@@ -15,7 +15,6 @@ import { fileURLToPath } from 'node:url';
 
 import { buildRecord } from './pipeline/normalise.js';
 import type { PipelineMeta, SourceId, VulnerabilityRecord } from './pipeline/types.js';
-import { MANUFACTURERS } from '../src/lib/manufacturers.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '..', 'src', 'data');
@@ -167,10 +166,6 @@ async function main(): Promise<void> {
   console.log(`\nGenerated ${allRecords.length} total records`);
   console.log('Running aggregation...');
 
-  // Run aggregation by importing and executing the aggregate script
-  const { default: aggregate } = await import('./aggregate.js');
-  // The aggregate script is self-executing, so we just need to run it
-  // But since it's a module with main(), we'll run it as a child process
 }
 
 main().then(async () => {

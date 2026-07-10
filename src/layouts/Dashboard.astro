@@ -12,7 +12,7 @@ interface Props {
 const { lastUpdated } = Astro.props;
 
 const formattedDate = lastUpdated
-  ? new Date(lastUpdated).toLocaleDateString('en-GB', {
+  ? new Date(lastUpdated).toLocaleString('en-GB', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -43,42 +43,42 @@ const formattedDate = lastUpdated
     <meta property="og:type" content="website" />
   </head>
   <body>
-    <header class="vt-header">
-      <div class="vt-container vt-header-inner">
-        <div class="vt-header-brand">
-          <h1 class="vt-logo">
-            <span class="vt-logo-text">Vuln<span class="vt-logo-accent">Trends</span></span>
+    <header class="bg-vt-bg-secondary border-b border-vt-border py-6">
+      <div class="w-full max-w-[1400px] mx-auto px-6 flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight m-0">
+            <span>Vuln<span class="text-vt-accent">Trends</span></span>
           </h1>
-          <p class="vt-tagline">
+          <p class="text-vt-text-muted text-sm mt-1 max-w-2xl">
             Tracking trends in vulnerability patching across major software manufacturers
           </p>
         </div>
         {formattedDate && (
-          <div class="vt-last-updated">
-            <span class="vt-last-updated-label">Last updated</span>
-            <time datetime={lastUpdated}>{formattedDate}</time>
+          <div class="text-right shrink-0">
+            <span class="block text-xs uppercase tracking-wide text-vt-text-muted">Last updated</span>
+            <time class="text-sm text-vt-text-secondary" datetime={lastUpdated}>{formattedDate}</time>
           </div>
         )}
       </div>
     </header>
 
-    <main class="vt-main">
-      <div class="vt-container">
+    <main class="flex-1 py-8">
+      <div class="w-full max-w-[1400px] mx-auto px-6">
         <slot />
       </div>
     </main>
 
-    <footer class="vt-footer">
-      <div class="vt-container vt-footer-inner">
-        <div class="vt-footer-section">
-          <p class="vt-footer-title">VulnTrends</p>
-          <p class="vt-footer-text">
+    <footer class="bg-vt-bg-secondary border-t border-vt-border py-8 mt-8">
+      <div class="w-full max-w-[1400px] mx-auto px-6 grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr_1fr]">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-3">VulnTrends</p>
+          <p class="text-sm text-vt-text-secondary">
             Open-source data on vulnerability patching trends.
           </p>
         </div>
-        <div class="vt-footer-section">
-          <p class="vt-footer-title">Data sources</p>
-          <ul class="vt-footer-list">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-3">Data sources</p>
+          <ul class="list-none text-sm space-y-1">
             <li><a href="https://www.mozilla.org/en-US/security/advisories/">Mozilla MFSA</a></li>
             <li><a href="https://api.msrc.microsoft.com/cvrf/v3.0/">Microsoft MSRC</a></li>
             <li><a href="https://bugs.chromium.org/p/project-zero/">Project Zero</a></li>
@@ -87,9 +87,9 @@ const formattedDate = lastUpdated
             <li><a href="https://support.apple.com/en-us/HT201222">Apple Security</a></li>
           </ul>
         </div>
-        <div class="vt-footer-section">
-          <p class="vt-footer-title">Project</p>
-          <ul class="vt-footer-list">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-3">Project</p>
+          <ul class="list-none text-sm space-y-1">
             <li><a href="/about">About &amp; methodology</a></li>
             <li><a href="https://github.com/vulntrends/vulntrends">GitHub</a></li>
             <li>MIT Licensed</li>
@@ -97,107 +97,5 @@ const formattedDate = lastUpdated
         </div>
       </div>
     </footer>
-
-    <style>
-      .vt-header {
-        background-color: var(--vt-bg-secondary);
-        border-bottom: 1px solid var(--vt-border);
-        padding: 1.5rem 0;
-      }
-
-      .vt-header-inner {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      .vt-logo {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin: 0;
-      }
-
-      .vt-logo-text {
-        letter-spacing: -0.02em;
-      }
-
-      .vt-logo-accent {
-        color: var(--vt-accent);
-      }
-
-      .vt-tagline {
-        color: var(--vt-text-muted);
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
-        max-width: 40rem;
-      }
-
-      .vt-last-updated {
-        text-align: right;
-        flex-shrink: 0;
-      }
-
-      .vt-last-updated-label {
-        display: block;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--vt-text-muted);
-      }
-
-      .vt-last-updated time {
-        font-size: 0.875rem;
-        color: var(--vt-text-secondary);
-      }
-
-      .vt-main {
-        flex: 1;
-        padding: 2rem 0;
-      }
-
-      .vt-footer {
-        background-color: var(--vt-bg-secondary);
-        border-top: 1px solid var(--vt-border);
-        padding: 2rem 0;
-        margin-top: 2rem;
-      }
-
-      .vt-footer-inner {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      @media (min-width: 768px) {
-        .vt-footer-inner {
-          grid-template-columns: 2fr 1fr 1fr;
-        }
-      }
-
-      .vt-footer-title {
-        font-size: 0.875rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--vt-text-muted);
-        margin-bottom: 0.75rem;
-      }
-
-      .vt-footer-text {
-        font-size: 0.875rem;
-        color: var(--vt-text-secondary);
-      }
-
-      .vt-footer-list {
-        list-style: none;
-        font-size: 0.875rem;
-      }
-
-      .vt-footer-list li {
-        margin-bottom: 0.25rem;
-      }
-    </style>
   </body>
 </html>

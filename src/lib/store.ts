@@ -42,7 +42,7 @@ export function selectAllManufacturers(): void {
   }));
 }
 
-/** Clear all manufacturer selections (show none — though charts handle empty as "all"). */
+/** Clear all manufacturer selections (equivalent to selecting all / no filter). */
 export function clearManufacturers(): void {
   dashboardStore.update((state) => ({
     ...state,

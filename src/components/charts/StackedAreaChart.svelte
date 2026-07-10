@@ -214,26 +214,21 @@
       focus.attr('transform', `translate(${x(d._date)},0)`);
       focus.style('opacity', 1);
 
-      // Build tooltip HTML
+      // Build tooltip rows — structured data, no HTML interpolation
       const rows = manufacturers
         .map((m) => ({ m, v: d[m] ?? 0 }))
         .filter((r) => r.v > 0)
         .sort((a, b) => b.v - a.v);
 
-      const html = `
-        <div style="font-weight:600;margin-bottom:4px">${d3.timeFormat('%b %Y')(d._date)}</div>
-        ${rows
-          .map(
-            (r) =>
-              `<div style="display:flex;align-items:center;gap:6px">
-                <span style="width:8px;height:8px;border-radius:50%;background:${getColour(r.m)}"></span>
-                <span>${r.m}: ${r.v}</span>
-              </div>`,
-          )
-          .join('')}
-      `;
-
-      tooltip.show(event, html);
+      tooltip.show(
+        event,
+        formatTick(d._date),
+        rows.map((r) => ({
+          colour: getColour(r.m),
+          label: r.m,
+          value: String(r.v),
+        })),
+      );
     });
 
     overlay.on('mouseleave', () => {

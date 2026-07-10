@@ -17,11 +17,11 @@
     discoveredMonth: Array<{ date: string; manufacturer: string; count: number }>;
     fixedMonth: Array<{ date: string; manufacturer: string; count: number }>;
     patchLagMonth: Array<{ date: string; manufacturer: string; medianLagDays: number; p90LagDays: number; count: number }>;
-    backlogMonth: Array<{ date: string; manufacturer: string; count: number }>;
+    backlogMonth: Array<{ date: string; manufacturer: string; openCount: number }>;
     discoveredYear: Array<{ date: string; manufacturer: string; count: number }>;
     fixedYear: Array<{ date: string; manufacturer: string; count: number }>;
     patchLagYear: Array<{ date: string; manufacturer: string; medianLagDays: number; p90LagDays: number; count: number }>;
-    backlogYear: Array<{ date: string; manufacturer: string; count: number }>;
+    backlogYear: Array<{ date: string; manufacturer: string; openCount: number }>;
   }
 
   let {
@@ -46,17 +46,17 @@
   let backlog = $derived(granularity === 'month' ? backlogMonth : backlogYear);
 </script>
 
-<div class="vt-dashboard">
-  <div class="vt-controls">
-    <div class="vt-controls-row">
+<div class="flex flex-col gap-6">
+  <div class="bg-vt-bg-secondary border border-vt-border rounded-lg px-6 py-4">
+    <div class="flex items-start justify-between gap-6 flex-wrap">
       <ManufacturerFilter {manufacturers} />
       <GranularityToggle />
     </div>
   </div>
 
-  <div class="vt-grid">
-    <div class="vt-card">
-      <div class="vt-card-title">Vulnerabilities discovered</div>
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <div class="bg-vt-bg-secondary border border-vt-border rounded-lg p-6">
+      <div class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-4">Vulnerabilities discovered</div>
       <DiscoveredChart
         data={discovered}
         {granularity}
@@ -64,8 +64,8 @@
       />
     </div>
 
-    <div class="vt-card">
-      <div class="vt-card-title">Vulnerabilities fixed</div>
+    <div class="bg-vt-bg-secondary border border-vt-border rounded-lg p-6">
+      <div class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-4">Vulnerabilities fixed</div>
       <FixedChart
         data={fixed}
         {granularity}
@@ -73,8 +73,8 @@
       />
     </div>
 
-    <div class="vt-card">
-      <div class="vt-card-title">Time between discovery and patch</div>
+    <div class="bg-vt-bg-secondary border border-vt-border rounded-lg p-6">
+      <div class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-4">Time between discovery and patch</div>
       <PatchLagChart
         data={patchLag}
         {granularity}
@@ -82,8 +82,8 @@
       />
     </div>
 
-    <div class="vt-card">
-      <div class="vt-card-title">Vulnerability backlog</div>
+    <div class="bg-vt-bg-secondary border border-vt-border rounded-lg p-6">
+      <div class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-4">Vulnerability backlog</div>
       <BacklogChart
         data={backlog}
         {granularity}
@@ -92,26 +92,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  .vt-dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .vt-controls {
-    background-color: var(--vt-bg-secondary);
-    border: 1px solid var(--vt-border);
-    border-radius: var(--vt-radius);
-    padding: 1rem 1.5rem;
-  }
-
-  .vt-controls-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-</style>

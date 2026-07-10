@@ -21,15 +21,15 @@ const data = await loadDashboardData();
       backlogYear={data.backlogYear}
     />
   ) : (
-    <div class="vt-card" style="text-align: center; padding: 3rem">
-      <h2 style="margin-bottom: 0.5rem">No data yet</h2>
-      <p style="color: var(--vt-text-muted); margin-bottom: 1.5rem">
-        Run <code style="color: var(--vt-accent)">npm run data:build</code> to fetch
+    <div class="bg-vt-bg-secondary border border-vt-border rounded-lg p-12 text-center">
+      <h2 class="mb-2 text-xl">No data yet</h2>
+      <p class="text-vt-text-muted mb-6">
+        Run <code class="text-vt-accent">npm run data:build</code> to fetch
         vulnerability data from vendor sources and generate the dashboard.
       </p>
-      <p style="color: var(--vt-text-muted); font-size: 0.875rem">
+      <p class="text-vt-text-muted text-sm">
         The data build is decoupled from the site build — run it once, then
-        iterate on the website with <code style="color: var(--vt-accent)">npm run dev</code>.
+        iterate on the website with <code class="text-vt-accent">npm run dev</code>.
       </p>
     </div>
   )}

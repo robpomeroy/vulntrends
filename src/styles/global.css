@@ -1,7 +1,13 @@
-/* VulnTrends global styles — dark-first dashboard aesthetic */
+/* VulnTrends global styles — Tailwind CSS v4 + dark-first dashboard aesthetic */
 
+@import 'tailwindcss';
+
+/*
+ * Design tokens exposed as CSS custom properties for use in D3 charts
+ * and other non-Tailwind contexts (SVG elements, tooltip JS, etc.).
+ * Tailwind utilities map to the same values via @theme below.
+ */
 :root {
-  /* Colour palette — dark-first */
   --vt-bg-primary: #0f172a;       /* slate-900 */
   --vt-bg-secondary: #1e293b;    /* slate-800 */
   --vt-bg-tertiary: #334155;     /* slate-700 */
@@ -21,26 +27,32 @@
   --vt-linux: #f6c924;          /* gold — Linux */
   --vt-other: #a78bfa;          /* violet — Other/catch-all */
 
-  /* Typography */
-  --vt-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --vt-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
-    'Liberation Mono', monospace;
-
   /* Spacing */
   --vt-radius: 0.5rem;
   --vt-radius-sm: 0.25rem;
   --vt-transition: 150ms ease;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/*
+ * Tailwind theme extension — maps our custom tokens into Tailwind's
+ * colour system so utilities like bg-vt-bg-secondary work.
+ */
+@theme {
+  --color-vt-bg-primary: #0f172a;
+  --color-vt-bg-secondary: #1e293b;
+  --color-vt-bg-tertiary: #334155;
+  --color-vt-text-primary: #f1f5f9;
+  --color-vt-text-secondary: #cbd5e1;
+  --color-vt-text-muted: #94a3b8;
+  --color-vt-border: #475569;
+  --color-vt-accent: #38bdf8;
 }
 
+/* ---- Base styles ---- */
+
 html {
-  font-family: var(--vt-font-sans);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   background-color: var(--vt-bg-primary);
   color: var(--vt-text-primary);
   line-height: 1.6;
@@ -64,44 +76,8 @@ a:hover {
   color: #7dd3fc;
 }
 
-/* Layout helpers */
-.vt-container {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
+/* ---- D3 chart styles (SVG — cannot use Tailwind classes) ---- */
 
-.vt-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-@media (min-width: 1024px) {
-  .vt-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* Card */
-.vt-card {
-  background-color: var(--vt-bg-secondary);
-  border: 1px solid var(--vt-border);
-  border-radius: var(--vt-radius);
-  padding: 1.5rem;
-}
-
-.vt-card-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--vt-text-muted);
-  margin-bottom: 1rem;
-}
-
-/* Chart container */
 .vt-chart {
   width: 100%;
   height: 320px;
@@ -113,27 +89,6 @@ a:hover {
   display: block;
 }
 
-/* Tooltip */
-.vt-tooltip {
-  position: fixed;
-  pointer-events: none;
-  background-color: var(--vt-bg-tertiary);
-  border: 1px solid var(--vt-border);
-  border-radius: var(--vt-radius-sm);
-  padding: 0.5rem 0.75rem;
-  font-size: 0.8125rem;
-  color: var(--vt-text-primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity var(--vt-transition);
-}
-
-.vt-tooltip.visible {
-  opacity: 1;
-}
-
-/* D3 axis styling */
 .vt-chart .axis path,
 .vt-chart .axis line {
   stroke: var(--vt-border);
@@ -154,7 +109,29 @@ a:hover {
   stroke: none;
 }
 
-/* Reduced motion */
+/* ---- Tooltip (created via JS in src/lib/d3/tooltip.ts) ---- */
+
+.vt-tooltip {
+  position: fixed;
+  pointer-events: none;
+  background-color: var(--vt-bg-tertiary);
+  border: 1px solid var(--vt-border);
+  border-radius: var(--vt-radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--vt-text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity var(--vt-transition);
+}
+
+.vt-tooltip.visible {
+  opacity: 1;
+}
+
+/* ---- Reduced motion ---- */
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

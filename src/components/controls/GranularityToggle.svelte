@@ -13,12 +13,14 @@
   let current = $derived($dashboardStore.granularity);
 </script>
 
-<div class="vt-granularity-toggle" role="group" aria-label="Time granularity">
+<div class="inline-flex border border-vt-border rounded-sm overflow-hidden" role="group" aria-label="Time granularity">
   {#each options as opt (opt.value)}
     <button
       type="button"
-      class="vt-toggle-btn"
-      class:vt-toggle-btn-active={current === opt.value}
+      class="py-1.5 px-3.5 text-sm cursor-pointer transition-all border-none
+        {current === opt.value
+          ? 'bg-vt-accent text-vt-bg-primary font-semibold hover:bg-vt-accent hover:text-vt-bg-primary'
+          : 'bg-transparent text-vt-text-muted hover:text-vt-text-primary hover:bg-vt-bg-tertiary'}"
       onclick={() => setGranularity(opt.value)}
       aria-pressed={current === opt.value}
     >
@@ -26,38 +28,3 @@
     </button>
   {/each}
 </div>
-
-<style>
-  .vt-granularity-toggle {
-    display: inline-flex;
-    border: 1px solid var(--vt-border);
-    border-radius: var(--vt-radius-sm);
-    overflow: hidden;
-  }
-
-  .vt-toggle-btn {
-    padding: 0.375rem 0.875rem;
-    background: transparent;
-    border: none;
-    color: var(--vt-text-muted);
-    font-size: 0.8125rem;
-    cursor: pointer;
-    transition: all var(--vt-transition);
-  }
-
-  .vt-toggle-btn:hover {
-    color: var(--vt-text-primary);
-    background-color: var(--vt-bg-tertiary);
-  }
-
-  .vt-toggle-btn-active {
-    background-color: var(--vt-accent);
-    color: var(--vt-bg-primary);
-    font-weight: 600;
-  }
-
-  .vt-toggle-btn-active:hover {
-    background-color: var(--vt-accent);
-    color: var(--vt-bg-primary);
-  }
-</style>

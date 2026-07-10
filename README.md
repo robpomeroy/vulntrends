@@ -20,7 +20,7 @@ letting users draw their own conclusions from the visualised trends.
 - **Framework**: Astro 7 (static site generation)
 - **Interactive components**: Svelte 5 islands
 - **Visualisation**: D3.js
-- **Styling**: Custom CSS (dark-first dashboard aesthetic)
+- **Styling**: Tailwind CSS v4 (dark-first dashboard aesthetic)
 - **Data validation**: Zod
 - **Pipeline tooling**: tsx + TypeScript (Node 22+)
 - **Deployment**: GitHub Pages via GitHub Actions

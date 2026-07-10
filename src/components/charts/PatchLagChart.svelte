@@ -221,24 +221,19 @@
 
       if (rows.length === 0) return;
 
-      const nearestDate = parseDate(rows[0] ? filteredData[0].date : '') ?? date;
       focus.attr('transform', `translate(${x(date)},0)`);
       focus.style('opacity', 1);
 
       rows.sort((a, b) => a.median - b.median);
-      const html = `
-        <div style="font-weight:600;margin-bottom:4px">${d3.timeFormat('%b %Y')(date)}</div>
-        ${rows
-          .map(
-            (r) =>
-              `<div style="display:flex;align-items:center;gap:6px">
-                <span style="width:8px;height:8px;border-radius:50%;background:${getColour(r.m)}"></span>
-                <span>${r.m}: median ${r.median}d, p90 ${r.p90}d (${r.count})</span>
-              </div>`,
-          )
-          .join('')}
-      `;
-      tooltip.show(event, html);
+      tooltip.show(
+        event,
+        formatTick(date),
+        rows.map((r) => ({
+          colour: getColour(r.m),
+          label: r.m,
+          value: `median ${r.median}d, p90 ${r.p90}d (${r.count})`,
+        })),
+      );
     });
 
     overlay.on('mouseleave', () => {

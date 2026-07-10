@@ -5,7 +5,7 @@
 export const THEME = {
   bgPrimary: '#0f172a',
   bgSecondary: '#1e293b',
-  bgTertiaryary: '#334155',
+  bgTertiary: '#334155',
   textPrimary: '#f1f5f9',
   textSecondary: '#cbd5e1',
   textMuted: '#94a3b8',
@@ -24,7 +24,7 @@ export const MANUFACTURER_COLOURS: Record<string, string> = {
   Microsoft: '#00a4ef',
   Apple: '#a8a8a8',
   Oracle: '#c74634',
-  Samsung: '#364fc7',
+   Samsung: '#1428a0',
   Linux: '#f6c924',
   Other: '#a78bfa',
 };

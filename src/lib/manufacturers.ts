@@ -14,7 +14,7 @@ export const MANUFACTURERS: ManufacturerInfo[] = [
   { name: 'Microsoft', colour: '#00a4ef' },
   { name: 'Apple', colour: '#a8a8a8' },
   { name: 'Oracle', colour: '#c74634' },
-  { name: 'Samsung', colour: '#364fc7' },
+  { name: 'Samsung', colour: '#1428a0' },
   { name: 'Linux', colour: '#f6c924' },
   { name: 'Other', colour: '#a78bfa' },
 ];

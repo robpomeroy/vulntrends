@@ -1,0 +1,163 @@
+/* VulnTrends global styles — dark-first dashboard aesthetic */
+
+:root {
+  /* Colour palette — dark-first */
+  --vt-bg-primary: #0f172a;       /* slate-900 */
+  --vt-bg-secondary: #1e293b;    /* slate-800 */
+  --vt-bg-tertiary: #334155;     /* slate-700 */
+  --vt-text-primary: #f1f5f9;    /* slate-100 */
+  --vt-text-secondary: #cbd5e1;  /* slate-300 */
+  --vt-text-muted: #94a3b8;      /* slate-400 */
+  --vt-border: #475569;          /* slate-600 */
+  --vt-accent: #38bdf8;          /* sky-400 */
+
+  /* Manufacturer colours — 8 distinct, accessible on dark background */
+  --vt-mozilla: #ff7133;        /* orange — Mozilla */
+  --vt-google: #4285f4;         /* blue — Google */
+  --vt-microsoft: #00a4ef;      /* cyan — Microsoft */
+  --vt-apple: #a8a8a8;          /* silver — Apple */
+  --vt-oracle: #c74634;         /* red — Oracle */
+  --vt-samsung: #1428a0;        /* navy — Samsung */
+  --vt-linux: #f6c924;          /* gold — Linux */
+  --vt-other: #a78bfa;          /* violet — Other/catch-all */
+
+  /* Typography */
+  --vt-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --vt-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  /* Spacing */
+  --vt-radius: 0.5rem;
+  --vt-radius-sm: 0.25rem;
+  --vt-transition: 150ms ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--vt-font-sans);
+  background-color: var(--vt-bg-primary);
+  color: var(--vt-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--vt-accent);
+  text-decoration: none;
+  transition: color var(--vt-transition);
+}
+
+a:hover {
+  color: #7dd3fc;
+}
+
+/* Layout helpers */
+.vt-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.vt-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .vt-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Card */
+.vt-card {
+  background-color: var(--vt-bg-secondary);
+  border: 1px solid var(--vt-border);
+  border-radius: var(--vt-radius);
+  padding: 1.5rem;
+}
+
+.vt-card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vt-text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Chart container */
+.vt-chart {
+  width: 100%;
+  height: 320px;
+}
+
+.vt-chart svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Tooltip */
+.vt-tooltip {
+  position: fixed;
+  pointer-events: none;
+  background-color: var(--vt-bg-tertiary);
+  border: 1px solid var(--vt-border);
+  border-radius: var(--vt-radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--vt-text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity var(--vt-transition);
+}
+
+.vt-tooltip.visible {
+  opacity: 1;
+}
+
+/* D3 axis styling */
+.vt-chart .axis path,
+.vt-chart .axis line {
+  stroke: var(--vt-border);
+}
+
+.vt-chart .axis text {
+  fill: var(--vt-text-muted);
+  font-size: 0.75rem;
+}
+
+.vt-chart .grid line {
+  stroke: var(--vt-bg-tertiary);
+  stroke-opacity: 0.5;
+  stroke-dasharray: 2 4;
+}
+
+.vt-chart .grid path {
+  stroke: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

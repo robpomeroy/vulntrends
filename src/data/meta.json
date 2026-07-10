@@ -1,0 +1,12 @@
+{
+  "lastUpdated": "2026-07-10T16:25:17.685Z",
+  "sourceCounts": {
+    "mozilla": 200,
+    "chrome": 350,
+    "msrc": 500,
+    "apple": 300,
+    "projectzero": 150,
+    "nvd": 550
+  },
+  "totalRecords": 2050
+}

@@ -1,0 +1,2537 @@
+[
+  {
+    "date": "2020-01",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2020-01",
+    "manufacturer": "Google",
+    "count": 10
+  },
+  {
+    "date": "2020-01",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2020-01",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2020-01",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2020-01",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2020-01",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2020-02",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2020-02",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2020-02",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2020-02",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2020-02",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2020-02",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2020-03",
+    "manufacturer": "Apple",
+    "count": 6
+  },
+  {
+    "date": "2020-03",
+    "manufacturer": "Google",
+    "count": 6
+  },
+  {
+    "date": "2020-03",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2020-03",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2020-03",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2020-03",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2020-03",
+    "manufacturer": "Samsung",
+    "count": 4
+  },
+  {
+    "date": "2020-04",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2020-04",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2020-04",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2020-04",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2020-04",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2020-04",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2020-04",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2020-05",
+    "manufacturer": "Apple",
+    "count": 6
+  },
+  {
+    "date": "2020-05",
+    "manufacturer": "Google",
+    "count": 14
+  },
+  {
+    "date": "2020-05",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2020-05",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2020-05",
+    "manufacturer": "Mozilla",
+    "count": 5
+  },
+  {
+    "date": "2020-05",
+    "manufacturer": "Oracle",
+    "count": 5
+  },
+  {
+    "date": "2020-05",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2020-06",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2020-06",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2020-06",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2020-06",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2020-06",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2020-06",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2020-06",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2020-07",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2020-07",
+    "manufacturer": "Google",
+    "count": 3
+  },
+  {
+    "date": "2020-07",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2020-07",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2020-07",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2020-07",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2020-08",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2020-08",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2020-08",
+    "manufacturer": "Linux",
+    "count": 8
+  },
+  {
+    "date": "2020-08",
+    "manufacturer": "Microsoft",
+    "count": 11
+  },
+  {
+    "date": "2020-08",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2020-08",
+    "manufacturer": "Oracle",
+    "count": 4
+  },
+  {
+    "date": "2020-08",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2020-09",
+    "manufacturer": "Apple",
+    "count": 8
+  },
+  {
+    "date": "2020-09",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2020-09",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2020-09",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2020-09",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2020-10",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2020-10",
+    "manufacturer": "Google",
+    "count": 6
+  },
+  {
+    "date": "2020-10",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2020-10",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2020-10",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2020-10",
+    "manufacturer": "Oracle",
+    "count": 5
+  },
+  {
+    "date": "2020-10",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2020-11",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2020-11",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2020-11",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2020-11",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2020-11",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2020-11",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2020-12",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2020-12",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2020-12",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2020-12",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2020-12",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2020-12",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2021-01",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2021-01",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2021-01",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2021-01",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2021-01",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2021-01",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2021-02",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2021-02",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2021-02",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2021-02",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2021-02",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2021-02",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2021-02",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2021-03",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2021-03",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2021-03",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2021-03",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2021-03",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2021-03",
+    "manufacturer": "Oracle",
+    "count": 4
+  },
+  {
+    "date": "2021-03",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2021-04",
+    "manufacturer": "Apple",
+    "count": 7
+  },
+  {
+    "date": "2021-04",
+    "manufacturer": "Google",
+    "count": 6
+  },
+  {
+    "date": "2021-04",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2021-04",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2021-04",
+    "manufacturer": "Mozilla",
+    "count": 5
+  },
+  {
+    "date": "2021-04",
+    "manufacturer": "Oracle",
+    "count": 4
+  },
+  {
+    "date": "2021-04",
+    "manufacturer": "Samsung",
+    "count": 3
+  },
+  {
+    "date": "2021-05",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2021-05",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2021-05",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2021-05",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2021-05",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2021-05",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2021-06",
+    "manufacturer": "Apple",
+    "count": 1
+  },
+  {
+    "date": "2021-06",
+    "manufacturer": "Google",
+    "count": 10
+  },
+  {
+    "date": "2021-06",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2021-06",
+    "manufacturer": "Microsoft",
+    "count": 3
+  },
+  {
+    "date": "2021-06",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2021-06",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2021-07",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2021-07",
+    "manufacturer": "Google",
+    "count": 6
+  },
+  {
+    "date": "2021-07",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2021-07",
+    "manufacturer": "Microsoft",
+    "count": 10
+  },
+  {
+    "date": "2021-07",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2021-07",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2021-07",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2021-08",
+    "manufacturer": "Apple",
+    "count": 6
+  },
+  {
+    "date": "2021-08",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2021-08",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2021-08",
+    "manufacturer": "Microsoft",
+    "count": 8
+  },
+  {
+    "date": "2021-08",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2021-08",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2021-08",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2021-09",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2021-09",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2021-09",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2021-09",
+    "manufacturer": "Microsoft",
+    "count": 3
+  },
+  {
+    "date": "2021-09",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2021-10",
+    "manufacturer": "Apple",
+    "count": 1
+  },
+  {
+    "date": "2021-10",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2021-10",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2021-10",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2021-10",
+    "manufacturer": "Mozilla",
+    "count": 5
+  },
+  {
+    "date": "2021-10",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2021-11",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2021-11",
+    "manufacturer": "Google",
+    "count": 6
+  },
+  {
+    "date": "2021-11",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2021-11",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2021-11",
+    "manufacturer": "Mozilla",
+    "count": 5
+  },
+  {
+    "date": "2021-11",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2021-12",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2021-12",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2021-12",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2021-12",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2021-12",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2021-12",
+    "manufacturer": "Oracle",
+    "count": 5
+  },
+  {
+    "date": "2021-12",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2022-01",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2022-01",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2022-01",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2022-01",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2022-01",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2022-01",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2022-01",
+    "manufacturer": "Samsung",
+    "count": 3
+  },
+  {
+    "date": "2022-02",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2022-02",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2022-02",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2022-02",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2022-02",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2022-02",
+    "manufacturer": "Oracle",
+    "count": 4
+  },
+  {
+    "date": "2022-03",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2022-03",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2022-03",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2022-03",
+    "manufacturer": "Microsoft",
+    "count": 9
+  },
+  {
+    "date": "2022-03",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2022-03",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2022-04",
+    "manufacturer": "Apple",
+    "count": 6
+  },
+  {
+    "date": "2022-04",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2022-04",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2022-04",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2022-04",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2022-04",
+    "manufacturer": "Oracle",
+    "count": 4
+  },
+  {
+    "date": "2022-04",
+    "manufacturer": "Samsung",
+    "count": 5
+  },
+  {
+    "date": "2022-05",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2022-05",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2022-05",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2022-05",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2022-05",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2022-05",
+    "manufacturer": "Oracle",
+    "count": 5
+  },
+  {
+    "date": "2022-05",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2022-06",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2022-06",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2022-06",
+    "manufacturer": "Linux",
+    "count": 7
+  },
+  {
+    "date": "2022-06",
+    "manufacturer": "Microsoft",
+    "count": 8
+  },
+  {
+    "date": "2022-06",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2022-06",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2022-06",
+    "manufacturer": "Samsung",
+    "count": 4
+  },
+  {
+    "date": "2022-07",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2022-07",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2022-07",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2022-07",
+    "manufacturer": "Microsoft",
+    "count": 10
+  },
+  {
+    "date": "2022-07",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2022-07",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2022-08",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2022-08",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2022-08",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2022-08",
+    "manufacturer": "Microsoft",
+    "count": 9
+  },
+  {
+    "date": "2022-08",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2022-08",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2022-08",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2022-09",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2022-09",
+    "manufacturer": "Google",
+    "count": 3
+  },
+  {
+    "date": "2022-09",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2022-09",
+    "manufacturer": "Microsoft",
+    "count": 8
+  },
+  {
+    "date": "2022-09",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2022-09",
+    "manufacturer": "Oracle",
+    "count": 5
+  },
+  {
+    "date": "2022-09",
+    "manufacturer": "Samsung",
+    "count": 3
+  },
+  {
+    "date": "2022-10",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2022-10",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2022-10",
+    "manufacturer": "Linux",
+    "count": 6
+  },
+  {
+    "date": "2022-10",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2022-10",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2022-10",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2022-11",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2022-11",
+    "manufacturer": "Google",
+    "count": 3
+  },
+  {
+    "date": "2022-11",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2022-11",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2022-11",
+    "manufacturer": "Oracle",
+    "count": 5
+  },
+  {
+    "date": "2022-11",
+    "manufacturer": "Samsung",
+    "count": 4
+  },
+  {
+    "date": "2022-12",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2022-12",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2022-12",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2022-12",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2022-12",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2022-12",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2022-12",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2023-01",
+    "manufacturer": "Apple",
+    "count": 6
+  },
+  {
+    "date": "2023-01",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2023-01",
+    "manufacturer": "Linux",
+    "count": 7
+  },
+  {
+    "date": "2023-01",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2023-01",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2023-01",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2023-01",
+    "manufacturer": "Samsung",
+    "count": 3
+  },
+  {
+    "date": "2023-02",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2023-02",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2023-02",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2023-02",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2023-02",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2023-02",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2023-02",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2023-03",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2023-03",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2023-03",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2023-03",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2023-03",
+    "manufacturer": "Mozilla",
+    "count": 5
+  },
+  {
+    "date": "2023-03",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2023-03",
+    "manufacturer": "Samsung",
+    "count": 6
+  },
+  {
+    "date": "2023-04",
+    "manufacturer": "Apple",
+    "count": 6
+  },
+  {
+    "date": "2023-04",
+    "manufacturer": "Google",
+    "count": 2
+  },
+  {
+    "date": "2023-04",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2023-04",
+    "manufacturer": "Microsoft",
+    "count": 3
+  },
+  {
+    "date": "2023-04",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2023-04",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2023-04",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2023-05",
+    "manufacturer": "Apple",
+    "count": 1
+  },
+  {
+    "date": "2023-05",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2023-05",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2023-05",
+    "manufacturer": "Microsoft",
+    "count": 9
+  },
+  {
+    "date": "2023-05",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2023-05",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2023-05",
+    "manufacturer": "Samsung",
+    "count": 4
+  },
+  {
+    "date": "2023-06",
+    "manufacturer": "Apple",
+    "count": 1
+  },
+  {
+    "date": "2023-06",
+    "manufacturer": "Google",
+    "count": 4
+  },
+  {
+    "date": "2023-06",
+    "manufacturer": "Linux",
+    "count": 6
+  },
+  {
+    "date": "2023-06",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2023-06",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2023-06",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2023-06",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2023-07",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2023-07",
+    "manufacturer": "Google",
+    "count": 3
+  },
+  {
+    "date": "2023-07",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2023-07",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2023-07",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2023-07",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2023-07",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2023-08",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2023-08",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2023-08",
+    "manufacturer": "Microsoft",
+    "count": 8
+  },
+  {
+    "date": "2023-08",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2023-09",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2023-09",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2023-09",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2023-09",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2023-09",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2023-09",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2023-10",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2023-10",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2023-10",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2023-10",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2023-10",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2023-10",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2023-10",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2023-11",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2023-11",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2023-11",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2023-11",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2023-11",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2023-11",
+    "manufacturer": "Oracle",
+    "count": 7
+  },
+  {
+    "date": "2023-12",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2023-12",
+    "manufacturer": "Google",
+    "count": 2
+  },
+  {
+    "date": "2023-12",
+    "manufacturer": "Linux",
+    "count": 7
+  },
+  {
+    "date": "2023-12",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2023-12",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2023-12",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2024-01",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2024-01",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2024-01",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2024-01",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2024-01",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2024-01",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2024-01",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Google",
+    "count": 4
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Microsoft",
+    "count": 9
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Samsung",
+    "count": 3
+  },
+  {
+    "date": "2024-03",
+    "manufacturer": "Apple",
+    "count": 7
+  },
+  {
+    "date": "2024-03",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2024-03",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2024-03",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2024-03",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2024-03",
+    "manufacturer": "Oracle",
+    "count": 4
+  },
+  {
+    "date": "2024-04",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2024-04",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2024-04",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2024-04",
+    "manufacturer": "Microsoft",
+    "count": 11
+  },
+  {
+    "date": "2024-04",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2024-04",
+    "manufacturer": "Oracle",
+    "count": 6
+  },
+  {
+    "date": "2024-05",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2024-05",
+    "manufacturer": "Google",
+    "count": 11
+  },
+  {
+    "date": "2024-05",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2024-05",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2024-05",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2024-05",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2024-05",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2024-06",
+    "manufacturer": "Apple",
+    "count": 1
+  },
+  {
+    "date": "2024-06",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2024-06",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2024-06",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2024-06",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2024-06",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2024-07",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2024-07",
+    "manufacturer": "Google",
+    "count": 4
+  },
+  {
+    "date": "2024-07",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2024-07",
+    "manufacturer": "Microsoft",
+    "count": 11
+  },
+  {
+    "date": "2024-07",
+    "manufacturer": "Mozilla",
+    "count": 5
+  },
+  {
+    "date": "2024-07",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2024-08",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2024-08",
+    "manufacturer": "Google",
+    "count": 4
+  },
+  {
+    "date": "2024-08",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2024-08",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2024-08",
+    "manufacturer": "Mozilla",
+    "count": 6
+  },
+  {
+    "date": "2024-08",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2024-09",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2024-09",
+    "manufacturer": "Google",
+    "count": 4
+  },
+  {
+    "date": "2024-09",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2024-09",
+    "manufacturer": "Microsoft",
+    "count": 8
+  },
+  {
+    "date": "2024-09",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2024-09",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Oracle",
+    "count": 4
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2024-11",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2024-11",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2024-11",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2024-11",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2024-11",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2024-11",
+    "manufacturer": "Oracle",
+    "count": 4
+  },
+  {
+    "date": "2024-11",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2024-12",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2024-12",
+    "manufacturer": "Google",
+    "count": 5
+  },
+  {
+    "date": "2024-12",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2024-12",
+    "manufacturer": "Microsoft",
+    "count": 2
+  },
+  {
+    "date": "2024-12",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2024-12",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Apple",
+    "count": 6
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Google",
+    "count": 1
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Microsoft",
+    "count": 9
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Samsung",
+    "count": 3
+  },
+  {
+    "date": "2025-02",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2025-02",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2025-02",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2025-02",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2025-02",
+    "manufacturer": "Oracle",
+    "count": 6
+  },
+  {
+    "date": "2025-02",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2025-03",
+    "manufacturer": "Apple",
+    "count": 6
+  },
+  {
+    "date": "2025-03",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2025-03",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2025-03",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2025-03",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2025-03",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2025-03",
+    "manufacturer": "Samsung",
+    "count": 3
+  },
+  {
+    "date": "2025-04",
+    "manufacturer": "Apple",
+    "count": 7
+  },
+  {
+    "date": "2025-04",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2025-04",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2025-04",
+    "manufacturer": "Microsoft",
+    "count": 9
+  },
+  {
+    "date": "2025-04",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2025-04",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2025-04",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2025-05",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2025-05",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2025-05",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2025-05",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2025-05",
+    "manufacturer": "Oracle",
+    "count": 6
+  },
+  {
+    "date": "2025-05",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2025-06",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2025-06",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2025-06",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2025-06",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2025-06",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2025-06",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2025-06",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2025-07",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2025-07",
+    "manufacturer": "Google",
+    "count": 4
+  },
+  {
+    "date": "2025-07",
+    "manufacturer": "Linux",
+    "count": 2
+  },
+  {
+    "date": "2025-07",
+    "manufacturer": "Microsoft",
+    "count": 9
+  },
+  {
+    "date": "2025-07",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2025-07",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2025-08",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2025-08",
+    "manufacturer": "Google",
+    "count": 6
+  },
+  {
+    "date": "2025-08",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2025-08",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2025-08",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2025-08",
+    "manufacturer": "Oracle",
+    "count": 5
+  },
+  {
+    "date": "2025-08",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2025-09",
+    "manufacturer": "Apple",
+    "count": 2
+  },
+  {
+    "date": "2025-09",
+    "manufacturer": "Google",
+    "count": 4
+  },
+  {
+    "date": "2025-09",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2025-09",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2025-09",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2025-09",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2025-09",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2025-10",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2025-10",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2025-10",
+    "manufacturer": "Linux",
+    "count": 5
+  },
+  {
+    "date": "2025-10",
+    "manufacturer": "Microsoft",
+    "count": 4
+  },
+  {
+    "date": "2025-10",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2025-10",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2025-11",
+    "manufacturer": "Apple",
+    "count": 7
+  },
+  {
+    "date": "2025-11",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2025-11",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2025-11",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2025-11",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2025-11",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2025-12",
+    "manufacturer": "Apple",
+    "count": 4
+  },
+  {
+    "date": "2025-12",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2025-12",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2025-12",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2025-12",
+    "manufacturer": "Mozilla",
+    "count": 5
+  },
+  {
+    "date": "2025-12",
+    "manufacturer": "Samsung",
+    "count": 2
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Google",
+    "count": 7
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Mozilla",
+    "count": 1
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2026-02",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2026-02",
+    "manufacturer": "Google",
+    "count": 8
+  },
+  {
+    "date": "2026-02",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2026-02",
+    "manufacturer": "Microsoft",
+    "count": 6
+  },
+  {
+    "date": "2026-02",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2026-02",
+    "manufacturer": "Oracle",
+    "count": 5
+  },
+  {
+    "date": "2026-03",
+    "manufacturer": "Apple",
+    "count": 8
+  },
+  {
+    "date": "2026-03",
+    "manufacturer": "Google",
+    "count": 3
+  },
+  {
+    "date": "2026-03",
+    "manufacturer": "Linux",
+    "count": 3
+  },
+  {
+    "date": "2026-03",
+    "manufacturer": "Microsoft",
+    "count": 7
+  },
+  {
+    "date": "2026-03",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2026-03",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2026-03",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2026-04",
+    "manufacturer": "Apple",
+    "count": 3
+  },
+  {
+    "date": "2026-04",
+    "manufacturer": "Google",
+    "count": 9
+  },
+  {
+    "date": "2026-04",
+    "manufacturer": "Linux",
+    "count": 1
+  },
+  {
+    "date": "2026-04",
+    "manufacturer": "Microsoft",
+    "count": 8
+  },
+  {
+    "date": "2026-04",
+    "manufacturer": "Mozilla",
+    "count": 3
+  },
+  {
+    "date": "2026-04",
+    "manufacturer": "Oracle",
+    "count": 1
+  },
+  {
+    "date": "2026-05",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2026-05",
+    "manufacturer": "Google",
+    "count": 10
+  },
+  {
+    "date": "2026-05",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2026-05",
+    "manufacturer": "Microsoft",
+    "count": 5
+  },
+  {
+    "date": "2026-05",
+    "manufacturer": "Mozilla",
+    "count": 2
+  },
+  {
+    "date": "2026-05",
+    "manufacturer": "Oracle",
+    "count": 2
+  },
+  {
+    "date": "2026-05",
+    "manufacturer": "Samsung",
+    "count": 1
+  },
+  {
+    "date": "2026-06",
+    "manufacturer": "Apple",
+    "count": 5
+  },
+  {
+    "date": "2026-06",
+    "manufacturer": "Google",
+    "count": 4
+  },
+  {
+    "date": "2026-06",
+    "manufacturer": "Linux",
+    "count": 4
+  },
+  {
+    "date": "2026-06",
+    "manufacturer": "Microsoft",
+    "count": 11
+  },
+  {
+    "date": "2026-06",
+    "manufacturer": "Mozilla",
+    "count": 4
+  },
+  {
+    "date": "2026-06",
+    "manufacturer": "Oracle",
+    "count": 3
+  },
+  {
+    "date": "2026-06",
+    "manufacturer": "Samsung",
+    "count": 2
+  }
+]

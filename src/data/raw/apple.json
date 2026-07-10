@@ -1,0 +1,4502 @@
+[
+  {
+    "id": "CVE-2024-59369",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2024-59369",
+    "cvss": 5.1,
+    "discoveredDate": "2024-03-11",
+    "patchedDate": "2024-04-06",
+    "cveIds": [
+      "CVE-2024-59369"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-59369",
+    "patchLagDays": 26,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-52947",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-52947",
+    "cvss": 1.4,
+    "discoveredDate": "2021-03-23",
+    "patchedDate": "2021-08-29",
+    "cveIds": [
+      "CVE-2021-52947"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-52947",
+    "patchLagDays": 159,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-15358",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in macOS — CVE-2022-15358",
+    "discoveredDate": "2022-11-21",
+    "patchedDate": "2023-03-02",
+    "cveIds": [
+      "CVE-2022-15358"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-15358",
+    "patchLagDays": 101
+  },
+  {
+    "id": "CVE-2022-32722",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in watchOS — CVE-2022-32722",
+    "discoveredDate": "2022-04-08",
+    "patchedDate": "2022-05-05",
+    "cveIds": [
+      "CVE-2022-32722"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-32722",
+    "patchLagDays": 27
+  },
+  {
+    "id": "CVE-2025-17972",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in Safari — CVE-2025-17972",
+    "cvss": 9.7,
+    "discoveredDate": "2025-04-08",
+    "cveIds": [
+      "CVE-2025-17972"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-17972",
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2022-61137",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in macOS — CVE-2022-61137",
+    "cvss": 0.6,
+    "discoveredDate": "2022-07-06",
+    "cveIds": [
+      "CVE-2022-61137"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-61137",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-76187",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2023-76187",
+    "cvss": 5.5,
+    "discoveredDate": "2023-04-05",
+    "patchedDate": "2023-05-10",
+    "cveIds": [
+      "CVE-2023-76187"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-76187",
+    "patchLagDays": 35,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2022-74641",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2022-74641",
+    "discoveredDate": "2022-12-14",
+    "patchedDate": "2023-01-24",
+    "cveIds": [
+      "CVE-2022-74641"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-74641",
+    "patchLagDays": 41
+  },
+  {
+    "id": "CVE-2026-44439",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in macOS — CVE-2026-44439",
+    "discoveredDate": "2026-02-10",
+    "patchedDate": "2026-02-26",
+    "cveIds": [
+      "CVE-2026-44439"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-44439",
+    "patchLagDays": 16
+  },
+  {
+    "id": "CVE-2024-12955",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2024-12955",
+    "cvss": 5.9,
+    "discoveredDate": "2024-12-16",
+    "patchedDate": "2024-12-22",
+    "cveIds": [
+      "CVE-2024-12955"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-12955",
+    "patchLagDays": 6,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2022-67642",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2022-67642",
+    "cvss": 8.5,
+    "discoveredDate": "2022-04-06",
+    "patchedDate": "2022-06-08",
+    "cveIds": [
+      "CVE-2022-67642"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-67642",
+    "patchLagDays": 63,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2022-78294",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2022-78294",
+    "discoveredDate": "2022-07-30",
+    "patchedDate": "2022-09-29",
+    "cveIds": [
+      "CVE-2022-78294"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-78294",
+    "patchLagDays": 61
+  },
+  {
+    "id": "CVE-2025-70754",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2025-70754",
+    "cvss": 4.5,
+    "discoveredDate": "2025-07-24",
+    "patchedDate": "2025-08-08",
+    "cveIds": [
+      "CVE-2025-70754"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-70754",
+    "patchLagDays": 15,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2025-48092",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2025-48092",
+    "discoveredDate": "2025-09-12",
+    "patchedDate": "2025-10-24",
+    "cveIds": [
+      "CVE-2025-48092"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-48092",
+    "patchLagDays": 42
+  },
+  {
+    "id": "CVE-2024-61188",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2024-61188",
+    "discoveredDate": "2024-11-16",
+    "patchedDate": "2025-02-05",
+    "cveIds": [
+      "CVE-2024-61188"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-61188",
+    "patchLagDays": 81
+  },
+  {
+    "id": "CVE-2020-22514",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2020-22514",
+    "cvss": 0.3,
+    "discoveredDate": "2020-06-13",
+    "cveIds": [
+      "CVE-2020-22514"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-22514",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-16595",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2020-16595",
+    "discoveredDate": "2020-09-01",
+    "patchedDate": "2020-12-29",
+    "cveIds": [
+      "CVE-2020-16595"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-16595",
+    "patchLagDays": 119
+  },
+  {
+    "id": "CVE-2020-56660",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2020-56660",
+    "cvss": 9.1,
+    "discoveredDate": "2020-07-18",
+    "patchedDate": "2020-09-21",
+    "cveIds": [
+      "CVE-2020-56660"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-56660",
+    "patchLagDays": 65,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2026-77841",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2026-77841",
+    "discoveredDate": "2026-03-07",
+    "patchedDate": "2026-04-11",
+    "cveIds": [
+      "CVE-2026-77841"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-77841",
+    "patchLagDays": 35
+  },
+  {
+    "id": "CVE-2022-48472",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2022-48472",
+    "cvss": 8.5,
+    "discoveredDate": "2022-01-27",
+    "cveIds": [
+      "CVE-2022-48472"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-48472",
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2021-96849",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-96849",
+    "discoveredDate": "2021-07-05",
+    "patchedDate": "2021-11-09",
+    "cveIds": [
+      "CVE-2021-96849"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-96849",
+    "patchLagDays": 127
+  },
+  {
+    "id": "CVE-2026-57153",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2026-57153",
+    "cvss": 4.5,
+    "discoveredDate": "2026-03-02",
+    "patchedDate": "2026-03-30",
+    "cveIds": [
+      "CVE-2026-57153"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-57153",
+    "patchLagDays": 28,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-34225",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2020-34225",
+    "discoveredDate": "2020-01-14",
+    "patchedDate": "2020-05-30",
+    "cveIds": [
+      "CVE-2020-34225"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-34225",
+    "patchLagDays": 137
+  },
+  {
+    "id": "CVE-2026-66927",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2026-66927",
+    "cvss": 0.4,
+    "discoveredDate": "2026-04-28",
+    "patchedDate": "2026-07-10",
+    "cveIds": [
+      "CVE-2026-66927"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-66927",
+    "patchLagDays": 73,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2021-81285",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2021-81285",
+    "cvss": 3.5,
+    "discoveredDate": "2021-02-19",
+    "patchedDate": "2021-04-28",
+    "cveIds": [
+      "CVE-2021-81285"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-81285",
+    "patchLagDays": 68,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-39913",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2025-39913",
+    "discoveredDate": "2025-06-18",
+    "cveIds": [
+      "CVE-2025-39913"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-39913"
+  },
+  {
+    "id": "CVE-2026-96971",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2026-96971",
+    "cvss": 2.2,
+    "discoveredDate": "2026-04-26",
+    "patchedDate": "2026-07-12",
+    "cveIds": [
+      "CVE-2026-96971"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-96971",
+    "patchLagDays": 77,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-88297",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2023-88297",
+    "discoveredDate": "2023-04-17",
+    "cveIds": [
+      "CVE-2023-88297"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-88297"
+  },
+  {
+    "id": "CVE-2023-14937",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2023-14937",
+    "cvss": 0.3,
+    "discoveredDate": "2023-04-25",
+    "patchedDate": "2023-05-18",
+    "cveIds": [
+      "CVE-2023-14937"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-14937",
+    "patchLagDays": 23,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-64316",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2020-64316",
+    "cvss": 4.4,
+    "discoveredDate": "2020-02-22",
+    "patchedDate": "2020-06-22",
+    "cveIds": [
+      "CVE-2020-64316"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-64316",
+    "patchLagDays": 121,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-69945",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2020-69945",
+    "cvss": 7,
+    "discoveredDate": "2020-05-02",
+    "patchedDate": "2020-08-17",
+    "cveIds": [
+      "CVE-2020-69945"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-69945",
+    "patchLagDays": 107,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2025-23349",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2025-23349",
+    "cvss": 8.4,
+    "discoveredDate": "2025-08-18",
+    "patchedDate": "2025-09-19",
+    "cveIds": [
+      "CVE-2025-23349"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-23349",
+    "patchLagDays": 32,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2022-13742",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2022-13742",
+    "discoveredDate": "2022-08-01",
+    "patchedDate": "2022-10-13",
+    "cveIds": [
+      "CVE-2022-13742"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-13742",
+    "patchLagDays": 73
+  },
+  {
+    "id": "CVE-2022-38181",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2022-38181",
+    "discoveredDate": "2022-02-03",
+    "patchedDate": "2022-03-09",
+    "cveIds": [
+      "CVE-2022-38181"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-38181",
+    "patchLagDays": 34
+  },
+  {
+    "id": "CVE-2022-58314",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in watchOS — CVE-2022-58314",
+    "discoveredDate": "2022-02-27",
+    "patchedDate": "2022-06-22",
+    "cveIds": [
+      "CVE-2022-58314"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-58314",
+    "patchLagDays": 115
+  },
+  {
+    "id": "CVE-2023-91250",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2023-91250",
+    "discoveredDate": "2023-01-12",
+    "patchedDate": "2023-03-30",
+    "cveIds": [
+      "CVE-2023-91250"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-91250",
+    "patchLagDays": 77
+  },
+  {
+    "id": "CVE-2024-77064",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2024-77064",
+    "cvss": 1.1,
+    "discoveredDate": "2024-04-17",
+    "cveIds": [
+      "CVE-2024-77064"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-77064",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-45634",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in Safari — CVE-2024-45634",
+    "cvss": 4.6,
+    "discoveredDate": "2024-12-25",
+    "patchedDate": "2025-03-25",
+    "cveIds": [
+      "CVE-2024-45634"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-45634",
+    "patchLagDays": 90,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-58894",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2024-58894",
+    "cvss": 10,
+    "discoveredDate": "2024-12-20",
+    "patchedDate": "2025-03-19",
+    "cveIds": [
+      "CVE-2024-58894"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-58894",
+    "patchLagDays": 89,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2025-41307",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2025-41307",
+    "discoveredDate": "2025-03-12",
+    "patchedDate": "2025-05-12",
+    "cveIds": [
+      "CVE-2025-41307"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-41307",
+    "patchLagDays": 61
+  },
+  {
+    "id": "CVE-2021-71916",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in macOS — CVE-2021-71916",
+    "cvss": 0.9,
+    "discoveredDate": "2021-04-03",
+    "patchedDate": "2021-04-25",
+    "cveIds": [
+      "CVE-2021-71916"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-71916",
+    "patchLagDays": 22,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-32893",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in watchOS — CVE-2023-32893",
+    "discoveredDate": "2023-06-24",
+    "patchedDate": "2023-07-20",
+    "cveIds": [
+      "CVE-2023-32893"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-32893",
+    "patchLagDays": 26
+  },
+  {
+    "id": "CVE-2020-77337",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2020-77337",
+    "discoveredDate": "2020-05-09",
+    "cveIds": [
+      "CVE-2020-77337"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-77337"
+  },
+  {
+    "id": "CVE-2023-15752",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iOS — CVE-2023-15752",
+    "cvss": 1.3,
+    "discoveredDate": "2023-02-08",
+    "patchedDate": "2023-07-11",
+    "cveIds": [
+      "CVE-2023-15752"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-15752",
+    "patchLagDays": 153,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-36424",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2022-36424",
+    "cvss": 2.2,
+    "discoveredDate": "2022-03-16",
+    "patchedDate": "2022-04-28",
+    "cveIds": [
+      "CVE-2022-36424"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-36424",
+    "patchLagDays": 43,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2026-52518",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2026-52518",
+    "cvss": 8.2,
+    "discoveredDate": "2026-02-23",
+    "patchedDate": "2026-03-11",
+    "cveIds": [
+      "CVE-2026-52518"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-52518",
+    "patchLagDays": 16,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2021-53320",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2021-53320",
+    "cvss": 9.6,
+    "discoveredDate": "2021-07-21",
+    "patchedDate": "2021-09-13",
+    "cveIds": [
+      "CVE-2021-53320"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-53320",
+    "patchLagDays": 54,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2021-52741",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in macOS — CVE-2021-52741",
+    "cvss": 8.1,
+    "discoveredDate": "2021-04-16",
+    "cveIds": [
+      "CVE-2021-52741"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-52741",
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2021-55132",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-55132",
+    "discoveredDate": "2021-11-16",
+    "cveIds": [
+      "CVE-2021-55132"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-55132"
+  },
+  {
+    "id": "CVE-2025-91634",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2025-91634",
+    "cvss": 6.1,
+    "discoveredDate": "2025-03-22",
+    "patchedDate": "2025-06-12",
+    "cveIds": [
+      "CVE-2025-91634"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-91634",
+    "patchLagDays": 82,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2025-37559",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2025-37559",
+    "cvss": 9.1,
+    "discoveredDate": "2025-01-02",
+    "cveIds": [
+      "CVE-2025-37559"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-37559",
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2024-98911",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2024-98911",
+    "cvss": 8.4,
+    "discoveredDate": "2024-03-14",
+    "patchedDate": "2024-04-27",
+    "cveIds": [
+      "CVE-2024-98911"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-98911",
+    "patchLagDays": 44,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2020-25111",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2020-25111",
+    "cvss": 1.4,
+    "discoveredDate": "2020-05-11",
+    "patchedDate": "2020-05-23",
+    "cveIds": [
+      "CVE-2020-25111"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-25111",
+    "patchLagDays": 12,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-22846",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2024-22846",
+    "cvss": 4.2,
+    "discoveredDate": "2024-03-14",
+    "patchedDate": "2024-04-21",
+    "cveIds": [
+      "CVE-2024-22846"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-22846",
+    "patchLagDays": 38,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-97995",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2021-97995",
+    "cvss": 0.5,
+    "discoveredDate": "2021-12-02",
+    "patchedDate": "2022-05-09",
+    "cveIds": [
+      "CVE-2021-97995"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-97995",
+    "patchLagDays": 158,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2026-71773",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2026-71773",
+    "cvss": 2.5,
+    "discoveredDate": "2026-05-18",
+    "patchedDate": "2026-08-13",
+    "cveIds": [
+      "CVE-2026-71773"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-71773",
+    "patchLagDays": 87,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2026-16807",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2026-16807",
+    "cvss": 2.7,
+    "discoveredDate": "2026-06-26",
+    "patchedDate": "2026-09-14",
+    "cveIds": [
+      "CVE-2026-16807"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-16807",
+    "patchLagDays": 80,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-18567",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2025-18567",
+    "cvss": 0.7,
+    "discoveredDate": "2025-01-31",
+    "patchedDate": "2025-04-26",
+    "cveIds": [
+      "CVE-2025-18567"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-18567",
+    "patchLagDays": 85,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-90660",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2025-90660",
+    "discoveredDate": "2025-07-26",
+    "patchedDate": "2025-09-01",
+    "cveIds": [
+      "CVE-2025-90660"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-90660",
+    "patchLagDays": 37
+  },
+  {
+    "id": "CVE-2024-15550",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2024-15550",
+    "discoveredDate": "2024-03-24",
+    "patchedDate": "2024-05-31",
+    "cveIds": [
+      "CVE-2024-15550"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-15550",
+    "patchLagDays": 68
+  },
+  {
+    "id": "CVE-2021-97284",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2021-97284",
+    "cvss": 3.4,
+    "discoveredDate": "2021-06-30",
+    "patchedDate": "2021-08-17",
+    "cveIds": [
+      "CVE-2021-97284"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-97284",
+    "patchLagDays": 48,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2026-88561",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in macOS — CVE-2026-88561",
+    "discoveredDate": "2026-06-06",
+    "cveIds": [
+      "CVE-2026-88561"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-88561"
+  },
+  {
+    "id": "CVE-2022-24425",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2022-24425",
+    "cvss": 0.8,
+    "discoveredDate": "2022-09-18",
+    "patchedDate": "2022-11-24",
+    "cveIds": [
+      "CVE-2022-24425"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-24425",
+    "patchLagDays": 67,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-36291",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2024-36291",
+    "cvss": 4.3,
+    "discoveredDate": "2024-05-25",
+    "patchedDate": "2024-06-15",
+    "cveIds": [
+      "CVE-2024-36291"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-36291",
+    "patchLagDays": 21,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-26378",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in watchOS — CVE-2021-26378",
+    "discoveredDate": "2021-07-28",
+    "cveIds": [
+      "CVE-2021-26378"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-26378"
+  },
+  {
+    "id": "CVE-2020-35830",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2020-35830",
+    "cvss": 7.9,
+    "discoveredDate": "2020-03-24",
+    "cveIds": [
+      "CVE-2020-35830"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-35830",
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2020-59664",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2020-59664",
+    "cvss": 8.7,
+    "discoveredDate": "2020-02-11",
+    "patchedDate": "2020-05-07",
+    "cveIds": [
+      "CVE-2020-59664"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-59664",
+    "patchLagDays": 86,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2025-73443",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2025-73443",
+    "cvss": 3.5,
+    "discoveredDate": "2025-10-12",
+    "patchedDate": "2025-11-09",
+    "cveIds": [
+      "CVE-2025-73443"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-73443",
+    "patchLagDays": 28,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-42127",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2020-42127",
+    "cvss": 3.8,
+    "discoveredDate": "2020-09-29",
+    "patchedDate": "2020-11-27",
+    "cveIds": [
+      "CVE-2020-42127"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-42127",
+    "patchLagDays": 59,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-85832",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2023-85832",
+    "discoveredDate": "2023-08-10",
+    "patchedDate": "2023-12-04",
+    "cveIds": [
+      "CVE-2023-85832"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-85832",
+    "patchLagDays": 116
+  },
+  {
+    "id": "CVE-2024-32079",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2024-32079",
+    "cvss": 3.4,
+    "discoveredDate": "2024-01-31",
+    "patchedDate": "2024-02-08",
+    "cveIds": [
+      "CVE-2024-32079"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-32079",
+    "patchLagDays": 8,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-84073",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2022-84073",
+    "cvss": 7.7,
+    "discoveredDate": "2022-05-06",
+    "patchedDate": "2022-10-10",
+    "cveIds": [
+      "CVE-2022-84073"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-84073",
+    "patchLagDays": 157,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2023-41491",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-41491",
+    "cvss": 2.3,
+    "discoveredDate": "2023-01-02",
+    "patchedDate": "2023-04-19",
+    "cveIds": [
+      "CVE-2023-41491"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-41491",
+    "patchLagDays": 107,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-64002",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iOS — CVE-2025-64002",
+    "discoveredDate": "2025-12-17",
+    "patchedDate": "2026-03-14",
+    "cveIds": [
+      "CVE-2025-64002"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-64002",
+    "patchLagDays": 87
+  },
+  {
+    "id": "CVE-2021-42436",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-42436",
+    "cvss": 2.7,
+    "discoveredDate": "2021-12-14",
+    "patchedDate": "2022-04-23",
+    "cveIds": [
+      "CVE-2021-42436"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-42436",
+    "patchLagDays": 130,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2021-40494",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2021-40494",
+    "cvss": 0.2,
+    "discoveredDate": "2021-03-14",
+    "patchedDate": "2021-06-08",
+    "cveIds": [
+      "CVE-2021-40494"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-40494",
+    "patchLagDays": 86,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-98799",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2023-98799",
+    "cvss": 1.9,
+    "discoveredDate": "2023-07-23",
+    "patchedDate": "2023-08-23",
+    "cveIds": [
+      "CVE-2023-98799"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-98799",
+    "patchLagDays": 31,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-55276",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in Safari — CVE-2024-55276",
+    "cvss": 1.6,
+    "discoveredDate": "2024-01-25",
+    "patchedDate": "2024-03-08",
+    "cveIds": [
+      "CVE-2024-55276"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-55276",
+    "patchLagDays": 43,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-73785",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2024-73785",
+    "cvss": 4.7,
+    "discoveredDate": "2024-05-07",
+    "patchedDate": "2024-05-15",
+    "cveIds": [
+      "CVE-2024-73785"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-73785",
+    "patchLagDays": 8,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-60632",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2021-60632",
+    "cvss": 2.6,
+    "discoveredDate": "2021-05-23",
+    "cveIds": [
+      "CVE-2021-60632"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-60632",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2021-87262",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2021-87262",
+    "cvss": 4.3,
+    "discoveredDate": "2021-09-05",
+    "patchedDate": "2022-02-08",
+    "cveIds": [
+      "CVE-2021-87262"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-87262",
+    "patchLagDays": 156,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-14701",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in Safari — CVE-2021-14701",
+    "discoveredDate": "2021-10-06",
+    "patchedDate": "2022-01-12",
+    "cveIds": [
+      "CVE-2021-14701"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-14701",
+    "patchLagDays": 98
+  },
+  {
+    "id": "CVE-2025-70400",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in macOS — CVE-2025-70400",
+    "cvss": 9.2,
+    "discoveredDate": "2025-11-16",
+    "patchedDate": "2026-01-22",
+    "cveIds": [
+      "CVE-2025-70400"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-70400",
+    "patchLagDays": 67,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2025-72053",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2025-72053",
+    "cvss": 2.9,
+    "discoveredDate": "2025-12-25",
+    "patchedDate": "2026-03-21",
+    "cveIds": [
+      "CVE-2025-72053"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-72053",
+    "patchLagDays": 86,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-62353",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2020-62353",
+    "cvss": 2.5,
+    "discoveredDate": "2020-09-20",
+    "patchedDate": "2021-02-19",
+    "cveIds": [
+      "CVE-2020-62353"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-62353",
+    "patchLagDays": 152,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-57682",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2023-57682",
+    "cvss": 0.8,
+    "discoveredDate": "2023-07-06",
+    "patchedDate": "2023-08-27",
+    "cveIds": [
+      "CVE-2023-57682"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-57682",
+    "patchLagDays": 52,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2026-69267",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2026-69267",
+    "cvss": 8.9,
+    "discoveredDate": "2026-03-12",
+    "patchedDate": "2026-05-06",
+    "cveIds": [
+      "CVE-2026-69267"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-69267",
+    "patchLagDays": 55,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2026-20256",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2026-20256",
+    "cvss": 6.5,
+    "discoveredDate": "2026-01-17",
+    "patchedDate": "2026-04-02",
+    "cveIds": [
+      "CVE-2026-20256"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-20256",
+    "patchLagDays": 75,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-65654",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2020-65654",
+    "cvss": 8.5,
+    "discoveredDate": "2020-09-16",
+    "patchedDate": "2020-11-15",
+    "cveIds": [
+      "CVE-2020-65654"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-65654",
+    "patchLagDays": 60,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2025-33486",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2025-33486",
+    "cvss": 5.6,
+    "discoveredDate": "2025-04-08",
+    "patchedDate": "2025-05-07",
+    "cveIds": [
+      "CVE-2025-33486"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-33486",
+    "patchLagDays": 29,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-11808",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2024-11808",
+    "cvss": 1.5,
+    "discoveredDate": "2024-06-26",
+    "patchedDate": "2024-07-29",
+    "cveIds": [
+      "CVE-2024-11808"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-11808",
+    "patchLagDays": 33,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-92197",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2025-92197",
+    "cvss": 0.7,
+    "discoveredDate": "2025-09-04",
+    "patchedDate": "2025-11-13",
+    "cveIds": [
+      "CVE-2025-92197"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-92197",
+    "patchLagDays": 70,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-15504",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2025-15504",
+    "cvss": 3.7,
+    "discoveredDate": "2025-04-20",
+    "cveIds": [
+      "CVE-2025-15504"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-15504",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-80153",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2025-80153",
+    "discoveredDate": "2025-04-17",
+    "patchedDate": "2025-07-16",
+    "cveIds": [
+      "CVE-2025-80153"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-80153",
+    "patchLagDays": 90
+  },
+  {
+    "id": "CVE-2020-21778",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2020-21778",
+    "discoveredDate": "2020-08-09",
+    "patchedDate": "2020-12-04",
+    "cveIds": [
+      "CVE-2020-21778"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-21778",
+    "patchLagDays": 117
+  },
+  {
+    "id": "CVE-2024-58346",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2024-58346",
+    "discoveredDate": "2024-11-17",
+    "patchedDate": "2025-01-28",
+    "cveIds": [
+      "CVE-2024-58346"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-58346",
+    "patchLagDays": 72
+  },
+  {
+    "id": "CVE-2020-45543",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2020-45543",
+    "cvss": 5.6,
+    "discoveredDate": "2020-11-28",
+    "cveIds": [
+      "CVE-2020-45543"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-45543",
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-41499",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2024-41499",
+    "cvss": 9.6,
+    "discoveredDate": "2024-08-07",
+    "patchedDate": "2024-08-26",
+    "cveIds": [
+      "CVE-2024-41499"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-41499",
+    "patchLagDays": 19,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2023-86962",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-86962",
+    "discoveredDate": "2023-11-09",
+    "patchedDate": "2023-11-19",
+    "cveIds": [
+      "CVE-2023-86962"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-86962",
+    "patchLagDays": 10
+  },
+  {
+    "id": "CVE-2026-96910",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2026-96910",
+    "cvss": 0.3,
+    "discoveredDate": "2026-02-08",
+    "patchedDate": "2026-04-28",
+    "cveIds": [
+      "CVE-2026-96910"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-96910",
+    "patchLagDays": 79,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-13385",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-13385",
+    "cvss": 7.6,
+    "discoveredDate": "2023-03-25",
+    "patchedDate": "2023-05-13",
+    "cveIds": [
+      "CVE-2023-13385"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-13385",
+    "patchLagDays": 49,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2025-72257",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2025-72257",
+    "discoveredDate": "2025-10-06",
+    "cveIds": [
+      "CVE-2025-72257"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-72257"
+  },
+  {
+    "id": "CVE-2024-16747",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2024-16747",
+    "discoveredDate": "2024-01-15",
+    "patchedDate": "2024-02-10",
+    "cveIds": [
+      "CVE-2024-16747"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-16747",
+    "patchLagDays": 26
+  },
+  {
+    "id": "CVE-2025-53077",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2025-53077",
+    "cvss": 8.8,
+    "discoveredDate": "2025-12-01",
+    "patchedDate": "2026-01-02",
+    "cveIds": [
+      "CVE-2025-53077"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-53077",
+    "patchLagDays": 32,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2025-71025",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2025-71025",
+    "discoveredDate": "2025-06-18",
+    "patchedDate": "2025-08-10",
+    "cveIds": [
+      "CVE-2025-71025"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-71025",
+    "patchLagDays": 53
+  },
+  {
+    "id": "CVE-2020-49917",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2020-49917",
+    "discoveredDate": "2020-09-26",
+    "patchedDate": "2020-12-31",
+    "cveIds": [
+      "CVE-2020-49917"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-49917",
+    "patchLagDays": 96
+  },
+  {
+    "id": "CVE-2020-68361",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2020-68361",
+    "cvss": 7.4,
+    "discoveredDate": "2020-09-02",
+    "patchedDate": "2020-12-01",
+    "cveIds": [
+      "CVE-2020-68361"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-68361",
+    "patchLagDays": 90,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2022-45319",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2022-45319",
+    "cvss": 6.1,
+    "discoveredDate": "2022-05-25",
+    "cveIds": [
+      "CVE-2022-45319"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-45319",
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2023-95443",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2023-95443",
+    "discoveredDate": "2023-10-30",
+    "patchedDate": "2024-02-01",
+    "cveIds": [
+      "CVE-2023-95443"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-95443",
+    "patchLagDays": 94
+  },
+  {
+    "id": "CVE-2025-89603",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2025-89603",
+    "discoveredDate": "2025-08-11",
+    "patchedDate": "2025-08-19",
+    "cveIds": [
+      "CVE-2025-89603"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-89603",
+    "patchLagDays": 8
+  },
+  {
+    "id": "CVE-2025-95225",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2025-95225",
+    "discoveredDate": "2025-05-23",
+    "patchedDate": "2025-06-03",
+    "cveIds": [
+      "CVE-2025-95225"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-95225",
+    "patchLagDays": 11
+  },
+  {
+    "id": "CVE-2020-48579",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2020-48579",
+    "cvss": 7.4,
+    "discoveredDate": "2020-01-04",
+    "patchedDate": "2020-06-26",
+    "cveIds": [
+      "CVE-2020-48579"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-48579",
+    "patchLagDays": 174,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2026-67462",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2026-67462",
+    "discoveredDate": "2026-06-28",
+    "cveIds": [
+      "CVE-2026-67462"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-67462"
+  },
+  {
+    "id": "CVE-2021-75958",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2021-75958",
+    "cvss": 2.1,
+    "discoveredDate": "2021-04-07",
+    "patchedDate": "2021-09-16",
+    "cveIds": [
+      "CVE-2021-75958"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-75958",
+    "patchLagDays": 162,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-84535",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2020-84535",
+    "discoveredDate": "2020-10-14",
+    "patchedDate": "2021-04-10",
+    "cveIds": [
+      "CVE-2020-84535"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-84535",
+    "patchLagDays": 178
+  },
+  {
+    "id": "CVE-2022-34306",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2022-34306",
+    "discoveredDate": "2022-01-15",
+    "patchedDate": "2022-03-22",
+    "cveIds": [
+      "CVE-2022-34306"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-34306",
+    "patchLagDays": 66
+  },
+  {
+    "id": "CVE-2022-73727",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2022-73727",
+    "cvss": 1.3,
+    "discoveredDate": "2022-03-29",
+    "patchedDate": "2022-08-20",
+    "cveIds": [
+      "CVE-2022-73727"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-73727",
+    "patchLagDays": 144,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-53329",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-53329",
+    "cvss": 9,
+    "discoveredDate": "2023-04-30",
+    "cveIds": [
+      "CVE-2023-53329"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-53329",
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2025-15040",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2025-15040",
+    "cvss": 3,
+    "discoveredDate": "2025-08-20",
+    "patchedDate": "2025-09-24",
+    "cveIds": [
+      "CVE-2025-15040"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-15040",
+    "patchLagDays": 35,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-29302",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in Safari — CVE-2024-29302",
+    "cvss": 1.8,
+    "discoveredDate": "2024-10-25",
+    "patchedDate": "2024-12-30",
+    "cveIds": [
+      "CVE-2024-29302"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-29302",
+    "patchLagDays": 66,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-61136",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2020-61136",
+    "cvss": 8,
+    "discoveredDate": "2020-12-04",
+    "patchedDate": "2021-03-12",
+    "cveIds": [
+      "CVE-2020-61136"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-61136",
+    "patchLagDays": 98,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2025-10168",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2025-10168",
+    "discoveredDate": "2025-06-09",
+    "cveIds": [
+      "CVE-2025-10168"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-10168"
+  },
+  {
+    "id": "CVE-2025-53840",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2025-53840",
+    "discoveredDate": "2025-04-07",
+    "patchedDate": "2025-05-04",
+    "cveIds": [
+      "CVE-2025-53840"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-53840",
+    "patchLagDays": 27
+  },
+  {
+    "id": "CVE-2024-10632",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2024-10632",
+    "cvss": 5.6,
+    "discoveredDate": "2024-01-26",
+    "patchedDate": "2024-03-30",
+    "cveIds": [
+      "CVE-2024-10632"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-10632",
+    "patchLagDays": 64,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2022-69701",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2022-69701",
+    "cvss": 8.6,
+    "discoveredDate": "2022-06-14",
+    "patchedDate": "2022-11-04",
+    "cveIds": [
+      "CVE-2022-69701"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-69701",
+    "patchLagDays": 143,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2024-94368",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2024-94368",
+    "cvss": 7.3,
+    "discoveredDate": "2024-07-14",
+    "patchedDate": "2024-08-21",
+    "cveIds": [
+      "CVE-2024-94368"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-94368",
+    "patchLagDays": 38,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2024-12072",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2024-12072",
+    "discoveredDate": "2024-02-03",
+    "patchedDate": "2024-04-10",
+    "cveIds": [
+      "CVE-2024-12072"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-12072",
+    "patchLagDays": 67
+  },
+  {
+    "id": "CVE-2022-91990",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2022-91990",
+    "cvss": 5,
+    "discoveredDate": "2022-05-29",
+    "patchedDate": "2022-11-04",
+    "cveIds": [
+      "CVE-2022-91990"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-91990",
+    "patchLagDays": 159,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-12996",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2024-12996",
+    "cvss": 0.5,
+    "discoveredDate": "2024-07-21",
+    "patchedDate": "2024-08-19",
+    "cveIds": [
+      "CVE-2024-12996"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-12996",
+    "patchLagDays": 29,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-40525",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2020-40525",
+    "cvss": 5.3,
+    "discoveredDate": "2020-04-18",
+    "patchedDate": "2020-08-29",
+    "cveIds": [
+      "CVE-2020-40525"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-40525",
+    "patchLagDays": 133,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2026-16537",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2026-16537",
+    "cvss": 8.4,
+    "discoveredDate": "2026-06-27",
+    "patchedDate": "2026-07-06",
+    "cveIds": [
+      "CVE-2026-16537"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-16537",
+    "patchLagDays": 9,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2024-24864",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2024-24864",
+    "cvss": 9.7,
+    "discoveredDate": "2024-05-09",
+    "patchedDate": "2024-06-03",
+    "cveIds": [
+      "CVE-2024-24864"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-24864",
+    "patchLagDays": 25,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2021-42045",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-42045",
+    "cvss": 2.5,
+    "discoveredDate": "2021-05-15",
+    "patchedDate": "2021-09-27",
+    "cveIds": [
+      "CVE-2021-42045"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-42045",
+    "patchLagDays": 135,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-12200",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2023-12200",
+    "cvss": 4.1,
+    "discoveredDate": "2023-11-16",
+    "cveIds": [
+      "CVE-2023-12200"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-12200",
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-81520",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2024-81520",
+    "cvss": 6.7,
+    "discoveredDate": "2024-11-28",
+    "patchedDate": "2025-01-25",
+    "cveIds": [
+      "CVE-2024-81520"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-81520",
+    "patchLagDays": 58,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-79809",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iOS — CVE-2021-79809",
+    "cvss": 9.1,
+    "discoveredDate": "2021-08-05",
+    "patchedDate": "2022-01-03",
+    "cveIds": [
+      "CVE-2021-79809"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-79809",
+    "patchLagDays": 151,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2023-55684",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2023-55684",
+    "cvss": 1.7,
+    "discoveredDate": "2023-02-01",
+    "patchedDate": "2023-03-27",
+    "cveIds": [
+      "CVE-2023-55684"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-55684",
+    "patchLagDays": 54,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-46124",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2023-46124",
+    "discoveredDate": "2023-04-15",
+    "patchedDate": "2023-07-29",
+    "cveIds": [
+      "CVE-2023-46124"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-46124",
+    "patchLagDays": 105
+  },
+  {
+    "id": "CVE-2026-95585",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2026-95585",
+    "cvss": 8.2,
+    "discoveredDate": "2026-05-22",
+    "patchedDate": "2026-06-07",
+    "cveIds": [
+      "CVE-2026-95585"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-95585",
+    "patchLagDays": 16,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2022-51696",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2022-51696",
+    "cvss": 4.8,
+    "discoveredDate": "2022-06-10",
+    "patchedDate": "2022-08-12",
+    "cveIds": [
+      "CVE-2022-51696"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-51696",
+    "patchLagDays": 63,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-43809",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2024-43809",
+    "cvss": 6.7,
+    "discoveredDate": "2024-03-24",
+    "patchedDate": "2024-04-09",
+    "cveIds": [
+      "CVE-2024-43809"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-43809",
+    "patchLagDays": 16,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2025-29555",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2025-29555",
+    "cvss": 6.9,
+    "discoveredDate": "2025-01-09",
+    "patchedDate": "2025-02-08",
+    "cveIds": [
+      "CVE-2025-29555"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-29555",
+    "patchLagDays": 30,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2025-18970",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2025-18970",
+    "cvss": 5.5,
+    "discoveredDate": "2025-10-14",
+    "patchedDate": "2025-12-23",
+    "cveIds": [
+      "CVE-2025-18970"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-18970",
+    "patchLagDays": 70,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-93511",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2021-93511",
+    "cvss": 9.1,
+    "discoveredDate": "2021-09-22",
+    "patchedDate": "2022-02-02",
+    "cveIds": [
+      "CVE-2021-93511"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-93511",
+    "patchLagDays": 133,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2020-38163",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2020-38163",
+    "cvss": 4.5,
+    "discoveredDate": "2020-11-07",
+    "patchedDate": "2021-01-16",
+    "cveIds": [
+      "CVE-2020-38163"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-38163",
+    "patchLagDays": 70,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-64747",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2024-64747",
+    "cvss": 6.3,
+    "discoveredDate": "2024-08-17",
+    "patchedDate": "2024-08-28",
+    "cveIds": [
+      "CVE-2024-64747"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-64747",
+    "patchLagDays": 11,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2022-49039",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2022-49039",
+    "cvss": 9.9,
+    "discoveredDate": "2022-02-05",
+    "patchedDate": "2022-05-04",
+    "cveIds": [
+      "CVE-2022-49039"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-49039",
+    "patchLagDays": 88,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2025-70630",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2025-70630",
+    "cvss": 8.6,
+    "discoveredDate": "2025-11-19",
+    "cveIds": [
+      "CVE-2025-70630"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-70630",
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2025-79541",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2025-79541",
+    "discoveredDate": "2025-12-09",
+    "patchedDate": "2025-12-26",
+    "cveIds": [
+      "CVE-2025-79541"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-79541",
+    "patchLagDays": 17
+  },
+  {
+    "id": "CVE-2020-51139",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2020-51139",
+    "cvss": 7.9,
+    "discoveredDate": "2020-11-05",
+    "patchedDate": "2020-11-15",
+    "cveIds": [
+      "CVE-2020-51139"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-51139",
+    "patchLagDays": 10,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2021-43724",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2021-43724",
+    "cvss": 3.7,
+    "discoveredDate": "2021-11-02",
+    "patchedDate": "2022-01-09",
+    "cveIds": [
+      "CVE-2021-43724"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-43724",
+    "patchLagDays": 68,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2026-37411",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2026-37411",
+    "discoveredDate": "2026-03-18",
+    "patchedDate": "2026-04-22",
+    "cveIds": [
+      "CVE-2026-37411"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-37411",
+    "patchLagDays": 35
+  },
+  {
+    "id": "CVE-2022-47307",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2022-47307",
+    "cvss": 6.2,
+    "discoveredDate": "2022-01-05",
+    "cveIds": [
+      "CVE-2022-47307"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-47307",
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2022-39354",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2022-39354",
+    "discoveredDate": "2022-10-24",
+    "patchedDate": "2022-11-25",
+    "cveIds": [
+      "CVE-2022-39354"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-39354",
+    "patchLagDays": 32
+  },
+  {
+    "id": "CVE-2020-43391",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2020-43391",
+    "cvss": 6.2,
+    "discoveredDate": "2020-05-11",
+    "patchedDate": "2020-10-31",
+    "cveIds": [
+      "CVE-2020-43391"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-43391",
+    "patchLagDays": 173,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-23339",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iOS — CVE-2020-23339",
+    "cvss": 5.6,
+    "discoveredDate": "2020-10-12",
+    "patchedDate": "2021-02-01",
+    "cveIds": [
+      "CVE-2020-23339"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-23339",
+    "patchLagDays": 112,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-48621",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2020-48621",
+    "cvss": 1.7,
+    "discoveredDate": "2020-12-01",
+    "patchedDate": "2021-02-20",
+    "cveIds": [
+      "CVE-2020-48621"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-48621",
+    "patchLagDays": 81,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-37920",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2024-37920",
+    "cvss": 1,
+    "discoveredDate": "2024-11-10",
+    "patchedDate": "2025-01-29",
+    "cveIds": [
+      "CVE-2024-37920"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-37920",
+    "patchLagDays": 80,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-81636",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2024-81636",
+    "cvss": 7.2,
+    "discoveredDate": "2024-11-15",
+    "patchedDate": "2025-01-30",
+    "cveIds": [
+      "CVE-2024-81636"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-81636",
+    "patchLagDays": 76,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2021-28732",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2021-28732",
+    "cvss": 1.2,
+    "discoveredDate": "2021-09-04",
+    "patchedDate": "2021-12-20",
+    "cveIds": [
+      "CVE-2021-28732"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-28732",
+    "patchLagDays": 107,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-68205",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iOS — CVE-2025-68205",
+    "cvss": 0.1,
+    "discoveredDate": "2025-11-27",
+    "cveIds": [
+      "CVE-2025-68205"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-68205",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2026-93597",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2026-93597",
+    "cvss": 5.9,
+    "discoveredDate": "2026-04-08",
+    "patchedDate": "2026-05-27",
+    "cveIds": [
+      "CVE-2026-93597"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-93597",
+    "patchLagDays": 49,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2023-46323",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-46323",
+    "cvss": 3.6,
+    "discoveredDate": "2023-11-27",
+    "cveIds": [
+      "CVE-2023-46323"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-46323",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2021-81723",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iOS — CVE-2021-81723",
+    "cvss": 4.9,
+    "discoveredDate": "2021-01-30",
+    "patchedDate": "2021-07-02",
+    "cveIds": [
+      "CVE-2021-81723"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-81723",
+    "patchLagDays": 153,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2023-12452",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-12452",
+    "cvss": 7,
+    "discoveredDate": "2023-01-20",
+    "patchedDate": "2023-03-05",
+    "cveIds": [
+      "CVE-2023-12452"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-12452",
+    "patchLagDays": 44,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2025-41379",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2025-41379",
+    "cvss": 9.5,
+    "discoveredDate": "2025-11-12",
+    "patchedDate": "2025-12-24",
+    "cveIds": [
+      "CVE-2025-41379"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-41379",
+    "patchLagDays": 42,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2022-26653",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2022-26653",
+    "discoveredDate": "2022-11-11",
+    "patchedDate": "2022-12-05",
+    "cveIds": [
+      "CVE-2022-26653"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-26653",
+    "patchLagDays": 24
+  },
+  {
+    "id": "CVE-2021-48016",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-48016",
+    "discoveredDate": "2021-08-21",
+    "patchedDate": "2021-11-03",
+    "cveIds": [
+      "CVE-2021-48016"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-48016",
+    "patchLagDays": 74
+  },
+  {
+    "id": "CVE-2026-30070",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2026-30070",
+    "discoveredDate": "2026-03-24",
+    "patchedDate": "2026-04-02",
+    "cveIds": [
+      "CVE-2026-30070"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-30070",
+    "patchLagDays": 9
+  },
+  {
+    "id": "CVE-2020-64906",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2020-64906",
+    "discoveredDate": "2020-08-25",
+    "patchedDate": "2020-12-07",
+    "cveIds": [
+      "CVE-2020-64906"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-64906",
+    "patchLagDays": 104
+  },
+  {
+    "id": "CVE-2024-98304",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2024-98304",
+    "cvss": 3.4,
+    "discoveredDate": "2024-04-14",
+    "patchedDate": "2024-05-07",
+    "cveIds": [
+      "CVE-2024-98304"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-98304",
+    "patchLagDays": 23,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-61425",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iOS — CVE-2023-61425",
+    "discoveredDate": "2023-02-21",
+    "patchedDate": "2023-04-20",
+    "cveIds": [
+      "CVE-2023-61425"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-61425",
+    "patchLagDays": 58
+  },
+  {
+    "id": "CVE-2021-11445",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-11445",
+    "cvss": 9.9,
+    "discoveredDate": "2021-08-02",
+    "cveIds": [
+      "CVE-2021-11445"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-11445",
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2025-79924",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2025-79924",
+    "cvss": 6.1,
+    "discoveredDate": "2025-11-02",
+    "patchedDate": "2025-12-03",
+    "cveIds": [
+      "CVE-2025-79924"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-79924",
+    "patchLagDays": 31,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-78152",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2020-78152",
+    "cvss": 5.8,
+    "discoveredDate": "2020-12-27",
+    "patchedDate": "2021-05-09",
+    "cveIds": [
+      "CVE-2020-78152"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-78152",
+    "patchLagDays": 133,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-37334",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2024-37334",
+    "cvss": 4,
+    "discoveredDate": "2024-12-26",
+    "patchedDate": "2025-03-19",
+    "cveIds": [
+      "CVE-2024-37334"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-37334",
+    "patchLagDays": 83,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2025-28538",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2025-28538",
+    "cvss": 5.2,
+    "discoveredDate": "2025-08-19",
+    "cveIds": [
+      "CVE-2025-28538"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-28538",
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-62699",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2024-62699",
+    "discoveredDate": "2024-12-09",
+    "cveIds": [
+      "CVE-2024-62699"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-62699"
+  },
+  {
+    "id": "CVE-2023-59349",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2023-59349",
+    "discoveredDate": "2023-09-20",
+    "patchedDate": "2023-10-14",
+    "cveIds": [
+      "CVE-2023-59349"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-59349",
+    "patchLagDays": 24
+  },
+  {
+    "id": "CVE-2020-40557",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2020-40557",
+    "cvss": 4.3,
+    "discoveredDate": "2020-11-29",
+    "patchedDate": "2021-04-03",
+    "cveIds": [
+      "CVE-2020-40557"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-40557",
+    "patchLagDays": 125,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-86305",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iOS — CVE-2024-86305",
+    "cvss": 2.1,
+    "discoveredDate": "2024-01-27",
+    "patchedDate": "2024-03-24",
+    "cveIds": [
+      "CVE-2024-86305"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-86305",
+    "patchLagDays": 57,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-27109",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2025-27109",
+    "discoveredDate": "2025-06-21",
+    "patchedDate": "2025-07-30",
+    "cveIds": [
+      "CVE-2025-27109"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-27109",
+    "patchLagDays": 39
+  },
+  {
+    "id": "CVE-2021-50626",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2021-50626",
+    "cvss": 3,
+    "discoveredDate": "2021-04-11",
+    "patchedDate": "2021-05-10",
+    "cveIds": [
+      "CVE-2021-50626"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-50626",
+    "patchLagDays": 29,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-38702",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2024-38702",
+    "cvss": 8.5,
+    "discoveredDate": "2024-09-22",
+    "cveIds": [
+      "CVE-2024-38702"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-38702",
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2020-72179",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2020-72179",
+    "cvss": 8.1,
+    "discoveredDate": "2020-02-02",
+    "cveIds": [
+      "CVE-2020-72179"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-72179",
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2020-25334",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in watchOS — CVE-2020-25334",
+    "discoveredDate": "2020-09-10",
+    "patchedDate": "2020-09-22",
+    "cveIds": [
+      "CVE-2020-25334"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-25334",
+    "patchLagDays": 12
+  },
+  {
+    "id": "CVE-2020-33617",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2020-33617",
+    "cvss": 0.4,
+    "discoveredDate": "2020-02-22",
+    "patchedDate": "2020-07-24",
+    "cveIds": [
+      "CVE-2020-33617"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-33617",
+    "patchLagDays": 153,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2021-56848",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2021-56848",
+    "discoveredDate": "2021-02-04",
+    "patchedDate": "2021-03-30",
+    "cveIds": [
+      "CVE-2021-56848"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-56848",
+    "patchLagDays": 54
+  },
+  {
+    "id": "CVE-2020-63564",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2020-63564",
+    "discoveredDate": "2020-03-22",
+    "patchedDate": "2020-04-30",
+    "cveIds": [
+      "CVE-2020-63564"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-63564",
+    "patchLagDays": 39
+  },
+  {
+    "id": "CVE-2023-29228",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2023-29228",
+    "cvss": 9.6,
+    "discoveredDate": "2023-03-10",
+    "patchedDate": "2023-07-20",
+    "cveIds": [
+      "CVE-2023-29228"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-29228",
+    "patchLagDays": 132,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2021-77624",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2021-77624",
+    "cvss": 1.7,
+    "discoveredDate": "2021-08-21",
+    "patchedDate": "2021-12-25",
+    "cveIds": [
+      "CVE-2021-77624"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-77624",
+    "patchLagDays": 126,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-93095",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-93095",
+    "cvss": 6.9,
+    "discoveredDate": "2023-05-09",
+    "cveIds": [
+      "CVE-2023-93095"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-93095",
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-85983",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2021-85983",
+    "cvss": 4.7,
+    "discoveredDate": "2021-09-17",
+    "patchedDate": "2021-10-17",
+    "cveIds": [
+      "CVE-2021-85983"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-85983",
+    "patchLagDays": 30,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2025-26037",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2025-26037",
+    "cvss": 7.1,
+    "discoveredDate": "2025-11-24",
+    "patchedDate": "2026-02-05",
+    "cveIds": [
+      "CVE-2025-26037"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-26037",
+    "patchLagDays": 73,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2023-24218",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2023-24218",
+    "discoveredDate": "2023-01-26",
+    "patchedDate": "2023-02-18",
+    "cveIds": [
+      "CVE-2023-24218"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-24218",
+    "patchLagDays": 23
+  },
+  {
+    "id": "CVE-2026-91050",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2026-91050",
+    "discoveredDate": "2026-05-29",
+    "patchedDate": "2026-07-03",
+    "cveIds": [
+      "CVE-2026-91050"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-91050",
+    "patchLagDays": 35
+  },
+  {
+    "id": "CVE-2024-30926",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2024-30926",
+    "discoveredDate": "2024-08-15",
+    "patchedDate": "2024-10-12",
+    "cveIds": [
+      "CVE-2024-30926"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-30926",
+    "patchLagDays": 58
+  },
+  {
+    "id": "CVE-2026-66826",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2026-66826",
+    "cvss": 4.7,
+    "discoveredDate": "2026-03-04",
+    "patchedDate": "2026-04-27",
+    "cveIds": [
+      "CVE-2026-66826"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-66826",
+    "patchLagDays": 54,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2023-41674",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-41674",
+    "discoveredDate": "2023-08-10",
+    "patchedDate": "2023-12-14",
+    "cveIds": [
+      "CVE-2023-41674"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-41674",
+    "patchLagDays": 126
+  },
+  {
+    "id": "CVE-2026-71028",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2026-71028",
+    "discoveredDate": "2026-05-24",
+    "patchedDate": "2026-08-02",
+    "cveIds": [
+      "CVE-2026-71028"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-71028",
+    "patchLagDays": 70
+  },
+  {
+    "id": "CVE-2020-22533",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2020-22533",
+    "discoveredDate": "2020-04-29",
+    "cveIds": [
+      "CVE-2020-22533"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-22533"
+  },
+  {
+    "id": "CVE-2026-20010",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2026-20010",
+    "cvss": 9.6,
+    "discoveredDate": "2026-01-09",
+    "patchedDate": "2026-01-22",
+    "cveIds": [
+      "CVE-2026-20010"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-20010",
+    "patchLagDays": 13,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2024-69952",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2024-69952",
+    "discoveredDate": "2024-03-31",
+    "patchedDate": "2024-05-20",
+    "cveIds": [
+      "CVE-2024-69952"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-69952",
+    "patchLagDays": 50
+  },
+  {
+    "id": "CVE-2022-43460",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2022-43460",
+    "discoveredDate": "2022-12-14",
+    "patchedDate": "2023-04-30",
+    "cveIds": [
+      "CVE-2022-43460"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-43460",
+    "patchLagDays": 137
+  },
+  {
+    "id": "CVE-2022-85828",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2022-85828",
+    "discoveredDate": "2022-10-04",
+    "patchedDate": "2023-01-15",
+    "cveIds": [
+      "CVE-2022-85828"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-85828",
+    "patchLagDays": 103
+  },
+  {
+    "id": "CVE-2025-10579",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2025-10579",
+    "cvss": 9.8,
+    "discoveredDate": "2025-01-08",
+    "patchedDate": "2025-01-12",
+    "cveIds": [
+      "CVE-2025-10579"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-10579",
+    "patchLagDays": 4,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2022-29201",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2022-29201",
+    "cvss": 9.6,
+    "discoveredDate": "2022-04-13",
+    "patchedDate": "2022-06-11",
+    "cveIds": [
+      "CVE-2022-29201"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-29201",
+    "patchLagDays": 59,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2025-19719",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2025-19719",
+    "cvss": 7.8,
+    "discoveredDate": "2025-03-30",
+    "patchedDate": "2025-05-03",
+    "cveIds": [
+      "CVE-2025-19719"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-19719",
+    "patchLagDays": 34,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2020-38255",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in Safari — CVE-2020-38255",
+    "discoveredDate": "2020-04-21",
+    "patchedDate": "2020-08-08",
+    "cveIds": [
+      "CVE-2020-38255"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-38255",
+    "patchLagDays": 109
+  },
+  {
+    "id": "CVE-2025-70148",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2025-70148",
+    "discoveredDate": "2025-07-29",
+    "patchedDate": "2025-08-12",
+    "cveIds": [
+      "CVE-2025-70148"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-70148",
+    "patchLagDays": 14
+  },
+  {
+    "id": "CVE-2025-77098",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2025-77098",
+    "cvss": 1.3,
+    "discoveredDate": "2025-03-09",
+    "patchedDate": "2025-03-14",
+    "cveIds": [
+      "CVE-2025-77098"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-77098",
+    "patchLagDays": 5,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-67920",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2022-67920",
+    "cvss": 3.9,
+    "discoveredDate": "2022-05-23",
+    "patchedDate": "2022-07-09",
+    "cveIds": [
+      "CVE-2022-67920"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-67920",
+    "patchLagDays": 47,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-54812",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2020-54812",
+    "discoveredDate": "2020-02-24",
+    "patchedDate": "2020-05-16",
+    "cveIds": [
+      "CVE-2020-54812"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-54812",
+    "patchLagDays": 82
+  },
+  {
+    "id": "CVE-2021-29881",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2021-29881",
+    "discoveredDate": "2021-04-03",
+    "patchedDate": "2021-05-17",
+    "cveIds": [
+      "CVE-2021-29881"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-29881",
+    "patchLagDays": 44
+  },
+  {
+    "id": "CVE-2020-53566",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2020-53566",
+    "cvss": 4,
+    "discoveredDate": "2020-05-26",
+    "patchedDate": "2020-06-19",
+    "cveIds": [
+      "CVE-2020-53566"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-53566",
+    "patchLagDays": 24,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2023-43407",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2023-43407",
+    "cvss": 4.3,
+    "discoveredDate": "2023-04-18",
+    "patchedDate": "2023-06-02",
+    "cveIds": [
+      "CVE-2023-43407"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-43407",
+    "patchLagDays": 45,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-65259",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2021-65259",
+    "discoveredDate": "2021-04-17",
+    "patchedDate": "2021-07-23",
+    "cveIds": [
+      "CVE-2021-65259"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-65259",
+    "patchLagDays": 97
+  },
+  {
+    "id": "CVE-2024-72877",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2024-72877",
+    "cvss": 0.8,
+    "discoveredDate": "2024-07-19",
+    "patchedDate": "2024-09-07",
+    "cveIds": [
+      "CVE-2024-72877"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-72877",
+    "patchLagDays": 50,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-70099",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in Safari — CVE-2022-70099",
+    "cvss": 5.8,
+    "discoveredDate": "2022-02-09",
+    "patchedDate": "2022-06-09",
+    "cveIds": [
+      "CVE-2022-70099"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-70099",
+    "patchLagDays": 120,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-52421",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in Safari — CVE-2020-52421",
+    "cvss": 9.1,
+    "discoveredDate": "2020-09-14",
+    "patchedDate": "2020-12-23",
+    "cveIds": [
+      "CVE-2020-52421"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-52421",
+    "patchLagDays": 100,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2021-99313",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2021-99313",
+    "cvss": 3,
+    "discoveredDate": "2021-01-06",
+    "patchedDate": "2021-01-27",
+    "cveIds": [
+      "CVE-2021-99313"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-99313",
+    "patchLagDays": 21,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-98884",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2020-98884",
+    "discoveredDate": "2020-10-22",
+    "patchedDate": "2021-01-22",
+    "cveIds": [
+      "CVE-2020-98884"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-98884",
+    "patchLagDays": 92
+  },
+  {
+    "id": "CVE-2024-30663",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2024-30663",
+    "cvss": 1.3,
+    "discoveredDate": "2024-09-20",
+    "patchedDate": "2024-12-17",
+    "cveIds": [
+      "CVE-2024-30663"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-30663",
+    "patchLagDays": 88,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-91475",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in macOS — CVE-2025-91475",
+    "discoveredDate": "2025-08-23",
+    "patchedDate": "2025-09-26",
+    "cveIds": [
+      "CVE-2025-91475"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-91475",
+    "patchLagDays": 34
+  },
+  {
+    "id": "CVE-2020-91219",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2020-91219",
+    "cvss": 3.6,
+    "discoveredDate": "2020-07-14",
+    "patchedDate": "2020-09-22",
+    "cveIds": [
+      "CVE-2020-91219"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-91219",
+    "patchLagDays": 70,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-42178",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-42178",
+    "cvss": 5.7,
+    "discoveredDate": "2023-01-06",
+    "patchedDate": "2023-06-15",
+    "cveIds": [
+      "CVE-2023-42178"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-42178",
+    "patchLagDays": 160,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-66683",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2020-66683",
+    "cvss": 7.1,
+    "discoveredDate": "2020-03-24",
+    "patchedDate": "2020-08-10",
+    "cveIds": [
+      "CVE-2020-66683"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-66683",
+    "patchLagDays": 139,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2023-61261",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2023-61261",
+    "discoveredDate": "2023-10-11",
+    "cveIds": [
+      "CVE-2023-61261"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-61261"
+  },
+  {
+    "id": "CVE-2022-26655",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2022-26655",
+    "cvss": 5.5,
+    "discoveredDate": "2022-12-18",
+    "patchedDate": "2023-05-22",
+    "cveIds": [
+      "CVE-2022-26655"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-26655",
+    "patchLagDays": 155,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2022-14213",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2022-14213",
+    "cvss": 7.9,
+    "discoveredDate": "2022-10-20",
+    "patchedDate": "2023-02-26",
+    "cveIds": [
+      "CVE-2022-14213"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-14213",
+    "patchLagDays": 129,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2022-43549",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2022-43549",
+    "cvss": 1.5,
+    "discoveredDate": "2022-12-08",
+    "patchedDate": "2023-01-27",
+    "cveIds": [
+      "CVE-2022-43549"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-43549",
+    "patchLagDays": 50,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-38311",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in Safari — CVE-2020-38311",
+    "cvss": 3.7,
+    "discoveredDate": "2020-01-12",
+    "patchedDate": "2020-01-29",
+    "cveIds": [
+      "CVE-2020-38311"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-38311",
+    "patchLagDays": 17,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-43935",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in watchOS — CVE-2025-43935",
+    "discoveredDate": "2025-03-16",
+    "patchedDate": "2025-04-24",
+    "cveIds": [
+      "CVE-2025-43935"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-43935",
+    "patchLagDays": 39
+  },
+  {
+    "id": "CVE-2020-93726",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2020-93726",
+    "discoveredDate": "2020-05-27",
+    "patchedDate": "2020-10-11",
+    "cveIds": [
+      "CVE-2020-93726"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-93726",
+    "patchLagDays": 137
+  },
+  {
+    "id": "CVE-2022-74256",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2022-74256",
+    "discoveredDate": "2022-01-18",
+    "cveIds": [
+      "CVE-2022-74256"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-74256"
+  },
+  {
+    "id": "CVE-2022-63419",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2022-63419",
+    "cvss": 1.7,
+    "discoveredDate": "2022-08-19",
+    "patchedDate": "2022-08-26",
+    "cveIds": [
+      "CVE-2022-63419"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-63419",
+    "patchLagDays": 7,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-87390",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2022-87390",
+    "discoveredDate": "2022-11-04",
+    "patchedDate": "2023-01-11",
+    "cveIds": [
+      "CVE-2022-87390"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-87390",
+    "patchLagDays": 68
+  },
+  {
+    "id": "CVE-2023-48014",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2023-48014",
+    "cvss": 9.1,
+    "discoveredDate": "2023-03-07",
+    "patchedDate": "2023-05-22",
+    "cveIds": [
+      "CVE-2023-48014"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-48014",
+    "patchLagDays": 76,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2022-79746",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2022-79746",
+    "cvss": 6.7,
+    "discoveredDate": "2022-10-28",
+    "patchedDate": "2022-12-21",
+    "cveIds": [
+      "CVE-2022-79746"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-79746",
+    "patchLagDays": 54,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-14687",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2021-14687",
+    "discoveredDate": "2021-04-16",
+    "patchedDate": "2021-07-22",
+    "cveIds": [
+      "CVE-2021-14687"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-14687",
+    "patchLagDays": 97
+  },
+  {
+    "id": "CVE-2020-27486",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2020-27486",
+    "cvss": 8.8,
+    "discoveredDate": "2020-06-04",
+    "patchedDate": "2020-06-22",
+    "cveIds": [
+      "CVE-2020-27486"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-27486",
+    "patchLagDays": 18,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2023-40864",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-40864",
+    "cvss": 2.9,
+    "discoveredDate": "2023-02-20",
+    "cveIds": [
+      "CVE-2023-40864"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-40864",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-80402",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2024-80402",
+    "discoveredDate": "2024-02-14",
+    "patchedDate": "2024-03-17",
+    "cveIds": [
+      "CVE-2024-80402"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-80402",
+    "patchLagDays": 32
+  },
+  {
+    "id": "CVE-2022-72844",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in watchOS — CVE-2022-72844",
+    "cvss": 1.8,
+    "discoveredDate": "2022-04-19",
+    "cveIds": [
+      "CVE-2022-72844"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-72844",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-53029",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-53029",
+    "cvss": 2,
+    "discoveredDate": "2023-10-26",
+    "patchedDate": "2024-03-17",
+    "cveIds": [
+      "CVE-2023-53029"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-53029",
+    "patchLagDays": 143,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-46869",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2022-46869",
+    "discoveredDate": "2022-02-18",
+    "patchedDate": "2022-05-10",
+    "cveIds": [
+      "CVE-2022-46869"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-46869",
+    "patchLagDays": 81
+  },
+  {
+    "id": "CVE-2026-61550",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2026-61550",
+    "cvss": 2,
+    "discoveredDate": "2026-02-24",
+    "patchedDate": "2026-05-23",
+    "cveIds": [
+      "CVE-2026-61550"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-61550",
+    "patchLagDays": 88,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-99523",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2020-99523",
+    "cvss": 1.8,
+    "discoveredDate": "2020-06-26",
+    "patchedDate": "2020-10-24",
+    "cveIds": [
+      "CVE-2020-99523"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-99523",
+    "patchLagDays": 120,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-35395",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2020-35395",
+    "cvss": 3.9,
+    "discoveredDate": "2020-06-11",
+    "patchedDate": "2020-06-26",
+    "cveIds": [
+      "CVE-2020-35395"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-35395",
+    "patchLagDays": 15,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2021-54425",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in Safari — CVE-2021-54425",
+    "cvss": 2.2,
+    "discoveredDate": "2021-12-31",
+    "patchedDate": "2022-04-11",
+    "cveIds": [
+      "CVE-2021-54425"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-54425",
+    "patchLagDays": 101,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-40180",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in macOS — CVE-2022-40180",
+    "discoveredDate": "2022-08-01",
+    "patchedDate": "2022-11-28",
+    "cveIds": [
+      "CVE-2022-40180"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-40180",
+    "patchLagDays": 119
+  },
+  {
+    "id": "CVE-2025-60387",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in watchOS — CVE-2025-60387",
+    "discoveredDate": "2025-01-23",
+    "patchedDate": "2025-04-17",
+    "cveIds": [
+      "CVE-2025-60387"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-60387",
+    "patchLagDays": 84
+  },
+  {
+    "id": "CVE-2025-15363",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2025-15363",
+    "cvss": 3.7,
+    "discoveredDate": "2025-01-21",
+    "cveIds": [
+      "CVE-2025-15363"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-15363",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-55883",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2023-55883",
+    "discoveredDate": "2023-01-21",
+    "cveIds": [
+      "CVE-2023-55883"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-55883"
+  },
+  {
+    "id": "CVE-2020-82829",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2020-82829",
+    "discoveredDate": "2020-07-09",
+    "patchedDate": "2020-12-17",
+    "cveIds": [
+      "CVE-2020-82829"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-82829",
+    "patchLagDays": 161
+  },
+  {
+    "id": "CVE-2020-49515",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2020-49515",
+    "discoveredDate": "2020-01-14",
+    "patchedDate": "2020-02-09",
+    "cveIds": [
+      "CVE-2020-49515"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-49515",
+    "patchLagDays": 26
+  },
+  {
+    "id": "CVE-2026-90778",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2026-90778",
+    "cvss": 9.1,
+    "discoveredDate": "2026-03-13",
+    "patchedDate": "2026-04-03",
+    "cveIds": [
+      "CVE-2026-90778"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-90778",
+    "patchLagDays": 21,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2023-92076",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2023-92076",
+    "discoveredDate": "2023-12-11",
+    "patchedDate": "2024-03-28",
+    "cveIds": [
+      "CVE-2023-92076"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-92076",
+    "patchLagDays": 108
+  },
+  {
+    "id": "CVE-2024-81051",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2024-81051",
+    "cvss": 2.1,
+    "discoveredDate": "2024-04-19",
+    "patchedDate": "2024-06-20",
+    "cveIds": [
+      "CVE-2024-81051"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-81051",
+    "patchLagDays": 62,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2020-67867",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2020-67867",
+    "cvss": 6.8,
+    "discoveredDate": "2020-12-11",
+    "patchedDate": "2021-04-18",
+    "cveIds": [
+      "CVE-2020-67867"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-67867",
+    "patchLagDays": 128,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2025-87745",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in macOS — CVE-2025-87745",
+    "discoveredDate": "2025-05-25",
+    "patchedDate": "2025-05-30",
+    "cveIds": [
+      "CVE-2025-87745"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-87745",
+    "patchLagDays": 5
+  },
+  {
+    "id": "CVE-2026-61916",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2026-61916",
+    "cvss": 4.6,
+    "discoveredDate": "2026-05-19",
+    "patchedDate": "2026-07-14",
+    "cveIds": [
+      "CVE-2026-61916"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-61916",
+    "patchLagDays": 56,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-30347",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in macOS — CVE-2021-30347",
+    "cvss": 5.5,
+    "discoveredDate": "2021-05-30",
+    "patchedDate": "2021-10-22",
+    "cveIds": [
+      "CVE-2021-30347"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-30347",
+    "patchLagDays": 145,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-39982",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2024-39982",
+    "cvss": 3,
+    "discoveredDate": "2024-07-07",
+    "patchedDate": "2024-08-24",
+    "cveIds": [
+      "CVE-2024-39982"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-39982",
+    "patchLagDays": 48,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-11734",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2025-11734",
+    "cvss": 2.9,
+    "discoveredDate": "2025-11-20",
+    "patchedDate": "2026-01-12",
+    "cveIds": [
+      "CVE-2025-11734"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-11734",
+    "patchLagDays": 53,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-93721",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2025-93721",
+    "discoveredDate": "2025-04-25",
+    "patchedDate": "2025-05-23",
+    "cveIds": [
+      "CVE-2025-93721"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-93721",
+    "patchLagDays": 28
+  },
+  {
+    "id": "CVE-2021-91777",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-91777",
+    "cvss": 1.3,
+    "discoveredDate": "2021-05-29",
+    "patchedDate": "2021-07-21",
+    "cveIds": [
+      "CVE-2021-91777"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-91777",
+    "patchLagDays": 53,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-99259",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2023-99259",
+    "discoveredDate": "2023-03-31",
+    "patchedDate": "2023-07-18",
+    "cveIds": [
+      "CVE-2023-99259"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-99259",
+    "patchLagDays": 109
+  },
+  {
+    "id": "CVE-2022-60366",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iOS — CVE-2022-60366",
+    "cvss": 4.4,
+    "discoveredDate": "2022-04-03",
+    "patchedDate": "2022-07-30",
+    "cveIds": [
+      "CVE-2022-60366"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-60366",
+    "patchLagDays": 118,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-53507",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2020-53507",
+    "discoveredDate": "2020-08-24",
+    "patchedDate": "2021-01-28",
+    "cveIds": [
+      "CVE-2020-53507"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-53507",
+    "patchLagDays": 157
+  },
+  {
+    "id": "CVE-2026-17218",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2026-17218",
+    "discoveredDate": "2026-01-07",
+    "patchedDate": "2026-03-29",
+    "cveIds": [
+      "CVE-2026-17218"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-17218",
+    "patchLagDays": 81
+  },
+  {
+    "id": "CVE-2022-87246",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2022-87246",
+    "cvss": 3.5,
+    "discoveredDate": "2022-04-01",
+    "cveIds": [
+      "CVE-2022-87246"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-87246",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2026-71968",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2026-71968",
+    "cvss": 9.3,
+    "discoveredDate": "2026-06-24",
+    "patchedDate": "2026-07-21",
+    "cveIds": [
+      "CVE-2026-71968"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-71968",
+    "patchLagDays": 27,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2026-45513",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2026-45513",
+    "cvss": 0.9,
+    "discoveredDate": "2026-02-12",
+    "cveIds": [
+      "CVE-2026-45513"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-45513",
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2021-39657",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2021-39657",
+    "discoveredDate": "2021-08-25",
+    "patchedDate": "2021-11-27",
+    "cveIds": [
+      "CVE-2021-39657"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-39657",
+    "patchLagDays": 94
+  },
+  {
+    "id": "CVE-2021-38938",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-38938",
+    "discoveredDate": "2021-01-31",
+    "patchedDate": "2021-02-27",
+    "cveIds": [
+      "CVE-2021-38938"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-38938",
+    "patchLagDays": 27
+  },
+  {
+    "id": "CVE-2022-99734",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2022-99734",
+    "cvss": 8.5,
+    "discoveredDate": "2022-05-08",
+    "patchedDate": "2022-08-22",
+    "cveIds": [
+      "CVE-2022-99734"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-99734",
+    "patchLagDays": 106,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2024-94922",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in iOS — CVE-2024-94922",
+    "cvss": 4.1,
+    "discoveredDate": "2024-08-20",
+    "patchedDate": "2024-09-10",
+    "cveIds": [
+      "CVE-2024-94922"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-94922",
+    "patchLagDays": 21,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-52478",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2021-52478",
+    "discoveredDate": "2021-09-02",
+    "patchedDate": "2022-02-24",
+    "cveIds": [
+      "CVE-2021-52478"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-52478",
+    "patchLagDays": 175
+  },
+  {
+    "id": "CVE-2022-66897",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2022-66897",
+    "discoveredDate": "2022-09-07",
+    "patchedDate": "2022-11-07",
+    "cveIds": [
+      "CVE-2022-66897"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-66897",
+    "patchLagDays": 61
+  },
+  {
+    "id": "CVE-2020-97950",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in macOS — CVE-2020-97950",
+    "cvss": 1.6,
+    "discoveredDate": "2020-03-19",
+    "patchedDate": "2020-06-10",
+    "cveIds": [
+      "CVE-2020-97950"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-97950",
+    "patchLagDays": 83,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2024-28719",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2024-28719",
+    "cvss": 6.1,
+    "discoveredDate": "2024-10-02",
+    "patchedDate": "2024-10-20",
+    "cveIds": [
+      "CVE-2024-28719"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-28719",
+    "patchLagDays": 18,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-91787",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in macOS — CVE-2021-91787",
+    "cvss": 7,
+    "discoveredDate": "2021-07-04",
+    "patchedDate": "2021-07-28",
+    "cveIds": [
+      "CVE-2021-91787"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-91787",
+    "patchLagDays": 24,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2020-21433",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2020-21433",
+    "cvss": 5.9,
+    "discoveredDate": "2020-03-14",
+    "patchedDate": "2020-04-04",
+    "cveIds": [
+      "CVE-2020-21433"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-21433",
+    "patchLagDays": 21,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2024-67126",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in watchOS — CVE-2024-67126",
+    "discoveredDate": "2024-03-19",
+    "cveIds": [
+      "CVE-2024-67126"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-67126"
+  },
+  {
+    "id": "CVE-2021-71306",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2021-71306",
+    "discoveredDate": "2021-01-15",
+    "patchedDate": "2021-05-05",
+    "cveIds": [
+      "CVE-2021-71306"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-71306",
+    "patchLagDays": 110
+  },
+  {
+    "id": "CVE-2026-75061",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2026-75061",
+    "discoveredDate": "2026-03-31",
+    "patchedDate": "2026-04-26",
+    "cveIds": [
+      "CVE-2026-75061"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2026-75061",
+    "patchLagDays": 26
+  },
+  {
+    "id": "CVE-2023-99313",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iPadOS — CVE-2023-99313",
+    "discoveredDate": "2023-12-26",
+    "patchedDate": "2024-04-29",
+    "cveIds": [
+      "CVE-2023-99313"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-99313",
+    "patchLagDays": 125
+  },
+  {
+    "id": "CVE-2025-58812",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in Safari — CVE-2025-58812",
+    "cvss": 1.6,
+    "discoveredDate": "2025-04-19",
+    "patchedDate": "2025-06-07",
+    "cveIds": [
+      "CVE-2025-58812"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-58812",
+    "patchLagDays": 49,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2025-98329",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2025-98329",
+    "cvss": 7.8,
+    "discoveredDate": "2025-03-11",
+    "patchedDate": "2025-03-17",
+    "cveIds": [
+      "CVE-2025-98329"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2025-98329",
+    "patchLagDays": 6,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2020-34561",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in watchOS — CVE-2020-34561",
+    "cvss": 8.5,
+    "discoveredDate": "2020-10-18",
+    "patchedDate": "2021-04-13",
+    "cveIds": [
+      "CVE-2020-34561"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-34561",
+    "patchLagDays": 177,
+    "severity": "high"
+  },
+  {
+    "id": "CVE-2023-14610",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in iOS — CVE-2023-14610",
+    "cvss": 3.5,
+    "discoveredDate": "2023-09-08",
+    "patchedDate": "2024-01-02",
+    "cveIds": [
+      "CVE-2023-14610"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-14610",
+    "patchLagDays": 116,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-56439",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in macOS — CVE-2023-56439",
+    "cvss": 2.1,
+    "discoveredDate": "2023-02-15",
+    "patchedDate": "2023-08-03",
+    "cveIds": [
+      "CVE-2023-56439"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-56439",
+    "patchLagDays": 169,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2022-38307",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in macOS — CVE-2022-38307",
+    "cvss": 9.1,
+    "discoveredDate": "2022-01-31",
+    "patchedDate": "2022-02-16",
+    "cveIds": [
+      "CVE-2022-38307"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2022-38307",
+    "patchLagDays": 16,
+    "severity": "critical"
+  },
+  {
+    "id": "CVE-2020-39530",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "Safari",
+    "title": "Vulnerability in iPadOS — CVE-2020-39530",
+    "cvss": 4.7,
+    "discoveredDate": "2020-11-20",
+    "patchedDate": "2021-03-09",
+    "cveIds": [
+      "CVE-2020-39530"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-39530",
+    "patchLagDays": 109,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2021-18119",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iOS",
+    "title": "Vulnerability in iPadOS — CVE-2021-18119",
+    "discoveredDate": "2021-08-01",
+    "cveIds": [
+      "CVE-2021-18119"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2021-18119"
+  },
+  {
+    "id": "CVE-2024-84973",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in iOS — CVE-2024-84973",
+    "cvss": 6.2,
+    "discoveredDate": "2024-08-21",
+    "patchedDate": "2024-11-02",
+    "cveIds": [
+      "CVE-2024-84973"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-84973",
+    "patchLagDays": 73,
+    "severity": "medium"
+  },
+  {
+    "id": "CVE-2020-91391",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "macOS",
+    "title": "Vulnerability in watchOS — CVE-2020-91391",
+    "cvss": 0.7,
+    "discoveredDate": "2020-03-12",
+    "patchedDate": "2020-04-10",
+    "cveIds": [
+      "CVE-2020-91391"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2020-91391",
+    "patchLagDays": 29,
+    "severity": "low"
+  },
+  {
+    "id": "CVE-2023-88625",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "iPadOS",
+    "title": "Vulnerability in Safari — CVE-2023-88625",
+    "discoveredDate": "2023-11-23",
+    "cveIds": [
+      "CVE-2023-88625"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2023-88625"
+  },
+  {
+    "id": "CVE-2024-58540",
+    "source": "apple",
+    "manufacturer": "Apple",
+    "product": "watchOS",
+    "title": "Vulnerability in watchOS — CVE-2024-58540",
+    "cvss": 8.5,
+    "discoveredDate": "2024-07-19",
+    "patchedDate": "2024-10-09",
+    "cveIds": [
+      "CVE-2024-58540"
+    ],
+    "rawUrl": "https://example.com/apple/CVE-2024-58540",
+    "patchLagDays": 82,
+    "severity": "high"
+  }
+]

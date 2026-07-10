@@ -1,0 +1,119 @@
+---
+import DashboardLayout from '@/layouts/Dashboard.astro';
+---
+
+<DashboardLayout>
+  <article class="vt-about">
+    <h2>About VulnTrends</h2>
+
+    <p>
+      VulnTrends is an open-source project that tracks trends in vulnerability
+      patching across major software manufacturers. The dashboard visualises
+      vulnerabilities discovered, fixed, the time between discovery and patch,
+      and vulnerability backlogs — all over time, with the ability to filter
+      by manufacturer and switch between monthly and yearly granularity.
+    </p>
+
+    <h3>Methodology</h3>
+
+    <p>
+      Data is drawn from publicly available security advisories and
+      vulnerability databases. Each source is fetched, normalised to a common
+      schema, and aggregated into time-series data for visualisation.
+    </p>
+
+    <p>
+      Where multiple sources report the same vulnerability (identified by CVE
+      ID), vendor-specific advisory data is preferred over the NVD/CVE record,
+      as vendor advisories typically provide richer patch-timing information.
+    </p>
+
+    <h3>Data sources</h3>
+
+    <ul>
+      <li><strong>Mozilla</strong> — Mozilla Foundation Security Advisories (MFSA)</li>
+      <li><strong>Google</strong> — Chrome Releases blog and Project Zero</li>
+      <li><strong>Microsoft</strong> — Security Response Center (MSRC) CVRF API</li>
+      <li><strong>Apple</strong> — Security advisories (with NVD fallback)</li>
+      <li><strong>Project Zero</strong> — Issue tracker with disclosure timelines</li>
+      <li><strong>NVD/CVE</strong> — National Vulnerability Database (cross-vendor)</li>
+    </ul>
+
+    <h3>Limitations</h3>
+
+    <ul>
+      <li>
+        Discovery dates are not consistently available across all sources.
+        Where a discovery date is unavailable, the advisory publication date
+        is used as a proxy.
+      </li>
+      <li>
+        Patch dates are only available when the source explicitly reports them.
+        NVD records do not include patch dates.
+      </li>
+      <li>
+        Backlog figures represent vulnerabilities that have been discovered
+        but not yet patched, based on the dates available. Actual backlogs
+        may differ if patch information is incomplete.
+      </li>
+      <li>
+        Apple advisory data is scraped from HTML pages and may be affected by
+        structural changes. When scraping fails, Apple-related CVEs from NVD
+        are used as a fallback.
+      </li>
+    </ul>
+
+    <h3>Neutral framing</h3>
+
+    <p>
+      This project presents data as-is, without editorial annotations or
+      interpretive labels. Users are encouraged to draw their own conclusions
+      from the visualised trends.
+    </p>
+
+    <h3>Licence</h3>
+
+    <p>
+      VulnTrends is open-source software released under the MIT licence.
+      The aggregated data is derived from publicly available sources and is
+      provided for informational purposes.
+    </p>
+  </article>
+</DashboardLayout>
+
+<style>
+  .vt-about {
+    max-width: 48rem;
+    line-height: 1.7;
+  }
+
+  .vt-about h2 {
+    margin-bottom: 1rem;
+  }
+
+  .vt-about h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.125rem;
+    color: var(--vt-text-secondary);
+  }
+
+  .vt-about p {
+    margin-bottom: 1rem;
+    color: var(--vt-text-secondary);
+  }
+
+  .vt-about ul {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    color: var(--vt-text-secondary);
+  }
+
+  .vt-about li {
+    margin-bottom: 0.5rem;
+  }
+
+  .vt-about strong {
+    color: var(--vt-text-primary);
+  }
+</style>

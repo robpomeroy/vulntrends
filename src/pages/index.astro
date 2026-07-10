@@ -1,17 +1,36 @@
 ---
+import Dashboard from '@/components/Dashboard.svelte';
+import DashboardLayout from '@/layouts/Dashboard.astro';
+import { loadDashboardData } from '@/lib/load';
 
+const data = await loadDashboardData();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<DashboardLayout lastUpdated={data.meta?.lastUpdated}>
+  {data.meta ? (
+    <Dashboard
+      client:load
+      manufacturers={data.manufacturers}
+      discoveredMonth={data.discoveredMonth}
+      fixedMonth={data.fixedMonth}
+      patchLagMonth={data.patchLagMonth}
+      backlogMonth={data.backlogMonth}
+      discoveredYear={data.discoveredYear}
+      fixedYear={data.fixedYear}
+      patchLagYear={data.patchLagYear}
+      backlogYear={data.backlogYear}
+    />
+  ) : (
+    <div class="vt-card" style="text-align: center; padding: 3rem">
+      <h2 style="margin-bottom: 0.5rem">No data yet</h2>
+      <p style="color: var(--vt-text-muted); margin-bottom: 1.5rem">
+        Run <code style="color: var(--vt-accent)">npm run data:build</code> to fetch
+        vulnerability data from vendor sources and generate the dashboard.
+      </p>
+      <p style="color: var(--vt-text-muted); font-size: 0.875rem">
+        The data build is decoupled from the site build — run it once, then
+        iterate on the website with <code style="color: var(--vt-accent)">npm run dev</code>.
+      </p>
+    </div>
+  )}
+</DashboardLayout>

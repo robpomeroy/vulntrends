@@ -1,0 +1,247 @@
+[
+  {
+    "date": "2020",
+    "manufacturer": "Apple",
+    "openCount": 19
+  },
+  {
+    "date": "2020",
+    "manufacturer": "Google",
+    "openCount": 25
+  },
+  {
+    "date": "2020",
+    "manufacturer": "Linux",
+    "openCount": 14
+  },
+  {
+    "date": "2020",
+    "manufacturer": "Microsoft",
+    "openCount": 23
+  },
+  {
+    "date": "2020",
+    "manufacturer": "Mozilla",
+    "openCount": 10
+  },
+  {
+    "date": "2020",
+    "manufacturer": "Oracle",
+    "openCount": 13
+  },
+  {
+    "date": "2020",
+    "manufacturer": "Samsung",
+    "openCount": 3
+  },
+  {
+    "date": "2021",
+    "manufacturer": "Apple",
+    "openCount": 21
+  },
+  {
+    "date": "2021",
+    "manufacturer": "Google",
+    "openCount": 40
+  },
+  {
+    "date": "2021",
+    "manufacturer": "Linux",
+    "openCount": 20
+  },
+  {
+    "date": "2021",
+    "manufacturer": "Microsoft",
+    "openCount": 36
+  },
+  {
+    "date": "2021",
+    "manufacturer": "Mozilla",
+    "openCount": 21
+  },
+  {
+    "date": "2021",
+    "manufacturer": "Oracle",
+    "openCount": 10
+  },
+  {
+    "date": "2021",
+    "manufacturer": "Samsung",
+    "openCount": 2
+  },
+  {
+    "date": "2022",
+    "manufacturer": "Apple",
+    "openCount": 27
+  },
+  {
+    "date": "2022",
+    "manufacturer": "Google",
+    "openCount": 51
+  },
+  {
+    "date": "2022",
+    "manufacturer": "Linux",
+    "openCount": 25
+  },
+  {
+    "date": "2022",
+    "manufacturer": "Microsoft",
+    "openCount": 55
+  },
+  {
+    "date": "2022",
+    "manufacturer": "Mozilla",
+    "openCount": 13
+  },
+  {
+    "date": "2022",
+    "manufacturer": "Oracle",
+    "openCount": 23
+  },
+  {
+    "date": "2022",
+    "manufacturer": "Samsung",
+    "openCount": 10
+  },
+  {
+    "date": "2023",
+    "manufacturer": "Apple",
+    "openCount": 33
+  },
+  {
+    "date": "2023",
+    "manufacturer": "Google",
+    "openCount": 58
+  },
+  {
+    "date": "2023",
+    "manufacturer": "Linux",
+    "openCount": 29
+  },
+  {
+    "date": "2023",
+    "manufacturer": "Microsoft",
+    "openCount": 62
+  },
+  {
+    "date": "2023",
+    "manufacturer": "Mozilla",
+    "openCount": 19
+  },
+  {
+    "date": "2023",
+    "manufacturer": "Oracle",
+    "openCount": 22
+  },
+  {
+    "date": "2023",
+    "manufacturer": "Samsung",
+    "openCount": 8
+  },
+  {
+    "date": "2024",
+    "manufacturer": "Apple",
+    "openCount": 40
+  },
+  {
+    "date": "2024",
+    "manufacturer": "Google",
+    "openCount": 55
+  },
+  {
+    "date": "2024",
+    "manufacturer": "Linux",
+    "openCount": 27
+  },
+  {
+    "date": "2024",
+    "manufacturer": "Microsoft",
+    "openCount": 70
+  },
+  {
+    "date": "2024",
+    "manufacturer": "Mozilla",
+    "openCount": 18
+  },
+  {
+    "date": "2024",
+    "manufacturer": "Oracle",
+    "openCount": 26
+  },
+  {
+    "date": "2024",
+    "manufacturer": "Samsung",
+    "openCount": 7
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Apple",
+    "openCount": 48
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Google",
+    "openCount": 70
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Linux",
+    "openCount": 39
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Microsoft",
+    "openCount": 87
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Mozilla",
+    "openCount": 28
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Oracle",
+    "openCount": 32
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Samsung",
+    "openCount": 9
+  },
+  {
+    "date": "2026",
+    "manufacturer": "Apple",
+    "openCount": 45
+  },
+  {
+    "date": "2026",
+    "manufacturer": "Google",
+    "openCount": 64
+  },
+  {
+    "date": "2026",
+    "manufacturer": "Linux",
+    "openCount": 37
+  },
+  {
+    "date": "2026",
+    "manufacturer": "Microsoft",
+    "openCount": 85
+  },
+  {
+    "date": "2026",
+    "manufacturer": "Mozilla",
+    "openCount": 25
+  },
+  {
+    "date": "2026",
+    "manufacturer": "Oracle",
+    "openCount": 34
+  },
+  {
+    "date": "2026",
+    "manufacturer": "Samsung",
+    "openCount": 8
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Mozilla",
+    "colour": "#ff7133"
+  },
+  {
+    "name": "Google",
+    "colour": "#4285f4"
+  },
+  {
+    "name": "Microsoft",
+    "colour": "#00a4ef"
+  },
+  {
+    "name": "Apple",
+    "colour": "#a8a8a8"
+  },
+  {
+    "name": "Oracle",
+    "colour": "#c74634"
+  },
+  {
+    "name": "Samsung",
+    "colour": "#364fc7"
+  },
+  {
+    "name": "Linux",
+    "colour": "#f6c924"
+  },
+  {
+    "name": "Other",
+    "colour": "#a78bfa"
+  }
+]

@@ -59,8 +59,13 @@ export async function loadMeta(): Promise<PipelineMeta | null> {
       join(DATA_DIR, 'meta.json'),
       join(DATA_DIR_FALLBACK, 'meta.json'),
     );
-  } catch {
-    return null;
+  } catch (err) {
+    // Only suppress "file not found" — data hasn't been generated yet.
+    // Parse errors and other integrity issues must surface.
+    if (err instanceof Error && 'code' in err && err.code === 'ENOENT') {
+      return null;
+    }
+    throw err;
   }
 }
 
@@ -71,8 +76,11 @@ export async function loadManufacturers(): Promise<ManufacturerInfo[]> {
       join(AGG_DIR, 'manufacturers.json'),
       join(AGG_DIR_FALLBACK, 'manufacturers.json'),
     );
-  } catch {
-    return [];
+  } catch (err) {
+    if (err instanceof Error && 'code' in err && err.code === 'ENOENT') {
+      return [];
+    }
+    throw err;
   }
 }
 
@@ -142,21 +150,34 @@ export async function loadBacklogByYear(): Promise<BacklogPoint[]> {
 
 /**
  * Load all data needed for the dashboard in a single call.
- * Returns null for datasets that don't exist yet (before first pipeline run).
+ *
+ * `meta` is `null` when the pipeline hasn't been run yet (no `meta.json`).
+ * Time-series datasets default to empty arrays when their files don't exist
+ * yet — an empty array means "no data generated", not "zero vulnerabilities".
+ * Parse errors and other data integrity issues propagate so they are not
+ * silently masked.
  */
 export async function loadDashboardData() {
+  // Only suppress ENOENT (file not found) — data hasn't been generated yet.
+  // Parse errors and other integrity issues must surface.
+  const optional = <T>(p: Promise<T>): Promise<T | []> =>
+    p.catch((err) => {
+      if (err instanceof Error && 'code' in err && err.code === 'ENOENT') return [];
+      throw err;
+    });
+
   const [meta, manufacturers, discoveredMonth, fixedMonth, patchLagMonth, backlogMonth, discoveredYear, fixedYear, patchLagYear, backlogYear] =
     await Promise.all([
       loadMeta(),
       loadManufacturers(),
-      loadDiscoveredByMonth().catch(() => []),
-      loadFixedByMonth().catch(() => []),
-      loadPatchLagByMonth().catch(() => []),
-      loadBacklogByMonth().catch(() => []),
-      loadDiscoveredByYear().catch(() => []),
-      loadFixedByYear().catch(() => []),
-      loadPatchLagByYear().catch(() => []),
-      loadBacklogByYear().catch(() => []),
+      optional(loadDiscoveredByMonth()),
+      optional(loadFixedByMonth()),
+      optional(loadPatchLagByMonth()),
+      optional(loadBacklogByMonth()),
+      optional(loadDiscoveredByYear()),
+      optional(loadFixedByYear()),
+      optional(loadPatchLagByYear()),
+      optional(loadBacklogByYear()),
     ]);
 
   return {

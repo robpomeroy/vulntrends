@@ -23,6 +23,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        # When triggered by workflow_run, actions/checkout defaults to the
+        # head_sha of the *triggering* workflow run (the commit that started
+        # the refresh), not the commit the refresh job pushed. Pin to main
+        # so we always build/deploy the latest committed data.
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v4

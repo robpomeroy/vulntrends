@@ -69,7 +69,7 @@
     }
 
     const stackedData = dates.map((date) => {
-      const row: Record<string, number> = { date };
+      const row: Record<string, number | string> = { date };
       for (const m of manufacturers) {
         row[m] = dataMap.get(date)?.get(m) ?? 0;
       }
@@ -83,7 +83,7 @@
         : d3.timeParse('%Y');
     const parsedData = stackedData.map((d) => ({
       ...d,
-      _date: parseDate(d.date) as Date,
+      _date: parseDate(d.date as string) as Date,
     }));
 
     // Scales

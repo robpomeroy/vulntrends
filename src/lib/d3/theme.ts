@@ -1,6 +1,12 @@
 /**
  * Shared D3 theme — colours, fonts, and constants used across all charts.
+ *
+ * Manufacturer colours are defined once in `src/lib/manufacturers.ts` and
+ * re-exported here for chart components. Do not duplicate the colour values
+ * — always source them from MANUFACTURERS.
  */
+
+import { MANUFACTURERS, getManufacturerColour } from '../manufacturers.js';
 
 export const THEME = {
   bgPrimary: '#0f172a',
@@ -17,19 +23,13 @@ export const THEME = {
     'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 } as const;
 
-/** Manufacturer colour palette. */
-export const MANUFACTURER_COLOURS: Record<string, string> = {
-  Mozilla: '#ff7133',
-  Google: '#4285f4',
-  Microsoft: '#00a4ef',
-  Apple: '#a8a8a8',
-  Oracle: '#c74634',
-   Samsung: '#1428a0',
-  Linux: '#f6c924',
-  Other: '#a78bfa',
-};
-
-/** Get the colour for a manufacturer, falling back to "Other". */
+/**
+ * Get the colour for a manufacturer, falling back to "Other".
+ * Delegates to the canonical definition in manufacturers.ts.
+ */
 export function getColour(manufacturer: string): string {
-  return MANUFACTURER_COLOURS[manufacturer] ?? MANUFACTURER_COLOURS.Other;
+  return getManufacturerColour(manufacturer);
 }
+
+// Re-export so chart components can import from a single location if preferred
+export { MANUFACTURERS };

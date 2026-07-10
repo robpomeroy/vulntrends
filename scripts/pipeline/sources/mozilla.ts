@@ -9,7 +9,7 @@
  * records with discovery and patch dates.
  */
 
-import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
+import { buildRecord, parseDate } from '../normalise.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const MFSA_INDEX_URL = 'https://www.mozilla.org/en-US/security/advisories/';

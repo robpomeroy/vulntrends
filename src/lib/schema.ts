@@ -29,11 +29,11 @@ export const vulnerabilityRecordSchema = z.object({
   patchedDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   patchLagDays: z.number().int().optional(),
   cveIds: z.array(z.string()).optional(),
-  rawUrl: z.string().url().optional(),
+  rawUrl: z.url().optional(),
 });
 
 export const pipelineMetaSchema = z.object({
-  lastUpdated: z.string().datetime(),
+  lastUpdated: z.iso.datetime(),
   sourceCounts: z.record(sourceIdSchema, z.number().int()),
   totalRecords: z.number().int(),
 });

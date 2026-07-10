@@ -84,7 +84,8 @@ function generateRecords(
     // Patch lag: 1-180 days, with a trend towards shorter lags in recent years
     const year = parseInt(discoveredDate.slice(0, 4));
     const baseLag = year >= 2024 ? randomInt(1, 90) : randomInt(7, 180);
-    const patchedDate = rng() > 0.15 ? addDays(discoveredDate, baseLag) : undefined;
+    let patchedDate = rng() > 0.15 ? addDays(discoveredDate, baseLag) : undefined;
+    if (patchedDate && new Date(patchedDate) > endDate) patchedDate = undefined;
 
     const cvss = rng() > 0.3 ? Math.round(rng() * 10 * 10) / 10 : undefined;
     const cveId = `CVE-${year}-${randomInt(10000, 99999)}`;

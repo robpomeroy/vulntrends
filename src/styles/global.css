@@ -17,16 +17,6 @@
   --vt-border: #475569;          /* slate-600 */
   --vt-accent: #38bdf8;          /* sky-400 */
 
-  /* Manufacturer colours — 8 distinct, accessible on dark background */
-  --vt-mozilla: #ff7133;        /* orange — Mozilla */
-  --vt-google: #4285f4;         /* blue — Google */
-  --vt-microsoft: #00a4ef;      /* cyan — Microsoft */
-  --vt-apple: #a8a8a8;          /* silver — Apple */
-  --vt-oracle: #c74634;         /* red — Oracle */
-  --vt-samsung: #1428a0;        /* navy — Samsung */
-  --vt-linux: #f6c924;          /* gold — Linux */
-  --vt-other: #a78bfa;          /* violet — Other/catch-all */
-
   /* Spacing */
   --vt-radius: 0.5rem;
   --vt-radius-sm: 0.25rem;

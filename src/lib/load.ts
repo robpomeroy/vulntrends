@@ -33,12 +33,22 @@ async function loadJson<T>(path: string): Promise<T> {
   return JSON.parse(content) as T;
 }
 
-/** Try loading from the primary path, fall back to cwd-based path. */
+/**
+ * Try loading from the primary path, fall back to cwd-based path.
+ * Only falls back on "file not found" — parse errors and other data
+ * integrity issues propagate so they are not silently masked.
+ */
 async function loadJsonWithFallback<T>(primaryPath: string, fallbackPath: string): Promise<T> {
   try {
     return await loadJson<T>(primaryPath);
-  } catch {
-    return await loadJson<T>(fallbackPath);
+  } catch (err) {
+    // Only fall back if the primary file doesn't exist.
+    // ENOENT = file not found; anything else (e.g. JSON parse error)
+    // indicates a data integrity problem that should surface, not be masked.
+    if (err instanceof Error && 'code' in err && err.code === 'ENOENT') {
+      return await loadJson<T>(fallbackPath);
+    }
+    throw err;
   }
 }
 

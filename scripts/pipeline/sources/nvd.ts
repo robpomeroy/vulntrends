@@ -7,6 +7,11 @@
  * This is the canonical cross-vendor source. It requires an API key
  * (NVD_API_KEY) for reasonable rate limits. Without a key, requests are
  * limited to ~1 per 6 seconds.
+ *
+ * To avoid downloading the entire NVD dataset (millions of CVEs), we use
+ * the `virtualMatchString` parameter to filter server-side by CPE vendor.
+ * Each vendor is queried separately, then results are merged and
+ * deduplicated by CVE ID.
  */
 
 import { buildRecord, cvssToSeverity, parseDate } from '../normalise.js';
@@ -15,18 +20,21 @@ import type { VulnerabilityRecord } from '../types.js';
 const NVD_API_URL = 'https://services.nvd.nist.gov/rest/json/cves/2.0';
 const NVD_API_KEY = process.env.NVD_API_KEY;
 
-/** Manufacturers we care about — used to filter NVD's broad dataset. */
-const TARGET_MANUFACTURERS = [
-  'mozilla',
-  'google',
-  'chrome',
-  'microsoft',
-  'apple',
-  'oracle',
-  'samsung',
-  'linux',
-  'linux_kernel',
-  'linux kernel',
+/**
+ * CPE vendor names to query via `virtualMatchString`.
+ * Each entry maps a CPE vendor string to our canonical manufacturer name.
+ * The CPE match string format is `cpe:2.3:a:<vendor>:*:*:*:*:*:*:*:*:*`
+ * which matches all products from that vendor.
+ */
+const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string }> = [
+  { cpeVendor: 'mozilla', manufacturer: 'Mozilla' },
+  { cpeVendor: 'google', manufacturer: 'Google' },
+  { cpeVendor: 'chrome', manufacturer: 'Google' },
+  { cpeVendor: 'microsoft', manufacturer: 'Microsoft' },
+  { cpeVendor: 'apple', manufacturer: 'Apple' },
+  { cpeVendor: 'oracle', manufacturer: 'Oracle' },
+  { cpeVendor: 'samsung', manufacturer: 'Samsung' },
+  { cpeVendor: 'linux', manufacturer: 'Linux' },
 ];
 
 interface NvdCve {
@@ -62,47 +70,15 @@ interface NvdResponse {
 }
 
 /**
- * Determine the manufacturer from CPE configuration data.
- * CPE format: cpe:2.3:a:vendor:product:version
+ * Fetch a single page of CVEs from the NVD API, filtered by CPE vendor.
+ *
+ * @param cpeVendor  The CPE 2.3 vendor string (e.g. "microsoft")
+ * @param startIndex  Pagination offset
  */
-function extractManufacturerFromCpe(cve: NvdCve): string | undefined {
-  const configs = cve.configurations ?? [];
-  for (const config of configs) {
-    for (const node of config.nodes ?? []) {
-      for (const match of node.cpeMatch ?? []) {
-        if (!match.vulnerable) continue;
-        const parts = match.criteria.split(':');
-        // cpe:2.3:a:vendor:product:...
-        const vendor = parts[3]?.toLowerCase();
-        if (!vendor) continue;
-        if (TARGET_MANUFACTURERS.includes(vendor)) {
-          return vendor;
-        }
-      }
-    }
-  }
-  return undefined;
-}
-
-/**
- * Normalise a vendor name from CPE to our canonical manufacturer names.
- */
-function normaliseVendor(vendor: string): string {
-  const v = vendor.toLowerCase().trim();
-  if (v === 'mozilla') return 'Mozilla';
-  if (v === 'google' || v === 'chrome') return 'Google';
-  if (v === 'microsoft') return 'Microsoft';
-  if (v === 'apple') return 'Apple';
-  if (v === 'oracle') return 'Oracle';
-  if (v === 'samsung') return 'Samsung';
-  if (v === 'linux' || v === 'linux_kernel') return 'Linux';
-  return vendor;
-}
-
-/**
- * Fetch a single page of CVEs from the NVD API.
- */
-async function fetchCvePage(startIndex: number): Promise<NvdResponse> {
+async function fetchCvePage(
+  cpeVendor: string,
+  startIndex: number,
+): Promise<NvdResponse> {
   const headers: Record<string, string> = {
     Accept: 'application/json',
     'User-Agent': 'VulnTrends/0.1',
@@ -111,27 +87,32 @@ async function fetchCvePage(startIndex: number): Promise<NvdResponse> {
     headers['apiKey'] = NVD_API_KEY;
   }
 
+  // virtualMatchString filters server-side by CPE vendor.
+  // Format: cpe:2.3:a:<vendor>:*:*:*:*:*:*:*:*:*
+  const matchString = `cpe:2.3:a:${cpeVendor}:*:*:*:*:*:*:*:*:*`;
+
   const params = new URLSearchParams({
+    virtualMatchString: matchString,
     startIndex: String(startIndex),
     resultsPerPage: '2000',
   });
 
   const response = await fetch(`${NVD_API_URL}?${params}`, { headers });
   if (!response.ok) {
-    throw new Error(`NVD API returned ${response.status}: ${await response.text()}`);
+    throw new Error(
+      `NVD API returned ${response.status} for vendor "${cpeVendor}": ${await response.text()}`,
+    );
   }
   return response.json();
 }
 
 /**
  * Convert an NVD CVE entry to a VulnerabilityRecord.
- * Only returns records for our target manufacturers.
+ *
+ * @param cve            The NVD CVE entry
+ * @param manufacturer  The canonical manufacturer name (from the query)
  */
-function cveToRecord(cve: NvdCve): VulnerabilityRecord | null {
-  const vendor = extractManufacturerFromCpe(cve);
-  if (!vendor) return null;
-
-  const manufacturer = normaliseVendor(vendor);
+function cveToRecord(cve: NvdCve, manufacturer: string): VulnerabilityRecord | null {
   const description =
     cve.descriptions?.find((d) => d.lang === 'en')?.value ?? cve.id;
   const cvss =
@@ -163,11 +144,17 @@ function cveToRecord(cve: NvdCve): VulnerabilityRecord | null {
   });
 }
 
+/** Sleep for the given milliseconds. */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 /**
  * Fetch all NVD vulnerability records for our target manufacturers.
  *
- * Note: The NVD API can return a very large number of CVEs. We paginate
- * through all results, filtering to our target manufacturers client-side.
+ * Queries each CPE vendor separately via `virtualMatchString` to avoid
+ * downloading the entire NVD dataset. Results are deduplicated by CVE ID
+ * (since e.g. "google" and "chrome" may return overlapping CVEs).
  */
 export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   console.log('NVD/CVE: fetching CVEs...');
@@ -175,29 +162,43 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
     console.warn('  NVD: No NVD_API_KEY set — rate limits will be aggressive (1 req/6s)');
   }
 
+  // Rate limit: 500ms with API key, 6s without
+  const delay = NVD_API_KEY ? 500 : 6000;
+
+  const seenIds = new Set<string>();
   const allRecords: VulnerabilityRecord[] = [];
-  let startIndex = 0;
-  let totalResults = Infinity;
 
-  while (startIndex < totalResults) {
-    const data = await fetchCvePage(startIndex);
-    totalResults = data.totalResults;
+  for (const { cpeVendor, manufacturer } of VENDOR_QUERIES) {
+    console.log(`  NVD: querying vendor "${cpeVendor}" → ${manufacturer}...`);
 
-    for (const vuln of data.vulnerabilities) {
-      const record = cveToRecord(vuln.cve);
-      if (record) allRecords.push(record);
+    let startIndex = 0;
+    let totalResults = Infinity;
+
+    while (startIndex < totalResults) {
+      const data = await fetchCvePage(cpeVendor, startIndex);
+      totalResults = data.totalResults;
+
+      for (const vuln of data.vulnerabilities) {
+        // Deduplicate by CVE ID across vendor queries
+        if (seenIds.has(vuln.cve.id)) continue;
+        seenIds.add(vuln.cve.id);
+
+        const record = cveToRecord(vuln.cve, manufacturer);
+        if (record) allRecords.push(record);
+      }
+
+      startIndex += data.resultsPerPage;
+      console.log(
+        `    fetched ${startIndex}/${totalResults} for "${cpeVendor}" (${allRecords.length} total)`,
+      );
+
+      if (startIndex < totalResults) {
+        await sleep(delay);
+      }
     }
 
-    startIndex += data.resultsPerPage;
-    console.log(
-      `  NVD: fetched ${startIndex}/${totalResults} (${allRecords.length} matching)`,
-    );
-
-    if (startIndex < totalResults) {
-      // Rate limit: 500ms with API key, 6s without
-      const delay = NVD_API_KEY ? 500 : 6000;
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
+    // Pause between vendor queries
+    await sleep(delay);
   }
 
   console.log(`NVD/CVE: ${allRecords.length} records extracted`);

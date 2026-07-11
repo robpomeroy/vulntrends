@@ -27,7 +27,7 @@ import type {
   TimeSeriesPoint,
   VulnerabilityRecord,
 } from './pipeline/types.js';
-import { MANUFACTURERS } from '../src/lib/manufacturers.ts';
+import { MANUFACTURERS } from '../src/lib/manufacturers.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '..', 'src', 'data');

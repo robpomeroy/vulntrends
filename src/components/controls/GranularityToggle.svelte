@@ -21,7 +21,7 @@
         {current === opt.value
           ? 'bg-vt-accent text-vt-bg-primary font-semibold hover:bg-vt-accent hover:text-vt-bg-primary'
           : 'bg-transparent text-vt-text-muted hover:text-vt-text-primary hover:bg-vt-bg-tertiary'}"
-      on:click={() => setGranularity(opt.value)}
+      onclick={() => setGranularity(opt.value)}
       aria-pressed={current === opt.value}
     >
       {opt.label}

@@ -35,6 +35,11 @@ export function parseDate(input: string | undefined | null): string | undefined 
     return d.toISOString().slice(0, 10);
   }
 
+  // Date-only ISO strings are already unambiguous; return as-is to avoid TZ shifts.
+  if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
+    return input;
+  }
+ 
   // Timezone-naive date — use local calendar components to preserve
   // the parsed calendar day across machines in positive UTC offsets.
   const y = d.getFullYear();

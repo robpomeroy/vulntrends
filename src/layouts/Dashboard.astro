@@ -4,6 +4,12 @@
  */
 
 import '@/styles/global.css';
+// Import public assets with ?url so Astro resolves them relative to the
+// configured `base` path. Bare string hrefs (e.g. "/favicon.svg") were
+// resolved at build time via `Astro.resolve()` in older Astro versions,
+// but that API was removed in Astro 7.
+import faviconSvg from '/favicon.svg?url';
+import faviconIco from '/favicon.ico?url';
 
 interface Props {
   lastUpdated?: string;
@@ -27,8 +33,8 @@ const formattedDate =
 <html lang="en-GB">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href={Astro.resolve('/favicon.svg')} />
-    <link rel="icon" href={Astro.resolve('/favicon.ico')} />
+    <link rel="icon" type="image/svg+xml" href={faviconSvg} />
+    <link rel="icon" href={faviconIco} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>VulnTrends — Vulnerability Patching Trends</title>
@@ -91,7 +97,7 @@ const formattedDate =
         <div>
           <p class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-3">Project</p>
           <ul class="list-none text-sm space-y-1">
-            <li><a href={Astro.resolve('/about')}>About &amp; methodology</a></li>
+            <li><a href={`${import.meta.env.BASE_URL}about/`}>About &amp; methodology</a></li>
             <li><a href="https://github.com/vulntrends/vulntrends">GitHub</a></li>
             <li>MIT Licensed</li>
           </ul>

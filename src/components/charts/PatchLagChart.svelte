@@ -200,7 +200,7 @@
       const rawDate = x.invert(mx);
 
       // Find nearest data point per manufacturer
-      const rows: Array<{ m: string; median: number; p90: number; count: number; date: Date }> = [];
+      const candidates: Array<{ date: Date; m: string; median: number; p90: number; count: number }> = [];
       for (const grp of grouped) {
         const bisect = d3.bisector((d: { _date: Date }) => d._date).left;
         const idx = bisect(grp.values, rawDate, 1);
@@ -211,22 +211,30 @@
           !d1 || rawDate.getTime() - d0._date.getTime() < d1._date.getTime() - rawDate.getTime()
             ? d0
             : d1;
-        rows.push({
+        candidates.push({
+          date: d._date,
           m: grp.manufacturer,
           median: d.medianLagDays,
           p90: d.p90LagDays,
           count: d.count,
-          date: d._date,
         });
       }
 
-      if (rows.length === 0) return;
+      if (candidates.length === 0) return;
 
-      // Snap the focus line and tooltip title to the nearest actual data
-      // point, not the raw mouse position. This ensures the title, the
-      // focus line, and the displayed values all correspond to the same
-      // bucket.
-      const snapDate = rows[0].date;
+      // Snap to the bucket closest to the raw mouse position, not
+      // arbitrary `candidates[0]`. Different manufacturers may have
+      // data in different buckets, so we pick the single closest one
+      // and only show values for manufacturers that have a data point
+      // in that exact bucket.
+      const snapDate = candidates.reduce((closest, c) =>
+        Math.abs(c.date.getTime() - rawDate.getTime()) <
+        Math.abs(closest.date.getTime() - rawDate.getTime())
+          ? c
+          : closest,
+      ).date;
+      const snapTime = snapDate.getTime();
+      const rows = candidates.filter((c) => c.date.getTime() === snapTime);
 
       focus.attr('transform', `translate(${x(snapDate)},0)`);
       focus.style('opacity', 1);

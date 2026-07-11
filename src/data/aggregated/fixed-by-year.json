@@ -1,0 +1,112 @@
+[
+  {
+    "date": "2005",
+    "manufacturer": "Mozilla",
+    "count": 59
+  },
+  {
+    "date": "2006",
+    "manufacturer": "Mozilla",
+    "count": 63
+  },
+  {
+    "date": "2007",
+    "manufacturer": "Mozilla",
+    "count": 48
+  },
+  {
+    "date": "2008",
+    "manufacturer": "Mozilla",
+    "count": 63
+  },
+  {
+    "date": "2009",
+    "manufacturer": "Mozilla",
+    "count": 67
+  },
+  {
+    "date": "2010",
+    "manufacturer": "Mozilla",
+    "count": 74
+  },
+  {
+    "date": "2011",
+    "manufacturer": "Mozilla",
+    "count": 79
+  },
+  {
+    "date": "2012",
+    "manufacturer": "Mozilla",
+    "count": 145
+  },
+  {
+    "date": "2013",
+    "manufacturer": "Mozilla",
+    "count": 101
+  },
+  {
+    "date": "2014",
+    "manufacturer": "Mozilla",
+    "count": 74
+  },
+  {
+    "date": "2015",
+    "manufacturer": "Mozilla",
+    "count": 137
+  },
+  {
+    "date": "2016",
+    "manufacturer": "Mozilla",
+    "count": 100
+  },
+  {
+    "date": "2017",
+    "manufacturer": "Mozilla",
+    "count": 154
+  },
+  {
+    "date": "2018",
+    "manufacturer": "Mozilla",
+    "count": 117
+  },
+  {
+    "date": "2019",
+    "manufacturer": "Mozilla",
+    "count": 113
+  },
+  {
+    "date": "2020",
+    "manufacturer": "Mozilla",
+    "count": 118
+  },
+  {
+    "date": "2021",
+    "manufacturer": "Mozilla",
+    "count": 88
+  },
+  {
+    "date": "2022",
+    "manufacturer": "Mozilla",
+    "count": 128
+  },
+  {
+    "date": "2023",
+    "manufacturer": "Mozilla",
+    "count": 171
+  },
+  {
+    "date": "2024",
+    "manufacturer": "Mozilla",
+    "count": 170
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Mozilla",
+    "count": 159
+  },
+  {
+    "date": "2026",
+    "manufacturer": "Mozilla",
+    "count": 256
+  }
+]

@@ -1,0 +1,82 @@
+---
+import DashboardLayout from '@/layouts/Dashboard.astro';
+---
+
+<DashboardLayout>
+  <article class="max-w-3xl leading-relaxed">
+    <h2 class="mb-4 text-xl">About VulnTrends</h2>
+
+    <p class="mb-4 text-vt-text-secondary">
+      VulnTrends is an open-source project that tracks trends in vulnerability
+      patching across major software manufacturers. The dashboard visualises
+      vulnerabilities discovered, fixed, the time between discovery and patch,
+      and vulnerability backlogs — all over time, with the ability to filter
+      by manufacturer and switch between monthly and yearly granularity.
+    </p>
+
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Methodology</h3>
+
+    <p class="mb-4 text-vt-text-secondary">
+      Data is drawn from publicly available security advisories and
+      vulnerability databases. Each source is fetched, normalised to a common
+      schema, and aggregated into time-series data for visualisation.
+    </p>
+
+    <p class="mb-4 text-vt-text-secondary">
+      Where multiple sources report the same vulnerability (identified by CVE
+      ID), vendor-specific advisory data is preferred over the NVD/CVE record,
+      as vendor advisories typically provide richer patch-timing information.
+    </p>
+
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Data sources</h3>
+
+    <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
+      <li><strong class="text-vt-text-primary">Mozilla</strong> — Mozilla Foundation Security Advisories (MFSA)</li>
+      <li><strong class="text-vt-text-primary">Google</strong> — Chrome Releases blog and Project Zero</li>
+      <li><strong class="text-vt-text-primary">Microsoft</strong> — Security Response Center (MSRC) CVRF API</li>
+      <li><strong class="text-vt-text-primary">Apple</strong> — Security advisories (with NVD fallback)</li>
+      <li><strong class="text-vt-text-primary">Project Zero</strong> — Issue tracker with disclosure timelines</li>
+      <li><strong class="text-vt-text-primary">NVD/CVE</strong> — National Vulnerability Database (cross-vendor)</li>
+    </ul>
+
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Limitations</h3>
+
+    <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
+      <li>
+        Discovery dates are not consistently available across all sources.
+        Where a discovery date is unavailable, the advisory publication date
+        is used as a proxy.
+      </li>
+      <li>
+        Patch dates are only available when the source explicitly reports them.
+        NVD records do not include patch dates.
+      </li>
+      <li>
+        Backlog figures represent vulnerabilities that have been discovered
+        but not yet patched, based on the dates available. Actual backlogs
+        may differ if patch information is incomplete.
+      </li>
+      <li>
+        Apple advisory data is scraped from HTML pages and may be affected by
+        structural changes. When scraping fails, Apple-related CVEs from NVD
+        are used as a fallback.
+      </li>
+    </ul>
+
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Neutral framing</h3>
+
+    <p class="mb-4 text-vt-text-secondary">
+      This project presents data as-is, without editorial annotations or
+      interpretive labels. Users are encouraged to draw their own conclusions
+      from the visualised trends.
+    </p>
+
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Licence</h3>
+
+    <p class="mb-4 text-vt-text-secondary">
+      VulnTrends is open-source software released under the MIT licence.
+      The aggregated data is derived from publicly available sources and is
+      provided for informational purposes.
+    </p>
+  </article>
+</DashboardLayout>

@@ -1,0 +1,108 @@
+---
+/**
+ * Dashboard layout — full-page shell with header, main content, and footer.
+ */
+
+import '@/styles/global.css';
+// Import public assets with ?url so Astro resolves them relative to the
+// configured `base` path. Bare string hrefs (e.g. "/favicon.svg") were
+// resolved at build time via `Astro.resolve()` in older Astro versions,
+// but that API was removed in Astro 7.
+import faviconSvg from '/favicon.svg?url';
+import faviconIco from '/favicon.ico?url';
+
+interface Props {
+  lastUpdated?: string;
+}
+
+const { lastUpdated } = Astro.props;
+
+const formattedDate =
+  lastUpdated && !Number.isNaN(Date.parse(lastUpdated))
+    ? new Date(lastUpdated).toLocaleString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : null;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={faviconSvg} />
+    <link rel="icon" href={faviconIco} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>VulnTrends — Vulnerability Patching Trends</title>
+    <meta
+      name="description"
+      content="Tracking trends in vulnerability patching across major software manufacturers. An open-source, data-driven dashboard."
+    />
+    <meta property="og:title" content="VulnTrends — Vulnerability Patching Trends" />
+    <meta
+      property="og:description"
+      content="Tracking trends in vulnerability patching across major software manufacturers."
+    />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <header class="bg-vt-bg-secondary border-b border-vt-border py-6">
+      <div class="w-full max-w-[1400px] mx-auto px-6 flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight m-0">
+            <span>Vuln<span class="text-vt-accent">Trends</span></span>
+          </h1>
+          <p class="text-vt-text-muted text-sm mt-1 max-w-2xl">
+            Tracking trends in vulnerability patching across major software manufacturers
+          </p>
+        </div>
+        {formattedDate && (
+          <div class="text-right shrink-0">
+            <span class="block text-xs uppercase tracking-wide text-vt-text-muted">Last updated</span>
+            <time class="text-sm text-vt-text-secondary" datetime={lastUpdated}>{formattedDate}</time>
+          </div>
+        )}
+      </div>
+    </header>
+
+    <main class="flex-1 py-8">
+      <div class="w-full max-w-[1400px] mx-auto px-6">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="bg-vt-bg-secondary border-t border-vt-border py-8 mt-8">
+      <div class="w-full max-w-[1400px] mx-auto px-6 grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr_1fr]">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-3">VulnTrends</p>
+          <p class="text-sm text-vt-text-secondary">
+            Open-source data on vulnerability patching trends.
+          </p>
+        </div>
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-3">Data sources</p>
+          <ul class="list-none text-sm space-y-1">
+            <li><a href="https://www.mozilla.org/en-US/security/advisories/">Mozilla MFSA</a></li>
+            <li><a href="https://api.msrc.microsoft.com/cvrf/v3.0/">Microsoft MSRC</a></li>
+            <li><a href="https://bugs.chromium.org/p/project-zero/">Project Zero</a></li>
+            <li><a href="https://services.nvd.nist.gov/rest/json/cves/2.0">NVD/CVE</a></li>
+            <li><a href="https://chromereleases.googleblog.com/">Chrome Releases</a></li>
+            <li><a href="https://support.apple.com/en-us/HT201222">Apple Security</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-3">Project</p>
+          <ul class="list-none text-sm space-y-1">
+            <li><a href={`${import.meta.env.BASE_URL}about/`}>About &amp; methodology</a></li>
+            <li><a href="https://github.com/vulntrends/vulntrends">GitHub</a></li>
+            <li>MIT Licensed</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

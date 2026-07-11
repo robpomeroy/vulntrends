@@ -42,14 +42,6 @@ export function selectAllManufacturers(): void {
   }));
 }
 
-/** Clear all manufacturer selections (equivalent to selecting all / no filter). */
-export function clearManufacturers(): void {
-  dashboardStore.update((state) => ({
-    ...state,
-    selectedManufacturers: [],
-  }));
-}
-
 /** Set the granularity. */
 export function setGranularity(granularity: Granularity): void {
   dashboardStore.update((state) => ({ ...state, granularity }));

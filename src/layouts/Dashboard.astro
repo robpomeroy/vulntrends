@@ -11,15 +11,16 @@ interface Props {
 
 const { lastUpdated } = Astro.props;
 
-const formattedDate = lastUpdated
-  ? new Date(lastUpdated).toLocaleString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    })
-  : null;
+const formattedDate =
+  lastUpdated && !Number.isNaN(Date.parse(lastUpdated))
+    ? new Date(lastUpdated).toLocaleString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : null;
 ---
 
 <!doctype html>

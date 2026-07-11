@@ -38,14 +38,21 @@ export const pipelineMetaSchema = z.object({
   totalRecords: z.number().int(),
 });
 
+// Date format patterns for aggregated chart points.
+// Monthly buckets are "YYYY-MM"; yearly buckets are "YYYY". The chart
+// components use D3 date parsers for these formats, so any other shape
+// would produce "Invalid Date" at runtime.
+const MONTHLY_DATE_REGEX = /^\d{4}-\d{2}$/;
+const YEARLY_DATE_REGEX = /^\d{4}$/;
+
 export const timeSeriesPointSchema = z.object({
-  date: z.string(),
+  date: z.string().regex(MONTHLY_DATE_REGEX).or(z.string().regex(YEARLY_DATE_REGEX)),
   manufacturer: z.string(),
   count: z.number().int(),
 });
 
 export const patchLagPointSchema = z.object({
-  date: z.string(),
+  date: z.string().regex(MONTHLY_DATE_REGEX).or(z.string().regex(YEARLY_DATE_REGEX)),
   manufacturer: z.string(),
   medianLagDays: z.number(),
   p90LagDays: z.number(),
@@ -53,7 +60,7 @@ export const patchLagPointSchema = z.object({
 });
 
 export const backlogPointSchema = z.object({
-  date: z.string(),
+  date: z.string().regex(MONTHLY_DATE_REGEX).or(z.string().regex(YEARLY_DATE_REGEX)),
   manufacturer: z.string(),
   openCount: z.number().int(),
 });

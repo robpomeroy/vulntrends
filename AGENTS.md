@@ -36,16 +36,13 @@ This lets you iterate on the website freely without re-downloading data.
 
 **Local dev workflow**: run `npm run data:build` once, then `npm run dev` freely.
 
-### Astro dev server background mode
+### Dev server startup time
 
-When starting the dev server, use background mode:
-
-```
-astro dev --background
-```
-
-Manage the background server with `astro dev stop`, `astro dev status`, and
-`astro dev logs`.
+The dev server may take longer than 30 seconds to start on the first run
+because Vite needs to optimise dependencies (Tailwind v4, Svelte 5, D3).
+Do not use `astro dev --background` — it has a hardcoded 30s timeout that
+will fail before the server is ready. Use `npm run dev` (foreground) instead.
+Subsequent starts are faster once the Vite cache is warm.
 
 ## Architecture
 

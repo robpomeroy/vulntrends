@@ -8,12 +8,39 @@ import type { Severity, VulnerabilityRecord } from './types.js';
 /**
  * Parse a date string into ISO `YYYY-MM-DD` format.
  * Returns `undefined` if the input is null, empty, or unparseable.
+ *
+ * Two cases:
+ *
+ * 1. Inputs that include an explicit time or timezone offset (ISO 8601 with
+ *    "T...Z" or "T...+HH:MM", etc.) are unambiguous. We use the UTC
+ *    calendar components to get a stable date across machines.
+ *
+ * 2. Timezone-naive date inputs (e.g. "January 7, 2025", "2025-01-07") are
+ *    interpreted as local time by `new Date()`. In a positive UTC offset,
+ *    the resulting UTC instant may be in the *previous* calendar day, so
+ *    `toISOString().slice(0, 10)` would shift the date backwards. Instead,
+ *    we extract the year/month/day from the local calendar components
+ *    (`getFullYear`, `getMonth`, `getDate`) which reflect the parsed
+ *    calendar date regardless of timezone.
  */
 export function parseDate(input: string | undefined | null): string | undefined {
   if (!input) return undefined;
   const d = new Date(input);
   if (isNaN(d.getTime())) return undefined;
-  return d.toISOString().slice(0, 10);
+
+  // ISO 8601 with explicit time or timezone → safe to use UTC components
+  const hasExplicitTime = /T\d{2}:\d{2}/.test(input);
+  const hasTimezone = /[zZ]|[+-]\d{2}:?\d{2}\s*$/.test(input);
+  if (hasExplicitTime && hasTimezone) {
+    return d.toISOString().slice(0, 10);
+  }
+
+  // Timezone-naive date — use local calendar components to preserve
+  // the parsed calendar day across machines in positive UTC offsets.
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 /**

@@ -197,18 +197,18 @@
 
     overlay.on('mousemove', (event) => {
       const [mx] = d3.pointer(event);
-      const date = x.invert(mx);
+      const rawDate = x.invert(mx);
 
       // Find nearest data point per manufacturer
-      const rows: Array<{ m: string; median: number; p90: number; count: number }> = [];
+      const rows: Array<{ m: string; median: number; p90: number; count: number; date: Date }> = [];
       for (const grp of grouped) {
         const bisect = d3.bisector((d: { _date: Date }) => d._date).left;
-        const idx = bisect(grp.values, date, 1);
+        const idx = bisect(grp.values, rawDate, 1);
         const d0 = grp.values[idx - 1];
         const d1 = grp.values[idx];
         if (!d0 && !d1) continue;
         const d =
-          !d1 || date.getTime() - d0._date.getTime() < d1._date.getTime() - date.getTime()
+          !d1 || rawDate.getTime() - d0._date.getTime() < d1._date.getTime() - rawDate.getTime()
             ? d0
             : d1;
         rows.push({
@@ -216,18 +216,25 @@
           median: d.medianLagDays,
           p90: d.p90LagDays,
           count: d.count,
+          date: d._date,
         });
       }
 
       if (rows.length === 0) return;
 
-      focus.attr('transform', `translate(${x(date)},0)`);
+      // Snap the focus line and tooltip title to the nearest actual data
+      // point, not the raw mouse position. This ensures the title, the
+      // focus line, and the displayed values all correspond to the same
+      // bucket.
+      const snapDate = rows[0].date;
+
+      focus.attr('transform', `translate(${x(snapDate)},0)`);
       focus.style('opacity', 1);
 
       rows.sort((a, b) => a.median - b.median);
       tooltip.show(
         event,
-        formatTick(date),
+        formatTick(snapDate),
         rows.map((r) => ({
           colour: getColour(r.m),
           label: r.m,

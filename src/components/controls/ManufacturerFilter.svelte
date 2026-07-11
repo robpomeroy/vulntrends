@@ -23,7 +23,7 @@
       type="button"
       class="text-xs text-vt-accent hover:text-sky-300 bg-transparent border-none cursor-pointer p-0"
       on:click={selectAllManufacturers}
-      aria-label="Select all manufacturers"
+      aria-label={allSelected ? 'All manufacturers selected' : 'Select all manufacturers'}
     >
       {allSelected ? 'All selected' : 'Select all'}
     </button>

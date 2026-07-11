@@ -6,7 +6,7 @@
  * — always source them from MANUFACTURERS.
  */
 
-import { MANUFACTURERS, getManufacturerColour } from '../manufacturers.js';
+import { MANUFACTURERS, getManufacturerColour } from '../manufacturers';
 
 export const THEME = {
   bgPrimary: '#0f172a',

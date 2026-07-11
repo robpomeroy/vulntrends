@@ -22,7 +22,7 @@
     <button
       type="button"
       class="text-xs text-vt-accent hover:text-sky-300 bg-transparent border-none cursor-pointer p-0"
-      onclick={selectAllManufacturers}
+      on:click={selectAllManufacturers}
       aria-label="Select all manufacturers"
     >
       {allSelected ? 'All selected' : 'Select all'}
@@ -36,7 +36,7 @@
           {allSelected || selectedSet.has(m.name)
             ? 'bg-vt-bg-tertiary border-vt-accent text-vt-text-primary'
             : 'bg-transparent border-vt-border text-vt-text-secondary hover:border-vt-accent hover:text-vt-text-primary'}"
-        onclick={() => toggleManufacturer(m.name)}
+        on:click={() => toggleManufacturer(m.name)}
         aria-pressed={allSelected || selectedSet.has(m.name)}
       >
         <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: {m.colour}"></span>

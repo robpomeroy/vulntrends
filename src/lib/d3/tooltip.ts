@@ -73,8 +73,8 @@ export function createTooltip(): Tooltip {
       const rect = el.getBoundingClientRect();
       const maxX = window.innerWidth - rect.width - offset;
       const maxY = window.innerHeight - rect.height - offset;
-      el.style.left = `${Math.min(x, maxX)}px`;
-      el.style.top = `${Math.min(y, maxY)}px`;
+      el.style.left = `${Math.max(0, Math.min(x, maxX))}px`;
+      el.style.top = `${Math.max(0, Math.min(y, maxY))}px`;
     },
     hide() {
       el.classList.remove('visible');

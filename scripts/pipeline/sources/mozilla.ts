@@ -78,6 +78,12 @@ async function fetchAdvisoryRecords(advisory: MfsaAdvisory): Promise<Vulnerabili
       html.match(/"datePublished"\s*:\s*"([^"]+)"/i) ??
       html.match(/(\w+ \d{1,2}, \d{4})/);
     const patchedDate = parseDate(dateMatch?.[1]);
+    // Skip advisories with no parseable date — falling back to "today"
+    // would inject future-dated points and distort time-series aggregates.
+    if (!patchedDate) {
+      console.warn(`  MFSA: skip ${advisory.id} — no parseable date`);
+      return [];
+    }
 
     // Extract CVE IDs and vulnerability titles from the page
     const records: VulnerabilityRecord[] = [];
@@ -93,7 +99,7 @@ async function fetchAdvisoryRecords(advisory: MfsaAdvisory): Promise<Vulnerabili
           source: 'mozilla',
           manufacturer: 'Mozilla',
           title: advisory.title,
-          discoveredDate: patchedDate ?? new Date().toISOString().slice(0, 10),
+          discoveredDate: patchedDate,
           patchedDate,
           cveIds: undefined,
           rawUrl: advisory.url,
@@ -107,7 +113,7 @@ async function fetchAdvisoryRecords(advisory: MfsaAdvisory): Promise<Vulnerabili
           source: 'mozilla',
           manufacturer: 'Mozilla',
           title: advisory.title,
-          discoveredDate: patchedDate ?? new Date().toISOString().slice(0, 10),
+          discoveredDate: patchedDate,
           patchedDate,
           cveIds,
           rawUrl: advisory.url,

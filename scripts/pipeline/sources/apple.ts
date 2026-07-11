@@ -110,6 +110,12 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
       // Strategy 3: Look for "Posted: Month DD, YYYY" pattern
       html.match(/Posted:\s*([A-Z][a-z]+ \d{1,2}, \d{4})/i);
     const patchedDate = parseDate(dateMatch?.[1]);
+    // Skip advisories with no parseable date — falling back to "today"
+    // would inject future-dated points and distort time-series aggregates.
+    if (!patchedDate) {
+      console.warn(`  Apple: skip ${advisory.id} — no parseable date`);
+      return [];
+    }
 
     // Extract CVE IDs from the page
     const cveIds = extractCveIds(html) ?? [];
@@ -122,7 +128,7 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
           source: 'apple',
           manufacturer: 'Apple',
           title: advisory.title,
-          discoveredDate: patchedDate ?? new Date().toISOString().slice(0, 10),
+          discoveredDate: patchedDate,
           patchedDate,
           rawUrl: advisory.url,
         }),
@@ -136,7 +142,7 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
         source: 'apple',
         manufacturer: 'Apple',
         title: `${advisory.title} — ${cveId}`,
-        discoveredDate: patchedDate ?? new Date().toISOString().slice(0, 10),
+        discoveredDate: patchedDate,
         patchedDate,
         cveIds: [cveId],
         rawUrl: advisory.url,

@@ -77,6 +77,13 @@ async function fetchCvrfRecords(update: CvrfUpdate): Promise<VulnerabilityRecord
     const data = await response.json();
 
     const patchedDate = parseDate(update.CurrentReleaseDate);
+    // MSRC records use the patch date as the discovery-date proxy. If it
+    // can't be parsed, skip this update rather than injecting "today"
+    // (which would skew aggregates and produce future-dated points).
+    if (!patchedDate) {
+      console.warn(`  MSRC: skip ${update.ID} — unparseable CurrentReleaseDate`);
+      return [];
+    }
     const records: VulnerabilityRecord[] = [];
 
     // The CVRF document contains a vulnerability list
@@ -99,7 +106,7 @@ async function fetchCvrfRecords(update: CvrfUpdate): Promise<VulnerabilityRecord
           manufacturer: 'Microsoft',
           title: typeof title === 'string' ? title : cveId,
           cvss,
-          discoveredDate: patchedDate ?? new Date().toISOString().slice(0, 10),
+          discoveredDate: patchedDate,
           patchedDate,
           cveIds: [cveId],
           rawUrl: `https://msrc.microsoft.com/update-guide/vulnerability/${cveId}`,

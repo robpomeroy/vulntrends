@@ -212,36 +212,36 @@
   {
     "date": "2026",
     "manufacturer": "Apple",
-    "openCount": 45
+    "openCount": 54
   },
   {
     "date": "2026",
     "manufacturer": "Google",
-    "openCount": 64
+    "openCount": 73
   },
   {
     "date": "2026",
     "manufacturer": "Linux",
-    "openCount": 37
+    "openCount": 42
   },
   {
     "date": "2026",
     "manufacturer": "Microsoft",
-    "openCount": 85
+    "openCount": 97
   },
   {
     "date": "2026",
     "manufacturer": "Mozilla",
-    "openCount": 25
+    "openCount": 29
   },
   {
     "date": "2026",
     "manufacturer": "Oracle",
-    "openCount": 34
+    "openCount": 37
   },
   {
     "date": "2026",
     "manufacturer": "Samsung",
-    "openCount": 8
+    "openCount": 9
   }
 ]

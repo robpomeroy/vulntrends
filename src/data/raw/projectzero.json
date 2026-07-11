@@ -1361,12 +1361,10 @@
     "title": "Vulnerability in Chrome OS — CVE-2026-90791",
     "cvss": 1.6,
     "discoveredDate": "2026-05-24",
-    "patchedDate": "2026-08-01",
     "cveIds": [
       "CVE-2026-90791"
     ],
     "rawUrl": "https://example.com/projectzero/CVE-2026-90791",
-    "patchLagDays": 69,
     "severity": "low"
   },
   {
@@ -1773,12 +1771,10 @@
     "title": "Vulnerability in Android — CVE-2026-41656",
     "cvss": 9.4,
     "discoveredDate": "2026-05-10",
-    "patchedDate": "2026-07-27",
     "cveIds": [
       "CVE-2026-41656"
     ],
     "rawUrl": "https://example.com/projectzero/CVE-2026-41656",
-    "patchLagDays": 78,
     "severity": "critical"
   },
   {
@@ -1846,12 +1842,10 @@
     "product": "Chrome OS",
     "title": "Vulnerability in Chrome OS — CVE-2026-56784",
     "discoveredDate": "2026-06-02",
-    "patchedDate": "2026-07-14",
     "cveIds": [
       "CVE-2026-56784"
     ],
-    "rawUrl": "https://example.com/projectzero/CVE-2026-56784",
-    "patchLagDays": 42
+    "rawUrl": "https://example.com/projectzero/CVE-2026-56784"
   },
   {
     "id": "CVE-2023-40049",

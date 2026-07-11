@@ -165,8 +165,6 @@ async function main(): Promise<void> {
   await writeJson(join(DATA_DIR, 'meta.json'), meta);
 
   console.log(`\nGenerated ${allRecords.length} total records`);
-  console.log('Running aggregation...');
-
 }
 
 main().then(async () => {

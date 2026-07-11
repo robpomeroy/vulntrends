@@ -296,50 +296,50 @@
   {
     "date": "2026",
     "manufacturer": "Apple",
-    "medianLagDays": 54,
+    "medianLagDays": 49,
     "p90LagDays": 86,
-    "count": 32
+    "count": 23
   },
   {
     "date": "2026",
     "manufacturer": "Google",
-    "medianLagDays": 63,
+    "medianLagDays": 62,
     "p90LagDays": 87,
-    "count": 47
+    "count": 38
   },
   {
     "date": "2026",
     "manufacturer": "Linux",
-    "medianLagDays": 60,
+    "medianLagDays": 63,
     "p90LagDays": 80,
-    "count": 20
+    "count": 15
   },
   {
     "date": "2026",
     "manufacturer": "Microsoft",
-    "medianLagDays": 55,
+    "medianLagDays": 44,
     "p90LagDays": 83,
-    "count": 44
+    "count": 32
   },
   {
     "date": "2026",
     "manufacturer": "Mozilla",
-    "medianLagDays": 42,
-    "p90LagDays": 88,
-    "count": 19
+    "medianLagDays": 39,
+    "p90LagDays": 85,
+    "count": 15
   },
   {
     "date": "2026",
     "manufacturer": "Oracle",
-    "medianLagDays": 49,
+    "medianLagDays": 38,
     "p90LagDays": 86,
-    "count": 13
+    "count": 10
   },
   {
     "date": "2026",
     "manufacturer": "Samsung",
-    "medianLagDays": 28,
+    "medianLagDays": 27,
     "p90LagDays": 66,
-    "count": 6
+    "count": 5
   }
 ]

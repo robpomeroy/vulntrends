@@ -1013,12 +1013,10 @@
     "title": "Vulnerability in Firefox ESR — CVE-2026-24338",
     "cvss": 8.1,
     "discoveredDate": "2026-05-13",
-    "patchedDate": "2026-08-09",
     "cveIds": [
       "CVE-2026-24338"
     ],
     "rawUrl": "https://example.com/mozilla/CVE-2026-24338",
-    "patchLagDays": 88,
     "severity": "high"
   },
   {
@@ -1452,12 +1450,10 @@
     "product": "Firefox",
     "title": "Vulnerability in Firefox — CVE-2026-23910",
     "discoveredDate": "2026-06-24",
-    "patchedDate": "2026-07-14",
     "cveIds": [
       "CVE-2026-23910"
     ],
-    "rawUrl": "https://example.com/mozilla/CVE-2026-23910",
-    "patchLagDays": 20
+    "rawUrl": "https://example.com/mozilla/CVE-2026-23910"
   },
   {
     "id": "CVE-2022-99733",
@@ -2595,12 +2591,10 @@
     "title": "Vulnerability in Firefox — CVE-2026-81718",
     "cvss": 1,
     "discoveredDate": "2026-06-29",
-    "patchedDate": "2026-08-10",
     "cveIds": [
       "CVE-2026-81718"
     ],
     "rawUrl": "https://example.com/mozilla/CVE-2026-81718",
-    "patchLagDays": 42,
     "severity": "low"
   },
   {
@@ -2938,12 +2932,10 @@
     "product": "Firefox ESR",
     "title": "Vulnerability in Firefox — CVE-2026-90692",
     "discoveredDate": "2026-06-01",
-    "patchedDate": "2026-08-18",
     "cveIds": [
       "CVE-2026-90692"
     ],
-    "rawUrl": "https://example.com/mozilla/CVE-2026-90692",
-    "patchLagDays": 78
+    "rawUrl": "https://example.com/mozilla/CVE-2026-90692"
   },
   {
     "id": "CVE-2020-69829",
@@ -4238,12 +4230,10 @@
     "product": "Chrome OS",
     "title": "Vulnerability in Android — CVE-2026-60283",
     "discoveredDate": "2026-04-25",
-    "patchedDate": "2026-07-15",
     "cveIds": [
       "CVE-2026-60283"
     ],
-    "rawUrl": "https://example.com/chrome/CVE-2026-60283",
-    "patchLagDays": 81
+    "rawUrl": "https://example.com/chrome/CVE-2026-60283"
   },
   {
     "id": "CVE-2020-73050",
@@ -5763,12 +5753,10 @@
     "title": "Vulnerability in Chrome — CVE-2026-38927",
     "cvss": 3.2,
     "discoveredDate": "2026-04-11",
-    "patchedDate": "2026-07-09",
     "cveIds": [
       "CVE-2026-38927"
     ],
     "rawUrl": "https://example.com/chrome/CVE-2026-38927",
-    "patchLagDays": 89,
     "severity": "low"
   },
   {
@@ -7022,12 +7010,10 @@
     "product": "Chrome",
     "title": "Vulnerability in Android — CVE-2026-93455",
     "discoveredDate": "2026-05-26",
-    "patchedDate": "2026-07-10",
     "cveIds": [
       "CVE-2026-93455"
     ],
-    "rawUrl": "https://example.com/chrome/CVE-2026-93455",
-    "patchLagDays": 45
+    "rawUrl": "https://example.com/chrome/CVE-2026-93455"
   },
   {
     "id": "CVE-2026-29064",
@@ -7127,12 +7113,10 @@
     "title": "Vulnerability in Chrome OS — CVE-2026-56363",
     "cvss": 2.3,
     "discoveredDate": "2026-05-27",
-    "patchedDate": "2026-07-18",
     "cveIds": [
       "CVE-2026-56363"
     ],
     "rawUrl": "https://example.com/chrome/CVE-2026-56363",
-    "patchLagDays": 52,
     "severity": "low"
   },
   {
@@ -7640,12 +7624,10 @@
     "product": "Chrome OS",
     "title": "Vulnerability in Android — CVE-2026-29429",
     "discoveredDate": "2026-05-24",
-    "patchedDate": "2026-08-10",
     "cveIds": [
       "CVE-2026-29429"
     ],
-    "rawUrl": "https://example.com/chrome/CVE-2026-29429",
-    "patchLagDays": 78
+    "rawUrl": "https://example.com/chrome/CVE-2026-29429"
   },
   {
     "id": "CVE-2020-33197",
@@ -7771,12 +7753,10 @@
     "title": "Vulnerability in Chrome — CVE-2026-97671",
     "cvss": 8.5,
     "discoveredDate": "2026-05-25",
-    "patchedDate": "2026-07-26",
     "cveIds": [
       "CVE-2026-97671"
     ],
     "rawUrl": "https://example.com/chrome/CVE-2026-97671",
-    "patchLagDays": 62,
     "severity": "high"
   },
   {
@@ -8931,12 +8911,10 @@
     "title": "Vulnerability in Edge — CVE-2026-66875",
     "cvss": 1.5,
     "discoveredDate": "2026-05-02",
-    "patchedDate": "2026-07-12",
     "cveIds": [
       "CVE-2026-66875"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-66875",
-    "patchLagDays": 71,
     "severity": "low"
   },
   {
@@ -9431,12 +9409,10 @@
     "title": "Vulnerability in Exchange — CVE-2026-75993",
     "cvss": 9.8,
     "discoveredDate": "2026-06-06",
-    "patchedDate": "2026-07-27",
     "cveIds": [
       "CVE-2026-75993"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-75993",
-    "patchLagDays": 51,
     "severity": "critical"
   },
   {
@@ -11404,12 +11380,10 @@
     "product": "Edge",
     "title": "Vulnerability in Office 365 — CVE-2026-68096",
     "discoveredDate": "2026-06-10",
-    "patchedDate": "2026-08-07",
     "cveIds": [
       "CVE-2026-68096"
     ],
-    "rawUrl": "https://example.com/msrc/CVE-2026-68096",
-    "patchLagDays": 58
+    "rawUrl": "https://example.com/msrc/CVE-2026-68096"
   },
   {
     "id": "CVE-2022-16434",
@@ -11635,12 +11609,10 @@
     "title": "Vulnerability in Office 365 — CVE-2026-84141",
     "cvss": 0.8,
     "discoveredDate": "2026-06-24",
-    "patchedDate": "2026-09-15",
     "cveIds": [
       "CVE-2026-84141"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-84141",
-    "patchLagDays": 83,
     "severity": "low"
   },
   {
@@ -11906,12 +11878,10 @@
     "product": "Windows 10",
     "title": "Vulnerability in Edge — CVE-2026-51191",
     "discoveredDate": "2026-05-16",
-    "patchedDate": "2026-07-25",
     "cveIds": [
       "CVE-2026-51191"
     ],
-    "rawUrl": "https://example.com/msrc/CVE-2026-51191",
-    "patchLagDays": 70
+    "rawUrl": "https://example.com/msrc/CVE-2026-51191"
   },
   {
     "id": "CVE-2021-76847",
@@ -12547,12 +12517,10 @@
     "title": "Vulnerability in Edge — CVE-2026-74837",
     "cvss": 7.9,
     "discoveredDate": "2026-06-07",
-    "patchedDate": "2026-09-04",
     "cveIds": [
       "CVE-2026-74837"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-74837",
-    "patchLagDays": 89,
     "severity": "high"
   },
   {
@@ -12669,12 +12637,10 @@
     "title": "Vulnerability in Windows 10 — CVE-2026-67022",
     "cvss": 4.6,
     "discoveredDate": "2026-06-18",
-    "patchedDate": "2026-09-08",
     "cveIds": [
       "CVE-2026-67022"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-67022",
-    "patchLagDays": 82,
     "severity": "medium"
   },
   {
@@ -14659,12 +14625,10 @@
     "title": "Vulnerability in Exchange — CVE-2026-66885",
     "cvss": 2,
     "discoveredDate": "2026-06-19",
-    "patchedDate": "2026-07-20",
     "cveIds": [
       "CVE-2026-66885"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-66885",
-    "patchLagDays": 31,
     "severity": "low"
   },
   {
@@ -15329,12 +15293,10 @@
     "title": "Vulnerability in Windows 11 — CVE-2026-96351",
     "cvss": 5.3,
     "discoveredDate": "2026-06-26",
-    "patchedDate": "2026-09-13",
     "cveIds": [
       "CVE-2026-96351"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-96351",
-    "patchLagDays": 79,
     "severity": "medium"
   },
   {
@@ -15345,12 +15307,10 @@
     "title": "Vulnerability in Office 365 — CVE-2026-60982",
     "cvss": 5.2,
     "discoveredDate": "2026-06-27",
-    "patchedDate": "2026-07-03",
     "cveIds": [
       "CVE-2026-60982"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-60982",
-    "patchLagDays": 6,
     "severity": "medium"
   },
   {
@@ -15603,12 +15563,10 @@
     "title": "Vulnerability in Office 365 — CVE-2026-86903",
     "cvss": 9.4,
     "discoveredDate": "2026-06-01",
-    "patchedDate": "2026-07-02",
     "cveIds": [
       "CVE-2026-86903"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-86903",
-    "patchLagDays": 31,
     "severity": "critical"
   },
   {
@@ -15831,12 +15789,10 @@
     "title": "Vulnerability in Exchange — CVE-2026-90061",
     "cvss": 4.3,
     "discoveredDate": "2026-06-28",
-    "patchedDate": "2026-07-27",
     "cveIds": [
       "CVE-2026-90061"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-90061",
-    "patchLagDays": 29,
     "severity": "medium"
   },
   {
@@ -16185,12 +16141,10 @@
     "title": "Vulnerability in iPadOS — CVE-2026-66927",
     "cvss": 0.4,
     "discoveredDate": "2026-04-28",
-    "patchedDate": "2026-07-10",
     "cveIds": [
       "CVE-2026-66927"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-66927",
-    "patchLagDays": 73,
     "severity": "low"
   },
   {
@@ -16229,12 +16183,10 @@
     "title": "Vulnerability in Safari — CVE-2026-96971",
     "cvss": 2.2,
     "discoveredDate": "2026-04-26",
-    "patchedDate": "2026-07-12",
     "cveIds": [
       "CVE-2026-96971"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-96971",
-    "patchLagDays": 77,
     "severity": "low"
   },
   {
@@ -16663,12 +16615,10 @@
     "title": "Vulnerability in macOS — CVE-2026-71773",
     "cvss": 2.5,
     "discoveredDate": "2026-05-18",
-    "patchedDate": "2026-08-13",
     "cveIds": [
       "CVE-2026-71773"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-71773",
-    "patchLagDays": 87,
     "severity": "low"
   },
   {
@@ -16679,12 +16629,10 @@
     "title": "Vulnerability in macOS — CVE-2026-16807",
     "cvss": 2.7,
     "discoveredDate": "2026-06-26",
-    "patchedDate": "2026-09-14",
     "cveIds": [
       "CVE-2026-16807"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-16807",
-    "patchLagDays": 80,
     "severity": "low"
   },
   {
@@ -17793,12 +17741,10 @@
     "title": "Vulnerability in watchOS — CVE-2026-16537",
     "cvss": 8.4,
     "discoveredDate": "2026-06-27",
-    "patchedDate": "2026-07-06",
     "cveIds": [
       "CVE-2026-16537"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-16537",
-    "patchLagDays": 9,
     "severity": "high"
   },
   {
@@ -18778,12 +18724,10 @@
     "product": "Safari",
     "title": "Vulnerability in iPadOS — CVE-2026-91050",
     "discoveredDate": "2026-05-29",
-    "patchedDate": "2026-07-03",
     "cveIds": [
       "CVE-2026-91050"
     ],
-    "rawUrl": "https://example.com/apple/CVE-2026-91050",
-    "patchLagDays": 35
+    "rawUrl": "https://example.com/apple/CVE-2026-91050"
   },
   {
     "id": "CVE-2024-30926",
@@ -18836,12 +18780,10 @@
     "product": "iPadOS",
     "title": "Vulnerability in Safari — CVE-2026-71028",
     "discoveredDate": "2026-05-24",
-    "patchedDate": "2026-08-02",
     "cveIds": [
       "CVE-2026-71028"
     ],
-    "rawUrl": "https://example.com/apple/CVE-2026-71028",
-    "patchLagDays": 70
+    "rawUrl": "https://example.com/apple/CVE-2026-71028"
   },
   {
     "id": "CVE-2020-22533",
@@ -19761,12 +19703,10 @@
     "title": "Vulnerability in iPadOS — CVE-2026-61916",
     "cvss": 4.6,
     "discoveredDate": "2026-05-19",
-    "patchedDate": "2026-07-14",
     "cveIds": [
       "CVE-2026-61916"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-61916",
-    "patchLagDays": 56,
     "severity": "medium"
   },
   {
@@ -19927,12 +19867,10 @@
     "title": "Vulnerability in Safari — CVE-2026-71968",
     "cvss": 9.3,
     "discoveredDate": "2026-06-24",
-    "patchedDate": "2026-07-21",
     "cveIds": [
       "CVE-2026-71968"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-71968",
-    "patchLagDays": 27,
     "severity": "critical"
   },
   {
@@ -21701,12 +21639,10 @@
     "title": "Vulnerability in Chrome OS — CVE-2026-90791",
     "cvss": 1.6,
     "discoveredDate": "2026-05-24",
-    "patchedDate": "2026-08-01",
     "cveIds": [
       "CVE-2026-90791"
     ],
     "rawUrl": "https://example.com/projectzero/CVE-2026-90791",
-    "patchLagDays": 69,
     "severity": "low"
   },
   {
@@ -22113,12 +22049,10 @@
     "title": "Vulnerability in Android — CVE-2026-41656",
     "cvss": 9.4,
     "discoveredDate": "2026-05-10",
-    "patchedDate": "2026-07-27",
     "cveIds": [
       "CVE-2026-41656"
     ],
     "rawUrl": "https://example.com/projectzero/CVE-2026-41656",
-    "patchLagDays": 78,
     "severity": "critical"
   },
   {
@@ -22186,12 +22120,10 @@
     "product": "Chrome OS",
     "title": "Vulnerability in Chrome OS — CVE-2026-56784",
     "discoveredDate": "2026-06-02",
-    "patchedDate": "2026-07-14",
     "cveIds": [
       "CVE-2026-56784"
     ],
-    "rawUrl": "https://example.com/projectzero/CVE-2026-56784",
-    "patchLagDays": 42
+    "rawUrl": "https://example.com/projectzero/CVE-2026-56784"
   },
   {
     "id": "CVE-2023-40049",
@@ -22874,12 +22806,10 @@
     "product": "Oracle Database",
     "title": "Vulnerability in VirtualBox — CVE-2026-28013",
     "discoveredDate": "2026-06-20",
-    "patchedDate": "2026-08-05",
     "cveIds": [
       "CVE-2026-28013"
     ],
-    "rawUrl": "https://example.com/nvd/CVE-2026-28013",
-    "patchLagDays": 46
+    "rawUrl": "https://example.com/nvd/CVE-2026-28013"
   },
   {
     "id": "CVE-2024-20799",
@@ -22965,12 +22895,10 @@
     "title": "Vulnerability in VirtualBox — CVE-2026-96282",
     "cvss": 1.5,
     "discoveredDate": "2026-06-19",
-    "patchedDate": "2026-09-02",
     "cveIds": [
       "CVE-2026-96282"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-96282",
-    "patchLagDays": 75,
     "severity": "low"
   },
   {
@@ -24171,12 +24099,10 @@
     "title": "Vulnerability in Oracle Database — CVE-2026-60800",
     "cvss": 1.9,
     "discoveredDate": "2026-05-22",
-    "patchedDate": "2026-08-14",
     "cveIds": [
       "CVE-2026-60800"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-60800",
-    "patchLagDays": 84,
     "severity": "low"
   },
   {
@@ -27013,12 +26939,10 @@
     "title": "Vulnerability in Knox — CVE-2026-97319",
     "cvss": 1.2,
     "discoveredDate": "2026-06-10",
-    "patchedDate": "2026-07-09",
     "cveIds": [
       "CVE-2026-97319"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-97319",
-    "patchLagDays": 29,
     "severity": "low"
   },
   {
@@ -27275,12 +27199,10 @@
     "title": "Vulnerability in Debian — CVE-2026-23691",
     "cvss": 6.7,
     "discoveredDate": "2026-06-08",
-    "patchedDate": "2026-07-05",
     "cveIds": [
       "CVE-2026-23691"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-23691",
-    "patchLagDays": 27,
     "severity": "medium"
   },
   {
@@ -27441,12 +27363,10 @@
     "title": "Vulnerability in RHEL — CVE-2026-50523",
     "cvss": 3.3,
     "discoveredDate": "2026-05-08",
-    "patchedDate": "2026-07-05",
     "cveIds": [
       "CVE-2026-50523"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-50523",
-    "patchLagDays": 58,
     "severity": "low"
   },
   {
@@ -27605,12 +27525,10 @@
     "title": "Vulnerability in Debian — CVE-2026-32278",
     "cvss": 4.6,
     "discoveredDate": "2026-06-09",
-    "patchedDate": "2026-08-10",
     "cveIds": [
       "CVE-2026-32278"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-32278",
-    "patchLagDays": 62,
     "severity": "medium"
   },
   {
@@ -27697,12 +27615,10 @@
     "title": "Vulnerability in Debian — CVE-2026-57282",
     "cvss": 8.3,
     "discoveredDate": "2026-06-13",
-    "patchedDate": "2026-08-06",
     "cveIds": [
       "CVE-2026-57282"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-57282",
-    "patchLagDays": 54,
     "severity": "high"
   },
   {
@@ -28773,12 +28689,10 @@
     "title": "Vulnerability in Ubuntu — CVE-2026-34441",
     "cvss": 2.8,
     "discoveredDate": "2026-05-01",
-    "patchedDate": "2026-07-14",
     "cveIds": [
       "CVE-2026-34441"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-34441",
-    "patchLagDays": 74,
     "severity": "low"
   },
   {

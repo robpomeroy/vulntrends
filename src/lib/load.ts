@@ -160,7 +160,7 @@ export async function loadBacklogByYear(): Promise<BacklogPoint[]> {
 export async function loadDashboardData() {
   // Only suppress ENOENT (file not found) — data hasn't been generated yet.
   // Parse errors and other integrity issues must surface.
-  const optional = <T>(p: Promise<T>): Promise<T | []> =>
+  const optional = <T>(p: Promise<T[]>): Promise<T[]> =>
     p.catch((err) => {
       if (err instanceof Error && 'code' in err && err.code === 'ENOENT') return [];
       throw err;

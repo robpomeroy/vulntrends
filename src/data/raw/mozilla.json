@@ -1013,12 +1013,10 @@
     "title": "Vulnerability in Firefox ESR — CVE-2026-24338",
     "cvss": 8.1,
     "discoveredDate": "2026-05-13",
-    "patchedDate": "2026-08-09",
     "cveIds": [
       "CVE-2026-24338"
     ],
     "rawUrl": "https://example.com/mozilla/CVE-2026-24338",
-    "patchLagDays": 88,
     "severity": "high"
   },
   {
@@ -1452,12 +1450,10 @@
     "product": "Firefox",
     "title": "Vulnerability in Firefox — CVE-2026-23910",
     "discoveredDate": "2026-06-24",
-    "patchedDate": "2026-07-14",
     "cveIds": [
       "CVE-2026-23910"
     ],
-    "rawUrl": "https://example.com/mozilla/CVE-2026-23910",
-    "patchLagDays": 20
+    "rawUrl": "https://example.com/mozilla/CVE-2026-23910"
   },
   {
     "id": "CVE-2022-99733",
@@ -2595,12 +2591,10 @@
     "title": "Vulnerability in Firefox — CVE-2026-81718",
     "cvss": 1,
     "discoveredDate": "2026-06-29",
-    "patchedDate": "2026-08-10",
     "cveIds": [
       "CVE-2026-81718"
     ],
     "rawUrl": "https://example.com/mozilla/CVE-2026-81718",
-    "patchLagDays": 42,
     "severity": "low"
   },
   {
@@ -2938,12 +2932,10 @@
     "product": "Firefox ESR",
     "title": "Vulnerability in Firefox — CVE-2026-90692",
     "discoveredDate": "2026-06-01",
-    "patchedDate": "2026-08-18",
     "cveIds": [
       "CVE-2026-90692"
     ],
-    "rawUrl": "https://example.com/mozilla/CVE-2026-90692",
-    "patchLagDays": 78
+    "rawUrl": "https://example.com/mozilla/CVE-2026-90692"
   },
   {
     "id": "CVE-2020-69829",

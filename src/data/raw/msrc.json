@@ -623,12 +623,10 @@
     "title": "Vulnerability in Edge — CVE-2026-66875",
     "cvss": 1.5,
     "discoveredDate": "2026-05-02",
-    "patchedDate": "2026-07-12",
     "cveIds": [
       "CVE-2026-66875"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-66875",
-    "patchLagDays": 71,
     "severity": "low"
   },
   {
@@ -1123,12 +1121,10 @@
     "title": "Vulnerability in Exchange — CVE-2026-75993",
     "cvss": 9.8,
     "discoveredDate": "2026-06-06",
-    "patchedDate": "2026-07-27",
     "cveIds": [
       "CVE-2026-75993"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-75993",
-    "patchLagDays": 51,
     "severity": "critical"
   },
   {
@@ -3096,12 +3092,10 @@
     "product": "Edge",
     "title": "Vulnerability in Office 365 — CVE-2026-68096",
     "discoveredDate": "2026-06-10",
-    "patchedDate": "2026-08-07",
     "cveIds": [
       "CVE-2026-68096"
     ],
-    "rawUrl": "https://example.com/msrc/CVE-2026-68096",
-    "patchLagDays": 58
+    "rawUrl": "https://example.com/msrc/CVE-2026-68096"
   },
   {
     "id": "CVE-2022-16434",
@@ -3327,12 +3321,10 @@
     "title": "Vulnerability in Office 365 — CVE-2026-84141",
     "cvss": 0.8,
     "discoveredDate": "2026-06-24",
-    "patchedDate": "2026-09-15",
     "cveIds": [
       "CVE-2026-84141"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-84141",
-    "patchLagDays": 83,
     "severity": "low"
   },
   {
@@ -3598,12 +3590,10 @@
     "product": "Windows 10",
     "title": "Vulnerability in Edge — CVE-2026-51191",
     "discoveredDate": "2026-05-16",
-    "patchedDate": "2026-07-25",
     "cveIds": [
       "CVE-2026-51191"
     ],
-    "rawUrl": "https://example.com/msrc/CVE-2026-51191",
-    "patchLagDays": 70
+    "rawUrl": "https://example.com/msrc/CVE-2026-51191"
   },
   {
     "id": "CVE-2021-76847",
@@ -4239,12 +4229,10 @@
     "title": "Vulnerability in Edge — CVE-2026-74837",
     "cvss": 7.9,
     "discoveredDate": "2026-06-07",
-    "patchedDate": "2026-09-04",
     "cveIds": [
       "CVE-2026-74837"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-74837",
-    "patchLagDays": 89,
     "severity": "high"
   },
   {
@@ -4361,12 +4349,10 @@
     "title": "Vulnerability in Windows 10 — CVE-2026-67022",
     "cvss": 4.6,
     "discoveredDate": "2026-06-18",
-    "patchedDate": "2026-09-08",
     "cveIds": [
       "CVE-2026-67022"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-67022",
-    "patchLagDays": 82,
     "severity": "medium"
   },
   {
@@ -6351,12 +6337,10 @@
     "title": "Vulnerability in Exchange — CVE-2026-66885",
     "cvss": 2,
     "discoveredDate": "2026-06-19",
-    "patchedDate": "2026-07-20",
     "cveIds": [
       "CVE-2026-66885"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-66885",
-    "patchLagDays": 31,
     "severity": "low"
   },
   {
@@ -7021,12 +7005,10 @@
     "title": "Vulnerability in Windows 11 — CVE-2026-96351",
     "cvss": 5.3,
     "discoveredDate": "2026-06-26",
-    "patchedDate": "2026-09-13",
     "cveIds": [
       "CVE-2026-96351"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-96351",
-    "patchLagDays": 79,
     "severity": "medium"
   },
   {
@@ -7037,12 +7019,10 @@
     "title": "Vulnerability in Office 365 — CVE-2026-60982",
     "cvss": 5.2,
     "discoveredDate": "2026-06-27",
-    "patchedDate": "2026-07-03",
     "cveIds": [
       "CVE-2026-60982"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-60982",
-    "patchLagDays": 6,
     "severity": "medium"
   },
   {
@@ -7295,12 +7275,10 @@
     "title": "Vulnerability in Office 365 — CVE-2026-86903",
     "cvss": 9.4,
     "discoveredDate": "2026-06-01",
-    "patchedDate": "2026-07-02",
     "cveIds": [
       "CVE-2026-86903"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-86903",
-    "patchLagDays": 31,
     "severity": "critical"
   },
   {
@@ -7523,12 +7501,10 @@
     "title": "Vulnerability in Exchange — CVE-2026-90061",
     "cvss": 4.3,
     "discoveredDate": "2026-06-28",
-    "patchedDate": "2026-07-27",
     "cveIds": [
       "CVE-2026-90061"
     ],
     "rawUrl": "https://example.com/msrc/CVE-2026-90061",
-    "patchLagDays": 29,
     "severity": "medium"
   }
 ]

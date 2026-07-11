@@ -156,7 +156,14 @@ export function deduplicateRecords(
 
 /**
  * Deduplicate records by CVE ID rather than record ID.
- * Merges CVE IDs from multiple records into a single entry.
+ *
+ * Materialises one output record per CVE key, setting `id` and `cveIds` to
+ * that single CVE so every returned record has a unique ID. This prevents
+ * advisories that cover multiple CVEs from appearing multiple times in the
+ * output and inflating downstream counts.
+ *
+ * Records with no CVE IDs are deduplicated by their own `id` field and
+ * included as-is.
  */
 export function deduplicateByCve(
   records: VulnerabilityRecord[],
@@ -170,22 +177,26 @@ export function deduplicateByCve(
     for (const cve of cves) {
       const existing = byCve.get(cve);
       if (!existing) {
-        byCve.set(cve, record);
+        // Materialise a new record scoped to this single CVE
+        byCve.set(cve, { ...record, id: cve, cveIds: [cve] });
         continue;
       }
-      // Prefer non-NVD records
+      // Prefer non-NVD records (vendor advisories have better timing data)
       if (existing.source === 'nvd' && record.source !== 'nvd') {
-        byCve.set(cve, record);
+        byCve.set(cve, { ...record, id: cve, cveIds: [cve] });
       }
     }
   }
 
-  // Also include records with no CVE IDs (use their own ID)
-  const noCveRecords = records.filter((r) => !r.cveIds || r.cveIds.length === 0);
+  // Also include records with no CVE IDs — deduplicate by their own id
   const byId = new Map<string, VulnerabilityRecord>();
-  for (const record of noCveRecords) {
-    byId.set(record.id, record);
+  for (const record of records) {
+    if (!record.cveIds || record.cveIds.length === 0) {
+      if (!byId.has(record.id)) {
+        byId.set(record.id, record);
+      }
+    }
   }
 
-  return [...byCve.values(), ...[...byId.values()]];
+  return [...byCve.values(), ...byId.values()];
 }

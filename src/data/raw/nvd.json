@@ -250,12 +250,10 @@
     "product": "Oracle Database",
     "title": "Vulnerability in VirtualBox — CVE-2026-28013",
     "discoveredDate": "2026-06-20",
-    "patchedDate": "2026-08-05",
     "cveIds": [
       "CVE-2026-28013"
     ],
-    "rawUrl": "https://example.com/nvd/CVE-2026-28013",
-    "patchLagDays": 46
+    "rawUrl": "https://example.com/nvd/CVE-2026-28013"
   },
   {
     "id": "CVE-2024-20799",
@@ -341,12 +339,10 @@
     "title": "Vulnerability in VirtualBox — CVE-2026-96282",
     "cvss": 1.5,
     "discoveredDate": "2026-06-19",
-    "patchedDate": "2026-09-02",
     "cveIds": [
       "CVE-2026-96282"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-96282",
-    "patchLagDays": 75,
     "severity": "low"
   },
   {
@@ -1547,12 +1543,10 @@
     "title": "Vulnerability in Oracle Database — CVE-2026-60800",
     "cvss": 1.9,
     "discoveredDate": "2026-05-22",
-    "patchedDate": "2026-08-14",
     "cveIds": [
       "CVE-2026-60800"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-60800",
-    "patchLagDays": 84,
     "severity": "low"
   },
   {
@@ -4389,12 +4383,10 @@
     "title": "Vulnerability in Knox — CVE-2026-97319",
     "cvss": 1.2,
     "discoveredDate": "2026-06-10",
-    "patchedDate": "2026-07-09",
     "cveIds": [
       "CVE-2026-97319"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-97319",
-    "patchLagDays": 29,
     "severity": "low"
   },
   {
@@ -4651,12 +4643,10 @@
     "title": "Vulnerability in Debian — CVE-2026-23691",
     "cvss": 6.7,
     "discoveredDate": "2026-06-08",
-    "patchedDate": "2026-07-05",
     "cveIds": [
       "CVE-2026-23691"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-23691",
-    "patchLagDays": 27,
     "severity": "medium"
   },
   {
@@ -4817,12 +4807,10 @@
     "title": "Vulnerability in RHEL — CVE-2026-50523",
     "cvss": 3.3,
     "discoveredDate": "2026-05-08",
-    "patchedDate": "2026-07-05",
     "cveIds": [
       "CVE-2026-50523"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-50523",
-    "patchLagDays": 58,
     "severity": "low"
   },
   {
@@ -4981,12 +4969,10 @@
     "title": "Vulnerability in Debian — CVE-2026-32278",
     "cvss": 4.6,
     "discoveredDate": "2026-06-09",
-    "patchedDate": "2026-08-10",
     "cveIds": [
       "CVE-2026-32278"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-32278",
-    "patchLagDays": 62,
     "severity": "medium"
   },
   {
@@ -5073,12 +5059,10 @@
     "title": "Vulnerability in Debian — CVE-2026-57282",
     "cvss": 8.3,
     "discoveredDate": "2026-06-13",
-    "patchedDate": "2026-08-06",
     "cveIds": [
       "CVE-2026-57282"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-57282",
-    "patchLagDays": 54,
     "severity": "high"
   },
   {
@@ -6149,12 +6133,10 @@
     "title": "Vulnerability in Ubuntu — CVE-2026-34441",
     "cvss": 2.8,
     "discoveredDate": "2026-05-01",
-    "patchedDate": "2026-07-14",
     "cveIds": [
       "CVE-2026-34441"
     ],
     "rawUrl": "https://example.com/nvd/CVE-2026-34441",
-    "patchLagDays": 74,
     "severity": "low"
   },
   {

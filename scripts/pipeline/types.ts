@@ -2,8 +2,8 @@
  * Canonical vulnerability record schema.
  *
  * All data source parsers produce records conforming to this type. The pipeline
- * orchestrator merges and deduplicates records by CVE ID before writing to
- * `src/data/raw/`.
+ * orchestrator writes per-source raw JSON, then merges and deduplicates records
+ * by CVE ID for the combined `src/data/raw/all.json` output.
  */
 
 /** Identifiers for the data sources we ingest. */

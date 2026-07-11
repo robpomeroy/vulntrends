@@ -345,12 +345,10 @@
     "title": "Vulnerability in iPadOS — CVE-2026-66927",
     "cvss": 0.4,
     "discoveredDate": "2026-04-28",
-    "patchedDate": "2026-07-10",
     "cveIds": [
       "CVE-2026-66927"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-66927",
-    "patchLagDays": 73,
     "severity": "low"
   },
   {
@@ -389,12 +387,10 @@
     "title": "Vulnerability in Safari — CVE-2026-96971",
     "cvss": 2.2,
     "discoveredDate": "2026-04-26",
-    "patchedDate": "2026-07-12",
     "cveIds": [
       "CVE-2026-96971"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-96971",
-    "patchLagDays": 77,
     "severity": "low"
   },
   {
@@ -823,12 +819,10 @@
     "title": "Vulnerability in macOS — CVE-2026-71773",
     "cvss": 2.5,
     "discoveredDate": "2026-05-18",
-    "patchedDate": "2026-08-13",
     "cveIds": [
       "CVE-2026-71773"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-71773",
-    "patchLagDays": 87,
     "severity": "low"
   },
   {
@@ -839,12 +833,10 @@
     "title": "Vulnerability in macOS — CVE-2026-16807",
     "cvss": 2.7,
     "discoveredDate": "2026-06-26",
-    "patchedDate": "2026-09-14",
     "cveIds": [
       "CVE-2026-16807"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-16807",
-    "patchLagDays": 80,
     "severity": "low"
   },
   {
@@ -1953,12 +1945,10 @@
     "title": "Vulnerability in watchOS — CVE-2026-16537",
     "cvss": 8.4,
     "discoveredDate": "2026-06-27",
-    "patchedDate": "2026-07-06",
     "cveIds": [
       "CVE-2026-16537"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-16537",
-    "patchLagDays": 9,
     "severity": "high"
   },
   {
@@ -2938,12 +2928,10 @@
     "product": "Safari",
     "title": "Vulnerability in iPadOS — CVE-2026-91050",
     "discoveredDate": "2026-05-29",
-    "patchedDate": "2026-07-03",
     "cveIds": [
       "CVE-2026-91050"
     ],
-    "rawUrl": "https://example.com/apple/CVE-2026-91050",
-    "patchLagDays": 35
+    "rawUrl": "https://example.com/apple/CVE-2026-91050"
   },
   {
     "id": "CVE-2024-30926",
@@ -2996,12 +2984,10 @@
     "product": "iPadOS",
     "title": "Vulnerability in Safari — CVE-2026-71028",
     "discoveredDate": "2026-05-24",
-    "patchedDate": "2026-08-02",
     "cveIds": [
       "CVE-2026-71028"
     ],
-    "rawUrl": "https://example.com/apple/CVE-2026-71028",
-    "patchLagDays": 70
+    "rawUrl": "https://example.com/apple/CVE-2026-71028"
   },
   {
     "id": "CVE-2020-22533",
@@ -3921,12 +3907,10 @@
     "title": "Vulnerability in iPadOS — CVE-2026-61916",
     "cvss": 4.6,
     "discoveredDate": "2026-05-19",
-    "patchedDate": "2026-07-14",
     "cveIds": [
       "CVE-2026-61916"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-61916",
-    "patchLagDays": 56,
     "severity": "medium"
   },
   {
@@ -4087,12 +4071,10 @@
     "title": "Vulnerability in Safari — CVE-2026-71968",
     "cvss": 9.3,
     "discoveredDate": "2026-06-24",
-    "patchedDate": "2026-07-21",
     "cveIds": [
       "CVE-2026-71968"
     ],
     "rawUrl": "https://example.com/apple/CVE-2026-71968",
-    "patchLagDays": 27,
     "severity": "critical"
   },
   {

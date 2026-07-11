@@ -1202,12 +1202,10 @@
     "product": "Chrome OS",
     "title": "Vulnerability in Android — CVE-2026-60283",
     "discoveredDate": "2026-04-25",
-    "patchedDate": "2026-07-15",
     "cveIds": [
       "CVE-2026-60283"
     ],
-    "rawUrl": "https://example.com/chrome/CVE-2026-60283",
-    "patchLagDays": 81
+    "rawUrl": "https://example.com/chrome/CVE-2026-60283"
   },
   {
     "id": "CVE-2020-73050",
@@ -2727,12 +2725,10 @@
     "title": "Vulnerability in Chrome — CVE-2026-38927",
     "cvss": 3.2,
     "discoveredDate": "2026-04-11",
-    "patchedDate": "2026-07-09",
     "cveIds": [
       "CVE-2026-38927"
     ],
     "rawUrl": "https://example.com/chrome/CVE-2026-38927",
-    "patchLagDays": 89,
     "severity": "low"
   },
   {
@@ -3986,12 +3982,10 @@
     "product": "Chrome",
     "title": "Vulnerability in Android — CVE-2026-93455",
     "discoveredDate": "2026-05-26",
-    "patchedDate": "2026-07-10",
     "cveIds": [
       "CVE-2026-93455"
     ],
-    "rawUrl": "https://example.com/chrome/CVE-2026-93455",
-    "patchLagDays": 45
+    "rawUrl": "https://example.com/chrome/CVE-2026-93455"
   },
   {
     "id": "CVE-2026-29064",
@@ -4091,12 +4085,10 @@
     "title": "Vulnerability in Chrome OS — CVE-2026-56363",
     "cvss": 2.3,
     "discoveredDate": "2026-05-27",
-    "patchedDate": "2026-07-18",
     "cveIds": [
       "CVE-2026-56363"
     ],
     "rawUrl": "https://example.com/chrome/CVE-2026-56363",
-    "patchLagDays": 52,
     "severity": "low"
   },
   {
@@ -4604,12 +4596,10 @@
     "product": "Chrome OS",
     "title": "Vulnerability in Android — CVE-2026-29429",
     "discoveredDate": "2026-05-24",
-    "patchedDate": "2026-08-10",
     "cveIds": [
       "CVE-2026-29429"
     ],
-    "rawUrl": "https://example.com/chrome/CVE-2026-29429",
-    "patchLagDays": 78
+    "rawUrl": "https://example.com/chrome/CVE-2026-29429"
   },
   {
     "id": "CVE-2020-33197",
@@ -4735,12 +4725,10 @@
     "title": "Vulnerability in Chrome — CVE-2026-97671",
     "cvss": 8.5,
     "discoveredDate": "2026-05-25",
-    "patchedDate": "2026-07-26",
     "cveIds": [
       "CVE-2026-97671"
     ],
     "rawUrl": "https://example.com/chrome/CVE-2026-97671",
-    "patchLagDays": 62,
     "severity": "high"
   },
   {

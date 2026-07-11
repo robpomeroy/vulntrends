@@ -147,6 +147,43 @@ async function main(): Promise<void> {
     allRecords.push(...records);
   }
 
+  // Generate NVD "discovery" records for a subset of vendor CVEs.
+  // In real data, NVD has a `published` date (proxy for discovery) that is
+  // earlier than the vendor's patch date. The deduplication merge logic
+  // combines these to produce a real patch lag.
+  console.log('Generating NVD discovery records for vendor CVEs...');
+  const vendorRecords = allRecords.filter(
+    (r) => r.source !== 'nvd' && r.cveIds && r.cveIds.length > 0,
+  );
+  const nvdDiscoveryRecords: VulnerabilityRecord[] = [];
+  for (const vr of vendorRecords) {
+    // Generate an NVD record for ~60% of vendor CVEs
+    if (rng() > 0.6) continue;
+    if (!vr.discoveredDate || !vr.patchedDate) continue;
+    // NVD published date is 1-30 days before the vendor's patch date
+    // (simulating the gap between CVE publication and vendor patch release)
+    const lagDays = randomInt(1, 30);
+    const nvdDate = addDays(vr.patchedDate, -lagDays);
+    // Only use the NVD date if it's before the vendor's date
+    if (new Date(nvdDate) > new Date(vr.patchedDate)) continue;
+    nvdDiscoveryRecords.push(
+      buildRecord({
+        id: vr.id,
+        source: 'nvd',
+        manufacturer: vr.manufacturer,
+        title: vr.title,
+        discoveredDate: nvdDate,
+        // NVD records don't have patchedDate — the merge will take it
+        // from the vendor record
+        cveIds: vr.cveIds,
+        rawUrl: `https://nvd.nist.gov/vuln/detail/${vr.id}`,
+      }),
+    );
+  }
+  sourceCounts.nvd += nvdDiscoveryRecords.length;
+  allRecords.push(...nvdDiscoveryRecords);
+  console.log(`  Generated ${nvdDiscoveryRecords.length} NVD discovery records`);
+
   // Write per-source raw files
   for (const sourceId of Object.keys(sourceCounts) as SourceId[]) {
     const sourceRecords = allRecords.filter((r) => r.source === sourceId);

@@ -162,9 +162,59 @@ export function buildRecord(
 }
 
 /**
+ * Merge two records for the same CVE, taking the best fields from each.
+ *
+ * Vendor advisories (Mozilla, MSRC, Chrome, Apple) typically have a patch
+ * date but use it as both discoveredDate and patchedDate (→ 0 lag). NVD
+ * records have a `published` date (a proxy for discovery) but no patch
+ * date. By merging, we get the NVD discovery date + the vendor patch date,
+ * yielding a real patch lag.
+ *
+ * Preference order for each field:
+ * - discoveredDate: NVD published date > vendor date (NVD is closer to
+ *   actual discovery; vendor date is the advisory/patch date)
+ * - patchedDate: vendor date > NVD (NVD doesn't have patch dates)
+ * - severity/cvss: whichever is present (prefer vendor if both)
+ * - source: keep the vendor source (richer data overall)
+ */
+function mergeRecords(
+  vendor: VulnerabilityRecord,
+  nvd: VulnerabilityRecord,
+): VulnerabilityRecord {
+  // Use NVD's discoveredDate if the vendor's discoveredDate equals its
+  // patchedDate (i.e. the vendor used the patch date as a discovery proxy).
+  // Otherwise keep the vendor's discoveredDate (it may be from Project Zero
+  // which has real Reported- dates).
+  const useNvdDiscovery =
+    vendor.discoveredDate === vendor.patchedDate &&
+    nvd.discoveredDate &&
+    nvd.discoveredDate !== vendor.patchedDate;
+
+  const discoveredDate = useNvdDiscovery
+    ? nvd.discoveredDate
+    : vendor.discoveredDate;
+
+  const patchedDate = vendor.patchedDate ?? nvd.patchedDate;
+  const patchLagDays = computePatchLagDays(discoveredDate, patchedDate);
+
+  return {
+    ...vendor,
+    discoveredDate,
+    patchedDate,
+    patchLagDays,
+    // Prefer vendor severity/cvss, fall back to NVD
+    severity: vendor.severity ?? nvd.severity,
+    cvss: vendor.cvss ?? nvd.cvss,
+  };
+}
+
+/**
  * Deduplicate an array of records by their `id` field.
- * When two records share an ID, the one from a vendor-specific source
- * (non-NVD) is preferred, as it typically has richer timing data.
+ *
+ * When a vendor record and an NVD record share the same ID, they are
+ * merged: the NVD `published` date is used as `discoveredDate` (a proxy
+ * for when the vulnerability was first reported) and the vendor's
+ * `patchedDate` is kept. This yields a real patch lag instead of 0.
  */
 export function deduplicateRecords(
   records: VulnerabilityRecord[],
@@ -177,10 +227,14 @@ export function deduplicateRecords(
       byId.set(record.id, record);
       continue;
     }
-    // Prefer non-NVD records (vendor advisories have better timing data)
+
+    // Merge vendor + NVD records to get real patch lag
     if (existing.source === 'nvd' && record.source !== 'nvd') {
-      byId.set(record.id, record);
+      byId.set(record.id, mergeRecords(record, existing));
+    } else if (record.source === 'nvd' && existing.source !== 'nvd') {
+      byId.set(record.id, mergeRecords(existing, record));
     }
+    // If both are from the same category, keep the first (no merge needed)
   }
 
   return [...byId.values()];
@@ -193,6 +247,9 @@ export function deduplicateRecords(
  * that single CVE so every returned record has a unique ID. This prevents
  * advisories that cover multiple CVEs from appearing multiple times in the
  * output and inflating downstream counts.
+ *
+ * When a vendor record and an NVD record share the same CVE, they are
+ * merged (see `mergeRecords`) to produce a real patch lag.
  *
  * Records with no CVE IDs are deduplicated by their own `id` field and
  * included as-is.
@@ -209,14 +266,17 @@ export function deduplicateByCve(
     for (const cve of cves) {
       const existing = byCve.get(cve);
       if (!existing) {
-        // Materialise a new record scoped to this single CVE
         byCve.set(cve, { ...record, id: cve, cveIds: [cve] });
         continue;
       }
-      // Prefer non-NVD records (vendor advisories have better timing data)
+
+      // Merge vendor + NVD records to get real patch lag
       if (existing.source === 'nvd' && record.source !== 'nvd') {
-        byCve.set(cve, { ...record, id: cve, cveIds: [cve] });
+        byCve.set(cve, { ...mergeRecords(record, existing), id: cve, cveIds: [cve] });
+      } else if (record.source === 'nvd' && existing.source !== 'nvd') {
+        byCve.set(cve, { ...mergeRecords(existing, record), id: cve, cveIds: [cve] });
       }
+      // If both are from the same category, keep the first
     }
   }
 

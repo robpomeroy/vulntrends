@@ -142,7 +142,7 @@
     const stripWidth = width - margin.left - BRUSH_MARGIN_RIGHT;
     const stripHeight = brushInnerHeight();
     const stripX = margin.left;
-    const stripY = brushY(mainHeight) + BRUSH_LAYOUT.padding;
+    const stripY = brushY(mainHeight);
 
     d3.select(svg).selectAll('*').remove();
     d3.select(svg).attr('width', width).attr('height', height);

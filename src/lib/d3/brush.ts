@@ -23,22 +23,24 @@ import { setDateRange, type DateRange } from '../store';
 
 /**
  * Strip layout constants. Kept in one place so every chart renders
- * the brush at the same height and with the same internal padding.
+ * the brush at the same height.
+ *
+ * The strip has NO internal padding — the brush fills the strip end
+ * to end so the bottom of the strip lines up with the bottom of the
+ * SVG and the card border. The "Drag to zoom" hint label lives in
+ * the gap above the strip (at y = -2 from the strip top).
  */
 export const BRUSH_LAYOUT = {
-  /** Total height of the strip including its internal padding. */
+  /** Total height of the strip. The brush fills it completely. */
   stripHeight: 50,
-  /** Padding inside the strip on each side. The brush lives within
-   *  `stripHeight - padding * 2` so the D3 brush never sees a
-   *  negative or zero inner height. */
-  padding: 4,
-  /** Gap between the main chart and the strip. */
+  /** Gap between the main chart and the strip. The hint label
+   *  ("Drag to zoom, double-click to reset") sits in this gap. */
   gap: 8,
 } as const;
 
-/** Compute the inner brush height from the strip layout. */
+/** The brush's height equals the strip height (no internal padding). */
 export function brushInnerHeight(): number {
-  return BRUSH_LAYOUT.stripHeight - BRUSH_LAYOUT.padding * 2;
+  return BRUSH_LAYOUT.stripHeight;
 }
 
 /** Y offset (relative to the SVG top) where the strip starts. */

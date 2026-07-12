@@ -52,17 +52,16 @@ async function fetchUpdatePosts(): Promise<ChromeUpdate[]> {
       const title = match[2].trim();
       const date = parseDate(match[3]);
 
-      // Only interested in stable channel security posts
+      // Only interested in stable channel security posts.
+      // The "stable channel" / "stable update" check also implicitly
+      // filters out posts with empty titles (empty string won't match
+      // the regex), so by this point title is guaranteed non-empty.
       if (!title.match(/stable channel|stable update/i)) continue;
       if (!date) continue;
 
-      // Fall back to the date if the blog post has no title text,
-      // so the title is always non-empty per the Zod schema contract.
-      const safeTitle = title || `Chrome update ${date}`;
-
       // Fetch the full post to extract CVE details
       updates.push({
-        title: safeTitle,
+        title,
         url,
         date,
         cveIds: [],

@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-07-12T14:08:06.858Z",
+  "lastUpdated": "2026-07-11T17:21:49.627Z",
   "sourceCounts": {
-    "mozilla": 200,
-    "chrome": 350,
-    "msrc": 500,
-    "apple": 300,
-    "projectzero": 150,
-    "nvd": 1311
+    "mozilla": 1098,
+    "chrome": 0,
+    "msrc": 0,
+    "apple": 0,
+    "projectzero": 0,
+    "nvd": 30077
   },
-  "totalRecords": 2811
+  "totalRecords": 30179
 }

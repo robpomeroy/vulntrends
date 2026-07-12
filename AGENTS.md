@@ -15,7 +15,7 @@ annotations or editorial framing — and lets users draw their own conclusions.
 - **Visualisation**: D3.js (vanilla, wrapped in Svelte components)
 - **Styling**: Tailwind CSS (dark-first dashboard aesthetic)
 - **Data validation**: Zod schemas
-- **Pipeline tooling**: tsx + TypeScript (Node 22+)
+- **Pipeline tooling**: tsx + TypeScript (Node 24+)
 - **Deployment**: GitHub Pages via GitHub Actions
 
 ## Commands

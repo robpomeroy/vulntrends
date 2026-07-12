@@ -51,8 +51,12 @@ export function chartSvgHeight(mainHeight: number): number {
   return mainHeight + BRUSH_LAYOUT.gap + BRUSH_LAYOUT.stripHeight;
 }
 
-/** Strip margin: leaves room for the chart's main left axis (48px). */
-export const BRUSH_MARGIN_LEFT = 48;
+/**
+ * Default right margin between the brush strip and the SVG edge. The
+ * left margin is supplied by the caller because it must match the
+ * main chart's `margin.left` (which varies with the y-axis label
+ * width — e.g. "Days to patch" is wider than "Vulnerabilities").
+ */
 export const BRUSH_MARGIN_RIGHT = 16;
 
 /** Arguments for {@link renderBrushStrip}. */
@@ -63,6 +67,13 @@ export interface BrushStripOptions {
   innerWidth: number;
   /** Strip inner height (after the strip's own padding). */
   innerHeight: number;
+  /**
+   * X offset of the strip's inner area, relative to the SVG left edge.
+   * Defaults to the strip's left margin but should be set to match the
+   * main chart's `margin.left` so the brush aligns with the plot area
+   * (not the y-axis labels).
+   */
+  xOffset: number;
   /** Y offset of the strip's inner area, relative to the SVG top. */
   yOffset: number;
   /** Per-date data points. Must include `date` (bucket key) and a
@@ -82,7 +93,7 @@ export interface BrushStripOptions {
  * the selection.
  */
 export function renderBrushStrip(opts: BrushStripOptions): void {
-  const { svg, innerWidth, innerHeight, yOffset, data, granularity, dateRange } = opts;
+  const { svg, innerWidth, innerHeight, xOffset, yOffset, data, granularity, dateRange } = opts;
 
   if (innerHeight <= 0 || innerWidth <= 0) return;
   if (data.length === 0) return;
@@ -129,7 +140,7 @@ export function renderBrushStrip(opts: BrushStripOptions): void {
     .select(svg)
     .append('g')
     .attr('class', 'brush-group')
-    .attr('transform', `translate(${BRUSH_MARGIN_LEFT},${yOffset})`);
+    .attr('transform', `translate(${xOffset},${yOffset})`);
 
   // Minimap background
   g.append('rect')

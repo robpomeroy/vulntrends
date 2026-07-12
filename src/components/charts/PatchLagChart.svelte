@@ -10,7 +10,6 @@
   import { createTooltip, type Tooltip } from '@/lib/d3/tooltip';
   import {
     BRUSH_LAYOUT,
-    BRUSH_MARGIN_LEFT,
     BRUSH_MARGIN_RIGHT,
     brushInnerHeight,
     brushY,
@@ -140,8 +139,9 @@
     const margin = { top: 16, right: 16, bottom: 24, left: 56 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = mainHeight - margin.top - margin.bottom;
-    const stripWidth = width - BRUSH_MARGIN_LEFT - BRUSH_MARGIN_RIGHT;
+    const stripWidth = width - margin.left - BRUSH_MARGIN_RIGHT;
     const stripHeight = brushInnerHeight();
+    const stripX = margin.left;
     const stripY = brushY(mainHeight) + BRUSH_LAYOUT.padding;
 
     d3.select(svg).selectAll('*').remove();
@@ -176,6 +176,7 @@
       svg,
       innerWidth: stripWidth,
       innerHeight: stripHeight,
+      xOffset: stripX,
       yOffset: stripY,
       data: brushData,
       granularity,

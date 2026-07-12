@@ -93,12 +93,13 @@ async function fetchAdvisoryRecords(advisory: MfsaAdvisory): Promise<Vulnerabili
 
     if (cveIds.length === 0) {
       // Some advisories don't list individual CVEs — create one record per advisory
+      // Fall back to the advisory ID when the HTML link text is empty
       records.push(
         buildRecord({
           id: advisory.id,
           source: 'mozilla',
           manufacturer: 'Mozilla',
-          title: advisory.title,
+          title: advisory.title || advisory.id,
           discoveredDate: patchedDate,
           patchedDate,
           cveIds: undefined,
@@ -112,7 +113,7 @@ async function fetchAdvisoryRecords(advisory: MfsaAdvisory): Promise<Vulnerabili
           id: advisory.id,
           source: 'mozilla',
           manufacturer: 'Mozilla',
-          title: advisory.title,
+          title: advisory.title || advisory.id,
           discoveredDate: patchedDate,
           patchedDate,
           cveIds,

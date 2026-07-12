@@ -52,9 +52,12 @@ async function fetchAdvisoryIndex(): Promise<AppleAdvisory[]> {
     const id = match[2];
     if (seen.has(id)) continue;
     seen.add(id);
+    // Fall back to the advisory ID when the HTML link text is empty,
+    // so the title is always non-empty per the Zod schema contract.
+    const title = match[3].trim() || id;
     advisories.push({
       id,
-      title: match[3].trim(),
+      title,
       url: match[1],
       date: undefined,
       cveIds: [],
@@ -72,10 +75,12 @@ async function fetchAdvisoryIndex(): Promise<AppleAdvisory[]> {
       if (!idMatch) continue;
       const id = idMatch[0];
       if (seen.has(id)) continue;
+      // Fall back to the advisory ID when the HTML link text is empty.
+      const title = match[2].trim() || id;
       seen.add(id);
       advisories.push({
         id,
-        title: match[2].trim(),
+        title,
         url: url.startsWith('http') ? url : `https://support.apple.com${url}`,
         date: undefined,
         cveIds: [],
@@ -120,6 +125,9 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
     // Extract CVE IDs from the page
     const cveIds = extractCveIds(html) ?? [];
 
+    // Fall back to the advisory ID when the HTML link text is empty
+    const baseTitle = advisory.title || advisory.id;
+
     if (cveIds.length === 0) {
       // No CVEs listed — create one record for the advisory
       return [
@@ -127,7 +135,7 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
           id: advisory.id,
           source: 'apple',
           manufacturer: 'Apple',
-          title: advisory.title,
+          title: baseTitle,
           discoveredDate: patchedDate,
           patchedDate,
           rawUrl: advisory.url,
@@ -141,7 +149,7 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
         id: cveId,
         source: 'apple',
         manufacturer: 'Apple',
-        title: `${advisory.title} — ${cveId}`,
+        title: `${baseTitle} — ${cveId}`,
         discoveredDate: patchedDate,
         patchedDate,
         cveIds: [cveId],

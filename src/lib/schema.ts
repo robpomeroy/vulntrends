@@ -21,7 +21,14 @@ export const vulnerabilityRecordSchema = z.object({
   source: sourceIdSchema,
   manufacturer: z.string().min(1),
   product: z.string().optional(),
-  title: z.string().min(1),
+  // Title is required and must be non-empty after trimming. The per-source
+  // parsers are responsible for falling back to the advisory ID when the
+  // source HTML doesn't provide a human-readable title (e.g. empty link
+  // text in Mozilla/Apple), so this contract can be enforced strictly.
+  title: z
+    .string()
+    .transform((s) => s.trim())
+    .refine((s) => s.length > 0, 'title must be non-empty'),
   severity: severitySchema.optional(),
   cvss: z.number().min(0).max(10).optional(),
   discoveredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),

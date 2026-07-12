@@ -52,7 +52,10 @@ async function fetchUpdatePosts(): Promise<ChromeUpdate[]> {
       const title = match[2].trim();
       const date = parseDate(match[3]);
 
-      // Only interested in stable channel security posts
+      // Only interested in stable channel security posts.
+      // The "stable channel" / "stable update" check also implicitly
+      // filters out posts with empty titles (empty string won't match
+      // the regex), so by this point title is guaranteed non-empty.
       if (!title.match(/stable channel|stable update/i)) continue;
       if (!date) continue;
 

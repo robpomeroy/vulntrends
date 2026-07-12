@@ -21,7 +21,10 @@ export const vulnerabilityRecordSchema = z.object({
   source: sourceIdSchema,
   manufacturer: z.string().min(1),
   product: z.string().optional(),
-  title: z.string().min(1),
+  // Title is optional — some vendor sources don't always provide a
+  // human-readable advisory title (e.g. empty link text in Mozilla/Apple
+  // HTML). The parsers fall back to the advisory ID when missing.
+  title: z.string().optional(),
   severity: severitySchema.optional(),
   cvss: z.number().min(0).max(10).optional(),
   discoveredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),

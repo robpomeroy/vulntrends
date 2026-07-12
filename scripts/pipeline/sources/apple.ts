@@ -120,6 +120,9 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
     // Extract CVE IDs from the page
     const cveIds = extractCveIds(html) ?? [];
 
+    // Fall back to the advisory ID when the HTML link text is empty
+    const baseTitle = advisory.title || advisory.id;
+
     if (cveIds.length === 0) {
       // No CVEs listed — create one record for the advisory
       return [
@@ -127,7 +130,7 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
           id: advisory.id,
           source: 'apple',
           manufacturer: 'Apple',
-          title: advisory.title,
+          title: baseTitle,
           discoveredDate: patchedDate,
           patchedDate,
           rawUrl: advisory.url,
@@ -141,7 +144,7 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
         id: cveId,
         source: 'apple',
         manufacturer: 'Apple',
-        title: `${advisory.title} — ${cveId}`,
+        title: `${baseTitle} — ${cveId}`,
         discoveredDate: patchedDate,
         patchedDate,
         cveIds: [cveId],

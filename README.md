@@ -22,7 +22,7 @@ letting users draw their own conclusions from the visualised trends.
 - **Visualisation**: D3.js
 - **Styling**: Tailwind CSS v4 (dark-first dashboard aesthetic)
 - **Data validation**: Zod
-- **Pipeline tooling**: tsx + TypeScript (Node 22+)
+- **Pipeline tooling**: tsx + TypeScript (Node 24+)
 - **Deployment**: GitHub Pages via GitHub Actions
 
 ## Getting started

@@ -63,7 +63,10 @@ export const patchLagPointSchema = z.object({
   manufacturer: z.string(),
   medianLagDays: z.number(),
   p90LagDays: z.number(),
-  count: z.number().int(),
+  // Records with a known (non-zero) patch lag in this bucket
+  knownCount: z.number().int(),
+  // Total records in this bucket (denominator for data confidence)
+  totalCount: z.number().int(),
 });
 
 export const backlogPointSchema = z.object({

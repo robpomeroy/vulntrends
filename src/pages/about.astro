@@ -28,6 +28,27 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
       as vendor advisories typically provide richer patch-timing information.
     </p>
 
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Data confidence</h3>
+
+    <p class="mb-4 text-vt-text-secondary">
+      The "Time between discovery and patch" chart can only be calculated for
+      CVEs where both a discovery date <em>and</em> a patch date are known.
+      Most vendor advisories only publish a patch date, not a separate
+      discovery date — the chart only shows the subset of CVEs with full
+      data. This can over-represent vendors that publish more detail (e.g.
+      Mozilla and Project Zero, which report Reported/Fixed timestamps), and
+      under-represent vendors that don't.
+    </p>
+
+    <p class="mb-4 text-vt-text-secondary">
+      The "data confidence" badge on the patch lag chart shows what fraction
+      of records have both dates, and the "Hide low-confidence manufacturers"
+      toggle filters out vendors whose data is too sparse to be meaningful.
+      Cross-vendor comparisons should always be interpreted with this
+      asymmetry in mind — a 0-day median patch lag usually means
+      "missing discovery data", not "instant patching".
+    </p>
+
     <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Data sources</h3>
 
     <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
@@ -45,7 +66,8 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
       <li>
         Discovery dates are not consistently available across all sources.
         Where a discovery date is unavailable, the advisory publication date
-        is used as a proxy.
+        is used as a proxy, which yields a 0-day patch lag (likely
+        misleading — see the data confidence section above).
       </li>
       <li>
         Patch dates are only available when the source explicitly reports them.
@@ -60,6 +82,11 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
         Apple advisory data is scraped from HTML pages and may be affected by
         structural changes. When scraping fails, Apple-related CVEs from NVD
         are used as a fallback.
+      </li>
+      <li>
+        The "Vulnerabilities fixed" chart counts records with a patch date.
+        This is a reasonable proxy for "fixed" but may include records where
+        the patch was a no-op or the vendor advisory covered multiple CVEs.
       </li>
     </ul>
 

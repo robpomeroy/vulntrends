@@ -109,34 +109,78 @@ function aggregateTimeSeries(
 
 /**
  * Aggregate patch-lag data (median + p90 per month/year per manufacturer).
+ *
+ * Computes two counts per bucket:
+ * - `knownCount`: records with a known (non-zero) patch lag — used for the
+ *   median/p90 calculation. These are records where the merge logic was
+ *   able to find both a discovery and a patch date.
+ * - `totalCount`: all records with a patch date in this bucket (the
+ *   denominator for data confidence). The difference between `totalCount`
+ *   and `knownCount` represents records that had a patch date but no
+ *   known discovery date.
  */
 function aggregatePatchLag(
   records: VulnerabilityRecord[],
   granularity: 'month' | 'year',
 ): PatchLagPoint[] {
-  const buckets = new Map<string, number[]>();
+  // Tracks known patch lags (for median/p90) and total records with
+  // a patch date in this bucket (for data confidence)
+  const knownBuckets = new Map<string, number[]>();
+  const totalCounts = new Map<string, number>();
 
   for (const record of records) {
+    // Count all records with a patch date (for totalCount)
+    if (record.patchedDate) {
+      const totalBucket = granularity === 'month'
+        ? toMonth(record.patchedDate)
+        : toYear(record.patchedDate);
+      const totalKey = `${totalBucket}|${record.manufacturer}`;
+      totalCounts.set(totalKey, (totalCounts.get(totalKey) ?? 0) + 1);
+    }
+
+    // Only include records with a known (non-zero) patch lag in the lag calc
     if (record.patchLagDays == null || record.patchLagDays < 0) continue;
     const date = record.patchedDate ?? record.discoveredDate;
     if (!date) continue;
     const bucket = granularity === 'month' ? toMonth(date) : toYear(date);
     const key = `${bucket}|${record.manufacturer}`;
-    const arr = buckets.get(key) ?? [];
+    const arr = knownBuckets.get(key) ?? [];
     arr.push(record.patchLagDays);
-    buckets.set(key, arr);
+    knownBuckets.set(key, arr);
   }
 
+  // Merge the known and total counts into the output points
+  const allKeys = new Set([...knownBuckets.keys(), ...totalCounts.keys()]);
   const points: PatchLagPoint[] = [];
-  for (const [key, lags] of buckets) {
+  for (const key of allKeys) {
     const [date, manufacturer] = key.split('|');
+    const lags = knownBuckets.get(key) ?? [];
+    const totalCount = totalCounts.get(key) ?? 0;
+    const knownCount = lags.length;
+
+    if (lags.length === 0) {
+      // No known patch lags in this bucket — skip the median/p90 but
+      // still report the total count so the UI can show "0 of N have
+      // known patch lag".
+      points.push({
+        date,
+        manufacturer,
+        medianLagDays: 0,
+        p90LagDays: 0,
+        knownCount: 0,
+        totalCount,
+      });
+      continue;
+    }
+
     const sorted = lags.sort((a, b) => a - b);
     points.push({
       date,
       manufacturer,
       medianLagDays: Math.round(median(sorted)),
       p90LagDays: Math.round(p90(sorted)),
-      count: sorted.length,
+      knownCount,
+      totalCount,
     });
   }
 

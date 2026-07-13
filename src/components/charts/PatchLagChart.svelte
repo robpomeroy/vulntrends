@@ -136,7 +136,11 @@
     // every chart renders the strip identically.
     const mainHeight = 260;
     const height = mainHeight + BRUSH_LAYOUT.gap + BRUSH_LAYOUT.stripHeight;
-    const margin = { top: 16, right: 16, bottom: 24, left: 56 };
+    // margin.left is wider than usual so 4–5 digit y-axis tick labels
+    // (e.g. "2,500" on the patch lag chart) don't overlap the rotated
+    // y-axis label. 72px is enough for ~28px of tick label + 44px of
+    // breathing room for the rotated chart title.
+    const margin = { top: 16, right: 16, bottom: 24, left: 72 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = mainHeight - margin.top - margin.bottom;
     const stripWidth = width - margin.left - BRUSH_MARGIN_RIGHT;
@@ -296,11 +300,14 @@
       .attr('class', 'axis')
       .call(d3.axisLeft(y).ticks(6));
 
-    // Y axis label
+    // Y axis label. Positioned at x = -52 (was -44) so 4–5 digit tick
+    // labels (e.g. "2,500") don't crowd the rotated chart title.
+    // We bumped margin.left to 72 to give this label room alongside
+    // the longest tick values.
     g.append('text')
       .attr('transform', 'rotate(-90)')
       .attr('x', -innerHeight / 2)
-      .attr('y', -44)
+      .attr('y', -52)
       .attr('text-anchor', 'middle')
       .attr('fill', THEME.textMuted)
       .style('font-size', '0.75rem')

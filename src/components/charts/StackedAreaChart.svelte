@@ -66,9 +66,16 @@
     // every chart renders the strip identically.
     const mainHeight = 260;
     const height = mainHeight + BRUSH_LAYOUT.gap + BRUSH_LAYOUT.stripHeight;
-    const margin = { top: 16, right: 16, bottom: 24, left: 48 };
+    // margin.left is wider than usual so 4–5 digit y-axis tick labels
+    // (e.g. "25,000" on the backlog chart) don't overlap the rotated
+    // y-axis label. 72px is enough for ~28px of tick label + 44px of
+    // breathing room for the rotated chart title.
+    const margin = { top: 16, right: 16, bottom: 24, left: 72 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = mainHeight - margin.top - margin.bottom;
+    // Brush aligns with the y-axis so the strip's data lines up with
+    // the main chart's plot area. The brush's right edge uses
+    // BRUSH_MARGIN_RIGHT (16) to keep a small gutter to the card edge.
     const stripWidth = width - margin.left - BRUSH_MARGIN_RIGHT;
     const stripHeight = brushInnerHeight();
     const stripX = margin.left;
@@ -234,11 +241,15 @@
       .attr('class', 'axis')
       .call(d3.axisLeft(y).ticks(6));
 
-    // Y axis label
+    // Y axis label. Positioned at x = -52 (was -36) so 4–5 digit tick
+    // labels on the wide-value charts (e.g. backlog at "25,000")
+    // don't crowd the rotated chart title. We bumped margin.left to 72
+    // to give this label room to breathe alongside the longest tick
+    // values.
     g.append('text')
       .attr('transform', 'rotate(-90)')
       .attr('x', -innerHeight / 2)
-      .attr('y', -36)
+      .attr('y', -52)
       .attr('text-anchor', 'middle')
       .attr('fill', THEME.textMuted)
       .style('font-size', '0.75rem')

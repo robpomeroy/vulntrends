@@ -24,15 +24,19 @@
       medianLagDays: number;
       p90LagDays: number;
       /**
-       * Records with a known (non-zero) patch lag — i.e. where both
-       * a discovery and a patch date were available. Used as the
-       * denominator for the median/p90 calculation.
+       * Records in this bucket with a real (independent discovery +
+       * patch) lag — i.e. `discoveredDate !== patchedDate` and
+       * `discoveredDate` is known. Zero means the bucket has no
+       * measurable lag; the chart treats those as gaps rather than
+       * plotting 0. The aggregator still emits the point (with
+       * median/p90 = 0) so the confidence badge can use totalCount.
        */
       knownCount: number;
       /**
        * All records in this bucket with a patch date (including those
-       * with no known discovery date). Used for the data confidence
-       * indicator: knownCount / totalCount = % records with full data.
+       * with no known discovery date). Used as the denominator for
+       * the data confidence indicator: knownCount / totalCount = %
+       * of fixed records that have a known patch lag.
        */
       totalCount: number;
     }>;
@@ -213,17 +217,22 @@
         .sort((a, b) => a._date.getTime() - b._date.getTime()),
     }));
 
-    // Scales
+    // Scales. The y-scale only considers buckets with a real lag
+    // measurement (knownCount > 0); the aggregator's 0 placeholders
+    // for unknown buckets would otherwise compress the y-axis and
+    // make the real signal look like a thin sliver near the top.
     const allDates = grouped.flatMap((g) => g.values.map((v) => v._date));
     const x = d3
       .scaleTime()
       .domain(d3.extent(allDates) as [Date, Date])
       .range([0, innerWidth]);
 
-    const allLags = filteredData.map((d) => d.p90LagDays);
+    const realLags = filteredData
+      .filter((d) => d.knownCount > 0)
+      .flatMap((d) => [d.medianLagDays, d.p90LagDays]);
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(allLags) as number])
+      .domain([0, d3.max(realLags) ?? 0])
       .range([innerHeight, 0])
       .nice();
 
@@ -232,15 +241,22 @@
       .domain(manufacturers)
       .range(manufacturers.map(getColour));
 
-    // Line generators
+    // Line generators. The `defined()` accessor tells d3 to break the
+    // line/area when a point has no known (independent discovery +
+    // patch) lag — the aggregator emits medianLagDays: 0 / p90LagDays: 0
+    // as placeholders for those buckets, but plotting 0 would visually
+    // read as "0-day patch lag" and undo the proxy-data fix. With
+    // defined() returning false, d3 inserts a NaN gap instead.
     const medianLine = d3
-      .line<{ _date: Date; medianLagDays: number }>()
+      .line<{ _date: Date; medianLagDays: number; knownCount: number }>()
+      .defined((d) => d.knownCount > 0)
       .x((d) => x(d._date))
       .y((d) => y(d.medianLagDays))
       .curve(d3.curveMonotoneX);
 
     const p90Area = d3
-      .area<{ _date: Date; p90LagDays: number; medianLagDays: number }>()
+      .area<{ _date: Date; p90LagDays: number; medianLagDays: number; knownCount: number }>()
+      .defined((d) => d.knownCount > 0)
       .x((d) => x(d._date))
       .y0((d) => y(d.medianLagDays))
       .y1((d) => y(d.p90LagDays))
@@ -334,8 +350,18 @@
       const [mx] = d3.pointer(event);
       const rawDate = x.invert(mx);
 
-      // Find nearest data point per manufacturer
-      const candidates: Array<{ date: Date; m: string; median: number; p90: number; count: number }> = [];
+      // Find nearest data point per manufacturer. The tooltip shows
+      // both the lag stats (median/p90) and the sample size
+      // (knownCount / totalCount) so the user can judge how much
+      // weight the median deserves.
+      const candidates: Array<{
+        date: Date;
+        m: string;
+        median: number;
+        p90: number;
+        knownCount: number;
+        totalCount: number;
+      }> = [];
       for (const grp of grouped) {
         const bisect = d3.bisector((d: { _date: Date }) => d._date).left;
         const idx = bisect(grp.values, rawDate, 1);
@@ -351,7 +377,8 @@
           m: grp.manufacturer,
           median: d.medianLagDays,
           p90: d.p90LagDays,
-          count: d.count,
+          knownCount: d.knownCount,
+          totalCount: d.totalCount,
         });
       }
 
@@ -381,7 +408,10 @@
         rows.map((r) => ({
           colour: getColour(r.m),
           label: r.m,
-          value: `median ${r.median}d, p90 ${r.p90}d (${r.count})`,
+          value:
+            r.knownCount > 0
+              ? `median ${r.median}d, p90 ${r.p90}d (${r.knownCount} known / ${r.totalCount} patched)`
+              : `no known lag (${r.totalCount} patched)`,
         })),
       );
     });

@@ -86,9 +86,9 @@ export interface PatchLagPoint {
   /** 90th percentile patch lag in days. */
   p90LagDays: number;
   /**
-   * Number of records in this bucket that have a *known* (non-zero,
-   * non-missing) patch lag — i.e. where both a discovery date and a
-   * patch date were available. Used to compute data confidence.
+   * Number of records in this bucket with a known patch lag — i.e. a record
+   * that has a patch date and a distinct discovery date (not the vendor proxy
+   * case where discoveredDate === patchedDate, which yields a misleading 0).
    */
   knownCount: number;
   /**

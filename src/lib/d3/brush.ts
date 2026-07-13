@@ -89,8 +89,8 @@ export interface BrushStripOptions {
 /**
  * Render the brush strip on the given SVG. The brush always shows
  * the full data range so the user can re-zoom into a different
- * period. Dragging calls `setDateRange`; double-clicking clears
- * the selection.
+ * period. Dragging calls `setDateRange`; clearing the selection resets
+ * the range to "all time".
  */
 export function renderBrushStrip(opts: BrushStripOptions): void {
   const { svg, innerWidth, innerHeight, xOffset, yOffset, data, granularity, dateRange } = opts;
@@ -198,7 +198,7 @@ export function renderBrushStrip(opts: BrushStripOptions): void {
 
       const sel = event.selection as [number, number] | null;
       if (!sel) {
-        // Selection cleared (e.g. double-click) — reset to all time.
+        // Selection cleared (e.g. click outside the selection) — reset to all time.
         // Skip the update if already null to break the render loop.
         if (dateRange !== null) setDateRange(null);
         updateLabel(label, x, sel, granularity);

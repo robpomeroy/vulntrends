@@ -2,9 +2,9 @@
   /**
    * RangeSelector — quick-range preset buttons for time-range filtering.
    *
-   * Provides common date range presets (Last 12 months, Last 2 years, All time)
-   * plus a "View all" reset option. The actual time-range state lives in the
-   * shared dashboardStore, so this component stays in sync across all charts.
+   * Provides common date range presets (Last year, Last 2 years, All time).
+   * The actual time-range state lives in the shared dashboardStore, so this
+   * component stays in sync across all charts.
    *
    * The presets are computed relative to the most recent date in the
    * aggregated data (not the current calendar date), which avoids

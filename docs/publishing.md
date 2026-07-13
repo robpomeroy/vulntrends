@@ -162,7 +162,7 @@ failing and you need to push a fix):
 | Variable | Where it's read | Purpose |
 |---|---|---|
 | `NVD_API_KEY` | `scripts/pipeline/sources/nvd.ts` | Bumps the NVD/CVE rate limit from 1 req/6s to ~1 req/0.5s. Without it the build takes 10+ minutes. |
-| `MSRC_API_KEY` | `scripts/pipeline/sources/msrc.ts` | Optional. Microsoft requires an API key for the CVRF API; without it the source returns an empty array. |
+| `MSRC_API_KEY` | `scripts/pipeline/sources/msrc.ts` | Optional. The MSRC CVRF API is publicly accessible (Microsoft dropped the registration requirement in Feb 2021); without a key the source works but is rate-limited to ~10 req/min, so the full data build can take ~10 hours. With a key the limit is higher. To request a key, email `msrcapi@microsoft.com` with a brief description of what you're building — there is no automated self-serve sign-up. |
 
 **On GitHub:** add both as repository secrets at
 *Settings → Secrets and variables → Actions* (use the exact variable

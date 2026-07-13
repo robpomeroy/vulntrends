@@ -7,14 +7,17 @@
    */
 
   import StackedAreaChart from './StackedAreaChart.svelte';
+  import type { DateRange } from '@/lib/store';
 
   interface Props {
     data: Array<{ date: string; manufacturer: string; openCount: number }>;
     granularity: 'month' | 'year';
     selectedManufacturers: string[];
+    /** Optional time-range filter. null = show all time. */
+    dateRange?: DateRange | null;
   }
 
-  let { data, granularity, selectedManufacturers }: Props = $props();
+  let { data, granularity, selectedManufacturers, dateRange = null }: Props = $props();
 
   // Map openCount → count for the shared chart component
   let chartData = $derived(
@@ -30,5 +33,6 @@
   data={chartData}
   {granularity}
   {selectedManufacturers}
+  {dateRange}
   yLabel="Open vulnerabilities (backlog)"
 />

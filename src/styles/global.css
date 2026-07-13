@@ -68,14 +68,19 @@ a:hover {
 
 /* ---- D3 chart styles (SVG — cannot use Tailwind classes) ---- */
 
+/*
+ * The chart container takes its size from the SVG inside it (the
+ * Svelte component sets the SVG's width/height attributes from
+ * BRUSH_LAYOUT). Pinning a fixed height here would either clip
+ * the brush strip or leave a visible gap below it.
+ */
 .vt-chart {
   width: 100%;
-  height: 320px;
 }
 
 .vt-chart svg {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
 }
 

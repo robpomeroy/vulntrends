@@ -85,8 +85,20 @@ export interface PatchLagPoint {
   medianLagDays: number;
   /** 90th percentile patch lag in days. */
   p90LagDays: number;
-  /** Number of records in this bucket. */
-  count: number;
+  /**
+   * Number of records in this bucket with a known patch lag — i.e. a record
+   * that has a patch date and a distinct discovery date (not the vendor proxy
+   * case where discoveredDate === patchedDate, which yields a misleading 0).
+   */
+  knownCount: number;
+  /**
+   * Number of records in this bucket that had a patch date (used as
+   * the denominator for data confidence). Records with a patch date
+   * but no known discovery date are excluded from the lag calculation
+   * but still counted here so the UI can show "X% of fixed records
+   * have a known patch lag".
+   */
+  totalCount: number;
 }
 
 /** Aggregated backlog data point. */

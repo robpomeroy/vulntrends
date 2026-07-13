@@ -1,33 +1,55 @@
 <script lang="ts">
   /**
-   * Stacked area chart — used for discovered/fixed/backlog time series.
-   * Renders an SVG via D3, with hover tooltips and manufacturer colour coding.
+   * Stacked area chart — used for "discovered", "fixed", and "backlog"
+   * panels on the dashboard. Each panel stacks per-manufacturer counts
+   * over time.
+   *
+   * Also renders a D3 brush strip below the main chart for free-form
+   * time-range selection. The brush logic is shared with PatchLagChart
+   * via `lib/d3/brush` so the two stay in sync.
    */
 
   import { onMount, onDestroy } from 'svelte';
   import * as d3 from 'd3';
   import { THEME, getColour } from '@/lib/d3/theme';
   import { createTooltip, type Tooltip } from '@/lib/d3/tooltip';
+  import {
+    BRUSH_LAYOUT,
+    BRUSH_MARGIN_RIGHT,
+    brushInnerHeight,
+    brushY,
+    renderBrushStrip,
+  } from '@/lib/d3/brush';
+  import { inDateRange, type DateRange } from '@/lib/store';
 
   interface Props {
     data: Array<{ date: string; manufacturer: string; count: number }>;
     yLabel: string;
     granularity: 'month' | 'year';
     selectedManufacturers: string[];
+    /** Optional time-range filter. null = show all time. */
+    dateRange?: DateRange | null;
   }
 
-  let { data, yLabel, granularity, selectedManufacturers }: Props = $props();
+  let { data, yLabel, granularity, selectedManufacturers, dateRange = null }: Props = $props();
 
   let container: HTMLDivElement;
   let tooltip: Tooltip;
   let svg: SVGSVGElement;
 
-  // Filter data by selected manufacturers (empty = all)
-  let filteredData = $derived(
+  /**
+   * Full time range of the data (before any dateRange filter). Used for
+   * the brush strip so the user can always see and brush the full range.
+   * The brush can only select within this range.
+   */
+  let fullData = $derived(
     selectedManufacturers.length === 0
       ? data
       : data.filter((d) => selectedManufacturers.includes(d.manufacturer)),
   );
+
+  // Filter data by selected manufacturers, then by date range
+  let filteredData = $derived(inDateRange(fullData, dateRange));
 
   $effect(() => {
     if (!svg || !filteredData) return;
@@ -38,25 +60,81 @@
     if (!svg) return;
     const el = container;
     const width = el.clientWidth;
-    const height = 320;
-    const margin = { top: 16, right: 16, bottom: 32, left: 48 };
+
+    // Layout: main chart (260px) + gap (BRUSH_LAYOUT.gap) + brush strip
+    // (BRUSH_LAYOUT.stripHeight). Constants live in lib/d3/brush so
+    // every chart renders the strip identically.
+    const mainHeight = 260;
+    const height = mainHeight + BRUSH_LAYOUT.gap + BRUSH_LAYOUT.stripHeight;
+    // margin.left is wider than usual so 4–5 digit y-axis tick labels
+    // (e.g. "25,000" on the backlog chart) don't overlap the rotated
+    // y-axis label. 72px is enough for ~28px of tick label + 44px of
+    // breathing room for the rotated chart title.
+    const margin = { top: 16, right: 16, bottom: 24, left: 72 };
     const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
+    const innerHeight = mainHeight - margin.top - margin.bottom;
+    // Brush aligns with the y-axis so the strip's data lines up with
+    // the main chart's plot area. The brush's right edge uses
+    // BRUSH_MARGIN_RIGHT (16) to keep a small gutter to the card edge.
+    const stripWidth = width - margin.left - BRUSH_MARGIN_RIGHT;
+    const stripHeight = brushInnerHeight();
+    const stripX = margin.left;
+    const stripY = brushY(mainHeight);
 
     // Clear previous render
     d3.select(svg).selectAll('*').remove();
+    d3.select(svg).attr('width', width).attr('height', height);
+
+    // Parse dates helper
+    const parseDate =
+      granularity === 'month'
+        ? d3.timeParse('%Y-%m')
+        : d3.timeParse('%Y');
 
     if (filteredData.length === 0) {
+      const message = dateRange
+        ? `No data in selected range (${dateRange.start} -> ${dateRange.end})`
+        : 'No data available';
       d3.select(svg)
         .append('text')
         .attr('x', width / 2)
-        .attr('y', height / 2)
+        .attr('y', mainHeight / 2)
         .attr('text-anchor', 'middle')
         .attr('fill', THEME.textMuted)
-        .text('No data available');
-      return;
+        .text(message);
+    } else {
+      renderMainChart(innerWidth, innerHeight, margin, parseDate);
     }
 
+    // Build the brush data: total counts per date across the
+    // currently-selected manufacturers (ignoring dateRange, so the
+    // brush always shows the full data range).
+    const brushDataMap = new Map<string, number>();
+    for (const d of fullData) {
+      brushDataMap.set(d.date, (brushDataMap.get(d.date) ?? 0) + d.count);
+    }
+    const brushData = [...brushDataMap.entries()]
+      .map(([date, value]) => ({ date, value }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    renderBrushStrip({
+      svg,
+      innerWidth: stripWidth,
+      innerHeight: stripHeight,
+      xOffset: stripX,
+      yOffset: stripY,
+      data: brushData,
+      granularity,
+      dateRange,
+    });
+  }
+
+  function renderMainChart(
+    innerWidth: number,
+    innerHeight: number,
+    margin: { top: number; right: number; bottom: number; left: number },
+    parseDate: (s: string) => Date | null,
+  ) {
     // Get unique manufacturers and dates
     const manufacturers = [...new Set(filteredData.map((d) => d.manufacturer))];
     const dates = [...new Set(filteredData.map((d) => d.date))].sort();
@@ -76,11 +154,6 @@
       return row;
     });
 
-    // Parse dates
-    const parseDate =
-      granularity === 'month'
-        ? d3.timeParse('%Y-%m')
-        : d3.timeParse('%Y');
     const parsedData = stackedData.map((d) => ({
       ...d,
       _date: parseDate(d.date as string) as Date,
@@ -124,8 +197,6 @@
     // Create chart group
     const g = d3
       .select(svg)
-      .attr('width', width)
-      .attr('height', height)
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -170,11 +241,15 @@
       .attr('class', 'axis')
       .call(d3.axisLeft(y).ticks(6));
 
-    // Y axis label
+    // Y axis label. Positioned at x = -52 (was -36) so 4–5 digit tick
+    // labels on the wide-value charts (e.g. backlog at "25,000")
+    // don't crowd the rotated chart title. We bumped margin.left to 72
+    // to give this label room to breathe alongside the longest tick
+    // values.
     g.append('text')
       .attr('transform', 'rotate(-90)')
       .attr('x', -innerHeight / 2)
-      .attr('y', -36)
+      .attr('y', -52)
       .attr('text-anchor', 'middle')
       .attr('fill', THEME.textMuted)
       .style('font-size', '0.75rem')
@@ -255,3 +330,16 @@
 <div class="vt-chart" bind:this={container}>
   <svg bind:this={svg}></svg>
 </div>
+
+<style>
+  /*
+   * D3 v7 brush selection styling. Applied via CSS rather than D3
+   * .attr() calls to avoid the D3 brush emitting an invalid rect
+   * height (-4) when there's no selection on first render.
+   */
+  :global(.vt-chart .brush .selection) {
+    fill: var(--vt-accent);
+    fill-opacity: 0.15;
+    stroke: var(--vt-accent);
+  }
+</style>

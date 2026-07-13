@@ -12,7 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "data:build": "tsx scripts/pipeline/index.ts && tsx scripts/aggregate.ts",
+    "data:build": "tsx --env-file-if-exists=.env scripts/pipeline/index.ts && tsx --env-file-if-exists=.env scripts/aggregate.ts",
     "data:validate": "tsx scripts/validate.ts",
     "data:sample": "tsx scripts/generate-sample-data.ts"
   },

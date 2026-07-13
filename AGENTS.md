@@ -27,6 +27,7 @@ annotations or editorial framing — and lets users draw their own conclusions.
 | `npm run preview` | Preview the built site locally |
 | `npm run data:build` | **Standalone tool**: fetch all sources, normalise, aggregate into `src/data/` |
 | `npm run data:validate` | Validate all generated JSON against Zod schemas |
+| `npm run data:sample` | Generate small synthetic dataset (offline; uses `scripts/generate-sample-data.ts`) |
 
 ### Data build is decoupled from site build
 
@@ -35,6 +36,15 @@ annotations or editorial framing — and lets users draw their own conclusions.
 This lets you iterate on the website freely without re-downloading data.
 
 **Local dev workflow**: run `npm run data:build` once, then `npm run dev` freely.
+
+### Local secrets
+
+The data pipeline reads `NVD_API_KEY` (and optionally `MSRC_API_KEY`) from
+`process.env`. The `data:build` script passes `--env-file-if-exists=.env`
+to `tsx`, so dropping your keys in a `.env` file in the repo root is
+picked up automatically. Copy `.env.example` to `.env` to get started.
+On GitHub Actions the same variables come from the repository's encrypted
+secrets.
 
 ### Dev server startup time
 

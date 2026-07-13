@@ -26,5 +26,5 @@ pnpm-debug.log*
 # Vulnerability data — regenerated daily by .github/workflows/refresh-data.yml
 # and committed there. Locally we keep our own copies (regenerated via
 # `npm run data:build` or `npm run data:sample`).
-src/data/**
+src/data/
 !src/data/.gitkeep

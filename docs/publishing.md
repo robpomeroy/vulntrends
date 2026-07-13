@@ -186,7 +186,11 @@ when absent (e.g. if you set the variables inline in your shell).
 ### Data refresh fails in CI
 
 - Check that the `NVD_API_KEY` secret is set in the repository settings
-  (Settings → Secrets and variables → Actions).
+  (Settings → Secrets and variables → Actions). Without it, the NVD
+  source will be rate-limited to 1 req/6s and the build may time out.
+- `MSRC_API_KEY` is optional. If you have one (request via
+  `msrcapi@microsoft.com`), set it as a secret to bump the MSRC
+  rate limit. Without it the MSRC source still works, just slowly.
 - Review the workflow logs in the Actions tab for which source failed.
 - Individual source failures are non-fatal — the pipeline writes an empty
   array for any source that errors and continues with the remaining sources.

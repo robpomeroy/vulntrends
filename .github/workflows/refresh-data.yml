@@ -34,6 +34,9 @@ jobs:
       - name: Build data
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          # Optional — bumps MSRC CVRF API rate limit when set.
+          # Leave the secret unset for slower (but still working) refreshes.
+          MSRC_API_KEY: ${{ secrets.MSRC_API_KEY }}
         run: npm run data:build
 
       - name: Validate data

@@ -399,14 +399,15 @@
 </script>
 
 <div class="vt-chart" bind:this={container}>
+  <svg bind:this={svg}></svg>
   <!--
-    Header row: data confidence badge + "hide low confidence" toggle.
-    The badge shows what fraction of records have a known (non-zero)
-    patch lag vs. a missing upstream discovery date. The toggle lets
-    users opt into a stricter view that hides manufacturers whose
-    overall confidence is below the threshold.
+    Footer row (below the brush strip): data confidence badge +
+    "hide low confidence" toggle. Putting both controls under the
+    brush means the chart drawing isn't crowded by chrome, and
+    users see the controls in the order they affect the chart
+    (chart -> brush -> confidence filter).
   -->
-  <div class="flex items-center justify-between mb-2">
+  <div class="flex items-center justify-between mt-3 flex-wrap gap-2">
     {#if confidence.total > 0}
       <div
         class="flex items-center gap-1.5 text-xs px-2 py-0.5 rounded
@@ -437,7 +438,6 @@
       <span>Hide low-confidence manufacturers (&lt;{Math.round(CONFIDENCE_THRESHOLD * 100)}%)</span>
     </label>
   </div>
-  <svg bind:this={svg}></svg>
   <!--
     Footnote explaining the data limitation. Most vendor advisories only
     publish a patch date, not a separate discovery date, so patch lag

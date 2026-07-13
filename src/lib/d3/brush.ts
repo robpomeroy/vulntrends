@@ -160,13 +160,16 @@ export function renderBrushStrip(opts: BrushStripOptions): void {
     .attr('fill-opacity', 0.5)
     .attr('d', area as never);
 
-  // "Drag to zoom" hint label
+  // "Drag to zoom" hint label. The D3 v7 brush clears the selection
+  // when you drag a handle off the edge of the strip, or via the
+  // "All time" preset button — there's no built-in double-click
+  // reset, so the hint just describes what the user can do here.
   g.append('text')
     .attr('x', 0)
     .attr('y', -2)
     .attr('fill', THEME.textMuted)
     .style('font-size', '0.625rem')
-    .text('Drag to zoom, double-click to reset');
+    .text('Drag to zoom');
 
   // Current selection label
   const label = g

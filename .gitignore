@@ -23,8 +23,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# Vulnerability data — regenerated daily by .github/workflows/refresh-data.yml
-# and committed there. Locally we keep our own copies (regenerated via
+# Vulnerability data — regenerated daily by the Synology NAS scheduled task
+# (npm run publish). Locally we keep our own copies (regenerated via
 # `npm run data:build` or `npm run data:sample`).
 src/data/*
 !src/data/.gitkeep

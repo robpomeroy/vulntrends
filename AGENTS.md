@@ -15,8 +15,8 @@ annotations or editorial framing — and lets users draw their own conclusions.
 - **Visualisation**: D3.js (vanilla, wrapped in Svelte components)
 - **Styling**: Tailwind CSS (dark-first dashboard aesthetic)
 - **Data validation**: Zod schemas
-- **Pipeline tooling**: tsx + TypeScript (Node 24+)
-- **Deployment**: GitHub Pages via GitHub Actions
+- **Pipeline tooling**: tsx + TypeScript (Node 22+)
+- **Deployment**: Synology NAS scheduled task → rsync to Namecheap web host
 
 ## Commands
 
@@ -28,6 +28,9 @@ annotations or editorial framing — and lets users draw their own conclusions.
 | `npm run data:build` | **Standalone tool**: fetch all sources, normalise, aggregate into `src/data/` |
 | `npm run data:validate` | Validate all generated JSON against Zod schemas |
 | `npm run data:sample` | Generate small synthetic dataset (offline; uses `scripts/generate-sample-data.ts`) |
+| `npm run publish` | Full pipeline: data refresh + validate + build + rsync to production |
+| `npm run publish:staging` | Same, but deploy to staging path |
+| `npm run publish:dry-run` | Full pipeline minus rsync (test without deploying) |
 
 ### Data build is decoupled from site build
 
@@ -40,11 +43,15 @@ This lets you iterate on the website freely without re-downloading data.
 ### Local secrets
 
 The data pipeline reads `NVD_API_KEY` (and optionally `MSRC_API_KEY`) from
-`process.env`. The `data:build` script passes `--env-file-if-exists=.env`
-to `tsx`, so dropping your keys in a `.env` file in the repo root is
-picked up automatically. Copy `.env.example` to `.env` to get started.
-On GitHub Actions the same variables come from the repository's encrypted
-secrets.
+`process.env`. The `data:build` and `publish` scripts pass
+`--env-file-if-exists=.env` to `tsx`, so dropping your keys in a `.env`
+file in the repo root is picked up automatically. Copy `.env.example` to
+`.env` to get started.
+
+The `.env` file also holds the `DEPLOY_*` variables used by
+`scripts/publish.ts` for rsync to the Namecheap web host (host, port,
+user, SSH key path, production/staging paths). See `.env.example` for
+the full list.
 
 ### Dev server startup time
 

@@ -58,9 +58,53 @@ export function selectAllManufacturers(): void {
   }));
 }
 
-/** Set the granularity. */
+/**
+ * Convert a date range from one granularity's string format to another's.
+ * The two formats ("YYYY-MM" for monthly, "YYYY" for yearly) are not
+ * directly comparable lexicographically, so a range in the wrong format
+ * would silently drop every data point.
+ *
+ * - Monthly → yearly: drop the "-MM" suffix.
+ * - Yearly → monthly: start becomes "{YYYY}-01", end becomes "{YYYY}-12".
+ *   This expands the yearly range to the full calendar year, which is
+ *   the closest match given that a yearly bucket like "2024" aggregates
+ *   every month in 2024.
+ */
+function convertDateRange(
+  range: DateRange,
+  toGranularity: Granularity,
+): DateRange {
+  if (toGranularity === 'month') {
+    // YYYY → YYYY-MM
+    return {
+      start: `${range.start}-01`,
+      end: `${range.end}-12`,
+    };
+  }
+  // YYYY-MM → YYYY
+  return {
+    start: range.start.slice(0, 4),
+    end: range.end.slice(0, 4),
+  };
+}
+
+/**
+ * Set the granularity, converting the active date range to the new
+ * granularity's format if one is set. Without this, a range in
+ * "YYYY-MM" form would silently filter out every yearly data point
+ * (and vice versa) because "2024" sorts before "2024-01" as a string.
+ */
 export function setGranularity(granularity: Granularity): void {
-  dashboardStore.update((state) => ({ ...state, granularity }));
+  dashboardStore.update((state) => {
+    if (state.dateRange && granularity !== state.granularity) {
+      return {
+        ...state,
+        granularity,
+        dateRange: convertDateRange(state.dateRange, granularity),
+      };
+    }
+    return { ...state, granularity };
+  });
 }
 
 /**

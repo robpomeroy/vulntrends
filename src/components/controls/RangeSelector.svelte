@@ -94,7 +94,11 @@
         : 'text-vt-text-muted hover:text-vt-text-primary hover:bg-vt-bg-tertiary'}"
     onclick={() => selectPreset('year')}
     aria-pressed={isActive('year')}
-    title="Last 12 months from {latestDate}"
+    title={
+      granularity === 'month'
+        ? `Last 12 months from ${latestDate}`
+        : `Last year (${latestDate})`
+    }
   >
     Last year
   </button>

@@ -111,13 +111,18 @@ function aggregateTimeSeries(
  * Aggregate patch-lag data (median + p90 per month/year per manufacturer).
  *
  * Computes two counts per bucket:
- * - `knownCount`: records with a known (non-zero) patch lag — used for the
- *   median/p90 calculation. These are records where the merge logic was
- *   able to find both a discovery and a patch date.
+ * - `knownCount`: records where the merge logic established a *real*
+ *   discovery date independently of the patch date. Records where
+ *   `discoveredDate === patchedDate` are excluded — most vendor
+ *   advisories stamp both fields with the same date, so a 0-day lag
+ *   from them is a proxy artefact (we're using the patch date as a
+ *   stand-in for the discovery date), not a measured turnaround.
+ *   Excluding these keeps the median/p90 honest about the records
+ *   that genuinely show a pre-patch discovery.
  * - `totalCount`: all records with a patch date in this bucket (the
  *   denominator for data confidence). The difference between `totalCount`
  *   and `knownCount` represents records that had a patch date but no
- *   known discovery date.
+ *   known independent discovery date.
  */
 function aggregatePatchLag(
   records: VulnerabilityRecord[],
@@ -138,8 +143,15 @@ function aggregatePatchLag(
       totalCounts.set(totalKey, (totalCounts.get(totalKey) ?? 0) + 1);
     }
 
-    // Only include records with a known (non-zero) patch lag in the lag calc
+    // Only include records with a known *independent* discovery date
+    // in the lag calc. A 0-day lag (discoveredDate == patchedDate) is
+    // usually a proxy artefact, not a real turnaround, so it would
+    // pull the median toward zero and inflate knownCount.
     if (record.patchLagDays == null || record.patchLagDays < 0) continue;
+    if (
+      !record.discoveredDate ||
+      record.discoveredDate === record.patchedDate
+    ) continue;
     const date = record.patchedDate ?? record.discoveredDate;
     if (!date) continue;
     const bucket = granularity === 'month' ? toMonth(date) : toYear(date);

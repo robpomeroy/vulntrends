@@ -83,7 +83,6 @@
     setDateRange(computePreset(preset));
   }
 
-  let yearLabel = $derived(computePreset('year')?.start ?? '');
 </script>
 
 <div class="flex items-center gap-1" role="group" aria-label="Time range">

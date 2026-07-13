@@ -1,20 +1,18 @@
 /**
- * D3 brush strip — shared minimap + brush component for time-series
- * charts. Renders a small area chart of the data's overall volume
- * with a brush overlay for free-form time-range selection.
+ * D3 brush strip — shared minimap + brush component for time-series charts.
+ * Renders a small area chart of the data's overall volume with a brush overlay
+ * for free-form time-range selection.
  *
- * Used by StackedAreaChart and PatchLagChart so the brush behaves
- * consistently across all four dashboard panels and writes to the
- * same shared dateRange store.
+ * Used by StackedAreaChart and PatchLagChart so the brush behaves consistently
+ * across all four dashboard panels and writes to the same shared dateRange
+ * store.
  *
- * Why this lives in its own module (rather than being copy-pasted
- * into each chart):
- * - The brush needs three layered guards to avoid a Svelte 5 render
- *   loop (see /memories/svelte-d3-brush.md). Centralising them keeps
- *   the fix from drifting between components.
- * - The layout constants (50px strip, 4px internal padding, 8px
- *   gap above the strip) are part of the dashboard's visual design
- *   and should match across charts.
+ * Why this lives in its own module (rather than being copy-pasted into each
+ * chart):
+ * - The brush needs layered guards to avoid a Svelte 5 render loop.
+ *   Centralising them keeps the fix from drifting between components.
+ * - The layout constants (50px strip, 8px gap above the strip) are part of the
+ *   dashboard's visual design and should match across charts.
  */
 
 import * as d3 from 'd3';
@@ -260,8 +258,8 @@ export function renderBrushStrip(opts: BrushStripOptions): void {
 
 /** Format a Date as the aggregation bucket key ("YYYY-MM" or "YYYY"). */
 function formatBucket(date: Date, gran: 'month' | 'year'): string {
-  const y = date.getUTCFullYear();
-  const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
   return gran === 'month' ? `${y}-${m}` : `${y}`;
 }
 

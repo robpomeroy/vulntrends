@@ -4,7 +4,7 @@
    * and charts. This is a Svelte island hydrated on the client.
    */
 
-  import { dashboardStore, type DateRange } from '@/lib/store';
+  import { dashboardStore } from '@/lib/store';
   import ManufacturerFilter from './controls/ManufacturerFilter.svelte';
   import GranularityToggle from './controls/GranularityToggle.svelte';
   import RangeSelector from './controls/RangeSelector.svelte';

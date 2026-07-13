@@ -43,7 +43,7 @@
     granularity: 'month' | 'year';
     selectedManufacturers: string[];
     /** Optional time-range filter. null = show all time. */
-    dateRange?: import('@/lib/store').DateRange | null;
+    dateRange?: DateRange | null;
   }
 
   let { data, granularity, selectedManufacturers, dateRange = null }: Props = $props();

@@ -230,13 +230,16 @@ export function renderBrushStrip(opts: BrushStripOptions): void {
   // the *last* day of the end bucket (e.g. 31st for July, 28/29 for
   // February) so the visible selection covers the inclusive range
   // rather than stopping a few days short.
+  //
+  // We parse the start through the same d3 parser used for the data
+  // (rather than `new Date(string) + '-01'`) because the parser
+  // produces a local-midnight Date — important in negative-offset
+  // timezones where `new Date('2024-07-01')` parses as UTC midnight,
+  // which lands on Jun 30 local in PDT, shifting the brush and its
+  // label by a day.
   let initialSelection: [number, number] | null = null;
   if (dateRange) {
-    const startDate = new Date(
-      granularity === 'month'
-        ? dateRange.start + '-01'
-        : dateRange.start + '-01-01',
-    );
+    const startDate = parseDate(dateRange.start) ?? new Date(dateRange.start);
     const endDate = parseBucketEnd(dateRange.end, granularity);
     initialSelection = [x(startDate), x(endDate)];
   }

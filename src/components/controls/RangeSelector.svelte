@@ -32,6 +32,19 @@
   /**
    * Compute a DateRange for a preset relative to the latest date.
    * Returns null for "all time".
+   *
+   * In monthly mode the labels read "Last 12 months" / "Last 24 months",
+   * so we subtract 11/23 months from latestDate to get a range that
+   * includes latestDate and the preceding 11/23 months — e.g. with
+   * latestDate "2026-07", "Last year" gives the 12-month range
+   * "2025-08" → "2026-07". Subtracting a full year would have
+   * yielded a 13-month range ("2025-07" → "2026-07").
+   *
+   * In yearly mode the labels still read "Last year" / "Last 2 years".
+   * The latest year (e.g. "2026") is always the most recent full
+   * bucket, so:
+   *   - "Last year"  -> the most recent year,   start = end = latestDate
+   *   - "Last 2 years" -> the most recent 2 years, start = year-1
    */
   function computePreset(preset: 'year' | '2y' | 'all'): DateRange | null {
     if (preset === 'all') return null;
@@ -40,17 +53,17 @@
     const year = parseInt(yearStr, 10);
     const month = monthStr ? parseInt(monthStr, 10) : 12;
 
-    let startYear: number;
-    if (preset === 'year') {
-      // Last 12 months: start = (year-1, same month)
-      startYear = year - 1;
+    let start: string;
+    if (granularity === 'month') {
+      const monthsBack = preset === 'year' ? 11 : 23;
+      const totalMonths = (year * 12) + (month - 1) - monthsBack;
+      const startYear = Math.floor(totalMonths / 12);
+      const startMonth = (totalMonths % 12) + 1;
+      start = `${startYear}-${String(startMonth).padStart(2, '0')}`;
     } else {
-      // Last 2 years: start = (year-2, same month)
-      startYear = year - 2;
+      const yearsBack = preset === 'year' ? 0 : 1;
+      start = `${year - yearsBack}`;
     }
-    const start = granularity === 'month'
-      ? `${startYear}-${String(month).padStart(2, '0')}`
-      : `${startYear}`;
     return { start, end: latestDate };
   }
 

@@ -226,7 +226,10 @@ export function renderBrushStrip(opts: BrushStripOptions): void {
     });
 
   // Set the initial brush selection to match the current dateRange,
-  // or no selection if dateRange is null.
+  // or no selection if dateRange is null. The end is positioned at
+  // the *last* day of the end bucket (e.g. 31st for July, 28/29 for
+  // February) so the visible selection covers the inclusive range
+  // rather than stopping a few days short.
   let initialSelection: [number, number] | null = null;
   if (dateRange) {
     const startDate = new Date(
@@ -234,11 +237,7 @@ export function renderBrushStrip(opts: BrushStripOptions): void {
         ? dateRange.start + '-01'
         : dateRange.start + '-01-01',
     );
-    const endDate = new Date(
-      granularity === 'month'
-        ? dateRange.end + '-28'
-        : dateRange.end + '-12-31',
-    );
+    const endDate = parseBucketEnd(dateRange.end, granularity);
     initialSelection = [x(startDate), x(endDate)];
   }
 
@@ -261,6 +260,34 @@ function formatBucket(date: Date, gran: 'month' | 'year'): string {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, '0');
   return gran === 'month' ? `${y}-${m}` : `${y}`;
+}
+
+/**
+ * Parse a bucket key and return the Date that represents the *last*
+ * day of that bucket (used to position the brush selection so it
+ * covers the inclusive end of the range).
+ *
+ * For "YYYY-MM" returns the last calendar day of that month
+ * (handles 28/29/30/31-day months and leap years). For "YYYY"
+ * returns December 31st of that year.
+ *
+ * Implementation: for "YYYY-MM" we set the date to day 0 of the
+ * *next* month in UTC, which JS Date rolls back to the last day of
+ * the current month. For "YYYY" we set the date to Dec 31 of that
+ * year. All operations use UTC methods because `new Date("YYYY-MM")`
+ * is parsed in UTC (midnight on the 1st) — mixing in local-time
+ * methods shifts the date by the local UTC offset.
+ */
+function parseBucketEnd(bucket: string, gran: 'month' | 'year'): Date {
+  const d = new Date(bucket);
+  if (gran === 'year') {
+    d.setUTCMonth(11, 31);
+    d.setUTCHours(0, 0, 0, 0);
+    return d;
+  }
+  d.setUTCMonth(d.getUTCMonth() + 1, 0);
+  d.setUTCHours(0, 0, 0, 0);
+  return d;
 }
 
 /** Set the range label text to reflect the current brush selection. */

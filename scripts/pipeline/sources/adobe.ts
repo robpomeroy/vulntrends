@@ -27,6 +27,11 @@ import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const ADOBE_INDEX_URL = 'https://helpx.adobe.com/security.html';
+// Base URL for resolving relative <a href> targets in the index.
+// Adobe's per-bulletin links are typically like
+//   /security/products/Experience-Manager/apsb26-56.html
+// but we capture whatever they actually serve rather than guess.
+const ADOBE_BASE_URL = 'https://helpx.adobe.com';
 const MAX_DETAIL_PAGES = 25; // safety cap — most recent N bulletins
 
 const SEVERITY_MAP: Record<string, 'critical' | 'high' | 'medium' | 'low'> = {
@@ -95,14 +100,40 @@ function parseIndex(html: string): AdobeBulletin[] {
     if (seen.has(id)) continue;
     seen.add(id);
 
-    // Extract the title from the row's link text.
-    const titleMatch = match[0].match(
-      new RegExp(id + '\\s*:?\\s*[:\\s]*(?:<[^>]+>)*\\s*([^<]+)', 'i'),
+    const row = match[0];
+
+    // Extract the title from the row's link text. The link text is the
+    // longest run of non-tag content between the closing `>` of the
+    // <a href="..."> opening tag and the closing </a> tag. We require
+    // a `>` immediately before the APSB ID match so the regex doesn't
+    // grab the APSB ID that appears in the URL itself (e.g.
+    // `apsb26-56.html`); we want the one in the link text.
+    const titleMatch = row.match(
+      new RegExp('>\\s*' + id + '\\s*:?\\s*[:\\s]*([^<]+?)\\s*</a>', 'i'),
     );
     const title = titleMatch?.[1].trim() || id;
 
+    // Capture the per-bulletin link target if Adobe serves one. The row
+    // typically contains `<a href="/security/products/.../apsbXX-YY.html">`
+    // which is the actual per-bulletin page; we want this so
+    // fetchBulletinDetail() targets the real advisory (not the index)
+    // and so rawUrl in the output points somewhere useful. We resolve
+    // relative URLs against ADOBE_BASE_URL. If no link is present,
+    // fall back to the index anchor — better than the wrong URL but
+    // not the same as a real per-bulletin page.
+    const linkMatch = row.match(
+      /href="((?:\/security\/|https?:\/\/helpx\.adobe\.com)[^"]+)"/i,
+    );
+    let url: string;
+    if (linkMatch) {
+      const href = linkMatch[1];
+      url = href.startsWith('http') ? href : `${ADOBE_BASE_URL}${href}`;
+    } else {
+      url = `${ADOBE_INDEX_URL}#${id}`;
+    }
+
     // Product name is the first <td> in the row.
-    const productMatch = match[0].match(/<td[^>]*>([A-Za-z][^<]*?)\s*(?:&nbsp;|\s)*APSB/i);
+    const productMatch = row.match(/<td[^>]*>([A-Za-z][^<]*?)\s*(?:&nbsp;|\s)*APSB/i);
     const product = productMatch?.[1].trim();
 
     const publishedDate = parseDate(match[2]);
@@ -110,8 +141,8 @@ function parseIndex(html: string): AdobeBulletin[] {
 
     bulletins.push({
       id,
-      title: `Security update available for ${product ?? 'Adobe product'}`,
-      url: `https://helpx.adobe.com/security.html#${id}`,
+      title,
+      url,
       product,
       publishedDate,
       updatedDate,

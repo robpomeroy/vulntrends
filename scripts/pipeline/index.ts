@@ -49,7 +49,10 @@ const RAW_DIR = join(DATA_DIR, 'raw');
  * 2 means: with 10 sources, a single blip is fine, two blips
  * simultaneously is a system-level problem worth investigating.
  */
-const MAX_SOURCE_FAILURES = Number(process.env.MAX_SOURCE_FAILURES ?? '2');
+const MAX_SOURCE_FAILURES = (() => {
+  const parsed = Number.parseInt(process.env.MAX_SOURCE_FAILURES ?? '2', 10);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 2;
+})();
 
 /** All data sources, in fetch order. NVD is last so it can fill gaps. */
 const SOURCES: Array<{ id: SourceId; fetch: () => Promise<VulnerabilityRecord[]> }> = [

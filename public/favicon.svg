@@ -33,10 +33,14 @@
     reads as a graph line rather than a straight diagonal. Drawn as a
     thick polyline with rounded joins so it reads at small sizes. The
     clip makes the line appear to enter and exit the shield.
+
+    The line's average y (~65) is centred on the shield's vertical
+    midline (y=64), so the area under the line roughly equals the
+    area above it within the shield.
   -->
   <g clip-path="url(#shield-clip)">
     <polyline
-      points="8,104 28,88 44,96 60,72 76,80 92,52 120,24"
+      points="8,80 28,88 44,68 60,76 76,52 92,60 120,28"
       fill="none"
       stroke="currentColor"
       stroke-width="8"
@@ -45,7 +49,7 @@
       opacity="0.9"
     />
     <!-- Trend endpoint marker — a small filled circle at the peak -->
-    <circle cx="120" cy="24" r="7" fill="currentColor" />
+    <circle cx="120" cy="28" r="7" fill="currentColor" />
   </g>
 
   <style>

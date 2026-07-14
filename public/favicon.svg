@@ -29,13 +29,14 @@
 
   <!--
     Rising trend line (the "trends" metaphor), clipped to the shield.
-    Three points: low-left, mid, high-right — a clear upward trend.
-    Drawn as a thick polyline with rounded joins so it reads at small
-    sizes. The clip makes the line appear to enter and exit the shield.
+    A zig-zag of up- and down-ticks with an overall upward trend —
+    reads as a graph line rather than a straight diagonal. Drawn as a
+    thick polyline with rounded joins so it reads at small sizes. The
+    clip makes the line appear to enter and exit the shield.
   -->
   <g clip-path="url(#shield-clip)">
     <polyline
-      points="8,96 56,64 120,24"
+      points="8,104 28,88 44,96 60,72 76,80 92,52 120,24"
       fill="none"
       stroke="currentColor"
       stroke-width="8"

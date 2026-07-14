@@ -40,6 +40,19 @@ This lets you iterate on the website freely without re-downloading data.
 
 **Local dev workflow**: run `npm run data:build` once, then `npm run dev` freely.
 
+### Cross-platform `node_modules` (Windows ↔ Linux)
+
+`node_modules/` is gitignored because some dependencies (notably
+`esbuild`) ship a platform-specific native binary. If you develop on
+Windows and run `npm run publish` on Linux (or vice versa), the wrong
+binary is loaded and `data:build` fails with "You installed esbuild
+for another platform than the one you're currently using."
+
+**Run `npm ci` on each platform once** (Windows, Linux/WSL, macOS) to
+install the correct native binaries. The `publish` script also detects
+a wrong-platform binary before running any step and auto-runs `npm ci`
+to fix it — but doing it manually the first time is faster.
+
 ### Local secrets
 
 The data pipeline reads `NVD_API_KEY` (and optionally `MSRC_API_KEY`) from

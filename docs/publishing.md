@@ -13,6 +13,29 @@ task; the built site is then rsynced to a web host.
 - SSH access to the web host with a key-based login (no passphrase)
 - rsync available on the machine running the publish script
 
+## First-time setup on each platform
+
+`node_modules/` is **gitignored** because some dependencies (notably `esbuild`)
+ship a platform-specific native binary. If you develop on Windows and run
+`npm run publish` on Linux (or vice versa), the wrong-platform binary will
+be loaded and `data:build` (or any step that imports esbuild) will fail
+with `You installed esbuild for another platform than the one you're
+currently using.`
+
+**Run `npm ci` on each platform once** (Windows, Linux/WSL, macOS) to
+install the correct native binaries:
+
+```sh
+# First time on a new platform:
+cd /path/to/vulntrends
+npm ci
+```
+
+The `publish` script also detects a wrong-platform binary before
+running any step and auto-runs `npm ci` to fix it — but doing it
+manually the first time is faster than waiting for the script's
+self-heal pass.
+
 ## How publishing works
 
 VulnTrends uses a **decoupled build** architecture:

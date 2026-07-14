@@ -45,13 +45,17 @@ This lets you iterate on the website freely without re-downloading data.
 `node_modules/` is gitignored because some dependencies (notably
 `esbuild`) ship a platform-specific native binary. If you develop on
 Windows and run `npm run publish` on Linux (or vice versa), the wrong
-binary is loaded and `data:build` fails with "You installed esbuild
-for another platform than the one you're currently using."
+binary is loaded and the very first thing that breaks is the *loader*
+of `publish.ts` itself (which is `tsx`, and tsx depends on esbuild)
+— so a check that lives *inside* `publish.ts` can never fire.
 
 **Run `npm ci` on each platform once** (Windows, Linux/WSL, macOS) to
-install the correct native binaries. The `publish` script also detects
-a wrong-platform binary before running any step and auto-runs `npm ci`
-to fix it — but doing it manually the first time is faster.
+install the correct native binaries. After that, every script in
+`package.json` that uses tsx is prefixed with
+`node scripts/check-platform.mjs &&` — a plain-Node (no tsx, no
+esbuild) pre-flight that scans `node_modules/@esbuild/` for the
+current platform's variant. If only wrong-platform binaries are
+present, it runs `npm ci` automatically and tells you to re-run.
 
 ### Local secrets
 

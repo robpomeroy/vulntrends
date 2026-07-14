@@ -31,10 +31,21 @@ cd /path/to/vulntrends
 npm ci
 ```
 
-The `publish` script also detects a wrong-platform binary before
-running any step and auto-runs `npm ci` to fix it — but doing it
-manually the first time is faster than waiting for the script's
-self-heal pass.
+After that, every script in `package.json` that uses `tsx` is
+prefixed with `node scripts/check-platform.mjs &&` — a plain-Node
+(no tsx, no esbuild) pre-flight. This is required because
+`npm run publish` invokes `tsx scripts/publish.ts`, and `tsx`
+itself depends on esbuild: if the wrong-platform esbuild is in
+`node_modules`, esbuild throws an uncaught error the moment Node
+loads `publish.ts`, so any check that lives *inside* `publish.ts`
+never gets a chance to run.
+
+`check-platform.mjs` scans `node_modules/@esbuild/` for the
+current platform's variant. If only wrong-platform binaries are
+present, it runs `npm ci` automatically and tells you to re-run.
+For other known optional-native packages (`better-sqlite3`,
+`sharp`), it prints a warning only — auto-fixing varies (rebuild
+vs. reinstall) and is left to you.
 
 ## How publishing works
 

@@ -1,16 +1,16 @@
 {
-  "lastUpdated": "2026-07-14T13:43:56.857Z",
+  "lastUpdated": "2026-07-14T14:05:48.635Z",
   "sourceCounts": {
-    "mozilla": 200,
-    "chrome": 350,
-    "msrc": 500,
-    "apple": 300,
-    "projectzero": 150,
-    "pan": 200,
-    "fortinet": 180,
-    "cisco": 220,
-    "adobe": 160,
-    "nvd": 1674
+    "mozilla": 1101,
+    "chrome": 0,
+    "msrc": 0,
+    "apple": 0,
+    "projectzero": 0,
+    "pan": 25,
+    "fortinet": 705,
+    "cisco": 0,
+    "adobe": 14,
+    "nvd": 0
   },
-  "totalRecords": 3934
+  "totalRecords": 3236
 }

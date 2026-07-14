@@ -10,6 +10,7 @@
  */
 
 import { buildRecord, parseDate } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const MFSA_INDEX_URL = 'https://www.mozilla.org/en-US/security/advisories/';
@@ -26,7 +27,7 @@ interface MfsaAdvisory {
  * The index page lists advisories with links to individual advisory pages.
  */
 async function fetchAdvisoryIndex(): Promise<MfsaAdvisory[]> {
-  const response = await fetch(MFSA_INDEX_URL, {
+  const response = await fetchWithRetry(MFSA_INDEX_URL, {
     headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
   });
   if (!response.ok) {
@@ -62,7 +63,7 @@ async function fetchAdvisoryIndex(): Promise<MfsaAdvisory[]> {
  */
 async function fetchAdvisoryRecords(advisory: MfsaAdvisory): Promise<VulnerabilityRecord[]> {
   try {
-    const response = await fetch(advisory.url, {
+    const response = await fetchWithRetry(advisory.url, {
       headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
     });
     if (!response.ok) {

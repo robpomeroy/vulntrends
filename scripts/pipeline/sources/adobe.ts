@@ -23,6 +23,7 @@
  */
 
 import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const ADOBE_INDEX_URL = 'https://helpx.adobe.com/security.html';
@@ -62,9 +63,16 @@ interface AdobeBulletin {
  * is always present and unique.
  */
 async function fetchIndex(): Promise<string> {
-  const response = await fetch(ADOBE_INDEX_URL, {
-    headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
-  });
+  // Adobe's index page is genuinely slow (30+ sec in practice). Use a
+  // 60s timeout (longer than the default 30s) and the standard 3 retries
+  // for transient failures.
+  const response = await fetchWithRetry(
+    ADOBE_INDEX_URL,
+    {
+      headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
+      timeoutMs: 60_000,
+    },
+  );
   if (!response.ok) {
     throw new Error(`Adobe index fetch failed: ${response.status}`);
   }
@@ -120,7 +128,7 @@ function parseIndex(html: string): AdobeBulletin[] {
  */
 async function fetchBulletinDetail(bulletin: AdobeBulletin): Promise<void> {
   try {
-    const response = await fetch(bulletin.url, {
+    const response = await fetchWithRetry(bulletin.url, {
       headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
     });
     if (!response.ok) return;

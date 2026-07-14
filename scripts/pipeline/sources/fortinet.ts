@@ -22,6 +22,7 @@
  */
 
 import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const FORTINET_PSIRT_URL = 'https://www.fortiguard.com/psirt';
@@ -120,7 +121,7 @@ async function fetchPage(page: number): Promise<string> {
   // The base URL already carries the empty filter params, but they
   // don't matter — the page param is what controls pagination.
   const url = `${FORTINET_PSIRT_URL}?date=&severity=&product=&component=&discovered=&attack_type=&version=&page=${page}`;
-  const response = await fetch(url, {
+  const response = await fetchWithRetry(url, {
     headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
   });
   if (!response.ok) {

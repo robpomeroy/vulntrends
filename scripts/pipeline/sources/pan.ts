@@ -27,6 +27,7 @@
  */
 
 import { buildRecord } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const PAN_JSON_URL = 'https://security.paloaltonetworks.com/json';
@@ -63,7 +64,7 @@ const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms
 /** Fetch one page of condensed PAN advisories. */
 async function fetchPage(startIndex: number): Promise<PanAdvisory[]> {
   const url = `${PAN_JSON_URL}?sort=-date&resultsPerPage=${PAGE_SIZE}&startIndex=${startIndex}`;
-  const response = await fetch(url, {
+  const response = await fetchWithRetry(url, {
     headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
   });
   if (!response.ok) {

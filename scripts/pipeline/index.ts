@@ -10,7 +10,7 @@
  * Usage: `npm run data:build` (runs this then aggregate.ts)
  */
 
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
@@ -32,6 +32,24 @@ import { fetchRecords as fetchAdobe } from './sources/adobe.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '..', '..', 'src', 'data');
 const RAW_DIR = join(DATA_DIR, 'raw');
+
+/**
+ * Maximum number of sources allowed to fail *with no cached data* before
+ * the pipeline aborts. Configurable via the MAX_SOURCE_FAILURES env
+ * var (default 2).
+ *
+ * "Failed with no cached data" means: the source fetch threw AND no
+ * `src/data/raw/<source>.json` from a previous run was available. Sources
+ * that fail but have a cached fallback (e.g. NVD's last 12 hours
+ * partial) are NOT counted — they contribute stale-but-useful data to
+ * the run.
+ *
+ * The threshold guards against systemic failures (network down, NVD
+ * API key expired, DNS broken) nuking a healthy site. A threshold of
+ * 2 means: with 10 sources, a single blip is fine, two blips
+ * simultaneously is a system-level problem worth investigating.
+ */
+const MAX_SOURCE_FAILURES = Number(process.env.MAX_SOURCE_FAILURES ?? '2');
 
 /** All data sources, in fetch order. NVD is last so it can fill gaps. */
 const SOURCES: Array<{ id: SourceId; fetch: () => Promise<VulnerabilityRecord[]> }> = [
@@ -73,6 +91,11 @@ async function main(): Promise<void> {
 
   const allRecords: VulnerabilityRecord[] = [];
 
+  // Track which sources failed and whether each had a cached fallback.
+  // Used at the end to decide whether to abort the pipeline.
+  const failedSources: SourceId[] = [];
+  const cachedFallbackSources: SourceId[] = [];
+
   // Fetch each source
   for (const source of SOURCES) {
     console.log(`\n--- ${source.id} ---`);
@@ -86,10 +109,70 @@ async function main(): Promise<void> {
       console.log(`  Written ${records.length} records to raw/${source.id}.json`);
     } catch (err) {
       console.error(`  ERROR fetching ${source.id}:`, err);
-      sourceCounts[source.id] = 0;
-      // Write empty array so the file exists
-      await writeJson(join(RAW_DIR, `${source.id}.json`), []);
+
+      // Try to keep the previous run's data instead of overwriting
+      // with an empty array. Without this, a single network hiccup
+      // on the live site would wipe out a perfectly good previous
+      // dataset. The next aggregator run still sees the cached
+      // records, so the deployed site is at worst one run stale.
+      const prevPath = join(RAW_DIR, `${source.id}.json`);
+      let usedCache = false;
+      try {
+        const prevJson = await readFile(prevPath, 'utf-8');
+        const prevRecords = JSON.parse(prevJson) as VulnerabilityRecord[];
+        if (Array.isArray(prevRecords) && prevRecords.length > 0) {
+          sourceCounts[source.id] = prevRecords.length;
+          allRecords.push(...prevRecords);
+          usedCache = true;
+          cachedFallbackSources.push(source.id);
+          // Log to stderr so the Synology Task Scheduler email surfaces
+          // it (errors are normally sent to stderr; stdout goes to the
+          // log file). The user asked for visibility on cached-fallback
+          // usage so this is emitted even though it's not a hard error.
+          console.error(
+            `  ⚠ ${source.id}: fetch failed; reusing ${prevRecords.length} cached records from previous run`,
+          );
+        }
+      } catch {
+        // No previous file (first run) or JSON parse error — fall
+        // through to writing an empty array.
+      }
+      if (!usedCache) {
+        // True failure: no fresh data, no cached data. Write an empty
+        // array so the file exists and downstream code doesn't break
+        // (the Zod schemas require a JSON array, not absence).
+        sourceCounts[source.id] = 0;
+        await writeJson(prevPath, []);
+        failedSources.push(source.id);
+        console.error(
+          `  ✗ ${source.id}: fetch failed AND no previous data available; wrote empty array`,
+        );
+      }
     }
+  }
+
+  // Pre-aggregation safety check: if too many sources failed with no
+  // cached data, abort the pipeline before aggregating and writing
+  // meta.json. This prevents `npm run publish` from building and
+  // deploying a degraded site when there's a systemic problem (e.g.
+  // network down, API key expired, DNS broken).
+  if (failedSources.length > MAX_SOURCE_FAILURES) {
+    console.error('');
+    console.error(`✗ Pipeline aborted: ${failedSources.length} sources failed with no cached data`);
+    console.error(`  Failed: ${failedSources.join(', ')}`);
+    console.error(`  Threshold (MAX_SOURCE_FAILURES): ${MAX_SOURCE_FAILURES}`);
+    console.error(
+      `  Fix the failing sources or increase the threshold via the env var.`,
+    );
+    process.exit(1);
+  }
+
+  // Surface cached-fallback usage to stderr even on success, so the
+  // operator can see which sources were stale.
+  if (cachedFallbackSources.length > 0) {
+    console.error(
+      `⚠ ${cachedFallbackSources.length} source(s) used cached data: ${cachedFallbackSources.join(', ')}`,
+    );
   }
 
   // Deduplicate — first by record ID, then by CVE ID

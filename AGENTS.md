@@ -40,6 +40,40 @@ This lets you iterate on the website freely without re-downloading data.
 
 **Local dev workflow**: run `npm run data:build` once, then `npm run dev` freely.
 
+### Data pipeline resilience
+
+A scheduled `npm run publish` must not deploy a degraded site when
+sources fail. The pipeline has three safeguards:
+
+1. **Defensive fetching.** All source parsers go through
+   `scripts/pipeline/fetch-with-retry.ts`, which adds:
+   - **Timeout** (30s default, 60s for Adobe which is genuinely slow)
+   - **Retry with exponential backoff** (3 attempts: 1s, 2s, 4s + ±200ms
+     jitter) on transient errors
+   - **Retryable status codes** are 429/502/503/504 only — other 4xx
+     fail fast because they won't fix themselves
+
+2. **Cached fallback.** When a source fetch throws, the pipeline reads
+   the existing `src/data/raw/<source>.json` from the previous run and
+   uses those records instead of overwriting with `[]`. A single
+   network hiccup no longer wipes out a healthy previous dataset —
+   the deployed site is at worst one run stale.
+
+3. **Failure threshold.** After all sources are fetched, the pipeline
+   aborts (exit non-zero) if more than `MAX_SOURCE_FAILURES` (default
+   2, configurable via env var) sources failed with no cached data.
+   This prevents deploying a degraded site when there's a systemic
+   problem (network down, NVD API key expired, DNS broken).
+
+   Sources that fail but had cached data are **not** counted toward
+   the threshold — they contribute stale-but-useful records. A
+   warning is emitted to stderr listing which sources were stale,
+   so the operator can spot a degrading situation before it becomes
+   a real problem.
+
+The Synology Task Scheduler email surfaces both the threshold-abort
+and the cached-fallback warning (both go to stderr).
+
 ### Cross-platform `node_modules` (Windows ↔ Linux)
 
 `node_modules/` is gitignored because some dependencies (notably

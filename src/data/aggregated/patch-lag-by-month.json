@@ -1,4030 +1,1734 @@
 [
   {
-    "date": "2020-01",
-    "manufacturer": "Apple",
-    "medianLagDays": 17,
-    "p90LagDays": 17,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-01",
+    "date": "2005-01",
     "manufacturer": "Mozilla",
-    "medianLagDays": 13,
-    "p90LagDays": 13,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-02",
-    "manufacturer": "Adobe",
-    "medianLagDays": 13,
-    "p90LagDays": 13,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-02",
-    "manufacturer": "Apple",
-    "medianLagDays": 26,
-    "p90LagDays": 26,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-02",
-    "manufacturer": "Cisco",
-    "medianLagDays": 20,
-    "p90LagDays": 32,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-02",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 39,
-    "p90LagDays": 39,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-02",
-    "manufacturer": "Google",
-    "medianLagDays": 35,
-    "p90LagDays": 39,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-02",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 37,
-    "p90LagDays": 37,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-02",
-    "manufacturer": "Samsung",
-    "medianLagDays": 35,
-    "p90LagDays": 35,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-03",
-    "manufacturer": "Adobe",
-    "medianLagDays": 11,
-    "p90LagDays": 11,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-03",
-    "manufacturer": "Cisco",
-    "medianLagDays": 49,
-    "p90LagDays": 62,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-03",
-    "manufacturer": "Google",
-    "medianLagDays": 32,
-    "p90LagDays": 49,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-03",
-    "manufacturer": "Linux",
-    "medianLagDays": 24,
-    "p90LagDays": 32,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-03",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 23,
-    "p90LagDays": 74,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-03",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 49,
-    "p90LagDays": 49,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Adobe",
-    "medianLagDays": 53,
-    "p90LagDays": 53,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Apple",
-    "medianLagDays": 29,
-    "p90LagDays": 39,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Cisco",
-    "medianLagDays": 107,
-    "p90LagDays": 107,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 27,
-    "p90LagDays": 36,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Google",
-    "medianLagDays": 21,
-    "p90LagDays": 74,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Linux",
-    "medianLagDays": 67,
-    "p90LagDays": 74,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 36,
-    "p90LagDays": 48,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Oracle",
-    "medianLagDays": 25,
-    "p90LagDays": 25,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-04",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 43,
-    "p90LagDays": 60,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Adobe",
-    "medianLagDays": 136,
-    "p90LagDays": 136,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Apple",
-    "medianLagDays": 84,
-    "p90LagDays": 137,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Google",
-    "medianLagDays": 61,
-    "p90LagDays": 126,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Linux",
-    "medianLagDays": 23,
-    "p90LagDays": 92,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 79,
-    "p90LagDays": 99,
-    "knownCount": 10,
-    "totalCount": 10
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 19,
-    "p90LagDays": 53,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Oracle",
-    "medianLagDays": 112,
-    "p90LagDays": 112,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 29,
-    "p90LagDays": 29,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-05",
-    "manufacturer": "Samsung",
-    "medianLagDays": 100,
-    "p90LagDays": 100,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-06",
-    "manufacturer": "Apple",
-    "medianLagDays": 54,
-    "p90LagDays": 174,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2020-06",
-    "manufacturer": "Cisco",
-    "medianLagDays": 69,
-    "p90LagDays": 69,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-06",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 119,
-    "p90LagDays": 168,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-06",
-    "manufacturer": "Google",
-    "medianLagDays": 102,
-    "p90LagDays": 156,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2020-06",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 65,
-    "p90LagDays": 104,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-06",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 77,
-    "p90LagDays": 91,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-06",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 39,
-    "p90LagDays": 44,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-06",
-    "manufacturer": "Samsung",
-    "medianLagDays": 40,
-    "p90LagDays": 40,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Adobe",
-    "medianLagDays": 96,
-    "p90LagDays": 144,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Apple",
-    "medianLagDays": 153,
-    "p90LagDays": 153,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Cisco",
-    "medianLagDays": 88,
-    "p90LagDays": 88,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 149,
-    "p90LagDays": 177,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Google",
-    "medianLagDays": 51,
-    "p90LagDays": 177,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Linux",
-    "medianLagDays": 70,
-    "p90LagDays": 70,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 73,
-    "p90LagDays": 151,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 73,
-    "p90LagDays": 73,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Oracle",
-    "medianLagDays": 60,
-    "p90LagDays": 96,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-07",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 111,
-    "p90LagDays": 176,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-08",
-    "manufacturer": "Apple",
-    "medianLagDays": 121,
-    "p90LagDays": 139,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-08",
-    "manufacturer": "Cisco",
-    "medianLagDays": 136,
-    "p90LagDays": 164,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-08",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 103,
-    "p90LagDays": 177,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2020-08",
-    "manufacturer": "Google",
-    "medianLagDays": 105,
-    "p90LagDays": 166,
-    "knownCount": 12,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 12
   },
   {
-    "date": "2020-08",
-    "manufacturer": "Linux",
-    "medianLagDays": 18,
-    "p90LagDays": 18,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-08",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 64,
-    "p90LagDays": 133,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2020-08",
+    "date": "2005-02",
     "manufacturer": "Mozilla",
-    "medianLagDays": 155,
-    "p90LagDays": 155,
-    "knownCount": 1,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2005-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 3
+  },
+  {
+    "date": "2005-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 9
+  },
+  {
+    "date": "2005-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 3
+  },
+  {
+    "date": "2005-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
+  },
+  {
+    "date": "2005-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 3
+  },
+  {
+    "date": "2006-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 28
+  },
+  {
+    "date": "2006-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
+  },
+  {
+    "date": "2006-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 10
+  },
+  {
+    "date": "2006-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 11
+  },
+  {
+    "date": "2007-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2007-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 1
   },
   {
-    "date": "2020-08",
-    "manufacturer": "Oracle",
-    "medianLagDays": 56,
-    "p90LagDays": 89,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-08",
-    "manufacturer": "Samsung",
-    "medianLagDays": 86,
-    "p90LagDays": 96,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-09",
-    "manufacturer": "Adobe",
-    "medianLagDays": 129,
-    "p90LagDays": 172,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-09",
-    "manufacturer": "Apple",
-    "medianLagDays": 65,
-    "p90LagDays": 70,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-09",
-    "manufacturer": "Cisco",
-    "medianLagDays": 77,
-    "p90LagDays": 87,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-09",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 37,
-    "p90LagDays": 47,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-09",
-    "manufacturer": "Google",
-    "medianLagDays": 143,
-    "p90LagDays": 162,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-09",
-    "manufacturer": "Linux",
-    "medianLagDays": 103,
-    "p90LagDays": 124,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-09",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 70,
-    "p90LagDays": 177,
-    "knownCount": 7,
+    "date": "2007-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 7
   },
   {
-    "date": "2020-09",
+    "date": "2007-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 83,
-    "p90LagDays": 132,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 10
   },
   {
-    "date": "2020-09",
-    "manufacturer": "Oracle",
-    "medianLagDays": 142,
-    "p90LagDays": 164,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-09",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 36,
-    "p90LagDays": 36,
-    "knownCount": 1,
+    "date": "2007-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 1
   },
   {
-    "date": "2020-09",
-    "manufacturer": "Samsung",
-    "medianLagDays": 81,
-    "p90LagDays": 107,
-    "knownCount": 2,
-    "totalCount": 2
+    "date": "2007-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 10
   },
   {
-    "date": "2020-10",
-    "manufacturer": "Adobe",
-    "medianLagDays": 94,
-    "p90LagDays": 105,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-10",
-    "manufacturer": "Apple",
-    "medianLagDays": 137,
-    "p90LagDays": 173,
-    "knownCount": 3,
+    "date": "2007-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 3
   },
   {
-    "date": "2020-10",
-    "manufacturer": "Cisco",
-    "medianLagDays": 71,
-    "p90LagDays": 119,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-10",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 67,
-    "p90LagDays": 117,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-10",
-    "manufacturer": "Google",
-    "medianLagDays": 105,
-    "p90LagDays": 180,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-10",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 67,
-    "p90LagDays": 137,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2020-10",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 96,
-    "p90LagDays": 154,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2020-10",
-    "manufacturer": "Samsung",
-    "medianLagDays": 109,
-    "p90LagDays": 109,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-11",
-    "manufacturer": "Adobe",
-    "medianLagDays": 91,
-    "p90LagDays": 172,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-11",
-    "manufacturer": "Apple",
-    "medianLagDays": 59,
-    "p90LagDays": 60,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-11",
-    "manufacturer": "Cisco",
-    "medianLagDays": 132,
-    "p90LagDays": 165,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-11",
-    "manufacturer": "Google",
-    "medianLagDays": 87,
-    "p90LagDays": 139,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-11",
-    "manufacturer": "Linux",
-    "medianLagDays": 52,
-    "p90LagDays": 74,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-11",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 95,
-    "p90LagDays": 110,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2020-11",
+    "date": "2007-12",
     "manufacturer": "Mozilla",
-    "medianLagDays": 158,
-    "p90LagDays": 163,
-    "knownCount": 5,
-    "totalCount": 5
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
   },
   {
-    "date": "2020-11",
-    "manufacturer": "Oracle",
-    "medianLagDays": 117,
-    "p90LagDays": 180,
-    "knownCount": 2,
+    "date": "2008-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 2
   },
   {
-    "date": "2020-11",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 135,
-    "p90LagDays": 162,
-    "knownCount": 4,
+    "date": "2008-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 10
+  },
+  {
+    "date": "2008-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2008-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 4
   },
   {
-    "date": "2020-11",
-    "manufacturer": "Samsung",
-    "medianLagDays": 72,
-    "p90LagDays": 72,
-    "knownCount": 1,
-    "totalCount": 1
+    "date": "2008-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
   },
   {
-    "date": "2020-12",
-    "manufacturer": "Adobe",
-    "medianLagDays": 89,
-    "p90LagDays": 89,
-    "knownCount": 1,
-    "totalCount": 1
+    "date": "2008-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
   },
   {
-    "date": "2020-12",
-    "manufacturer": "Apple",
-    "medianLagDays": 104,
-    "p90LagDays": 161,
-    "knownCount": 7,
+    "date": "2008-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
+  },
+  {
+    "date": "2009-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2009-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
+  },
+  {
+    "date": "2009-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
+  },
+  {
+    "date": "2009-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
+  },
+  {
+    "date": "2009-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2009-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 11
+  },
+  {
+    "date": "2010-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 5
+  },
+  {
+    "date": "2010-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 26
+  },
+  {
+    "date": "2010-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
+  },
+  {
+    "date": "2010-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2010-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
+  },
+  {
+    "date": "2011-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 4
+  },
+  {
+    "date": "2011-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 19
+  },
+  {
+    "date": "2011-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2011-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2011-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2011-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 7
   },
   {
-    "date": "2020-12",
-    "manufacturer": "Cisco",
-    "medianLagDays": 76,
-    "p90LagDays": 118,
-    "knownCount": 2,
+    "date": "2012-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 10
+  },
+  {
+    "date": "2012-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 2
   },
   {
-    "date": "2020-12",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 113,
-    "p90LagDays": 169,
-    "knownCount": 3,
-    "totalCount": 3
+    "date": "2012-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
   },
   {
-    "date": "2020-12",
-    "manufacturer": "Google",
-    "medianLagDays": 51,
-    "p90LagDays": 89,
-    "knownCount": 6,
+    "date": "2012-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 33
+  },
+  {
+    "date": "2012-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
+  },
+  {
+    "date": "2012-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 19
+  },
+  {
+    "date": "2012-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 32
+  },
+  {
+    "date": "2012-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
+  },
+  {
+    "date": "2012-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 7
+  },
+  {
+    "date": "2012-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 28
+  },
+  {
+    "date": "2013-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
+  },
+  {
+    "date": "2013-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2013-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2013-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 19
+  },
+  {
+    "date": "2013-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2013-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 5
+  },
+  {
+    "date": "2013-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
+  },
+  {
+    "date": "2014-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 21
+  },
+  {
+    "date": "2014-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2014-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 11
+  },
+  {
+    "date": "2014-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
+  },
+  {
+    "date": "2014-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
+  },
+  {
+    "date": "2014-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
+  },
+  {
+    "date": "2015-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 10
+  },
+  {
+    "date": "2015-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2015-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 19
+  },
+  {
+    "date": "2015-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
+  },
+  {
+    "date": "2015-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
+  },
+  {
+    "date": "2015-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 23
+  },
+  {
+    "date": "2015-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 28
+  },
+  {
+    "date": "2015-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
+  },
+  {
+    "date": "2015-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 24
+  },
+  {
+    "date": "2016-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 18
+  },
+  {
+    "date": "2016-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2016-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
+  },
+  {
+    "date": "2016-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 20
+  },
+  {
+    "date": "2016-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2016-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 30
+  },
+  {
+    "date": "2016-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
+  },
+  {
+    "date": "2017-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 24
+  },
+  {
+    "date": "2017-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
+  },
+  {
+    "date": "2017-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 42
+  },
+  {
+    "date": "2017-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 31
+  },
+  {
+    "date": "2017-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
+  },
+  {
+    "date": "2017-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 18
+  },
+  {
+    "date": "2017-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2017-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 5
+  },
+  {
+    "date": "2018-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 34
+  },
+  {
+    "date": "2018-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 23
+  },
+  {
+    "date": "2018-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
+  },
+  {
+    "date": "2018-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 4
+  },
+  {
+    "date": "2018-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
+  },
+  {
+    "date": "2018-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2018-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2018-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
+  },
+  {
+    "date": "2019-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 10
+  },
+  {
+    "date": "2019-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 4
+  },
+  {
+    "date": "2019-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 23
+  },
+  {
+    "date": "2019-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 24
+  },
+  {
+    "date": "2019-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 7
+  },
+  {
+    "date": "2019-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 20
+  },
+  {
+    "date": "2019-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 9
+  },
+  {
+    "date": "2019-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
+  },
+  {
+    "date": "2020-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 7
+  },
+  {
+    "date": "2020-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 10
+  },
+  {
+    "date": "2020-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
+  },
+  {
+    "date": "2020-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
+  },
+  {
+    "date": "2020-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2020-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 29
+  },
+  {
+    "date": "2020-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 11
+  },
+  {
+    "date": "2020-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 6
   },
   {
-    "date": "2020-12",
-    "manufacturer": "Linux",
-    "medianLagDays": 57,
-    "p90LagDays": 75,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2020-12",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 130,
-    "p90LagDays": 173,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2020-12",
+    "date": "2020-10",
     "manufacturer": "Mozilla",
-    "medianLagDays": 134,
-    "p90LagDays": 170,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-12",
-    "manufacturer": "Oracle",
-    "medianLagDays": 137,
-    "p90LagDays": 151,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2020-12",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 13,
-    "p90LagDays": 13,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2020-12",
-    "manufacturer": "Samsung",
-    "medianLagDays": 132,
-    "p90LagDays": 132,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Adobe",
-    "medianLagDays": 98,
-    "p90LagDays": 108,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Apple",
-    "medianLagDays": 81,
-    "p90LagDays": 157,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Cisco",
-    "medianLagDays": 16,
-    "p90LagDays": 151,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 108,
-    "p90LagDays": 133,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Google",
-    "medianLagDays": 24,
-    "p90LagDays": 97,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Linux",
-    "medianLagDays": 39,
-    "p90LagDays": 55,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 24,
-    "p90LagDays": 36,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 56,
-    "p90LagDays": 179,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Oracle",
-    "medianLagDays": 22,
-    "p90LagDays": 22,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 94,
-    "p90LagDays": 138,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-01",
-    "manufacturer": "Samsung",
-    "medianLagDays": 127,
-    "p90LagDays": 127,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-02",
-    "manufacturer": "Adobe",
-    "medianLagDays": 150,
-    "p90LagDays": 156,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-02",
-    "manufacturer": "Apple",
-    "medianLagDays": 97,
-    "p90LagDays": 152,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-02",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 99,
-    "p90LagDays": 178,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-02",
-    "manufacturer": "Google",
-    "medianLagDays": 159,
-    "p90LagDays": 173,
-    "knownCount": 7,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 7
   },
   {
-    "date": "2021-02",
-    "manufacturer": "Linux",
-    "medianLagDays": 47,
-    "p90LagDays": 47,
-    "knownCount": 1,
-    "totalCount": 1
+    "date": "2020-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 20
   },
   {
-    "date": "2021-02",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 120,
-    "p90LagDays": 175,
-    "knownCount": 3,
-    "totalCount": 3
+    "date": "2020-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
+  },
+  {
+    "date": "2021-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
   },
   {
     "date": "2021-02",
     "manufacturer": "Mozilla",
-    "medianLagDays": 103,
-    "p90LagDays": 170,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-02",
-    "manufacturer": "Oracle",
-    "medianLagDays": 141,
-    "p90LagDays": 152,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-02",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 123,
-    "p90LagDays": 123,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-02",
-    "manufacturer": "Samsung",
-    "medianLagDays": 21,
-    "p90LagDays": 61,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Adobe",
-    "medianLagDays": 98,
-    "p90LagDays": 140,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Apple",
-    "medianLagDays": 98,
-    "p90LagDays": 109,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Cisco",
-    "medianLagDays": 62,
-    "p90LagDays": 129,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 171,
-    "p90LagDays": 171,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Google",
-    "medianLagDays": 97,
-    "p90LagDays": 170,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Linux",
-    "medianLagDays": 97,
-    "p90LagDays": 139,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 79,
-    "p90LagDays": 125,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
   },
   {
     "date": "2021-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 129,
-    "p90LagDays": 129,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 101,
-    "p90LagDays": 156,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-03",
-    "manufacturer": "Samsung",
-    "medianLagDays": 158,
-    "p90LagDays": 158,
-    "knownCount": 1,
-    "totalCount": 1
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 11
   },
   {
     "date": "2021-04",
-    "manufacturer": "Adobe",
-    "medianLagDays": 155,
-    "p90LagDays": 155,
-    "knownCount": 1,
-    "totalCount": 1
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 20
   },
   {
-    "date": "2021-04",
-    "manufacturer": "Apple",
-    "medianLagDays": 127,
-    "p90LagDays": 178,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2021-04",
-    "manufacturer": "Cisco",
-    "medianLagDays": 122,
-    "p90LagDays": 145,
-    "knownCount": 2,
+    "date": "2021-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 2
   },
   {
-    "date": "2021-04",
-    "manufacturer": "Google",
-    "medianLagDays": 71,
-    "p90LagDays": 147,
-    "knownCount": 7,
-    "totalCount": 7
+    "date": "2021-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
   },
   {
-    "date": "2021-04",
-    "manufacturer": "Linux",
-    "medianLagDays": 99,
-    "p90LagDays": 166,
-    "knownCount": 5,
-    "totalCount": 5
+    "date": "2021-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
   },
   {
-    "date": "2021-04",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 94,
-    "p90LagDays": 160,
-    "knownCount": 8,
+    "date": "2021-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
+  },
+  {
+    "date": "2021-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2022-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 19
+  },
+  {
+    "date": "2022-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2022-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2022-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 22
+  },
+  {
+    "date": "2022-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 8
   },
   {
-    "date": "2021-04",
+    "date": "2022-08",
     "manufacturer": "Mozilla",
-    "medianLagDays": 83,
-    "p90LagDays": 103,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-04",
-    "manufacturer": "Oracle",
-    "medianLagDays": 173,
-    "p90LagDays": 173,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-04",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 92,
-    "p90LagDays": 146,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-05",
-    "manufacturer": "Adobe",
-    "medianLagDays": 104,
-    "p90LagDays": 104,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-05",
-    "manufacturer": "Apple",
-    "medianLagDays": 77,
-    "p90LagDays": 133,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-05",
-    "manufacturer": "Cisco",
-    "medianLagDays": 161,
-    "p90LagDays": 165,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-05",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 58,
-    "p90LagDays": 102,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-05",
-    "manufacturer": "Google",
-    "medianLagDays": 104,
-    "p90LagDays": 142,
-    "knownCount": 8,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 8
   },
   {
-    "date": "2021-05",
-    "manufacturer": "Linux",
-    "medianLagDays": 42,
-    "p90LagDays": 87,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-05",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 39,
-    "p90LagDays": 174,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-05",
+    "date": "2022-09",
     "manufacturer": "Mozilla",
-    "medianLagDays": 39,
-    "p90LagDays": 48,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
   },
   {
-    "date": "2021-05",
-    "manufacturer": "Oracle",
-    "medianLagDays": 62,
-    "p90LagDays": 79,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-05",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 127,
-    "p90LagDays": 178,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Adobe",
-    "medianLagDays": 125,
-    "p90LagDays": 167,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Apple",
-    "medianLagDays": 86,
-    "p90LagDays": 86,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Cisco",
-    "medianLagDays": 145,
-    "p90LagDays": 169,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 118,
-    "p90LagDays": 118,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Google",
-    "medianLagDays": 88,
-    "p90LagDays": 171,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Linux",
-    "medianLagDays": 49,
-    "p90LagDays": 49,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 142,
-    "p90LagDays": 171,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-06",
+    "date": "2022-10",
     "manufacturer": "Mozilla",
-    "medianLagDays": 126,
-    "p90LagDays": 126,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Oracle",
-    "medianLagDays": 27,
-    "p90LagDays": 31,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-06",
-    "manufacturer": "Samsung",
-    "medianLagDays": 63,
-    "p90LagDays": 63,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-07",
-    "manufacturer": "Adobe",
-    "medianLagDays": 145,
-    "p90LagDays": 176,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-07",
-    "manufacturer": "Apple",
-    "medianLagDays": 97,
-    "p90LagDays": 153,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-07",
-    "manufacturer": "Cisco",
-    "medianLagDays": 111,
-    "p90LagDays": 111,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-07",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 129,
-    "p90LagDays": 134,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-07",
-    "manufacturer": "Google",
-    "medianLagDays": 102,
-    "p90LagDays": 179,
-    "knownCount": 8,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 8
   },
   {
-    "date": "2021-07",
-    "manufacturer": "Linux",
-    "medianLagDays": 134,
-    "p90LagDays": 134,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-07",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 63,
-    "p90LagDays": 109,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-07",
+    "date": "2022-11",
     "manufacturer": "Mozilla",
-    "medianLagDays": 85,
-    "p90LagDays": 95,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 22
   },
   {
-    "date": "2021-07",
-    "manufacturer": "Oracle",
-    "medianLagDays": 135,
-    "p90LagDays": 139,
-    "knownCount": 2,
-    "totalCount": 2
+    "date": "2022-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 9
   },
   {
-    "date": "2021-07",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 96,
-    "p90LagDays": 118,
-    "knownCount": 3,
-    "totalCount": 3
+    "date": "2023-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 25
   },
   {
-    "date": "2021-07",
-    "manufacturer": "Samsung",
-    "medianLagDays": 125,
-    "p90LagDays": 125,
-    "knownCount": 1,
-    "totalCount": 1
+    "date": "2023-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 22
   },
   {
-    "date": "2021-08",
-    "manufacturer": "Apple",
-    "medianLagDays": 104,
-    "p90LagDays": 159,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-08",
-    "manufacturer": "Cisco",
-    "medianLagDays": 66,
-    "p90LagDays": 82,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-08",
+    "date": "2023-03",
     "manufacturer": "Fortinet",
-    "medianLagDays": 70,
-    "p90LagDays": 123,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-08",
-    "manufacturer": "Google",
-    "medianLagDays": 138,
-    "p90LagDays": 173,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-08",
-    "manufacturer": "Linux",
-    "medianLagDays": 123,
-    "p90LagDays": 167,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2021-08",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 85,
-    "p90LagDays": 152,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-08",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 111,
-    "p90LagDays": 165,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2021-08",
-    "manufacturer": "Oracle",
-    "medianLagDays": 153,
-    "p90LagDays": 153,
-    "knownCount": 1,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 1
   },
   {
-    "date": "2021-08",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 104,
-    "p90LagDays": 155,
-    "knownCount": 2,
-    "totalCount": 2
+    "date": "2023-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
   },
   {
-    "date": "2021-09",
-    "manufacturer": "Adobe",
-    "medianLagDays": 124,
-    "p90LagDays": 153,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-09",
-    "manufacturer": "Apple",
-    "medianLagDays": 135,
-    "p90LagDays": 162,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-09",
-    "manufacturer": "Cisco",
-    "medianLagDays": 144,
-    "p90LagDays": 178,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-09",
+    "date": "2023-04",
     "manufacturer": "Fortinet",
-    "medianLagDays": 91,
-    "p90LagDays": 110,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 1,
+    "p90LagDays": 1,
+    "knownCount": 1,
+    "totalCount": 1
   },
   {
-    "date": "2021-09",
-    "manufacturer": "Google",
-    "medianLagDays": 42,
-    "p90LagDays": 117,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2021-09",
-    "manufacturer": "Linux",
-    "medianLagDays": 109,
-    "p90LagDays": 119,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-09",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 61,
-    "p90LagDays": 143,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2021-09",
+    "date": "2023-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 141,
-    "p90LagDays": 143,
-    "knownCount": 3,
-    "totalCount": 3
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 26
   },
   {
-    "date": "2021-09",
-    "manufacturer": "Oracle",
-    "medianLagDays": 132,
-    "p90LagDays": 132,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-09",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 164,
-    "p90LagDays": 169,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-09",
-    "manufacturer": "Samsung",
-    "medianLagDays": 108,
-    "p90LagDays": 140,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Adobe",
-    "medianLagDays": 99,
-    "p90LagDays": 99,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Apple",
-    "medianLagDays": 88,
-    "p90LagDays": 145,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-10",
+    "date": "2023-05",
     "manufacturer": "Fortinet",
-    "medianLagDays": 167,
-    "p90LagDays": 173,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Google",
-    "medianLagDays": 82,
-    "p90LagDays": 124,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Linux",
-    "medianLagDays": 61,
-    "p90LagDays": 119,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 102,
-    "p90LagDays": 124,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 92,
-    "p90LagDays": 167,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Oracle",
-    "medianLagDays": 132,
-    "p90LagDays": 160,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 39,
-    "p90LagDays": 68,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-10",
-    "manufacturer": "Samsung",
-    "medianLagDays": 112,
-    "p90LagDays": 112,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Adobe",
-    "medianLagDays": 87,
-    "p90LagDays": 110,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Apple",
-    "medianLagDays": 94,
-    "p90LagDays": 127,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Cisco",
-    "medianLagDays": 94,
-    "p90LagDays": 101,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Google",
-    "medianLagDays": 52,
-    "p90LagDays": 125,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Linux",
-    "medianLagDays": 66,
-    "p90LagDays": 66,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 68,
-    "p90LagDays": 99,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 128,
-    "p90LagDays": 129,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Oracle",
-    "medianLagDays": 53,
-    "p90LagDays": 92,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-11",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 109,
-    "p90LagDays": 109,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Adobe",
-    "medianLagDays": 117,
-    "p90LagDays": 171,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Apple",
-    "medianLagDays": 117,
-    "p90LagDays": 126,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Cisco",
-    "medianLagDays": 44,
-    "p90LagDays": 54,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 140,
-    "p90LagDays": 140,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Google",
-    "medianLagDays": 158,
-    "p90LagDays": 177,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Linux",
-    "medianLagDays": 152,
-    "p90LagDays": 152,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 49,
-    "p90LagDays": 68,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 134,
-    "p90LagDays": 148,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Oracle",
-    "medianLagDays": 78,
-    "p90LagDays": 176,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2021-12",
-    "manufacturer": "Palo Alto",
     "medianLagDays": 12,
     "p90LagDays": 12,
     "knownCount": 1,
     "totalCount": 1
   },
   {
-    "date": "2022-01",
-    "manufacturer": "Apple",
-    "medianLagDays": 98,
-    "p90LagDays": 151,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-01",
-    "manufacturer": "Cisco",
-    "medianLagDays": 35,
-    "p90LagDays": 35,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-01",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 15,
-    "p90LagDays": 22,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-01",
-    "manufacturer": "Google",
-    "medianLagDays": 95,
-    "p90LagDays": 177,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-01",
-    "manufacturer": "Linux",
-    "medianLagDays": 85,
-    "p90LagDays": 119,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2022-01",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 105,
-    "p90LagDays": 180,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-01",
+    "date": "2023-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 123,
-    "p90LagDays": 170,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2022-01",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 20,
-    "p90LagDays": 20,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Adobe",
-    "medianLagDays": 69,
-    "p90LagDays": 128,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Apple",
-    "medianLagDays": 145,
-    "p90LagDays": 175,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Cisco",
-    "medianLagDays": 150,
-    "p90LagDays": 164,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 90,
-    "p90LagDays": 100,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Google",
-    "medianLagDays": 54,
-    "p90LagDays": 179,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Linux",
-    "medianLagDays": 158,
-    "p90LagDays": 167,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 63,
-    "p90LagDays": 115,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 78,
-    "p90LagDays": 78,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Oracle",
-    "medianLagDays": 108,
-    "p90LagDays": 143,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-02",
-    "manufacturer": "Samsung",
-    "medianLagDays": 82,
-    "p90LagDays": 88,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Adobe",
-    "medianLagDays": 44,
-    "p90LagDays": 142,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Apple",
-    "medianLagDays": 50,
-    "p90LagDays": 66,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Cisco",
-    "medianLagDays": 60,
-    "p90LagDays": 101,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 59,
-    "p90LagDays": 59,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Google",
-    "medianLagDays": 101,
-    "p90LagDays": 166,
-    "knownCount": 8,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 8
   },
   {
-    "date": "2022-03",
-    "manufacturer": "Linux",
-    "medianLagDays": 80,
-    "p90LagDays": 161,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 140,
-    "p90LagDays": 169,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 92,
-    "p90LagDays": 162,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Oracle",
-    "medianLagDays": 120,
-    "p90LagDays": 122,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 85,
-    "p90LagDays": 85,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-03",
-    "manufacturer": "Samsung",
-    "medianLagDays": 175,
-    "p90LagDays": 175,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Apple",
-    "medianLagDays": 101,
-    "p90LagDays": 130,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Cisco",
-    "medianLagDays": 52,
-    "p90LagDays": 142,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Google",
-    "medianLagDays": 146,
-    "p90LagDays": 176,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Linux",
-    "medianLagDays": 97,
-    "p90LagDays": 176,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 164,
-    "p90LagDays": 171,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 115,
-    "p90LagDays": 175,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Oracle",
-    "medianLagDays": 91,
-    "p90LagDays": 154,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 64,
-    "p90LagDays": 114,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-04",
-    "manufacturer": "Samsung",
-    "medianLagDays": 57,
-    "p90LagDays": 57,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Adobe",
-    "medianLagDays": 50,
-    "p90LagDays": 50,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Apple",
-    "medianLagDays": 85,
-    "p90LagDays": 158,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Cisco",
-    "medianLagDays": 122,
-    "p90LagDays": 122,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Google",
-    "medianLagDays": 69,
-    "p90LagDays": 170,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Linux",
-    "medianLagDays": 136,
-    "p90LagDays": 136,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 71,
-    "p90LagDays": 115,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 173,
-    "p90LagDays": 174,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Oracle",
-    "medianLagDays": 35,
-    "p90LagDays": 66,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 38,
-    "p90LagDays": 157,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2022-05",
-    "manufacturer": "Samsung",
-    "medianLagDays": 70,
-    "p90LagDays": 166,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Adobe",
-    "medianLagDays": 81,
-    "p90LagDays": 89,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Apple",
-    "medianLagDays": 89,
-    "p90LagDays": 120,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Cisco",
-    "medianLagDays": 130,
-    "p90LagDays": 161,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2022-06",
+    "date": "2023-06",
     "manufacturer": "Fortinet",
-    "medianLagDays": 71,
-    "p90LagDays": 160,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Google",
-    "medianLagDays": 107,
-    "p90LagDays": 156,
-    "knownCount": 12,
-    "totalCount": 12
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Linux",
-    "medianLagDays": 145,
-    "p90LagDays": 159,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 122,
-    "p90LagDays": 170,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 20,
-    "p90LagDays": 20,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 135,
-    "p90LagDays": 148,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-06",
-    "manufacturer": "Samsung",
-    "medianLagDays": 169,
-    "p90LagDays": 169,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Adobe",
-    "medianLagDays": 113,
-    "p90LagDays": 113,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Apple",
-    "medianLagDays": 83,
-    "p90LagDays": 118,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Cisco",
-    "medianLagDays": 44,
-    "p90LagDays": 44,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 95,
-    "p90LagDays": 169,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Google",
-    "medianLagDays": 97,
-    "p90LagDays": 169,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Linux",
-    "medianLagDays": 86,
-    "p90LagDays": 126,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 138,
-    "p90LagDays": 167,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 62,
-    "p90LagDays": 62,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Oracle",
-    "medianLagDays": 33,
-    "p90LagDays": 47,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-07",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 140,
-    "p90LagDays": 160,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Adobe",
-    "medianLagDays": 108,
-    "p90LagDays": 137,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Apple",
-    "medianLagDays": 85,
-    "p90LagDays": 144,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Cisco",
-    "medianLagDays": 158,
-    "p90LagDays": 176,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 96,
-    "p90LagDays": 147,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Google",
-    "medianLagDays": 47,
-    "p90LagDays": 104,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 135,
-    "p90LagDays": 158,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 137,
-    "p90LagDays": 139,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Oracle",
-    "medianLagDays": 179,
-    "p90LagDays": 179,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 85,
-    "p90LagDays": 118,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-08",
-    "manufacturer": "Samsung",
-    "medianLagDays": 61,
-    "p90LagDays": 61,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Adobe",
-    "medianLagDays": 102,
-    "p90LagDays": 141,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Apple",
-    "medianLagDays": 61,
-    "p90LagDays": 61,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Cisco",
-    "medianLagDays": 80,
-    "p90LagDays": 81,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 14,
-    "p90LagDays": 14,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Google",
-    "medianLagDays": 145,
-    "p90LagDays": 155,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Linux",
-    "medianLagDays": 165,
-    "p90LagDays": 174,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 48,
-    "p90LagDays": 176,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 117,
-    "p90LagDays": 170,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Oracle",
-    "medianLagDays": 165,
-    "p90LagDays": 165,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-09",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 47,
-    "p90LagDays": 47,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-10",
-    "manufacturer": "Adobe",
-    "medianLagDays": 172,
-    "p90LagDays": 172,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-10",
-    "manufacturer": "Apple",
-    "medianLagDays": 115,
-    "p90LagDays": 157,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-10",
-    "manufacturer": "Cisco",
-    "medianLagDays": 75,
-    "p90LagDays": 117,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-10",
-    "manufacturer": "Google",
-    "medianLagDays": 131,
-    "p90LagDays": 173,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-10",
-    "manufacturer": "Linux",
-    "medianLagDays": 80,
+    "medianLagDays": 84,
     "p90LagDays": 98,
     "knownCount": 2,
     "totalCount": 2
   },
   {
-    "date": "2022-10",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 80,
-    "p90LagDays": 170,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2022-10",
+    "date": "2023-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 104,
-    "p90LagDays": 137,
-    "knownCount": 2,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 2
   },
   {
-    "date": "2022-10",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 105,
-    "p90LagDays": 161,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-10",
-    "manufacturer": "Samsung",
-    "medianLagDays": 47,
-    "p90LagDays": 47,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2022-11",
-    "manufacturer": "Adobe",
-    "medianLagDays": 126,
-    "p90LagDays": 163,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2022-11",
-    "manufacturer": "Apple",
-    "medianLagDays": 93,
-    "p90LagDays": 159,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2022-11",
-    "manufacturer": "Cisco",
-    "medianLagDays": 61,
-    "p90LagDays": 178,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2022-11",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 137,
-    "p90LagDays": 172,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2022-11",
-    "manufacturer": "Google",
-    "medianLagDays": 80,
-    "p90LagDays": 178,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2022-11",
-    "manufacturer": "Linux",
-    "medianLagDays": 90,
-    "p90LagDays": 162,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-11",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 90,
-    "p90LagDays": 167,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2022-11",
+    "date": "2023-08",
     "manufacturer": "Mozilla",
-    "medianLagDays": 110,
-    "p90LagDays": 153,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
   },
   {
-    "date": "2022-11",
-    "manufacturer": "Oracle",
-    "medianLagDays": 44,
-    "p90LagDays": 158,
-    "knownCount": 5,
-    "totalCount": 5
+    "date": "2023-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
   },
   {
-    "date": "2022-11",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 154,
-    "p90LagDays": 175,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-12",
-    "manufacturer": "Adobe",
-    "medianLagDays": 138,
-    "p90LagDays": 176,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2022-12",
-    "manufacturer": "Apple",
-    "medianLagDays": 39,
-    "p90LagDays": 54,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-12",
-    "manufacturer": "Cisco",
-    "medianLagDays": 88,
-    "p90LagDays": 158,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2022-12",
+    "date": "2023-10",
     "manufacturer": "Fortinet",
-    "medianLagDays": 52,
-    "p90LagDays": 52,
+    "medianLagDays": 20,
+    "p90LagDays": 20,
     "knownCount": 1,
-    "totalCount": 1
+    "totalCount": 5
   },
   {
-    "date": "2022-12",
-    "manufacturer": "Google",
-    "medianLagDays": 96,
-    "p90LagDays": 150,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-12",
-    "manufacturer": "Linux",
-    "medianLagDays": 82,
-    "p90LagDays": 93,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2022-12",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 123,
-    "p90LagDays": 179,
-    "knownCount": 13,
+    "date": "2023-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 13
   },
   {
-    "date": "2022-12",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 77,
-    "p90LagDays": 155,
-    "knownCount": 3,
-    "totalCount": 3
+    "date": "2023-11",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 156,
+    "p90LagDays": 156,
+    "knownCount": 1,
+    "totalCount": 19
   },
   {
-    "date": "2022-12",
-    "manufacturer": "Oracle",
-    "medianLagDays": 148,
-    "p90LagDays": 171,
-    "knownCount": 5,
+    "date": "2023-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 12
+  },
+  {
+    "date": "2023-12",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 9
+  },
+  {
+    "date": "2023-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 22
+  },
+  {
+    "date": "2024-01",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 57,
+    "p90LagDays": 113,
+    "knownCount": 3,
     "totalCount": 5
   },
   {
-    "date": "2022-12",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 115,
-    "p90LagDays": 151,
+    "date": "2024-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 3
+  },
+  {
+    "date": "2024-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2024-03",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 56,
+    "p90LagDays": 56,
+    "knownCount": 1,
+    "totalCount": 3
+  },
+  {
+    "date": "2024-03",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2024-04",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 34,
+    "p90LagDays": 60,
     "knownCount": 2,
     "totalCount": 2
   },
   {
-    "date": "2022-12",
-    "manufacturer": "Samsung",
-    "medianLagDays": 107,
-    "p90LagDays": 107,
+    "date": "2024-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
+  },
+  {
+    "date": "2024-05",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 103,
+    "p90LagDays": 103,
     "knownCount": 1,
     "totalCount": 1
   },
   {
-    "date": "2023-01",
-    "manufacturer": "Adobe",
-    "medianLagDays": 77,
-    "p90LagDays": 129,
+    "date": "2024-05",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 18
+  },
+  {
+    "date": "2024-06",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 79,
+    "p90LagDays": 99,
     "knownCount": 2,
     "totalCount": 2
   },
   {
-    "date": "2023-01",
-    "manufacturer": "Apple",
-    "medianLagDays": 59,
-    "p90LagDays": 103,
-    "knownCount": 4,
-    "totalCount": 4
+    "date": "2024-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 18
   },
   {
-    "date": "2023-01",
-    "manufacturer": "Cisco",
-    "medianLagDays": 115,
-    "p90LagDays": 132,
+    "date": "2024-07",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 10,
+    "p90LagDays": 10,
+    "knownCount": 1,
+    "totalCount": 1
+  },
+  {
+    "date": "2024-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
+  },
+  {
+    "date": "2024-08",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 218,
+    "p90LagDays": 246,
     "knownCount": 3,
     "totalCount": 3
   },
   {
-    "date": "2023-01",
+    "date": "2024-09",
     "manufacturer": "Fortinet",
-    "medianLagDays": 139,
-    "p90LagDays": 175,
+    "medianLagDays": 7,
+    "p90LagDays": 85,
+    "knownCount": 3,
+    "totalCount": 3
+  },
+  {
+    "date": "2024-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 17
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 375,
+    "p90LagDays": 498,
+    "knownCount": 2,
+    "totalCount": 2
+  },
+  {
+    "date": "2024-10",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
+  },
+  {
+    "date": "2024-11",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 3,
+    "p90LagDays": 35,
     "knownCount": 5,
     "totalCount": 5
   },
   {
-    "date": "2023-01",
-    "manufacturer": "Google",
-    "medianLagDays": 56,
-    "p90LagDays": 174,
+    "date": "2024-11",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 18
+  },
+  {
+    "date": "2024-12",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 204,
+    "p90LagDays": 237,
+    "knownCount": 3,
+    "totalCount": 3
+  },
+  {
+    "date": "2024-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 3
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 320,
+    "p90LagDays": 463,
+    "knownCount": 10,
+    "totalCount": 10
+  },
+  {
+    "date": "2025-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 2
+  },
+  {
+    "date": "2025-02",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 172,
+    "p90LagDays": 343,
+    "knownCount": 2,
+    "totalCount": 2
+  },
+  {
+    "date": "2025-02",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 4
+  },
+  {
+    "date": "2025-03",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 65,
+    "p90LagDays": 1606,
     "knownCount": 9,
     "totalCount": 9
   },
   {
-    "date": "2023-01",
-    "manufacturer": "Linux",
-    "medianLagDays": 108,
-    "p90LagDays": 176,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-01",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 165,
-    "p90LagDays": 167,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-01",
+    "date": "2025-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 22,
-    "p90LagDays": 150,
-    "knownCount": 3,
-    "totalCount": 3
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
   },
   {
-    "date": "2023-01",
-    "manufacturer": "Oracle",
-    "medianLagDays": 62,
-    "p90LagDays": 112,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-01",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 59,
-    "p90LagDays": 89,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-01",
-    "manufacturer": "Samsung",
-    "medianLagDays": 112,
-    "p90LagDays": 112,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-02",
-    "manufacturer": "Adobe",
-    "medianLagDays": 40,
-    "p90LagDays": 40,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-02",
-    "manufacturer": "Apple",
-    "medianLagDays": 76,
-    "p90LagDays": 129,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-02",
-    "manufacturer": "Cisco",
-    "medianLagDays": 65,
-    "p90LagDays": 107,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-02",
+    "date": "2025-04",
     "manufacturer": "Fortinet",
-    "medianLagDays": 148,
-    "p90LagDays": 159,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-02",
-    "manufacturer": "Google",
-    "medianLagDays": 102,
-    "p90LagDays": 179,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-02",
-    "manufacturer": "Linux",
-    "medianLagDays": 71,
-    "p90LagDays": 161,
+    "medianLagDays": 92,
+    "p90LagDays": 125,
     "knownCount": 3,
     "totalCount": 3
   },
   {
-    "date": "2023-02",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 79,
-    "p90LagDays": 105,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-02",
+    "date": "2025-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 107,
-    "p90LagDays": 107,
-    "knownCount": 1,
-    "totalCount": 1
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 18
   },
   {
-    "date": "2023-02",
-    "manufacturer": "Oracle",
-    "medianLagDays": 32,
-    "p90LagDays": 45,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-02",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 108,
-    "p90LagDays": 137,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-03",
-    "manufacturer": "Adobe",
-    "medianLagDays": 19,
-    "p90LagDays": 19,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-03",
-    "manufacturer": "Apple",
-    "medianLagDays": 66,
-    "p90LagDays": 101,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-03",
-    "manufacturer": "Cisco",
-    "medianLagDays": 49,
-    "p90LagDays": 49,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-03",
+    "date": "2025-05",
     "manufacturer": "Fortinet",
-    "medianLagDays": 60,
-    "p90LagDays": 160,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-03",
-    "manufacturer": "Google",
-    "medianLagDays": 81,
-    "p90LagDays": 141,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2023-03",
-    "manufacturer": "Linux",
-    "medianLagDays": 162,
-    "p90LagDays": 162,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-03",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 97,
-    "p90LagDays": 152,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2023-03",
-    "manufacturer": "Oracle",
-    "medianLagDays": 70,
-    "p90LagDays": 159,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-03",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 117,
-    "p90LagDays": 168,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Adobe",
-    "medianLagDays": 110,
-    "p90LagDays": 112,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Apple",
-    "medianLagDays": 107,
-    "p90LagDays": 137,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Cisco",
-    "medianLagDays": 46,
-    "p90LagDays": 60,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 81,
-    "p90LagDays": 113,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Google",
-    "medianLagDays": 29,
-    "p90LagDays": 93,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Linux",
-    "medianLagDays": 109,
-    "p90LagDays": 159,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 48,
-    "p90LagDays": 127,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 70,
-    "p90LagDays": 94,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Oracle",
-    "medianLagDays": 71,
-    "p90LagDays": 77,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 128,
-    "p90LagDays": 180,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-04",
-    "manufacturer": "Samsung",
-    "medianLagDays": 107,
-    "p90LagDays": 132,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-05",
-    "manufacturer": "Adobe",
-    "medianLagDays": 28,
-    "p90LagDays": 76,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-05",
-    "manufacturer": "Apple",
-    "medianLagDays": 49,
-    "p90LagDays": 155,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-05",
-    "manufacturer": "Cisco",
     "medianLagDays": 99,
-    "p90LagDays": 179,
-    "knownCount": 5,
-    "totalCount": 5
+    "p90LagDays": 358,
+    "knownCount": 10,
+    "totalCount": 10
   },
   {
-    "date": "2023-05",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 61,
-    "p90LagDays": 147,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-05",
-    "manufacturer": "Google",
-    "medianLagDays": 99,
-    "p90LagDays": 163,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-05",
-    "manufacturer": "Linux",
-    "medianLagDays": 117,
-    "p90LagDays": 176,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-05",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 101,
-    "p90LagDays": 148,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-05",
+    "date": "2025-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 107,
-    "p90LagDays": 119,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 19
   },
   {
-    "date": "2023-05",
-    "manufacturer": "Oracle",
-    "medianLagDays": 110,
-    "p90LagDays": 126,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-05",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 112,
-    "p90LagDays": 164,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-05",
-    "manufacturer": "Samsung",
-    "medianLagDays": 43,
-    "p90LagDays": 126,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-06",
-    "manufacturer": "Adobe",
-    "medianLagDays": 53,
-    "p90LagDays": 53,
+    "date": "2025-06",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 609,
+    "p90LagDays": 609,
     "knownCount": 1,
     "totalCount": 1
   },
   {
-    "date": "2023-06",
-    "manufacturer": "Apple",
-    "medianLagDays": 103,
-    "p90LagDays": 160,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-06",
-    "manufacturer": "Cisco",
-    "medianLagDays": 64,
-    "p90LagDays": 105,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-06",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 119,
-    "p90LagDays": 172,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2023-06",
-    "manufacturer": "Google",
-    "medianLagDays": 98,
-    "p90LagDays": 164,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-06",
-    "manufacturer": "Linux",
-    "medianLagDays": 48,
-    "p90LagDays": 161,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2023-06",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 114,
-    "p90LagDays": 172,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-06",
+    "date": "2025-06",
     "manufacturer": "Mozilla",
-    "medianLagDays": 112,
-    "p90LagDays": 112,
-    "knownCount": 1,
-    "totalCount": 1
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
   },
   {
-    "date": "2023-06",
-    "manufacturer": "Oracle",
+    "date": "2025-07",
+    "manufacturer": "Fortinet",
     "medianLagDays": 171,
-    "p90LagDays": 171,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-06",
-    "manufacturer": "Samsung",
-    "medianLagDays": 64,
-    "p90LagDays": 82,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Adobe",
-    "medianLagDays": 45,
-    "p90LagDays": 45,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Apple",
-    "medianLagDays": 109,
-    "p90LagDays": 153,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Cisco",
-    "medianLagDays": 167,
-    "p90LagDays": 169,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 55,
-    "p90LagDays": 117,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Linux",
-    "medianLagDays": 159,
-    "p90LagDays": 170,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 80,
-    "p90LagDays": 175,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 146,
-    "p90LagDays": 146,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Oracle",
-    "medianLagDays": 44,
-    "p90LagDays": 58,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 32,
-    "p90LagDays": 177,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-07",
-    "manufacturer": "Samsung",
-    "medianLagDays": 150,
-    "p90LagDays": 150,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-08",
-    "manufacturer": "Apple",
-    "medianLagDays": 52,
-    "p90LagDays": 169,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-08",
-    "manufacturer": "Cisco",
-    "medianLagDays": 179,
-    "p90LagDays": 179,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-08",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 51,
-    "p90LagDays": 152,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2023-08",
-    "manufacturer": "Google",
-    "medianLagDays": 94,
-    "p90LagDays": 113,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-08",
-    "manufacturer": "Linux",
-    "medianLagDays": 158,
-    "p90LagDays": 158,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-08",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 81,
-    "p90LagDays": 170,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-08",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 124,
-    "p90LagDays": 156,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-08",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 165,
-    "p90LagDays": 166,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Adobe",
-    "medianLagDays": 65,
-    "p90LagDays": 106,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Cisco",
-    "medianLagDays": 149,
-    "p90LagDays": 149,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 116,
-    "p90LagDays": 116,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Google",
-    "medianLagDays": 23,
-    "p90LagDays": 23,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Linux",
-    "medianLagDays": 130,
-    "p90LagDays": 130,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 77,
-    "p90LagDays": 108,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Oracle",
-    "medianLagDays": 48,
-    "p90LagDays": 48,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 99,
-    "p90LagDays": 161,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2023-09",
-    "manufacturer": "Samsung",
-    "medianLagDays": 96,
-    "p90LagDays": 119,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-10",
-    "manufacturer": "Apple",
-    "medianLagDays": 24,
-    "p90LagDays": 24,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-10",
-    "manufacturer": "Cisco",
-    "medianLagDays": 114,
-    "p90LagDays": 114,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-10",
-    "manufacturer": "Google",
-    "medianLagDays": 122,
-    "p90LagDays": 149,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2023-10",
-    "manufacturer": "Linux",
-    "medianLagDays": 65,
-    "p90LagDays": 112,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-10",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 112,
-    "p90LagDays": 151,
+    "p90LagDays": 360,
     "knownCount": 4,
     "totalCount": 4
   },
   {
-    "date": "2023-10",
+    "date": "2025-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 156,
-    "p90LagDays": 166,
-    "knownCount": 3,
-    "totalCount": 3
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 22
   },
   {
-    "date": "2023-10",
-    "manufacturer": "Oracle",
-    "medianLagDays": 57,
-    "p90LagDays": 140,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-10",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 161,
-    "p90LagDays": 161,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-10",
-    "manufacturer": "Samsung",
-    "medianLagDays": 24,
-    "p90LagDays": 30,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-11",
-    "manufacturer": "Adobe",
-    "medianLagDays": 106,
-    "p90LagDays": 160,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-11",
-    "manufacturer": "Apple",
-    "medianLagDays": 10,
-    "p90LagDays": 10,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-11",
-    "manufacturer": "Cisco",
-    "medianLagDays": 117,
-    "p90LagDays": 117,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-11",
+    "date": "2025-08",
     "manufacturer": "Fortinet",
-    "medianLagDays": 110,
-    "p90LagDays": 151,
+    "medianLagDays": 1,
+    "p90LagDays": 1,
     "knownCount": 2,
     "totalCount": 2
   },
   {
-    "date": "2023-11",
-    "manufacturer": "Google",
-    "medianLagDays": 95,
-    "p90LagDays": 180,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2023-11",
-    "manufacturer": "Linux",
-    "medianLagDays": 176,
-    "p90LagDays": 178,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-11",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 88,
-    "p90LagDays": 173,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2023-11",
+    "date": "2025-08",
     "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2025-09",
+    "manufacturer": "Fortinet",
     "medianLagDays": 97,
-    "p90LagDays": 119,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2023-11",
-    "manufacturer": "Oracle",
-    "medianLagDays": 96,
-    "p90LagDays": 96,
+    "p90LagDays": 97,
     "knownCount": 1,
     "totalCount": 1
   },
   {
-    "date": "2023-11",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 43,
-    "p90LagDays": 43,
-    "knownCount": 1,
-    "totalCount": 1
+    "date": "2025-09",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
   },
   {
-    "date": "2023-11",
-    "manufacturer": "Samsung",
+    "date": "2025-10",
+    "manufacturer": "Fortinet",
     "medianLagDays": 99,
-    "p90LagDays": 153,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-12",
-    "manufacturer": "Adobe",
-    "medianLagDays": 62,
-    "p90LagDays": 148,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2023-12",
-    "manufacturer": "Apple",
-    "medianLagDays": 121,
-    "p90LagDays": 126,
+    "p90LagDays": 196,
     "knownCount": 2,
     "totalCount": 2
   },
   {
-    "date": "2023-12",
-    "manufacturer": "Cisco",
-    "medianLagDays": 66,
-    "p90LagDays": 143,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2023-12",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 150,
-    "p90LagDays": 150,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-12",
-    "manufacturer": "Google",
-    "medianLagDays": 132,
-    "p90LagDays": 156,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-12",
-    "manufacturer": "Linux",
-    "medianLagDays": 129,
-    "p90LagDays": 175,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2023-12",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 113,
-    "p90LagDays": 180,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2023-12",
+    "date": "2025-10",
     "manufacturer": "Mozilla",
-    "medianLagDays": 47,
-    "p90LagDays": 161,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 15
+  },
+  {
+    "date": "2025-11",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 3,
+    "p90LagDays": 118,
     "knownCount": 3,
     "totalCount": 3
   },
   {
-    "date": "2023-12",
-    "manufacturer": "Oracle",
-    "medianLagDays": 75,
-    "p90LagDays": 75,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-12",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 13,
-    "p90LagDays": 13,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2023-12",
-    "manufacturer": "Samsung",
-    "medianLagDays": 51,
-    "p90LagDays": 159,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-01",
-    "manufacturer": "Adobe",
-    "medianLagDays": 91,
-    "p90LagDays": 91,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-01",
-    "manufacturer": "Apple",
-    "medianLagDays": 116,
-    "p90LagDays": 116,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-01",
-    "manufacturer": "Cisco",
-    "medianLagDays": 95,
-    "p90LagDays": 113,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-01",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 9,
-    "p90LagDays": 9,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-01",
-    "manufacturer": "Google",
-    "medianLagDays": 117,
-    "p90LagDays": 164,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-01",
-    "manufacturer": "Linux",
-    "medianLagDays": 10,
-    "p90LagDays": 10,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-01",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 100,
-    "p90LagDays": 151,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-01",
+    "date": "2025-11",
     "manufacturer": "Mozilla",
-    "medianLagDays": 67,
-    "p90LagDays": 68,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 16
   },
   {
-    "date": "2024-01",
-    "manufacturer": "Oracle",
+    "date": "2025-12",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 1,
+    "p90LagDays": 1,
+    "knownCount": 1,
+    "totalCount": 1
+  },
+  {
+    "date": "2025-12",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 3
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 358,
+    "p90LagDays": 358,
+    "knownCount": 1,
+    "totalCount": 1
+  },
+  {
+    "date": "2026-01",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 20
+  },
+  {
+    "date": "2026-02",
+    "manufacturer": "Fortinet",
     "medianLagDays": 29,
-    "p90LagDays": 110,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-01",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 49,
-    "p90LagDays": 49,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-02",
-    "manufacturer": "Adobe",
-    "medianLagDays": 60,
-    "p90LagDays": 60,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-02",
-    "manufacturer": "Apple",
-    "medianLagDays": 26,
-    "p90LagDays": 94,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-02",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 32,
-    "p90LagDays": 56,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-02",
-    "manufacturer": "Google",
-    "medianLagDays": 100,
-    "p90LagDays": 140,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-02",
-    "manufacturer": "Linux",
-    "medianLagDays": 32,
     "p90LagDays": 41,
     "knownCount": 2,
     "totalCount": 2
   },
   {
-    "date": "2024-02",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 39,
-    "p90LagDays": 101,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-02",
+    "date": "2026-02",
     "manufacturer": "Mozilla",
-    "medianLagDays": 85,
-    "p90LagDays": 137,
-    "knownCount": 3,
-    "totalCount": 3
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 52
   },
   {
-    "date": "2024-02",
-    "manufacturer": "Oracle",
-    "medianLagDays": 74,
-    "p90LagDays": 148,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-02",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 91,
-    "p90LagDays": 91,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-02",
-    "manufacturer": "Samsung",
-    "medianLagDays": 10,
-    "p90LagDays": 16,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-03",
-    "manufacturer": "Adobe",
-    "medianLagDays": 88,
-    "p90LagDays": 114,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-03",
-    "manufacturer": "Apple",
-    "medianLagDays": 61,
-    "p90LagDays": 143,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-03",
-    "manufacturer": "Cisco",
-    "medianLagDays": 117,
-    "p90LagDays": 179,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-03",
+    "date": "2026-03",
     "manufacturer": "Fortinet",
-    "medianLagDays": 57,
-    "p90LagDays": 60,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-03",
-    "manufacturer": "Google",
-    "medianLagDays": 52,
-    "p90LagDays": 116,
-    "knownCount": 9,
-    "totalCount": 9
-  },
-  {
-    "date": "2024-03",
-    "manufacturer": "Linux",
-    "medianLagDays": 121,
-    "p90LagDays": 144,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-03",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 112,
-    "p90LagDays": 161,
+    "medianLagDays": 36,
+    "p90LagDays": 141,
     "knownCount": 4,
     "totalCount": 4
   },
   {
-    "date": "2024-03",
+    "date": "2026-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 54,
-    "p90LagDays": 92,
-    "knownCount": 3,
-    "totalCount": 3
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 51
   },
   {
-    "date": "2024-03",
-    "manufacturer": "Oracle",
-    "medianLagDays": 111,
-    "p90LagDays": 166,
-    "knownCount": 6,
-    "totalCount": 6
+    "date": "2026-04",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 48
   },
   {
-    "date": "2024-03",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 51,
-    "p90LagDays": 139,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-03",
-    "manufacturer": "Samsung",
-    "medianLagDays": 12,
-    "p90LagDays": 12,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-04",
-    "manufacturer": "Adobe",
-    "medianLagDays": 170,
-    "p90LagDays": 170,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-04",
-    "manufacturer": "Apple",
-    "medianLagDays": 41,
-    "p90LagDays": 125,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-04",
-    "manufacturer": "Cisco",
-    "medianLagDays": 43,
-    "p90LagDays": 125,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-04",
+    "date": "2026-05",
     "manufacturer": "Fortinet",
-    "medianLagDays": 124,
-    "p90LagDays": 177,
+    "medianLagDays": 315,
+    "p90LagDays": 440,
     "knownCount": 2,
     "totalCount": 2
   },
   {
-    "date": "2024-04",
-    "manufacturer": "Google",
-    "medianLagDays": 61,
-    "p90LagDays": 176,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2024-04",
-    "manufacturer": "Linux",
-    "medianLagDays": 47,
-    "p90LagDays": 154,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-04",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 53,
-    "p90LagDays": 137,
-    "knownCount": 10,
-    "totalCount": 10
-  },
-  {
-    "date": "2024-04",
+    "date": "2026-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 60,
-    "p90LagDays": 75,
-    "knownCount": 2,
-    "totalCount": 2
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 38
   },
   {
-    "date": "2024-04",
-    "manufacturer": "Oracle",
-    "medianLagDays": 48,
-    "p90LagDays": 64,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-04",
+    "date": "2026-05",
     "manufacturer": "Palo Alto",
-    "medianLagDays": 29,
-    "p90LagDays": 169,
-    "knownCount": 6,
-    "totalCount": 6
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
   },
   {
-    "date": "2024-04",
-    "manufacturer": "Samsung",
-    "medianLagDays": 39,
-    "p90LagDays": 109,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-05",
+    "date": "2026-06",
     "manufacturer": "Adobe",
-    "medianLagDays": 110,
-    "p90LagDays": 147,
+    "medianLagDays": 4,
+    "p90LagDays": 6,
+    "knownCount": 2,
+    "totalCount": 13
+  },
+  {
+    "date": "2026-06",
+    "manufacturer": "Fortinet",
+    "medianLagDays": 304,
+    "p90LagDays": 370,
     "knownCount": 2,
     "totalCount": 2
   },
   {
-    "date": "2024-05",
-    "manufacturer": "Apple",
-    "medianLagDays": 37,
-    "p90LagDays": 68,
-    "knownCount": 4,
-    "totalCount": 4
+    "date": "2026-06",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 47
   },
   {
-    "date": "2024-05",
-    "manufacturer": "Cisco",
-    "medianLagDays": 164,
-    "p90LagDays": 166,
-    "knownCount": 3,
-    "totalCount": 3
+    "date": "2026-06",
+    "manufacturer": "Palo Alto",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 11
   },
   {
-    "date": "2024-05",
+    "date": "2026-07",
+    "manufacturer": "Adobe",
+    "medianLagDays": 20,
+    "p90LagDays": 20,
+    "knownCount": 1,
+    "totalCount": 1
+  },
+  {
+    "date": "2026-07",
     "manufacturer": "Fortinet",
     "medianLagDays": 144,
     "p90LagDays": 144,
@@ -4032,1971 +1736,19 @@
     "totalCount": 1
   },
   {
-    "date": "2024-05",
-    "manufacturer": "Google",
-    "medianLagDays": 30,
-    "p90LagDays": 172,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2024-05",
-    "manufacturer": "Linux",
-    "medianLagDays": 85,
-    "p90LagDays": 160,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-05",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 43,
-    "p90LagDays": 146,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2024-05",
+    "date": "2026-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 71,
-    "p90LagDays": 71,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-05",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 31,
-    "p90LagDays": 56,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-06",
-    "manufacturer": "Apple",
-    "medianLagDays": 25,
-    "p90LagDays": 62,
-    "knownCount": 3,
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
     "totalCount": 3
-  },
-  {
-    "date": "2024-06",
-    "manufacturer": "Cisco",
-    "medianLagDays": 49,
-    "p90LagDays": 75,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-06",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 48,
-    "p90LagDays": 73,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-06",
-    "manufacturer": "Google",
-    "medianLagDays": 43,
-    "p90LagDays": 83,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-06",
-    "manufacturer": "Linux",
-    "medianLagDays": 46,
-    "p90LagDays": 165,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-06",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 37,
-    "p90LagDays": 69,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2024-06",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 68,
-    "p90LagDays": 79,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-06",
-    "manufacturer": "Oracle",
-    "medianLagDays": 14,
-    "p90LagDays": 14,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-07",
-    "manufacturer": "Adobe",
-    "medianLagDays": 45,
-    "p90LagDays": 80,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-07",
-    "manufacturer": "Apple",
-    "medianLagDays": 33,
-    "p90LagDays": 33,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-07",
-    "manufacturer": "Cisco",
-    "medianLagDays": 49,
-    "p90LagDays": 87,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-07",
-    "manufacturer": "Google",
-    "medianLagDays": 64,
-    "p90LagDays": 71,
-    "knownCount": 10,
-    "totalCount": 10
-  },
-  {
-    "date": "2024-07",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 30,
-    "p90LagDays": 46,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2024-07",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 42,
-    "p90LagDays": 84,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-07",
-    "manufacturer": "Oracle",
-    "medianLagDays": 30,
-    "p90LagDays": 53,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-07",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 69,
-    "p90LagDays": 87,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Adobe",
-    "medianLagDays": 51,
-    "p90LagDays": 74,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Apple",
-    "medianLagDays": 29,
-    "p90LagDays": 48,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Cisco",
-    "medianLagDays": 42,
-    "p90LagDays": 81,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 16,
-    "p90LagDays": 16,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Google",
-    "medianLagDays": 60,
-    "p90LagDays": 76,
-    "knownCount": 10,
-    "totalCount": 10
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Linux",
-    "medianLagDays": 68,
-    "p90LagDays": 89,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 19,
-    "p90LagDays": 77,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 23,
-    "p90LagDays": 42,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Oracle",
-    "medianLagDays": 45,
-    "p90LagDays": 45,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-08",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 78,
-    "p90LagDays": 78,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Apple",
-    "medianLagDays": 36,
-    "p90LagDays": 50,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Cisco",
-    "medianLagDays": 70,
-    "p90LagDays": 87,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Google",
-    "medianLagDays": 22,
-    "p90LagDays": 68,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Linux",
-    "medianLagDays": 25,
-    "p90LagDays": 77,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 50,
-    "p90LagDays": 82,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 49,
-    "p90LagDays": 75,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Oracle",
-    "medianLagDays": 24,
-    "p90LagDays": 63,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 63,
-    "p90LagDays": 63,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-09",
-    "manufacturer": "Samsung",
-    "medianLagDays": 36,
-    "p90LagDays": 36,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Adobe",
-    "medianLagDays": 36,
-    "p90LagDays": 55,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Apple",
-    "medianLagDays": 58,
-    "p90LagDays": 82,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 43,
-    "p90LagDays": 73,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Google",
-    "medianLagDays": 15,
-    "p90LagDays": 24,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Linux",
-    "medianLagDays": 43,
-    "p90LagDays": 43,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 40,
-    "p90LagDays": 71,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 32,
-    "p90LagDays": 54,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Oracle",
-    "medianLagDays": 77,
-    "p90LagDays": 78,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-10",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 44,
-    "p90LagDays": 84,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Apple",
-    "medianLagDays": 73,
-    "p90LagDays": 73,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Cisco",
-    "medianLagDays": 28,
-    "p90LagDays": 28,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 67,
-    "p90LagDays": 68,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Google",
-    "medianLagDays": 35,
-    "p90LagDays": 86,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Linux",
-    "medianLagDays": 42,
-    "p90LagDays": 57,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 78,
-    "p90LagDays": 78,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Oracle",
-    "medianLagDays": 29,
-    "p90LagDays": 45,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 21,
-    "p90LagDays": 21,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-11",
-    "manufacturer": "Samsung",
-    "medianLagDays": 44,
-    "p90LagDays": 56,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-12",
-    "manufacturer": "Apple",
-    "medianLagDays": 66,
-    "p90LagDays": 88,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2024-12",
-    "manufacturer": "Cisco",
-    "medianLagDays": 24,
-    "p90LagDays": 24,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-12",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 66,
-    "p90LagDays": 81,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2024-12",
-    "manufacturer": "Google",
-    "medianLagDays": 28,
-    "p90LagDays": 71,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2024-12",
-    "manufacturer": "Linux",
-    "medianLagDays": 72,
-    "p90LagDays": 87,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2024-12",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 60,
-    "p90LagDays": 84,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2024-12",
-    "manufacturer": "Oracle",
-    "medianLagDays": 36,
-    "p90LagDays": 36,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2024-12",
-    "manufacturer": "Samsung",
-    "medianLagDays": 15,
-    "p90LagDays": 15,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Adobe",
-    "medianLagDays": 3,
-    "p90LagDays": 3,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Apple",
-    "medianLagDays": 72,
-    "p90LagDays": 80,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Cisco",
-    "medianLagDays": 5,
-    "p90LagDays": 32,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 15,
-    "p90LagDays": 15,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Google",
-    "medianLagDays": 55,
-    "p90LagDays": 79,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Linux",
-    "medianLagDays": 65,
-    "p90LagDays": 84,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 43,
-    "p90LagDays": 70,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 50,
-    "p90LagDays": 50,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Oracle",
-    "medianLagDays": 62,
-    "p90LagDays": 85,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 46,
-    "p90LagDays": 77,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-01",
-    "manufacturer": "Samsung",
-    "medianLagDays": 34,
-    "p90LagDays": 83,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Apple",
-    "medianLagDays": 56,
-    "p90LagDays": 81,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Cisco",
-    "medianLagDays": 16,
-    "p90LagDays": 16,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 14,
-    "p90LagDays": 24,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Google",
-    "medianLagDays": 34,
-    "p90LagDays": 69,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Linux",
-    "medianLagDays": 13,
-    "p90LagDays": 13,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 8,
-    "p90LagDays": 37,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 85,
-    "p90LagDays": 85,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Oracle",
-    "medianLagDays": 33,
-    "p90LagDays": 59,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-02",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 15,
-    "p90LagDays": 25,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Adobe",
-    "medianLagDays": 56,
-    "p90LagDays": 90,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Apple",
-    "medianLagDays": 83,
-    "p90LagDays": 90,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 49,
-    "p90LagDays": 49,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Google",
-    "medianLagDays": 35,
-    "p90LagDays": 37,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Linux",
-    "medianLagDays": 75,
-    "p90LagDays": 87,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 38,
-    "p90LagDays": 78,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 52,
-    "p90LagDays": 54,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Oracle",
-    "medianLagDays": 14,
-    "p90LagDays": 14,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 72,
-    "p90LagDays": 72,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-03",
-    "manufacturer": "Samsung",
-    "medianLagDays": 34,
-    "p90LagDays": 59,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Adobe",
-    "medianLagDays": 32,
-    "p90LagDays": 70,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Apple",
-    "medianLagDays": 84,
-    "p90LagDays": 85,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Cisco",
-    "medianLagDays": 49,
-    "p90LagDays": 54,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 13,
-    "p90LagDays": 13,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Google",
-    "medianLagDays": 43,
-    "p90LagDays": 70,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Linux",
-    "medianLagDays": 50,
-    "p90LagDays": 50,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 58,
-    "p90LagDays": 87,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 49,
-    "p90LagDays": 78,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 59,
-    "p90LagDays": 79,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-04",
-    "manufacturer": "Samsung",
-    "medianLagDays": 67,
-    "p90LagDays": 67,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Adobe",
-    "medianLagDays": 38,
-    "p90LagDays": 39,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Apple",
-    "medianLagDays": 29,
-    "p90LagDays": 61,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Cisco",
-    "medianLagDays": 50,
-    "p90LagDays": 72,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 51,
-    "p90LagDays": 87,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Google",
-    "medianLagDays": 54,
-    "p90LagDays": 73,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Linux",
-    "medianLagDays": 71,
-    "p90LagDays": 71,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 16,
-    "p90LagDays": 28,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 68,
-    "p90LagDays": 70,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Oracle",
-    "medianLagDays": 55,
-    "p90LagDays": 84,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 59,
-    "p90LagDays": 65,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-05",
-    "manufacturer": "Samsung",
-    "medianLagDays": 24,
-    "p90LagDays": 24,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Adobe",
-    "medianLagDays": 66,
-    "p90LagDays": 76,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Apple",
-    "medianLagDays": 49,
-    "p90LagDays": 82,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Cisco",
-    "medianLagDays": 63,
-    "p90LagDays": 74,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 26,
-    "p90LagDays": 26,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Google",
-    "medianLagDays": 53,
-    "p90LagDays": 85,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Linux",
-    "medianLagDays": 63,
-    "p90LagDays": 88,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 48,
-    "p90LagDays": 89,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 77,
-    "p90LagDays": 77,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Oracle",
-    "medianLagDays": 54,
-    "p90LagDays": 82,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-06",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 41,
-    "p90LagDays": 41,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Adobe",
-    "medianLagDays": 45,
-    "p90LagDays": 73,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Apple",
-    "medianLagDays": 65,
-    "p90LagDays": 90,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 20,
-    "p90LagDays": 20,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Google",
-    "medianLagDays": 43,
-    "p90LagDays": 80,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Linux",
-    "medianLagDays": 50,
-    "p90LagDays": 62,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 63,
-    "p90LagDays": 86,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 34,
-    "p90LagDays": 36,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 44,
-    "p90LagDays": 74,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2025-07",
-    "manufacturer": "Samsung",
-    "medianLagDays": 7,
-    "p90LagDays": 7,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Adobe",
-    "medianLagDays": 43,
-    "p90LagDays": 62,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Apple",
-    "medianLagDays": 15,
-    "p90LagDays": 53,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Cisco",
-    "medianLagDays": 46,
-    "p90LagDays": 59,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 56,
-    "p90LagDays": 59,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Google",
-    "medianLagDays": 28,
-    "p90LagDays": 83,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Linux",
-    "medianLagDays": 70,
-    "p90LagDays": 70,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 57,
-    "p90LagDays": 81,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 63,
-    "p90LagDays": 63,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Oracle",
-    "medianLagDays": 62,
-    "p90LagDays": 90,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 43,
-    "p90LagDays": 43,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-08",
-    "manufacturer": "Samsung",
-    "medianLagDays": 68,
-    "p90LagDays": 68,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Adobe",
-    "medianLagDays": 54,
-    "p90LagDays": 54,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Apple",
-    "medianLagDays": 35,
-    "p90LagDays": 37,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Google",
-    "medianLagDays": 69,
-    "p90LagDays": 84,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Linux",
-    "medianLagDays": 68,
-    "p90LagDays": 88,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 56,
-    "p90LagDays": 78,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 43,
-    "p90LagDays": 43,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Oracle",
-    "medianLagDays": 40,
-    "p90LagDays": 50,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 46,
-    "p90LagDays": 89,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-09",
-    "manufacturer": "Samsung",
-    "medianLagDays": 66,
-    "p90LagDays": 81,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Adobe",
-    "medianLagDays": 49,
-    "p90LagDays": 71,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Apple",
-    "medianLagDays": 42,
-    "p90LagDays": 42,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Cisco",
-    "medianLagDays": 34,
-    "p90LagDays": 42,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 33,
-    "p90LagDays": 39,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Google",
-    "medianLagDays": 46,
-    "p90LagDays": 80,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Linux",
-    "medianLagDays": 53,
-    "p90LagDays": 89,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 35,
-    "p90LagDays": 83,
-    "knownCount": 9,
-    "totalCount": 9
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 39,
-    "p90LagDays": 86,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Oracle",
-    "medianLagDays": 48,
-    "p90LagDays": 85,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 51,
-    "p90LagDays": 51,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-10",
-    "manufacturer": "Samsung",
-    "medianLagDays": 55,
-    "p90LagDays": 55,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Adobe",
-    "medianLagDays": 65,
-    "p90LagDays": 65,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Apple",
-    "medianLagDays": 49,
-    "p90LagDays": 70,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Cisco",
-    "medianLagDays": 49,
-    "p90LagDays": 82,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 63,
-    "p90LagDays": 85,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Google",
-    "medianLagDays": 23,
-    "p90LagDays": 43,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 44,
-    "p90LagDays": 82,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 72,
-    "p90LagDays": 72,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Oracle",
-    "medianLagDays": 58,
-    "p90LagDays": 79,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-11",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 40,
-    "p90LagDays": 71,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Apple",
-    "medianLagDays": 37,
-    "p90LagDays": 70,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Cisco",
-    "medianLagDays": 43,
-    "p90LagDays": 43,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 19,
-    "p90LagDays": 19,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Google",
-    "medianLagDays": 30,
-    "p90LagDays": 58,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Linux",
-    "medianLagDays": 29,
-    "p90LagDays": 42,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 31,
-    "p90LagDays": 66,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 55,
-    "p90LagDays": 61,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Oracle",
-    "medianLagDays": 60,
-    "p90LagDays": 83,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2025-12",
-    "manufacturer": "Samsung",
-    "medianLagDays": 46,
-    "p90LagDays": 46,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Adobe",
-    "medianLagDays": 41,
-    "p90LagDays": 41,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Apple",
-    "medianLagDays": 43,
-    "p90LagDays": 67,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Cisco",
-    "medianLagDays": 63,
-    "p90LagDays": 88,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 29,
-    "p90LagDays": 55,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Google",
-    "medianLagDays": 51,
-    "p90LagDays": 90,
-    "knownCount": 9,
-    "totalCount": 9
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Linux",
-    "medianLagDays": 23,
-    "p90LagDays": 69,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 48,
-    "p90LagDays": 86,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 89,
-    "p90LagDays": 89,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Oracle",
-    "medianLagDays": 59,
-    "p90LagDays": 79,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2026-01",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 69,
-    "p90LagDays": 69,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Adobe",
-    "medianLagDays": 8,
-    "p90LagDays": 8,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Apple",
-    "medianLagDays": 45,
-    "p90LagDays": 73,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Cisco",
-    "medianLagDays": 80,
-    "p90LagDays": 80,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 42,
-    "p90LagDays": 58,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Google",
-    "medianLagDays": 75,
-    "p90LagDays": 75,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Linux",
-    "medianLagDays": 63,
-    "p90LagDays": 69,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 8,
-    "p90LagDays": 8,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 62,
-    "p90LagDays": 64,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Oracle",
-    "medianLagDays": 69,
-    "p90LagDays": 84,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2026-02",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 25,
-    "p90LagDays": 49,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Adobe",
-    "medianLagDays": 66,
-    "p90LagDays": 66,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Apple",
-    "medianLagDays": 81,
-    "p90LagDays": 87,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Cisco",
-    "medianLagDays": 39,
-    "p90LagDays": 61,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 66,
-    "p90LagDays": 80,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Google",
-    "medianLagDays": 57,
-    "p90LagDays": 90,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Linux",
-    "medianLagDays": 36,
-    "p90LagDays": 42,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 29,
-    "p90LagDays": 76,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 38,
-    "p90LagDays": 85,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Oracle",
-    "medianLagDays": 74,
-    "p90LagDays": 77,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 16,
-    "p90LagDays": 16,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-03",
-    "manufacturer": "Samsung",
-    "medianLagDays": 39,
-    "p90LagDays": 39,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Adobe",
-    "medianLagDays": 63,
-    "p90LagDays": 79,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Apple",
-    "medianLagDays": 35,
-    "p90LagDays": 79,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Cisco",
-    "medianLagDays": 73,
-    "p90LagDays": 73,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 50,
-    "p90LagDays": 73,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Google",
-    "medianLagDays": 74,
-    "p90LagDays": 84,
-    "knownCount": 7,
-    "totalCount": 7
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Linux",
-    "medianLagDays": 28,
-    "p90LagDays": 69,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 69,
-    "p90LagDays": 83,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 3,
-    "p90LagDays": 3,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Oracle",
-    "medianLagDays": 63,
-    "p90LagDays": 79,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 49,
-    "p90LagDays": 89,
-    "knownCount": 4,
-    "totalCount": 4
-  },
-  {
-    "date": "2026-04",
-    "manufacturer": "Samsung",
-    "medianLagDays": 14,
-    "p90LagDays": 14,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-05",
-    "manufacturer": "Apple",
-    "medianLagDays": 55,
-    "p90LagDays": 88,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2026-05",
-    "manufacturer": "Google",
-    "medianLagDays": 41,
-    "p90LagDays": 80,
-    "knownCount": 10,
-    "totalCount": 10
-  },
-  {
-    "date": "2026-05",
-    "manufacturer": "Linux",
-    "medianLagDays": 48,
-    "p90LagDays": 56,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-05",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 68,
-    "p90LagDays": 89,
-    "knownCount": 6,
-    "totalCount": 6
-  },
-  {
-    "date": "2026-05",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 17,
-    "p90LagDays": 51,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2026-05",
-    "manufacturer": "Oracle",
-    "medianLagDays": 57,
-    "p90LagDays": 86,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-05",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 86,
-    "p90LagDays": 86,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Adobe",
-    "medianLagDays": 32,
-    "p90LagDays": 32,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Apple",
-    "medianLagDays": 16,
-    "p90LagDays": 16,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Cisco",
-    "medianLagDays": 65,
-    "p90LagDays": 67,
-    "knownCount": 3,
-    "totalCount": 3
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Fortinet",
-    "medianLagDays": 4,
-    "p90LagDays": 4,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Google",
-    "medianLagDays": 63,
-    "p90LagDays": 88,
-    "knownCount": 5,
-    "totalCount": 5
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Linux",
-    "medianLagDays": 40,
-    "p90LagDays": 40,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Microsoft",
-    "medianLagDays": 53,
-    "p90LagDays": 89,
-    "knownCount": 8,
-    "totalCount": 8
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Mozilla",
-    "medianLagDays": 42,
-    "p90LagDays": 71,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Oracle",
-    "medianLagDays": 58,
-    "p90LagDays": 68,
-    "knownCount": 2,
-    "totalCount": 2
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Palo Alto",
-    "medianLagDays": 15,
-    "p90LagDays": 15,
-    "knownCount": 1,
-    "totalCount": 1
-  },
-  {
-    "date": "2026-06",
-    "manufacturer": "Samsung",
-    "medianLagDays": 71,
-    "p90LagDays": 82,
-    "knownCount": 2,
-    "totalCount": 2
   },
   {
     "date": "2026-07",
-    "manufacturer": "Linux",
-    "medianLagDays": 39,
-    "p90LagDays": 41,
-    "knownCount": 2,
-    "totalCount": 2
+    "manufacturer": "Palo Alto",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 13
   }
 ]

@@ -58,9 +58,9 @@
   {
     "date": "2006-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 37,
+    "p90LagDays": 56,
+    "knownCount": 3,
     "totalCount": 28
   },
   {
@@ -74,9 +74,9 @@
   {
     "date": "2006-09",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 24,
+    "p90LagDays": 24,
+    "knownCount": 1,
     "totalCount": 10
   },
   {
@@ -90,9 +90,9 @@
   {
     "date": "2007-02",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 34,
+    "p90LagDays": 91,
+    "knownCount": 4,
     "totalCount": 15
   },
   {
@@ -114,73 +114,73 @@
   {
     "date": "2007-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 27,
+    "p90LagDays": 41,
+    "knownCount": 3,
     "totalCount": 10
   },
   {
     "date": "2007-09",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 358,
+    "p90LagDays": 358,
+    "knownCount": 1,
     "totalCount": 1
   },
   {
     "date": "2007-10",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 175,
+    "p90LagDays": 498,
+    "knownCount": 5,
     "totalCount": 10
   },
   {
     "date": "2007-11",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 12,
+    "p90LagDays": 12,
+    "knownCount": 1,
     "totalCount": 3
   },
   {
     "date": "2007-12",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 162,
+    "p90LagDays": 162,
+    "knownCount": 1,
     "totalCount": 1
   },
   {
     "date": "2008-02",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 7,
+    "p90LagDays": 7,
+    "knownCount": 1,
     "totalCount": 2
   },
   {
     "date": "2008-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 118,
+    "p90LagDays": 194,
+    "knownCount": 2,
     "totalCount": 10
   },
   {
     "date": "2008-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 20,
+    "p90LagDays": 20,
+    "knownCount": 1,
     "totalCount": 2
   },
   {
     "date": "2008-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 26,
+    "p90LagDays": 26,
+    "knownCount": 1,
     "totalCount": 4
   },
   {
@@ -194,9 +194,9 @@
   {
     "date": "2008-11",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 28,
+    "p90LagDays": 28,
+    "knownCount": 1,
     "totalCount": 15
   },
   {
@@ -210,17 +210,17 @@
   {
     "date": "2009-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 4,
+    "p90LagDays": 4,
+    "knownCount": 1,
     "totalCount": 2
   },
   {
     "date": "2009-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 60,
+    "p90LagDays": 60,
+    "knownCount": 1,
     "totalCount": 13
   },
   {
@@ -234,17 +234,17 @@
   {
     "date": "2009-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 1,
+    "p90LagDays": 1,
+    "knownCount": 1,
     "totalCount": 12
   },
   {
     "date": "2009-10",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 84,
+    "p90LagDays": 118,
+    "knownCount": 3,
     "totalCount": 17
   },
   {
@@ -266,25 +266,25 @@
   {
     "date": "2010-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 187,
+    "p90LagDays": 237,
+    "knownCount": 5,
     "totalCount": 26
   },
   {
     "date": "2010-06",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 89,
+    "p90LagDays": 518,
+    "knownCount": 3,
     "totalCount": 13
   },
   {
     "date": "2010-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 25,
+    "p90LagDays": 152,
+    "knownCount": 3,
     "totalCount": 17
   },
   {
@@ -298,17 +298,17 @@
   {
     "date": "2011-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 81,
+    "p90LagDays": 81,
+    "knownCount": 3,
     "totalCount": 4
   },
   {
     "date": "2011-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 13,
+    "p90LagDays": 48,
+    "knownCount": 3,
     "totalCount": 19
   },
   {
@@ -370,9 +370,9 @@
   {
     "date": "2012-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 218,
+    "p90LagDays": 410,
+    "knownCount": 2,
     "totalCount": 33
   },
   {
@@ -402,9 +402,9 @@
   {
     "date": "2012-09",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 6,
+    "p90LagDays": 6,
+    "knownCount": 1,
     "totalCount": 1
   },
   {
@@ -434,9 +434,9 @@
   {
     "date": "2013-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 343,
+    "p90LagDays": 343,
+    "knownCount": 1,
     "totalCount": 15
   },
   {
@@ -458,25 +458,25 @@
   {
     "date": "2013-10",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 7,
+    "p90LagDays": 7,
+    "knownCount": 1,
     "totalCount": 15
   },
   {
     "date": "2013-11",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 245,
+    "p90LagDays": 245,
+    "knownCount": 1,
     "totalCount": 5
   },
   {
     "date": "2013-12",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 21,
+    "p90LagDays": 21,
+    "knownCount": 2,
     "totalCount": 16
   },
   {
@@ -490,9 +490,9 @@
   {
     "date": "2014-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 35,
+    "p90LagDays": 35,
+    "knownCount": 1,
     "totalCount": 15
   },
   {
@@ -562,9 +562,9 @@
   {
     "date": "2015-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 76,
+    "p90LagDays": 76,
+    "knownCount": 1,
     "totalCount": 14
   },
   {
@@ -602,9 +602,9 @@
   {
     "date": "2016-01",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 41,
+    "p90LagDays": 41,
+    "knownCount": 1,
     "totalCount": 18
   },
   {
@@ -626,9 +626,9 @@
   {
     "date": "2016-09",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 46,
+    "p90LagDays": 46,
+    "knownCount": 2,
     "totalCount": 20
   },
   {
@@ -674,9 +674,9 @@
   {
     "date": "2017-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 46,
+    "p90LagDays": 46,
+    "knownCount": 1,
     "totalCount": 42
   },
   {
@@ -778,41 +778,41 @@
   {
     "date": "2018-12",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 37,
+    "p90LagDays": 37,
+    "knownCount": 1,
     "totalCount": 12
   },
   {
     "date": "2019-01",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 2464,
+    "p90LagDays": 2464,
+    "knownCount": 1,
     "totalCount": 10
   },
   {
     "date": "2019-02",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 65,
+    "p90LagDays": 65,
+    "knownCount": 2,
     "totalCount": 4
   },
   {
     "date": "2019-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 42,
+    "p90LagDays": 42,
+    "knownCount": 1,
     "totalCount": 23
   },
   {
     "date": "2019-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 25,
+    "p90LagDays": 106,
+    "knownCount": 3,
     "totalCount": 24
   },
   {
@@ -826,9 +826,9 @@
   {
     "date": "2019-08",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 35,
+    "p90LagDays": 35,
+    "knownCount": 19,
     "totalCount": 20
   },
   {
@@ -842,17 +842,17 @@
   {
     "date": "2019-10",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 117,
+    "p90LagDays": 117,
+    "knownCount": 1,
     "totalCount": 16
   },
   {
     "date": "2020-01",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 2,
+    "p90LagDays": 2,
+    "knownCount": 6,
     "totalCount": 7
   },
   {
@@ -890,9 +890,9 @@
   {
     "date": "2020-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 7,
+    "p90LagDays": 8,
+    "knownCount": 15,
     "totalCount": 29
   },
   {
@@ -922,9 +922,9 @@
   {
     "date": "2020-11",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 14,
+    "p90LagDays": 14,
+    "knownCount": 1,
     "totalCount": 20
   },
   {
@@ -938,17 +938,17 @@
   {
     "date": "2021-01",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 19,
+    "p90LagDays": 19,
+    "knownCount": 1,
     "totalCount": 15
   },
   {
     "date": "2021-02",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 76,
+    "p90LagDays": 76,
+    "knownCount": 1,
     "totalCount": 13
   },
   {
@@ -962,9 +962,9 @@
   {
     "date": "2021-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 52,
+    "p90LagDays": 52,
+    "knownCount": 1,
     "totalCount": 20
   },
   {
@@ -986,9 +986,9 @@
   {
     "date": "2021-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 28,
+    "p90LagDays": 28,
+    "knownCount": 1,
     "totalCount": 12
   },
   {
@@ -1090,9 +1090,9 @@
   {
     "date": "2023-01",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 405,
+    "p90LagDays": 405,
+    "knownCount": 13,
     "totalCount": 25
   },
   {
@@ -1162,17 +1162,17 @@
   {
     "date": "2023-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 8,
+    "p90LagDays": 8,
+    "knownCount": 1,
     "totalCount": 2
   },
   {
     "date": "2023-08",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 28,
+    "p90LagDays": 28,
+    "knownCount": 2,
     "totalCount": 16
   },
   {
@@ -1274,9 +1274,9 @@
   {
     "date": "2024-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 56,
+    "p90LagDays": 56,
+    "knownCount": 1,
     "totalCount": 15
   },
   {
@@ -1290,9 +1290,9 @@
   {
     "date": "2024-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 28,
+    "p90LagDays": 28,
+    "knownCount": 1,
     "totalCount": 16
   },
   {
@@ -1306,9 +1306,9 @@
   {
     "date": "2024-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 1,
+    "p90LagDays": 1,
+    "knownCount": 6,
     "totalCount": 18
   },
   {
@@ -1322,9 +1322,9 @@
   {
     "date": "2024-06",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 2,
+    "p90LagDays": 2,
+    "knownCount": 8,
     "totalCount": 18
   },
   {
@@ -1338,9 +1338,9 @@
   {
     "date": "2024-07",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 2,
+    "p90LagDays": 6,
+    "knownCount": 15,
     "totalCount": 16
   },
   {
@@ -1362,9 +1362,9 @@
   {
     "date": "2024-09",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 42,
+    "p90LagDays": 42,
+    "knownCount": 15,
     "totalCount": 17
   },
   {
@@ -1378,9 +1378,9 @@
   {
     "date": "2024-10",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 1,
+    "p90LagDays": 1,
+    "knownCount": 1,
     "totalCount": 16
   },
   {
@@ -1410,9 +1410,9 @@
   {
     "date": "2024-12",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 15,
+    "p90LagDays": 15,
+    "knownCount": 2,
     "totalCount": 3
   },
   {
@@ -1458,9 +1458,9 @@
   {
     "date": "2025-03",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 56,
+    "p90LagDays": 56,
+    "knownCount": 12,
     "totalCount": 14
   },
   {
@@ -1490,9 +1490,9 @@
   {
     "date": "2025-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 3,
+    "p90LagDays": 3,
+    "knownCount": 2,
     "totalCount": 19
   },
   {
@@ -1506,9 +1506,9 @@
   {
     "date": "2025-06",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 6,
+    "p90LagDays": 6,
+    "knownCount": 5,
     "totalCount": 16
   },
   {
@@ -1586,9 +1586,9 @@
   {
     "date": "2025-11",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 2,
+    "p90LagDays": 2,
+    "knownCount": 15,
     "totalCount": 16
   },
   {
@@ -1618,9 +1618,9 @@
   {
     "date": "2026-01",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 35,
+    "p90LagDays": 35,
+    "knownCount": 1,
     "totalCount": 20
   },
   {
@@ -1658,9 +1658,9 @@
   {
     "date": "2026-04",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 2,
+    "p90LagDays": 56,
+    "knownCount": 6,
     "totalCount": 48
   },
   {
@@ -1674,9 +1674,9 @@
   {
     "date": "2026-05",
     "manufacturer": "Mozilla",
-    "medianLagDays": 0,
-    "p90LagDays": 0,
-    "knownCount": 0,
+    "medianLagDays": 7,
+    "p90LagDays": 7,
+    "knownCount": 3,
     "totalCount": 38
   },
   {

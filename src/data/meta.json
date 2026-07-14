@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-14T14:05:48.635Z",
+  "lastUpdated": "2026-07-14T15:51:06.072Z",
   "sourceCounts": {
     "mozilla": 1101,
     "chrome": 0,
@@ -7,10 +7,10 @@
     "apple": 0,
     "projectzero": 0,
     "pan": 25,
-    "fortinet": 705,
+    "fortinet": 716,
     "cisco": 0,
     "adobe": 14,
-    "nvd": 0
+    "nvd": 42280
   },
-  "totalRecords": 3236
+  "totalRecords": 42531
 }

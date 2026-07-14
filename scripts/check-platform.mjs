@@ -75,7 +75,16 @@ function currentTriple() {
 function listPlatformEntries(dirRel) {
   const base = resolve(REPO_ROOT, dirRel);
   if (!existsSync(base)) return [];
-  return readdirSync(base).filter((e) => PLATFORM_TRIPLE_RE.test(e));
+
+  const entries = readdirSync(base).flatMap((entry) => {
+    if (PLATFORM_TRIPLE_RE.test(entry)) return [entry];
+    const parts = entry.split('-');
+    if (parts.length < 3) return [];
+    const suffix = parts.slice(-2).join('-');
+    return PLATFORM_TRIPLE_RE.test(suffix) ? [suffix] : [];
+  });
+
+  return [...new Set(entries)];  
 }
 
 /**
@@ -134,7 +143,7 @@ function checkPlatformBinaries() {
     }
 
     console.log('');
-    console.log('✓ npm ci complete. Re-run `npm run publish` to continue.');
+    console.log('✓ npm ci complete. Continuing with the original command...');
     return true;
   }
   return false;

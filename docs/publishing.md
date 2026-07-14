@@ -17,10 +17,9 @@ task; the built site is then rsynced to a web host.
 
 `node_modules/` is **gitignored** because some dependencies (notably `esbuild`)
 ship a platform-specific native binary. If you develop on Windows and run
-`npm run publish` on Linux (or vice versa), the wrong-platform binary will
-be loaded and `data:build` (or any step that imports esbuild) will fail
-with `You installed esbuild for another platform than the one you're
-currently using.`
+`npm run publish` on Linux (or vice versa), the wrong-platform binary will be
+loaded and `data:build` (or any step that imports esbuild) will fail with
+`You installed esbuild for another platform than the one you're currently using.`
 
 **Run `npm ci` on each platform once** (Windows, Linux/WSL, macOS) to
 install the correct native binaries:
@@ -31,21 +30,19 @@ cd /path/to/vulntrends
 npm ci
 ```
 
-After that, every script in `package.json` that uses `tsx` is
-prefixed with `node scripts/check-platform.mjs &&` — a plain-Node
-(no tsx, no esbuild) pre-flight. This is required because
-`npm run publish` invokes `tsx scripts/publish.ts`, and `tsx`
-itself depends on esbuild: if the wrong-platform esbuild is in
-`node_modules`, esbuild throws an uncaught error the moment Node
-loads `publish.ts`, so any check that lives *inside* `publish.ts`
-never gets a chance to run.
+After that, every script in `package.json` that uses `tsx` is prefixed with
+`node scripts/check-platform.mjs &&` — a plain-Node (no tsx, no esbuild)
+pre-flight. This is required because `npm run publish` invokes
+`tsx scripts/publish.ts`, and `tsx` itself depends on esbuild: if the
+wrong-platform esbuild is in `node_modules`, esbuild throws an uncaught error
+the moment Node loads `publish.ts`, so any check that lives *inside*
+`publish.ts` never gets a chance to run.
 
-`check-platform.mjs` scans `node_modules/@esbuild/` for the
-current platform's variant. If only wrong-platform binaries are
-present, it runs `npm ci` automatically and tells you to re-run.
-For other known optional-native packages (`better-sqlite3`,
-`sharp`), it prints a warning only — auto-fixing varies (rebuild
-vs. reinstall) and is left to you.
+`check-platform.mjs` scans `node_modules/@esbuild/` for the current platform's
+variant. If only wrong-platform binaries are present, it runs `npm ci`
+automatically and then continues with the original command. For other known
+optional-native packages (`better-sqlite3`, `sharp`), it prints a warning only —
+auto-fixing varies (rebuild vs. reinstall) and is left to you.
 
 ## How publishing works
 
@@ -85,28 +82,24 @@ Set the web host connection details in `.env` (see below).
 The rsync invocation uses the following flags:
 
 - `-avz` — archive mode (preserves permissions/timestamps), verbose, compressed.
-- `--delete` — remove files on the remote that no longer exist locally
-  (keeps the remote in lock-step with `dist/`).
+- `--delete` — remove files on the remote that no longer exist locally (keeps
+  the remote in lock-step with `dist/`).
 - `--exclude='@eaDir/'` — Synology DSM creates `@eaDir` directories
-  (extended-attribute indexes for FileStation / the media indexer)
-  inside every directory it touches. They contain thumbnails and
-  metadata, not content, and would otherwise be synced to
-  production. Add more excludes to the `excludes` array in
-  `scripts/publish.ts` as needed.
-- `--chmod='D755,F644'` — force directories to `0755` and files to
-  `0644` on the destination. Without this, rsync's `-a` (archive)
-  would preserve whatever permissions the local `dist/` files
-  happen to have — and those depend on whoever ran
-  `npm run build` (your user on the NAS, often root or
-  Administrator elsewhere), which is rarely what the web host
-  wants. The web host needs a consistent 0755/0644 split so the
-  PHP/Apache user can read files and traverse directories without
-  giving the world write access.
-- `-e '<ssh command>'` — the SSH command is passed as a single
-  argument so the port, identity file, and `StrictHostKeyChecking`
-  options all reach rsync intact. The whole SSH string is wrapped
-  in single quotes in the log output for clarity; the actual
-  `execFileSync` call passes it as one argv element so no
+  (extended-attribute indexes for FileStation / the media indexer) inside every
+  directory it touches. They contain thumbnails and metadata, not content, and
+  would otherwise be synced to production for users building on a Synology NAS.
+  Add more excludes to the `excludes` array in `scripts/publish.ts` as needed.
+- `--chmod='D755,F644'` — force directories to `0755` and files to `0644` on the
+  destination. Without this, rsync's `-a` (archive) would preserve whatever
+  permissions the local `dist/` files happen to have — and those depend on
+  whoever ran `npm run build` (e.g. the Linux user, often root or Administrator
+  elsewhere), which is rarely what the web host wants. The web host needs a
+  consistent 0755/0644 split so the webserver user can read files and traverse
+  directories without giving the world write access.
+- `-e '<ssh command>'` — the SSH command is passed as a single argument so the
+  port, identity file, and `StrictHostKeyChecking` options all reach rsync
+  intact. The whole SSH string is wrapped in single quotes in the log output for
+  clarity; the actual `execFileSync` call passes it as one argv element so no
   shell-level escaping is involved.
 
 If any step fails, the script prints the error to stderr and exits non-zero. The

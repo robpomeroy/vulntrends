@@ -50,7 +50,7 @@ const targetLabel = staging ? 'staging' : 'production';
 
 // ── Helpers ───────────────────────────────────────────────────────
 
-const REPO_ROOT = resolve(import.meta.dirname, '..');
+const REPO_ROOT = resolve(process.cwd());
 
 function runStep(label: string, command: string, args: string[]): void {
   const start = Date.now();
@@ -80,8 +80,7 @@ function validateConfig(): void {
   if (!DEPLOY_HOST) missing.push('DEPLOY_HOST');
   if (!DEPLOY_USER) missing.push('DEPLOY_USER');
   if (!DEPLOY_KEY) missing.push('DEPLOY_KEY');
-  if (!DEPLOY_PROD_PATH) missing.push('DEPLOY_PROD_PATH');
-  if (!DEPLOY_STAGING_PATH) missing.push('DEPLOY_STAGING_PATH');
+  if (!targetPath) missing.push(staging ? 'DEPLOY_STAGING_PATH' : 'DEPLOY_PROD_PATH');
 
   if (missing.length > 0 && !dryRun) {
     // In dry-run mode we skip rsync, so deploy vars aren't needed.

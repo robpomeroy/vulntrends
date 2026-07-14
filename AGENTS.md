@@ -55,7 +55,8 @@ install the correct native binaries. After that, every script in
 `node scripts/check-platform.mjs &&` — a plain-Node (no tsx, no
 esbuild) pre-flight that scans `node_modules/@esbuild/` for the
 current platform's variant. If only wrong-platform binaries are
-present, it runs `npm ci` automatically and tells you to re-run.
+present, it runs `npm ci` automatically and then continues with the original
+command.
 
 ### Local secrets
 

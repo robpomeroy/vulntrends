@@ -123,12 +123,21 @@ function rsync(): void {
   // excludes here as needed.
   const excludes = ['@eaDir/'];
 
+  // Force a known permission set on the destination regardless of
+  // what the local files have. 'a' (archive) preserves permissions
+  // by default, but the local perms depend on whoever ran
+  // `npm run build` (your user on the NAS, often root/Administrator
+  // elsewhere), which is rarely what the web host wants. The web
+  // host needs 0755 on directories and 0644 on files — D755,F644
+  // is the canonical rsync idiom for that.
+  const chmod = 'D755,F644';
+
   // For the log line, wrap the SSH command in single quotes so the
   // reader can see it's one argument. The actual execFileSync call
   // passes each element as a separate argv token regardless, so no
   // shell-level escaping is needed.
   console.log(
-    `$ rsync -avz --delete ` +
+    `$ rsync -avz --delete --chmod='${chmod}' ` +
       excludes.map((e) => `--exclude='${e}' `).join('') +
       `-e '${sshCmd}' dist/ ` +
       `${DEPLOY_USER}@${DEPLOY_HOST}:${targetPath}`,
@@ -139,6 +148,8 @@ function rsync(): void {
   const rsyncArgs: string[] = [
     '-avz',
     '--delete',
+    '--chmod',
+    chmod,
     ...excludes.flatMap((e) => ['--exclude', e]),
     '-e',
     sshCmd,

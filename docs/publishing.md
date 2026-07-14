@@ -93,6 +93,15 @@ The rsync invocation uses the following flags:
   metadata, not content, and would otherwise be synced to
   production. Add more excludes to the `excludes` array in
   `scripts/publish.ts` as needed.
+- `--chmod='D755,F644'` — force directories to `0755` and files to
+  `0644` on the destination. Without this, rsync's `-a` (archive)
+  would preserve whatever permissions the local `dist/` files
+  happen to have — and those depend on whoever ran
+  `npm run build` (your user on the NAS, often root or
+  Administrator elsewhere), which is rarely what the web host
+  wants. The web host needs a consistent 0755/0644 split so the
+  PHP/Apache user can read files and traverse directories without
+  giving the world write access.
 - `-e '<ssh command>'` — the SSH command is passed as a single
   argument so the port, identity file, and `StrictHostKeyChecking`
   options all reach rsync intact. The whole SSH string is wrapped

@@ -749,7 +749,15 @@
     "medianLagDays": 0,
     "p90LagDays": 0,
     "knownCount": 0,
-    "totalCount": 18
+    "totalCount": 4
+  },
+  {
+    "date": "2018-08",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 14
   },
   {
     "date": "2018-09",
@@ -1398,5 +1406,13 @@
     "p90LagDays": 0,
     "knownCount": 0,
     "totalCount": 47
+  },
+  {
+    "date": "2026-07",
+    "manufacturer": "Mozilla",
+    "medianLagDays": 0,
+    "p90LagDays": 0,
+    "knownCount": 0,
+    "totalCount": 1
   }
 ]

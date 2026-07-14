@@ -467,7 +467,12 @@
   {
     "date": "2018-06",
     "manufacturer": "Mozilla",
-    "count": 18
+    "count": 4
+  },
+  {
+    "date": "2018-08",
+    "manufacturer": "Mozilla",
+    "count": 14
   },
   {
     "date": "2018-09",
@@ -873,5 +878,10 @@
     "date": "2026-06",
     "manufacturer": "Mozilla",
     "count": 47
+  },
+  {
+    "date": "2026-07",
+    "manufacturer": "Mozilla",
+    "count": 1
   }
 ]

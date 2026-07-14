@@ -28,3 +28,7 @@ pnpm-debug.log*
 # `npm run data:build` or `npm run data:sample`).
 src/data/*
 !src/data/.gitkeep
+
+# Ignore logs
+logs/*
+!logs/.gitkeep

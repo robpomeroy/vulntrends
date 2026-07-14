@@ -1,8 +1,8 @@
 # Publishing the website and refreshing data
 
 This guide explains how to publish the VulnTrends website and refresh the
-vulnerability data. The data refresh and site build run on a Synology NAS
-via a scheduled task; the built site is rsync'd to a Namecheap web host.
+vulnerability data. The data refresh and site build should run via a scheduled
+task; the built site is then rsynced to a web host.
 
 ## Prerequisites
 
@@ -10,44 +10,34 @@ via a scheduled task; the built site is rsync'd to a Namecheap web host.
 - An `NVD_API_KEY` for the NVD/CVE API (request at
   <https://nvd.nist.gov/developers/request-an-api-key>)
 - An `MSRC_API_KEY` is optional (email `msrcapi@microsoft.com` to request one)
-- SSH access to the Namecheap web host with a key-based login (no passphrase)
+- SSH access to the web host with a key-based login (no passphrase)
 - rsync available on the machine running the publish script
 
 ## How publishing works
 
 VulnTrends uses a **decoupled build** architecture:
 
-1. **Data refresh** — fetches vulnerability data from vendor sources,
-   normalises it, and writes JSON to `src/data/`.
+1. **Data refresh** — fetches vulnerability data from vendor sources, normalises
+   it, and writes JSON to `src/data/`.
 2. **Site build** — reads the JSON and builds the static site to `dist/`.
 3. **Deploy** — rsyncs `dist/` to the web host.
 
-The `npm run publish` script chains all three steps. Each step prints
-its progress to stdout; on failure the script exits non-zero so the
-Synology Task Scheduler emails the result.
+The `npm run publish` script chains all three steps. Each step prints its
+progress to stdout; on failure the script exits non-zero to be picked up by the
+task scheduler/cron.
 
-## Automated: Synology NAS scheduled task
+## Automated: Scheduled task
 
 ### Setting up the scheduled task
 
-1. On the Synology, open **Control Panel → Task Scheduler**.
-2. Click **Create → Scheduled Task → User-defined script**.
-3. **General** tab:
-   - Task name: `VulnTrends publish`
-   - User: the account that has the repo and Node.js
-   - Enabled: ✓
-4. **Schedule** tab:
-   - Run on the following days: Daily
-   - Time: e.g. 06:00
-5. **Task Settings** tab:
-   - **Run command**:
+Set up a scheduled task or cron job to run the script. Under Linux the task
+action will be, e.g.:
 
-     ```sh
-     cd /volume1/path/to/vulntrends && npm run publish >> /volume1/path/to/vulntrends/logs/publish.log 2>&1
-     ```
+```bash
+cd /path/to/vulntrends && npm run publish >> /path/to/vulntrends/logs/publish.log 2>&1
+```
 
-   - **Output** — check "Send run details by email" and enter your address.
-6. Click **OK**.
+Set the web host connection details in `.env` (see below).
 
 ### What the publish script does
 
@@ -58,8 +48,8 @@ Synology Task Scheduler emails the result.
 3. `npm run build` — Astro static build → `dist/`
 4. `rsync dist/ → web host` — incremental upload via SSH
 
-If any step fails, the script prints the error to stderr and exits
-non-zero. The Synology Task Scheduler will email you the full output.
+If any step fails, the script prints the error to stderr and exits non-zero. The
+Synology Task Scheduler will email you the full output.
 
 ### Staging
 
@@ -90,9 +80,9 @@ npm run publish:staging:dry-run
 
 ### Refreshing data locally
 
-The data build script (`npm run data:build`) automatically picks up
-secrets from a local `.env` file via Node's `--env-file-if-exists`
-flag. For a one-time setup:
+The data build script (`npm run data:build`) automatically picks up secrets from
+a local `.env` file via Node's `--env-file-if-exists` flag. For a one-time
+setup:
 
 ```sh
 # Copy the template and fill in your secrets
@@ -102,8 +92,7 @@ cp .env.example .env
 
 The `.env` file is gitignored — it stays on your machine only.
 
-If you'd rather not use a file, you can still set the variables
-inline:
+If you'd rather not use a file, you can still set the variables inline:
 
 ```sh
 # PowerShell
@@ -115,21 +104,20 @@ export NVD_API_KEY="your-api-key-here"
 npm run data:build
 ```
 
-The data build can take 10+ minutes without an NVD API key due to rate
-limiting (approximately one request per 6 seconds).
+The data build can take 20+ minutes without an NVD API key due to rate limiting
+(approximately one request per 6 seconds).
 
 ### Using sample data for fast iteration
 
-If you just want to work on the website without waiting for the full
-data pipeline, use the sample data generator:
+If you just want to work on the website without waiting for the full data
+pipeline, use the sample data generator:
 
 ```sh
 npm run data:sample
 ```
 
-This creates 2,000+ synthetic but realistic vulnerability records and
-runs the aggregation step. You can then start the dev server and iterate
-freely:
+This creates 2,000+ synthetic vulnerability records and runs the aggregation
+step. You can then start the dev server and iterate freely:
 
 ```sh
 npm run dev
@@ -174,34 +162,34 @@ to `.env` and fill in the values.
 
 ### Data refresh fails
 
-- Check that `NVD_API_KEY` is set in `.env`. Without it, the NVD
-  source will be rate-limited to 1 req/6s and the build may time out.
-- `MSRC_API_KEY` is optional. Without it the MSRC source still works,
-  just slowly.
-- Individual source failures are non-fatal — the pipeline writes an
-  empty array for any source that errors and continues with the
-  remaining sources.
+- Check that `NVD_API_KEY` is set in `.env`. Without it, the NVD source will be
+  rate-limited to 1 req/6s and the build may time out.
+- `MSRC_API_KEY` is optional. Without it the MSRC source still works, just
+  slowly.
+- Individual source failures are non-fatal — the pipeline writes an empty array
+  for any source that errors and continues with the remaining sources.
 
 ### Apple parser returns no data
 
 Apple's advisory pages are HTML and may change structure. The parser is
-defensive: if scraping fails, it returns an empty array and the pipeline
-relies on NVD data for Apple-related CVEs as a fallback. Check the parser
-in `scripts/pipeline/sources/apple.ts` if this becomes a persistent issue.
+defensive: if scraping fails, it returns an empty array and the pipeline relies
+on NVD data for Apple-related CVEs as a fallback. Check the parser in
+`scripts/pipeline/sources/apple.ts` if this becomes a persistent issue.
 
 ### rsync fails
 
-- Verify the SSH key has no passphrase (`ssh-keygen -p -f /path/to/key`
-  to remove it if needed).
-- Test SSH manually: `ssh -p $DEPLOY_PORT -i $DEPLOY_KEY $DEPLOY_USER@$DEPLOY_HOST`
+- Verify the SSH key has no passphrase (`ssh-keygen -p -f /path/to/key` to
+  remove it if needed).
+- Test SSH manually:
+  `ssh -p $DEPLOY_PORT -i $DEPLOY_KEY $DEPLOY_USER@$DEPLOY_HOST`
 - Check that the target path exists on the web host.
 - Ensure `rsync` is installed on the machine running the publish script.
 
 ### Dev server timeout
 
-The Astro dev server may take longer than 30 seconds to start on first
-run due to Vite's dependency optimisation. If it times out, try running
-`npm run build` first to warm the Vite cache, then `npm run dev`.
+The Astro dev server may take longer than 30 seconds to start on first run due
+to Vite's dependency optimisation. If it times out, try running `npm run build`
+first to warm the Vite cache, then `npm run dev`.
 
 ## Summary of commands
 

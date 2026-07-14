@@ -5,8 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://vulntrends.github.io',
-  base: '/vulntrends/',
+  site: 'https://vulntrends.org',
+  base: '/',
   integrations: [svelte()],
   vite: {
     plugins: [tailwindcss()],

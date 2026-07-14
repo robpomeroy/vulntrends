@@ -15,8 +15,8 @@ annotations or editorial framing — and lets users draw their own conclusions.
 - **Visualisation**: D3.js (vanilla, wrapped in Svelte components)
 - **Styling**: Tailwind CSS (dark-first dashboard aesthetic)
 - **Data validation**: Zod schemas
-- **Pipeline tooling**: tsx + TypeScript (Node 24+)
-- **Deployment**: GitHub Pages via GitHub Actions
+- **Pipeline tooling**: tsx + TypeScript (Node 22+)
+- **Deployment**: Synology NAS scheduled task → rsync to Namecheap web host
 
 ## Commands
 
@@ -28,6 +28,9 @@ annotations or editorial framing — and lets users draw their own conclusions.
 | `npm run data:build` | **Standalone tool**: fetch all sources, normalise, aggregate into `src/data/` |
 | `npm run data:validate` | Validate all generated JSON against Zod schemas |
 | `npm run data:sample` | Generate small synthetic dataset (offline; uses `scripts/generate-sample-data.ts`) |
+| `npm run publish` | Full pipeline: data refresh + validate + build + rsync to production |
+| `npm run publish:staging` | Same, but deploy to staging path |
+| `npm run publish:dry-run` | Full pipeline minus rsync (test without deploying) |
 
 ### Data build is decoupled from site build
 
@@ -37,14 +40,36 @@ This lets you iterate on the website freely without re-downloading data.
 
 **Local dev workflow**: run `npm run data:build` once, then `npm run dev` freely.
 
+### Cross-platform `node_modules` (Windows ↔ Linux)
+
+`node_modules/` is gitignored because some dependencies (notably
+`esbuild`) ship a platform-specific native binary. If you develop on
+Windows and run `npm run publish` on Linux (or vice versa), the wrong
+binary is loaded and the very first thing that breaks is the *loader*
+of `publish.ts` itself (which is `tsx`, and tsx depends on esbuild)
+— so a check that lives *inside* `publish.ts` can never fire.
+
+**Run `npm ci` on each platform once** (Windows, Linux/WSL, macOS) to
+install the correct native binaries. After that, every script in
+`package.json` that uses tsx is prefixed with
+`node scripts/check-platform.mjs &&` — a plain-Node (no tsx, no
+esbuild) pre-flight that scans `node_modules/@esbuild/` for the
+current platform's variant. If only wrong-platform binaries are
+present, it runs `npm ci` automatically and then continues with the original
+command.
+
 ### Local secrets
 
 The data pipeline reads `NVD_API_KEY` (and optionally `MSRC_API_KEY`) from
-`process.env`. The `data:build` script passes `--env-file-if-exists=.env`
-to `tsx`, so dropping your keys in a `.env` file in the repo root is
-picked up automatically. Copy `.env.example` to `.env` to get started.
-On GitHub Actions the same variables come from the repository's encrypted
-secrets.
+`process.env`. The `data:build` and `publish` scripts pass
+`--env-file-if-exists=.env` to `tsx`, so dropping your keys in a `.env`
+file in the repo root is picked up automatically. Copy `.env.example` to
+`.env` to get started.
+
+The `.env` file also holds the `DEPLOY_*` variables used by
+`scripts/publish.ts` for rsync to the Namecheap web host (host, port,
+user, SSH key path, production/staging paths). See `.env.example` for
+the full list.
 
 ### Dev server startup time
 

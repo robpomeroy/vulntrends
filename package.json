@@ -5,16 +5,20 @@
   "description": "Tracking trends in vulnerability patching across major software manufacturers",
   "license": "MIT",
   "engines": {
-    "node": ">=24"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "data:build": "tsx --env-file-if-exists=.env scripts/pipeline/index.ts && tsx --env-file-if-exists=.env scripts/aggregate.ts",
-    "data:validate": "tsx scripts/validate.ts",
-    "data:sample": "tsx scripts/generate-sample-data.ts"
+    "data:build": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/pipeline/index.ts && tsx --env-file-if-exists=.env scripts/aggregate.ts",
+    "data:validate": "node scripts/check-platform.mjs && tsx scripts/validate.ts",
+    "data:sample": "node scripts/check-platform.mjs && tsx scripts/generate-sample-data.ts",
+    "publish": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts",
+    "publish:staging": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --staging",
+    "publish:dry-run": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --dry-run",
+    "publish:staging:dry-run": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --staging --dry-run"
   },
   "dependencies": {
     "@astrojs/svelte": "^9.0.1",

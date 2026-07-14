@@ -84,13 +84,13 @@ function listPlatformEntries(dirRel) {
     return PLATFORM_TRIPLE_RE.test(suffix) ? [suffix] : [];
   });
 
-  return [...new Set(entries)];  
+  return [...new Set(entries)];
 }
 
 /**
  * Returns true if a wrong-platform install was detected AND a fresh
- * `npm ci` was successfully run. The caller should exit 0 in that
- * case and tell the user to re-run publish.
+ * `npm ci` was successfully run. In that case, this script exits 0 so
+ * the calling npm script chain can continue with a clean tree.
  *
  * Returns false if everything's fine (current platform is present, or
  * no platform-specific package is installed at all). The caller
@@ -186,6 +186,6 @@ if (!fixed) {
   // proceeds to the next step.
   process.exit(0);
 }
-// checkPlatformBinaries already ran npm ci; exit 0 so the chain
-// doesn't proceed with a half-installed tree.
+// checkPlatformBinaries already ran npm ci; exit 0 so the calling npm
+// script chain can continue with a clean tree.
 process.exit(0);

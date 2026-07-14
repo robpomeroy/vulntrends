@@ -111,22 +111,49 @@ function rsync(): void {
   console.log(`  user: ${DEPLOY_USER}`);
   console.log(`  path: ${targetPath}`);
 
+  // The SSH command must be a single argv element so rsync passes
+  // it intact to /bin/sh -c on the remote end. Each option here is
+  // space-separated inside ONE string.
   const sshCmd = `ssh -p ${DEPLOY_PORT} -i "${DEPLOY_KEY}" -o StrictHostKeyChecking=accept-new`;
-  const rsyncArgs = [
-    '-avz', '--delete',
-    '-e', sshCmd,
+
+  // Synology DSM creates @eaDir directories (extended-attribute
+  // indexes for the FileStation / media indexer) inside every
+  // directory it touches. We never want them synced to production
+  // (they contain thumbnails and metadata, not content). Add more
+  // excludes here as needed.
+  const excludes = ['@eaDir/'];
+
+  // For the log line, wrap the SSH command in single quotes so the
+  // reader can see it's one argument. The actual execFileSync call
+  // passes each element as a separate argv token regardless, so no
+  // shell-level escaping is needed.
+  console.log(
+    `$ rsync -avz --delete ` +
+      excludes.map((e) => `--exclude='${e}' `).join('') +
+      `-e '${sshCmd}' dist/ ` +
+      `${DEPLOY_USER}@${DEPLOY_HOST}:${targetPath}`,
+  );
+
+  // Build the argv array. Order matters: exclude flags first, then
+  // -e with the SSH command as a single element, then source + dest.
+  const rsyncArgs: string[] = [
+    '-avz',
+    '--delete',
+    ...excludes.flatMap((e) => ['--exclude', e]),
+    '-e',
+    sshCmd,
     'dist/',
     `${DEPLOY_USER}@${DEPLOY_HOST}:${targetPath}`,
   ];
 
-  console.log(`$ rsync ${rsyncArgs.join(' ')}`);
-
   try {
+    // NB: no `shell: true` here. rsync is a real binary; passing
+    // argv directly is correct on both Windows and Linux and avoids
+    // any shell metacharacter issues with the SSH command.
     execFileSync('rsync', rsyncArgs, {
       cwd: REPO_ROOT,
       stdio: 'inherit',
       timeout: 10 * 60 * 1000, // 10 min cap for rsync
-      shell: process.platform === 'win32',
     });
     console.log('✓ rsync completed');
   } catch (err) {

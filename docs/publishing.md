@@ -82,6 +82,24 @@ Set the web host connection details in `.env` (see below).
 3. `npm run build` — Astro static build → `dist/`
 4. `rsync dist/ → web host` — incremental upload via SSH
 
+The rsync invocation uses the following flags:
+
+- `-avz` — archive mode (preserves permissions/timestamps), verbose, compressed.
+- `--delete` — remove files on the remote that no longer exist locally
+  (keeps the remote in lock-step with `dist/`).
+- `--exclude='@eaDir/'` — Synology DSM creates `@eaDir` directories
+  (extended-attribute indexes for FileStation / the media indexer)
+  inside every directory it touches. They contain thumbnails and
+  metadata, not content, and would otherwise be synced to
+  production. Add more excludes to the `excludes` array in
+  `scripts/publish.ts` as needed.
+- `-e '<ssh command>'` — the SSH command is passed as a single
+  argument so the port, identity file, and `StrictHostKeyChecking`
+  options all reach rsync intact. The whole SSH string is wrapped
+  in single quotes in the log output for clarity; the actual
+  `execFileSync` call passes it as one argv element so no
+  shell-level escaping is involved.
+
 If any step fails, the script prints the error to stderr and exits non-zero. The
 Synology Task Scheduler will email you the full output.
 

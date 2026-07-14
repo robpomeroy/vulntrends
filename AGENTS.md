@@ -116,10 +116,15 @@ Svelte + D3 charts                ← interactive dashboard
 1. Create a parser at `scripts/pipeline/sources/<vendor>.ts` exporting
    `async function fetchRecords(): Promise<VulnerabilityRecord[]>`.
 2. Register the source in `scripts/pipeline/index.ts` (import + add to the
-   `sources` array).
-3. Add the source ID to the `SourceId` union in `scripts/pipeline/types.ts`.
+   `sources` array, *before* NVD which is always last as the gap-filler).
+3. Add the source ID to the `SourceId` union in `scripts/pipeline/types.ts`
+   and to the `sourceCounts` record in `scripts/pipeline/index.ts` and
+   `scripts/validate.ts` and `scripts/generate-sample-data.ts`.
 4. Add the manufacturer to `MANUFACTURERS` in `src/lib/manufacturers.ts` with
-   a display name and colour.
+   a display name and colour. If the vendor has a CPE entry in NVD, also
+   add it to `VENDOR_QUERIES` in `scripts/pipeline/sources/nvd.ts` and the
+   `MANUFACTURER_ALIASES` map in `scripts/pipeline/normalise.ts` for
+   cross-source deduplication.
 5. Run `npm run data:build` and `npm run data:validate` to verify.
 
 ## Data sources
@@ -132,6 +137,10 @@ Svelte + D3 charts                ← interactive dashboard
 | NVD/CVE | REST API | Cross-vendor canonical source, requires `NVD_API_KEY` |
 | Google Chrome | HTML scraping | Chrome Releases blog, patch dates vary |
 | Apple | HTML scraping | Defensive parser with NVD fallback on failure |
+| Palo Alto | JSON API | `security.paloaltonetworks.com/json` — CVSS + publication dates |
+| Fortinet | HTML scraping | `fortiguard.com/psirt` — separate Published and Updated dates give real patch-lag signal |
+| Cisco | NVD-only | openVuln API requires OAuth; OXML feed deprecated. Coverage via NVD `cisco` CPE vendor. |
+| Adobe | HTML scraping | `helpx.adobe.com/security.html` — per-bulletin CVE fetch is best-effort |
 
 ## Documentation
 

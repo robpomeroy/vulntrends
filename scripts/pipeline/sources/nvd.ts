@@ -35,6 +35,10 @@ const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string }> = [
   { cpeVendor: 'oracle', manufacturer: 'Oracle' },
   { cpeVendor: 'samsung', manufacturer: 'Samsung' },
   { cpeVendor: 'linux', manufacturer: 'Linux' },
+  { cpeVendor: 'paloaltonetworks', manufacturer: 'Palo Alto' },
+  { cpeVendor: 'fortinet', manufacturer: 'Fortinet' },
+  { cpeVendor: 'cisco', manufacturer: 'Cisco' },
+  { cpeVendor: 'adobe', manufacturer: 'Adobe' },
 ];
 
 interface NvdCve {

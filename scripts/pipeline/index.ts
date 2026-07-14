@@ -24,6 +24,10 @@ import { fetchRecords as fetchProjectZero } from './sources/projectzero.js';
 import { fetchRecords as fetchNvd } from './sources/nvd.js';
 import { fetchRecords as fetchChrome } from './sources/chrome.js';
 import { fetchRecords as fetchApple } from './sources/apple.js';
+import { fetchRecords as fetchPan } from './sources/pan.js';
+import { fetchRecords as fetchFortinet } from './sources/fortinet.js';
+import { fetchRecords as fetchCisco } from './sources/cisco.js';
+import { fetchRecords as fetchAdobe } from './sources/adobe.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '..', '..', 'src', 'data');
@@ -36,6 +40,10 @@ const SOURCES: Array<{ id: SourceId; fetch: () => Promise<VulnerabilityRecord[]>
   { id: 'projectzero', fetch: fetchProjectZero },
   { id: 'chrome', fetch: fetchChrome },
   { id: 'apple', fetch: fetchApple },
+  { id: 'pan', fetch: fetchPan },
+  { id: 'fortinet', fetch: fetchFortinet },
+  { id: 'cisco', fetch: fetchCisco },
+  { id: 'adobe', fetch: fetchAdobe },
   { id: 'nvd', fetch: fetchNvd },
 ];
 
@@ -56,6 +64,10 @@ async function main(): Promise<void> {
     msrc: 0,
     apple: 0,
     projectzero: 0,
+    pan: 0,
+    fortinet: 0,
+    cisco: 0,
+    adobe: 0,
     nvd: 0,
   };
 

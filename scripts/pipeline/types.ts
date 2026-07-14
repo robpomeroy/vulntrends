@@ -13,6 +13,10 @@ export type SourceId =
   | 'msrc'
   | 'apple'
   | 'projectzero'
+  | 'pan'
+  | 'fortinet'
+  | 'cisco'
+  | 'adobe'
   | 'nvd';
 
 /** Severity levels, ordered from most to least severe. */

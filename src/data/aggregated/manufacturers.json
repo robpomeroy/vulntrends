@@ -24,10 +24,6 @@
     "colour": "#1428a0"
   },
   {
-    "name": "Linux",
-    "colour": "#f6c924"
-  },
-  {
     "name": "Palo Alto",
     "colour": "#fa582d"
   },
@@ -42,9 +38,5 @@
   {
     "name": "Adobe",
     "colour": "#d4261f"
-  },
-  {
-    "name": "Other",
-    "colour": "#a78bfa"
   }
 ]

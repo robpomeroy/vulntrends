@@ -74,7 +74,6 @@ function generateRecords(
     Apple: ['macOS', 'iOS', 'Safari', 'watchOS', 'iPadOS'],
     Oracle: ['Java', 'MySQL', 'Oracle Database', 'VirtualBox'],
     Samsung: ['Android', 'One UI', 'Knox'],
-    Linux: ['Kernel', 'Ubuntu', 'Debian', 'RHEL'],
     'Palo Alto': ['PAN-OS', 'Prisma Access', 'GlobalProtect', 'Cortex XDR'],
     Fortinet: ['FortiOS', 'FortiProxy', 'FortiManager', 'FortiAnalyzer', 'FortiMail'],
     Cisco: ['IOS XE', 'IOS', 'NX-OS', 'Webex', 'Umbrella', 'Firepower'],
@@ -149,7 +148,6 @@ async function main(): Promise<void> {
     { manufacturer: 'Adobe', source: 'adobe', count: 160 },
     { manufacturer: 'Oracle', source: 'nvd', count: 200 },
     { manufacturer: 'Samsung', source: 'nvd', count: 100 },
-    { manufacturer: 'Linux', source: 'nvd', count: 250 },
   ];
 
   for (const { manufacturer, source, count } of sourceMap) {

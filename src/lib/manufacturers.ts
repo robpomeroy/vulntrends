@@ -21,22 +21,28 @@ export const MANUFACTURERS: ManufacturerInfo[] = [
   { name: 'Apple', colour: '#a8a8a8' },
   { name: 'Oracle', colour: '#c74634' },
   { name: 'Samsung', colour: '#1428a0' },
-  { name: 'Linux', colour: '#f6c924' },
   { name: 'Palo Alto', colour: '#fa582d' },
   { name: 'Fortinet', colour: '#00b14f' },
   { name: 'Cisco', colour: '#1ba0d7' },
   { name: 'Adobe', colour: '#d4261f' },
-  { name: 'Other', colour: '#a78bfa' },
 ];
 
 /**
+ * Default colour used by `getManufacturerColour()` when a manufacturer
+ * name isn't in the canonical list (e.g. an unknown vendor from NVD
+ * that didn't match any alias). Keeps the dashboard rendering if
+ * something slips through the net.
+ */
+const UNKNOWN_MANUFACTURER_COLOUR = '#a78bfa';
+
+/**
  * Look up the colour for a manufacturer name.
- * Falls back to the "Other" colour if not found.
+ * Falls back to a neutral purple if not found.
  */
 export function getManufacturerColour(name: string): string {
   return (
     MANUFACTURERS.find((m) => m.name === name)?.colour ??
-    MANUFACTURERS.find((m) => m.name === 'Other')!.colour
+    UNKNOWN_MANUFACTURER_COLOUR
   );
 }
 

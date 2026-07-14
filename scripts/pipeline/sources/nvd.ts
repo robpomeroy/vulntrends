@@ -35,7 +35,6 @@ const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string }> = [
   { cpeVendor: 'apple', manufacturer: 'Apple' },
   { cpeVendor: 'oracle', manufacturer: 'Oracle' },
   { cpeVendor: 'samsung', manufacturer: 'Samsung' },
-  { cpeVendor: 'linux', manufacturer: 'Linux' },
   { cpeVendor: 'paloaltonetworks', manufacturer: 'Palo Alto' },
   { cpeVendor: 'fortinet', manufacturer: 'Fortinet' },
   { cpeVendor: 'cisco', manufacturer: 'Cisco' },

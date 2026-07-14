@@ -109,11 +109,6 @@ const MANUFACTURER_ALIASES: Record<string, string> = {
   // Samsung
   samsung: 'Samsung',
   'samsung electronics': 'Samsung',
-  // Linux
-  linux: 'Linux',
-  'linux kernel': 'Linux',
-  'linux foundation': 'Linux',
-  kernel: 'Linux',
   // Project Zero (Google's research team — group under Google)
   'project zero': 'Google',
   'google project zero': 'Google',

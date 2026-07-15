@@ -45,7 +45,7 @@ const DEPLOY_STAGING_PATH = process.env.DEPLOY_STAGING_PATH;
 // SITE_URL overrides the `site` config in astro.config.mjs at build
 // time. Production defaults to vulntrends.org; the staging deploy
 // passes --staging and gets staging.vulntrends.org. This is what
-// makes robots.txt, sitemap.xml, og:url, og:image, and <link
+// makes robots.txt, sitemap-index.xml, og:url, og:image, and <link
 // rel="canonical"> all match the environment being deployed.
 const SITE_URL_PROD = process.env.SITE_URL || 'https://vulntrends.org';
 const SITE_URL_STAGING = process.env.SITE_URL_STAGING || 'https://staging.vulntrends.org';
@@ -57,6 +57,33 @@ const targetPath = staging
 const targetLabel = staging ? 'staging' : 'production';
 
 const siteUrl = staging ? SITE_URL_STAGING : SITE_URL_PROD;
+
+// Validate the chosen site URL before any work begins. A typo'd
+// SITE_URL (missing scheme, malformed host) would otherwise sail
+// through every step and only surface as broken canonical/og/sitemap
+// URLs in the deployed site — or worse, a confusing build failure
+// late in the pipeline. Fail fast with a clear message instead.
+// `URL` rejects missing-scheme and malformed input; the explicit
+// protocol check rejects accidental http:// or relative paths that
+// the constructor would otherwise accept.
+function validateSiteUrl(label: string, value: string): void {
+  let parsed: URL;
+  try {
+    parsed = new URL(value);
+  } catch {
+    console.error(`✗ Invalid SITE_URL for ${label}: ${JSON.stringify(value)}`);
+    console.error('  Expected an absolute URL like https://vulntrends.org');
+    process.exit(1);
+  }
+  if (parsed.protocol !== 'https:') {
+    console.error(`✗ SITE_URL for ${label} must use https:// — got ${parsed.protocol}`);
+    console.error(`  Value: ${value}`);
+    process.exit(1);
+  }
+}
+
+validateSiteUrl('production', SITE_URL_PROD);
+validateSiteUrl('staging', SITE_URL_STAGING);
 
 // ── Helpers ───────────────────────────────────────────────────────
 

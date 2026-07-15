@@ -1,357 +1,37 @@
 [
   {
-    "date": "2019",
-    "manufacturer": "Mozilla",
+    "date": "2020",
+    "manufacturer": "Fortinet",
     "openCount": 1
   },
   {
-    "date": "2020",
-    "manufacturer": "Adobe",
-    "openCount": 27
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Apple",
-    "openCount": 41
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Cisco",
-    "openCount": 28
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Fortinet",
-    "openCount": 17
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Google",
-    "openCount": 61
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Microsoft",
-    "openCount": 60
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Mozilla",
-    "openCount": 28
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Oracle",
-    "openCount": 11
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Palo Alto",
-    "openCount": 23
-  },
-  {
-    "date": "2020",
-    "manufacturer": "Samsung",
-    "openCount": 4
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Adobe",
-    "openCount": 38
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Apple",
-    "openCount": 62
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Cisco",
-    "openCount": 46
-  },
-  {
     "date": "2021",
     "manufacturer": "Fortinet",
-    "openCount": 27
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Google",
-    "openCount": 116
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Microsoft",
-    "openCount": 111
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Mozilla",
-    "openCount": 57
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Oracle",
-    "openCount": 17
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Palo Alto",
-    "openCount": 39
-  },
-  {
-    "date": "2021",
-    "manufacturer": "Samsung",
-    "openCount": 7
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Adobe",
-    "openCount": 66
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Apple",
-    "openCount": 89
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Cisco",
-    "openCount": 74
+    "openCount": 2
   },
   {
     "date": "2022",
     "manufacturer": "Fortinet",
-    "openCount": 49
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Google",
-    "openCount": 167
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Microsoft",
-    "openCount": 162
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Mozilla",
-    "openCount": 65
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Oracle",
-    "openCount": 21
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Palo Alto",
-    "openCount": 66
-  },
-  {
-    "date": "2022",
-    "manufacturer": "Samsung",
-    "openCount": 7
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Adobe",
-    "openCount": 81
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Apple",
-    "openCount": 113
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Cisco",
-    "openCount": 98
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Fortinet",
-    "openCount": 69
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Google",
-    "openCount": 207
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Microsoft",
-    "openCount": 205
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Mozilla",
-    "openCount": 86
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Oracle",
-    "openCount": 29
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Palo Alto",
-    "openCount": 81
-  },
-  {
-    "date": "2023",
-    "manufacturer": "Samsung",
-    "openCount": 7
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Adobe",
-    "openCount": 93
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Apple",
-    "openCount": 147
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Cisco",
-    "openCount": 117
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Fortinet",
-    "openCount": 80
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Google",
-    "openCount": 240
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Microsoft",
-    "openCount": 251
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Mozilla",
-    "openCount": 104
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Oracle",
-    "openCount": 30
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Palo Alto",
-    "openCount": 99
-  },
-  {
-    "date": "2024",
-    "manufacturer": "Samsung",
-    "openCount": 11
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Adobe",
-    "openCount": 106
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Apple",
-    "openCount": 178
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Cisco",
-    "openCount": 137
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Fortinet",
-    "openCount": 99
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Google",
-    "openCount": 296
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Microsoft",
-    "openCount": 303
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Mozilla",
-    "openCount": 127
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Oracle",
-    "openCount": 38
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Palo Alto",
-    "openCount": 123
-  },
-  {
-    "date": "2025",
-    "manufacturer": "Samsung",
-    "openCount": 8
-  },
-  {
-    "date": "2026",
-    "manufacturer": "Adobe",
     "openCount": 112
   },
   {
-    "date": "2026",
-    "manufacturer": "Apple",
-    "openCount": 193
+    "date": "2023",
+    "manufacturer": "Fortinet",
+    "openCount": 270
   },
   {
-    "date": "2026",
-    "manufacturer": "Cisco",
-    "openCount": 144
+    "date": "2024",
+    "manufacturer": "Fortinet",
+    "openCount": 349
+  },
+  {
+    "date": "2025",
+    "manufacturer": "Fortinet",
+    "openCount": 507
   },
   {
     "date": "2026",
     "manufacturer": "Fortinet",
-    "openCount": 107
-  },
-  {
-    "date": "2026",
-    "manufacturer": "Google",
-    "openCount": 317
-  },
-  {
-    "date": "2026",
-    "manufacturer": "Microsoft",
-    "openCount": 330
-  },
-  {
-    "date": "2026",
-    "manufacturer": "Mozilla",
-    "openCount": 133
-  },
-  {
-    "date": "2026",
-    "manufacturer": "Oracle",
-    "openCount": 35
-  },
-  {
-    "date": "2026",
-    "manufacturer": "Palo Alto",
-    "openCount": 137
-  },
-  {
-    "date": "2026",
-    "manufacturer": "Samsung",
-    "openCount": 12
+    "openCount": 590
   }
 ]

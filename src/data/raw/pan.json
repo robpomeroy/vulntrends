@@ -1,0 +1,427 @@
+[
+  {
+    "id": "CVE-2026-0288",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Buffer Overflow Vulnerabilities in User-ID Terminal Server Agent",
+    "severity": "critical",
+    "cvss": 9.2,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0288"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0288",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0287",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Denial of Service Vulnerabilities in Network Traffic Processing",
+    "severity": "high",
+    "cvss": 8.7,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0287"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0287",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0286",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Authenticated Command Injection in CLI",
+    "severity": "high",
+    "cvss": 8.5,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0286"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0286",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0285",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Server-Side Request Forgery Vulnerability in Management Web Interface",
+    "severity": "high",
+    "cvss": 7,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0285"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0285",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0284",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: XML Injection Vulnerability in Large Scale VPN (LSVPN)",
+    "severity": "high",
+    "cvss": 7.8,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0284"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0284",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0283",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Authentication Bypass Vulnerability in Large Scale VPN (LSVPN)",
+    "severity": "high",
+    "cvss": 7.8,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0283"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0283",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0282",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: File Deletion Vulnerability in Management Web Interface",
+    "severity": "medium",
+    "cvss": 6.9,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0282"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0282",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0281",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Information Disclosure Vulnerability in Management Web Interface",
+    "severity": "medium",
+    "cvss": 5.9,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0281"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0281",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0280",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: IPv6 Firewall Policy Bypass",
+    "severity": "medium",
+    "cvss": 6.3,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0280"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0280",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0279",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Multiple Cross-Site Scripting (XSS) Vulnerabilities",
+    "severity": "medium",
+    "cvss": 5.3,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0279"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0279",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0277",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Prisma Access Agent, Prisma Access Agent",
+    "title": "Prisma Access Agent: Improper Certificate Validation on iOS",
+    "severity": "high",
+    "cvss": 8.7,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0277"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0277",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0276",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cortex XDR Broker VM",
+    "title": "Cortex XDR Broker VM: Privilege Escalation (PE) Vulnerability",
+    "severity": "medium",
+    "cvss": 4.8,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "CVE-2026-0276"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0276",
+    "patchLagDays": 0
+  },
+  {
+    "id": "PAN-SA-2026-0010",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Prisma Browser",
+    "title": "Chromium and Prisma Browser: Monthly Vulnerability Update (July 2026)",
+    "severity": "critical",
+    "cvss": 9.2,
+    "discoveredDate": "2026-07-08",
+    "publishedDate": "2026-07-08",
+    "patchedDate": "2026-07-08",
+    "cveIds": [
+      "PAN-SA-2026-0010"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/PAN-SA-2026-0010",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0274",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cortex XSIAM CommvaultSecurityIQ Marketplace, Cortex XSOAR CommvaultSecurityIQ Marketplace",
+    "title": "Cortex XSOAR: Improper Validation of Credentials in CommvaultSecurityIQ integration",
+    "severity": "critical",
+    "cvss": 9.3,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0274"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0274",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0273",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Authenticated Admin Command Injection Vulnerability via CLI or Web UI",
+    "severity": "high",
+    "cvss": 8.6,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0273"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0273",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0272",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Privilege Escalation (PE) Vulnerability in the Command Line Interface (CLI)",
+    "severity": "high",
+    "cvss": 8.5,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0272"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0272",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0271",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Prisma Access Agent, Prisma Access Agent",
+    "title": "Prisma Access Agent: Local Privilege Escalation by Authorized Users",
+    "severity": "high",
+    "cvss": 8.5,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0271"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0271",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0270",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cortex XSOAR, Cortex XSOAR",
+    "title": "Cortex XSOAR: Path Traversal Vulnerability",
+    "severity": "high",
+    "cvss": 7.5,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0270"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0270",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0269",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Denial of Service (DoS) in Tunnel Traffic Processing",
+    "severity": "medium",
+    "cvss": 6.9,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0269"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0269",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0268",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Prisma Access Agent, Prisma Access Agent",
+    "title": "Prisma Access Agent: Local Authenticated VPN Enforcement Bypass on Linux",
+    "severity": "medium",
+    "cvss": 6.9,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0268"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0268",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0267",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "GlobalProtect App, GlobalProtect App",
+    "title": "GlobalProtect App: Information Exposure Vulnerability on macOS",
+    "severity": "medium",
+    "cvss": 6.9,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0267"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0267",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0266",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Stored Cross-Site Scripting (XSS) Vulnerability in the Web Interface",
+    "severity": "medium",
+    "cvss": 4.8,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "CVE-2026-0266"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0266",
+    "patchLagDays": 0
+  },
+  {
+    "id": "PAN-SA-2026-0008",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Prisma Browser",
+    "title": "Chromium: Monthly Vulnerability Update (June 2026)",
+    "severity": "critical",
+    "cvss": 9.5,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "PAN-SA-2026-0008"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/PAN-SA-2026-0008",
+    "patchLagDays": 0
+  },
+  {
+    "id": "PAN-SA-2026-0009",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Prisma SD-WAN ION",
+    "title": "Informational Bulletin: Impact assessment of OSS CVEs in Prisma SD-WAN ION",
+    "severity": "low",
+    "cvss": 0,
+    "discoveredDate": "2026-06-10",
+    "publishedDate": "2026-06-10",
+    "patchedDate": "2026-06-10",
+    "cveIds": [
+      "PAN-SA-2026-0009"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/PAN-SA-2026-0009",
+    "patchLagDays": 0
+  },
+  {
+    "id": "CVE-2026-0265",
+    "source": "pan",
+    "manufacturer": "Palo Alto",
+    "product": "Cloud NGFW, PAN-OS",
+    "title": "PAN-OS: Authentication Bypass with Cloud Authentication Service (CAS) enabled",
+    "severity": "critical",
+    "cvss": 9.2,
+    "discoveredDate": "2026-05-13",
+    "publishedDate": "2026-05-13",
+    "patchedDate": "2026-05-13",
+    "cveIds": [
+      "CVE-2026-0265"
+    ],
+    "rawUrl": "https://security.paloaltonetworks.com/CVE-2026-0265",
+    "patchLagDays": 0
+  }
+]

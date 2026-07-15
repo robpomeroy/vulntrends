@@ -11,6 +11,10 @@ export const sourceIdSchema = z.enum([
   'msrc',
   'apple',
   'projectzero',
+  'pan',
+  'fortinet',
+  'cisco',
+  'adobe',
   'nvd',
 ]);
 

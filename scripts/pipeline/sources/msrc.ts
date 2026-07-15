@@ -10,6 +10,7 @@
  */
 
 import { buildRecord, parseDate } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const MSRC_API_BASE = 'https://api.msrc.microsoft.com/cvrf/v3.0';
@@ -48,7 +49,7 @@ async function fetchUpdateList(): Promise<CvrfUpdate[]> {
     headers['Api-Key'] = MSRC_API_KEY;
   }
 
-  const response = await fetch(`${MSRC_API_BASE}/updates`, { headers });
+  const response = await fetchWithRetry(`${MSRC_API_BASE}/updates`, { headers });
   if (!response.ok) {
     throw new Error(`MSRC update list fetch failed: ${response.status}`);
   }
@@ -69,7 +70,7 @@ async function fetchCvrfRecords(update: CvrfUpdate): Promise<VulnerabilityRecord
       headers['Api-Key'] = MSRC_API_KEY;
     }
 
-    const response = await fetch(`${MSRC_API_BASE}/cvrf/${update.ID}`, { headers });
+    const response = await fetchWithRetry(`${MSRC_API_BASE}/cvrf/${update.ID}`, { headers });
     if (!response.ok) {
       console.warn(`  MSRC: skip ${update.ID} — HTTP ${response.status}`);
       return [];

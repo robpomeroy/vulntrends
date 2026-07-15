@@ -14,6 +14,7 @@
  */
 
 import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const APPLE_ADVISORIES_URL = 'https://support.apple.com/en-us/HT201222';
@@ -31,7 +32,7 @@ interface AppleAdvisory {
  * This page lists all security advisories with links to individual pages.
  */
 async function fetchAdvisoryIndex(): Promise<AppleAdvisory[]> {
-  const response = await fetch(APPLE_ADVISORIES_URL, {
+  const response = await fetchWithRetry(APPLE_ADVISORIES_URL, {
     headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
   });
   if (!response.ok) {
@@ -97,7 +98,7 @@ async function fetchAdvisoryIndex(): Promise<AppleAdvisory[]> {
  */
 async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<VulnerabilityRecord[]> {
   try {
-    const response = await fetch(advisory.url, {
+    const response = await fetchWithRetry(advisory.url, {
       headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
     });
     if (!response.ok) {

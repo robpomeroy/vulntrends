@@ -15,6 +15,7 @@
  */
 
 import { buildRecord, cvssToSeverity, parseDate } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const NVD_API_URL = 'https://services.nvd.nist.gov/rest/json/cves/2.0';
@@ -34,7 +35,10 @@ const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string }> = [
   { cpeVendor: 'apple', manufacturer: 'Apple' },
   { cpeVendor: 'oracle', manufacturer: 'Oracle' },
   { cpeVendor: 'samsung', manufacturer: 'Samsung' },
-  { cpeVendor: 'linux', manufacturer: 'Linux' },
+  { cpeVendor: 'paloaltonetworks', manufacturer: 'Palo Alto' },
+  { cpeVendor: 'fortinet', manufacturer: 'Fortinet' },
+  { cpeVendor: 'cisco', manufacturer: 'Cisco' },
+  { cpeVendor: 'adobe', manufacturer: 'Adobe' },
 ];
 
 interface NvdCve {
@@ -97,7 +101,10 @@ async function fetchCvePage(
     resultsPerPage: '2000',
   });
 
-  const response = await fetch(`${NVD_API_URL}?${params}`, { headers });
+  const response = await fetchWithRetry(
+    `${NVD_API_URL}?${params}`,
+    { headers, timeoutMs: 30_000 },
+  );
   if (!response.ok) {
     throw new Error(
       `NVD API returned ${response.status} for vendor "${cpeVendor}": ${await response.text()}`,
@@ -171,30 +178,41 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   for (const { cpeVendor, manufacturer } of VENDOR_QUERIES) {
     console.log(`  NVD: querying vendor "${cpeVendor}" → ${manufacturer}...`);
 
-    let startIndex = 0;
-    let totalResults = Infinity;
+    // Per-vendor resilience: a single vendor failure (e.g. network
+    // drop) shouldn't kill all NVD data. Skip the vendor with a
+    // warning and continue with the next.
+    try {
+      let startIndex = 0;
+      let totalResults = Infinity;
 
-    while (startIndex < totalResults) {
-      const data = await fetchCvePage(cpeVendor, startIndex);
-      totalResults = data.totalResults;
+      while (startIndex < totalResults) {
+        const data = await fetchCvePage(cpeVendor, startIndex);
+        totalResults = data.totalResults;
 
-      for (const vuln of data.vulnerabilities) {
-        // Deduplicate by CVE ID across vendor queries
-        if (seenIds.has(vuln.cve.id)) continue;
-        seenIds.add(vuln.cve.id);
+        for (const vuln of data.vulnerabilities) {
+          // Deduplicate by CVE ID across vendor queries
+          if (seenIds.has(vuln.cve.id)) continue;
+          seenIds.add(vuln.cve.id);
 
-        const record = cveToRecord(vuln.cve, manufacturer);
-        if (record) allRecords.push(record);
+          const record = cveToRecord(vuln.cve, manufacturer);
+          if (record) allRecords.push(record);
+        }
+
+        startIndex += data.resultsPerPage;
+        console.log(
+          `    fetched ${startIndex}/${totalResults} for "${cpeVendor}" (${allRecords.length} total)`,
+        );
+
+        if (startIndex < totalResults) {
+          await sleep(delay);
+        }
       }
-
-      startIndex += data.resultsPerPage;
-      console.log(
-        `    fetched ${startIndex}/${totalResults} for "${cpeVendor}" (${allRecords.length} total)`,
+    } catch (err) {
+      console.error(
+        `  NVD: vendor "${cpeVendor}" failed, skipping (other vendors will continue):`,
+        err instanceof Error ? err.message : err,
       );
-
-      if (startIndex < totalResults) {
-        await sleep(delay);
-      }
+      continue;
     }
 
     // Pause between vendor queries

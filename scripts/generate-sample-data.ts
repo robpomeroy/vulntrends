@@ -74,7 +74,10 @@ function generateRecords(
     Apple: ['macOS', 'iOS', 'Safari', 'watchOS', 'iPadOS'],
     Oracle: ['Java', 'MySQL', 'Oracle Database', 'VirtualBox'],
     Samsung: ['Android', 'One UI', 'Knox'],
-    Linux: ['Kernel', 'Ubuntu', 'Debian', 'RHEL'],
+    'Palo Alto': ['PAN-OS', 'Prisma Access', 'GlobalProtect', 'Cortex XDR'],
+    Fortinet: ['FortiOS', 'FortiProxy', 'FortiManager', 'FortiAnalyzer', 'FortiMail'],
+    Cisco: ['IOS XE', 'IOS', 'NX-OS', 'Webex', 'Umbrella', 'Firepower'],
+    Adobe: ['Acrobat', 'Reader', 'Photoshop', 'ColdFusion', 'Experience Manager'],
   };
 
   const productList = products[manufacturer] ?? ['Unknown'];
@@ -125,6 +128,10 @@ async function main(): Promise<void> {
     msrc: 0,
     apple: 0,
     projectzero: 0,
+    pan: 0,
+    fortinet: 0,
+    cisco: 0,
+    adobe: 0,
     nvd: 0,
   };
 
@@ -135,9 +142,12 @@ async function main(): Promise<void> {
     { manufacturer: 'Microsoft', source: 'msrc', count: 500 },
     { manufacturer: 'Apple', source: 'apple', count: 300 },
     { manufacturer: 'Google', source: 'projectzero', count: 150 },
+    { manufacturer: 'Palo Alto', source: 'pan', count: 200 },
+    { manufacturer: 'Fortinet', source: 'fortinet', count: 180 },
+    { manufacturer: 'Cisco', source: 'cisco', count: 220 },
+    { manufacturer: 'Adobe', source: 'adobe', count: 160 },
     { manufacturer: 'Oracle', source: 'nvd', count: 200 },
     { manufacturer: 'Samsung', source: 'nvd', count: 100 },
-    { manufacturer: 'Linux', source: 'nvd', count: 250 },
   ];
 
   for (const { manufacturer, source, count } of sourceMap) {

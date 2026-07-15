@@ -109,14 +109,27 @@ const MANUFACTURER_ALIASES: Record<string, string> = {
   // Samsung
   samsung: 'Samsung',
   'samsung electronics': 'Samsung',
-  // Linux
-  linux: 'Linux',
-  'linux kernel': 'Linux',
-  'linux foundation': 'Linux',
-  kernel: 'Linux',
   // Project Zero (Google's research team — group under Google)
   'project zero': 'Google',
   'google project zero': 'Google',
+  // Palo Alto Networks
+  'palo alto': 'Palo Alto',
+  'palo alto networks': 'Palo Alto',
+  'paloaltonetworks': 'Palo Alto',
+  'pan-os': 'Palo Alto',
+  'panos': 'Palo Alto',
+  // Fortinet
+  fortinet: 'Fortinet',
+  'fortinet inc': 'Fortinet',
+  fortios: 'Fortinet',
+  fortiproxy: 'Fortinet',
+  // Cisco
+  cisco: 'Cisco',
+  'cisco systems': 'Cisco',
+  // Adobe
+  adobe: 'Adobe',
+  'adobe inc': 'Adobe',
+  'adobe systems': 'Adobe',
 };
 
 export function normaliseManufacturer(raw: string): string {

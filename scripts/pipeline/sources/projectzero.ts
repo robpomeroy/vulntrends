@@ -10,6 +10,7 @@
  */
 
 import { buildRecord, parseDate } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const PZ_ISSUES_URL = 'https://bugs.chromium.org/prpc/monorail.v3.Issues/ListIssues';
@@ -45,7 +46,7 @@ async function fetchPzIssues(): Promise<PzIssue[]> {
       body.pageToken = pageToken;
     }
 
-    const response = await fetch(PZ_ISSUES_URL, {
+    const response = await fetchWithRetry(PZ_ISSUES_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

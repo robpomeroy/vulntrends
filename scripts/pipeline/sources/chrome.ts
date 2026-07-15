@@ -9,6 +9,7 @@
  */
 
 import { buildRecord, parseDate } from '../normalise.js';
+import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const CHROME_BLOG_URL = 'https://chromereleases.googleblog.com/';
@@ -32,7 +33,7 @@ async function fetchUpdatePosts(): Promise<ChromeUpdate[]> {
   for (let page = 0; page < 100; page++) {
     if (!nextUrl) break;
 
-    const response: Response = await fetch(nextUrl, {
+    const response = await fetchWithRetry(nextUrl, {
       headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
     });
     if (!response.ok) {
@@ -88,7 +89,7 @@ async function fetchUpdatePosts(): Promise<ChromeUpdate[]> {
  */
 async function enrichUpdate(update: ChromeUpdate): Promise<ChromeUpdate> {
   try {
-    const response = await fetch(update.url, {
+    const response = await fetchWithRetry(update.url, {
       headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
     });
     if (!response.ok) return update;

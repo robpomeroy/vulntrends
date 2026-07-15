@@ -206,10 +206,16 @@ function main(): void {
   // Step 2: Validate
   runStep('data:validate', 'npm', ['run', 'data:validate']);
 
-  // Step 3: Build site — pass --site so Astro.site reflects the
-  // target environment (drives sitemap URLs, robots.txt, og:url,
-  // og:image, and the canonical link in every page).
-  runStep('build', 'npx', ['astro', 'build', '--site', siteUrl]);
+  // Step 3: Build site — invoke through `npm run build` (the
+  // canonical entry point) and forward `--site` to the underlying
+  // `astro build` via npm's `--` separator. This keeps publish on
+  // the same script local builds use, so if the build script ever
+  // gains flags or preflight checks (cf. check-platform.mjs on the
+  // other scripts), publish inherits them automatically. `--site`
+  // makes Astro.site reflect the target environment, which drives
+  // sitemap URLs, robots.txt, og:url, og:image, and the canonical
+  // link in every page.
+  runStep('build', 'npm', ['run', 'build', '--', '--site', siteUrl]);
 
   // Step 4: Deploy
   rsync();

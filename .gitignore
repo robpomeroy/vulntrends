@@ -26,8 +26,8 @@ pnpm-debug.log*
 # Vulnerability data — regenerated daily by the Synology NAS scheduled task
 # (npm run publish). Locally we keep our own copies (regenerated via
 # `npm run data:build` or `npm run data:sample`).
-src/data/*
-!src/data/.gitkeep
+#src/data/*
+#!src/data/.gitkeep
 
 # Ignore logs
 logs/*

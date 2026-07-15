@@ -10,6 +10,7 @@ import '@/styles/global.css';
 // but that API was removed in Astro 7.
 import faviconSvg from '/favicon.svg?url';
 import faviconIco from '/favicon.ico?url';
+import ogImage from '/og-image.jpg?url';
 
 interface Props {
   lastUpdated?: string;
@@ -48,7 +49,7 @@ const formattedDate =
       content="Tracking trends in vulnerability patching across major software manufacturers."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={new URL('/og-image.jpg', Astro.site).href} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="VulnTrends dashboard preview — discovered and backlog charts" />
@@ -56,7 +57,7 @@ const formattedDate =
     <meta property="og:site_name" content="VulnTrends" />
     <meta property="og:locale" content="en_GB" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site).href} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
     <meta name="twitter:image:alt" content="VulnTrends dashboard preview — discovered and backlog charts" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
   </head>

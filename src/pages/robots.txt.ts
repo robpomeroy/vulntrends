@@ -14,12 +14,12 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = ({ site }) => {
-  const origin = site?.origin ?? 'https://vulntrends.org';
+  const base = (site?.toString() ?? 'https://vulntrends.org').replace(/\/$/, '');
   const body = [
     'User-agent: *',
     'Allow: /',
     '',
-    `Sitemap: ${origin}/sitemap-index.xml`,
+    `Sitemap: ${base}/sitemap-index.xml`,
     '',
   ].join('\n');
 

@@ -21,6 +21,7 @@
     "publish:staging:dry-run": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --staging --dry-run"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@astrojs/svelte": "^9.0.1",
     "@tailwindcss/vite": "^4.3.2",
     "astro": "^7.0.7",

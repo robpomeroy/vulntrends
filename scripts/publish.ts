@@ -58,8 +58,8 @@ const targetLabel = staging ? 'staging' : 'production';
 
 const siteUrl = staging ? SITE_URL_STAGING : SITE_URL_PROD;
 
-// Validate the chosen site URL before any work begins. A typo'd
-// SITE_URL (missing scheme, malformed host) would otherwise sail
+// Validate the chosen site URL before any work begins. A mistyped SITE_URL
+// (missing scheme, malformed host) would otherwise sail
 // through every step and only surface as broken canonical/og/sitemap
 // URLs in the deployed site — or worse, a confusing build failure
 // late in the pipeline. Fail fast with a clear message instead.
@@ -82,8 +82,7 @@ function validateSiteUrl(label: string, value: string): void {
   }
 }
 
-validateSiteUrl('production', SITE_URL_PROD);
-validateSiteUrl('staging', SITE_URL_STAGING);
+validateSiteUrl(targetLabel, siteUrl);
 
 // ── Helpers ───────────────────────────────────────────────────────
 

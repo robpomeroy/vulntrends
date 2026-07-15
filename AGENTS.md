@@ -48,8 +48,8 @@ sources fail. The pipeline has three safeguards:
 1. **Defensive fetching.** All source parsers go through
    `scripts/pipeline/fetch-with-retry.ts`, which adds:
    - **Timeout** (30s default, 60s for Adobe which is genuinely slow)
-   - **Retry with exponential backoff** (3 attempts: 1s, 2s, 4s + ±200ms
-     jitter) on transient errors
+   - **Retry with exponential backoff** (4 attempts: initial + 3 retries with
+     1s, 2s, 4s + ±200ms
    - **Retryable status codes** are 429/502/503/504 only — other 4xx
      fail fast because they won't fix themselves
 

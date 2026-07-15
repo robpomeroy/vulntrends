@@ -7,7 +7,8 @@
  *
  * Features:
  *   - **Timeout** via `AbortController` (default 30s, configurable)
- *   - **Retry** with exponential backoff (default 3 attempts: 1s, 2s, 4s)
+ *   - **Retry** with exponential backoff (default 4 attempts: initial + 3
+ *     retries with 1s, 2s, 4s backoff)
  *   - **Jitter** (±200ms random) to avoid thundering-herd retries from
  *     multiple sources hitting the same API simultaneously
  *   - **Retryable status codes**: 429 (rate-limited), 502, 503, 504

@@ -42,11 +42,47 @@ const DEPLOY_KEY = process.env.DEPLOY_KEY;
 const DEPLOY_PROD_PATH = process.env.DEPLOY_PROD_PATH;
 const DEPLOY_STAGING_PATH = process.env.DEPLOY_STAGING_PATH;
 
+// SITE_URL overrides the `site` config in astro.config.mjs at build
+// time. Production defaults to vulntrends.org; the staging deploy
+// passes --staging and gets staging.vulntrends.org. This is what
+// makes robots.txt, sitemap-index.xml, og:url, og:image, and <link
+// rel="canonical"> all match the environment being deployed.
+const SITE_URL_PROD = process.env.SITE_URL || 'https://vulntrends.org';
+const SITE_URL_STAGING = process.env.SITE_URL_STAGING || 'https://staging.vulntrends.org';
+
 const targetPath = staging
   ? DEPLOY_STAGING_PATH
   : DEPLOY_PROD_PATH;
 
 const targetLabel = staging ? 'staging' : 'production';
+
+const siteUrl = staging ? SITE_URL_STAGING : SITE_URL_PROD;
+
+// Validate the chosen site URL before any work begins. A mistyped SITE_URL
+// (missing scheme, malformed host) would otherwise sail
+// through every step and only surface as broken canonical/og/sitemap
+// URLs in the deployed site — or worse, a confusing build failure
+// late in the pipeline. Fail fast with a clear message instead.
+// `URL` rejects missing-scheme and malformed input; the explicit
+// protocol check rejects accidental http:// or relative paths that
+// the constructor would otherwise accept.
+function validateSiteUrl(label: string, value: string): void {
+  let parsed: URL;
+  try {
+    parsed = new URL(value);
+  } catch {
+    console.error(`✗ Invalid SITE_URL for ${label}: ${JSON.stringify(value)}`);
+    console.error('  Expected an absolute URL like https://vulntrends.org');
+    process.exit(1);
+  }
+  if (parsed.protocol !== 'https:') {
+    console.error(`✗ SITE_URL for ${label} must use https:// — got ${parsed.protocol}`);
+    console.error(`  Value: ${value}`);
+    process.exit(1);
+  }
+}
+
+validateSiteUrl(targetLabel, siteUrl);
 
 // ── Helpers ───────────────────────────────────────────────────────
 
@@ -185,6 +221,7 @@ function main(): void {
   console.log('══════════════════════════════════════════════════════');
   console.log(`  VulnTrends publish — ${mode}`);
   console.log(`  ${new Date().toISOString()}`);
+  console.log(`  site:  ${siteUrl}`);
   console.log('══════════════════════════════════════════════════════');
 
   validateConfig();
@@ -195,8 +232,16 @@ function main(): void {
   // Step 2: Validate
   runStep('data:validate', 'npm', ['run', 'data:validate']);
 
-  // Step 3: Build site
-  runStep('build', 'npm', ['run', 'build']);
+  // Step 3: Build site — invoke through `npm run build` (the
+  // canonical entry point) and forward `--site` to the underlying
+  // `astro build` via npm's `--` separator. This keeps publish on
+  // the same script local builds use, so if the build script ever
+  // gains flags or preflight checks (cf. check-platform.mjs on the
+  // other scripts), publish inherits them automatically. `--site`
+  // makes Astro.site reflect the target environment, which drives
+  // sitemap URLs, robots.txt, og:url, og:image, and the canonical
+  // link in every page.
+  runStep('build', 'npm', ['run', 'build', '--', '--site', siteUrl]);
 
   // Step 4: Deploy
   rsync();

@@ -48,17 +48,17 @@ const formattedDate =
       content="Tracking trends in vulnerability patching across major software manufacturers."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://vulntrends.org/og-image.jpg" />
+    <meta property="og:image" content={new URL('/og-image.jpg', Astro.site).href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="VulnTrends dashboard preview — discovered and backlog charts" />
-    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
     <meta property="og:site_name" content="VulnTrends" />
     <meta property="og:locale" content="en_GB" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://vulntrends.org/og-image.jpg" />
+    <meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site).href} />
     <meta name="twitter:image:alt" content="VulnTrends dashboard preview — discovered and backlog charts" />
-    <link rel="canonical" href={Astro.url.href} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
   </head>
   <body>
     <header class="bg-vt-bg-secondary border-b border-vt-border py-6">

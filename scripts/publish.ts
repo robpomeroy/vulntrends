@@ -42,11 +42,21 @@ const DEPLOY_KEY = process.env.DEPLOY_KEY;
 const DEPLOY_PROD_PATH = process.env.DEPLOY_PROD_PATH;
 const DEPLOY_STAGING_PATH = process.env.DEPLOY_STAGING_PATH;
 
+// SITE_URL overrides the `site` config in astro.config.mjs at build
+// time. Production defaults to vulntrends.org; the staging deploy
+// passes --staging and gets staging.vulntrends.org. This is what
+// makes robots.txt, sitemap.xml, og:url, og:image, and <link
+// rel="canonical"> all match the environment being deployed.
+const SITE_URL_PROD = process.env.SITE_URL || 'https://vulntrends.org';
+const SITE_URL_STAGING = process.env.SITE_URL_STAGING || 'https://staging.vulntrends.org';
+
 const targetPath = staging
   ? DEPLOY_STAGING_PATH
   : DEPLOY_PROD_PATH;
 
 const targetLabel = staging ? 'staging' : 'production';
+
+const siteUrl = staging ? SITE_URL_STAGING : SITE_URL_PROD;
 
 // ── Helpers ───────────────────────────────────────────────────────
 
@@ -185,6 +195,7 @@ function main(): void {
   console.log('══════════════════════════════════════════════════════');
   console.log(`  VulnTrends publish — ${mode}`);
   console.log(`  ${new Date().toISOString()}`);
+  console.log(`  site:  ${siteUrl}`);
   console.log('══════════════════════════════════════════════════════');
 
   validateConfig();
@@ -195,8 +206,10 @@ function main(): void {
   // Step 2: Validate
   runStep('data:validate', 'npm', ['run', 'data:validate']);
 
-  // Step 3: Build site
-  runStep('build', 'npm', ['run', 'build']);
+  // Step 3: Build site — pass --site so Astro.site reflects the
+  // target environment (drives sitemap URLs, robots.txt, og:url,
+  // og:image, and the canonical link in every page).
+  runStep('build', 'npx', ['astro', 'build', '--site', siteUrl]);
 
   // Step 4: Deploy
   rsync();

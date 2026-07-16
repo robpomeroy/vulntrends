@@ -1,5 +1,7 @@
 # VulnTrends
 
+![VulnTrends social preview](public/og-image.jpg)
+
 Tracking trends in vulnerability patching across major software manufacturers.
 
 VulnTrends is an open-source, data-driven dashboard that visualises

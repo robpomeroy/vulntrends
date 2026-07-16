@@ -61,18 +61,51 @@ task scheduler/cron.
 
 ### Setting up the scheduled task
 
-Set up a scheduled task or cron job to run the script. Under Linux the task
-action will be, e.g.:
+The Synology Task Scheduler runs `scripts/daily-publish.sh` once a day. That
+script handles `git pull`, conditional `npm ci`, and `npm run publish`, with
+log output mirrored to `logs/publish.log`.
+
+Configure the task action as the path to the script:
 
 ```bash
-cd /path/to/vulntrends && npm run publish >> /path/to/vulntrends/logs/publish.log 2>&1
+/volume1/deployments/vulntrends/scripts/daily-publish.sh
 ```
 
-Set the web host connection details in `.env` (see below).
+Set the web host connection details in `.env` (see below). Override paths via
+env vars if your install differs from the defaults:
+
+| Env var | Default | Purpose |
+|---|---|---|
+| `REPO_DIR` | `/volume1/deployments/vulntrends` | Repo working copy the script `cd`s into |
+| `LOG_DIR` | `$REPO_DIR/logs` | Where the log file lives |
+| `LOG_FILE` | `$LOG_DIR/publish.log` | Full log path (mirrors everything) |
+
+### What the daily-runner script does
+
+`scripts/daily-publish.sh` performs five steps in order, with `set -euo pipefail`
+so any failure aborts the rest:
+
+1. **Environment checks** — verifies `git`, `rsync`, `npm`, `node`, and `.env`
+   are all present. Exits 2 with an actionable error if any are missing.
+2. **`git fetch origin main`** — fetches updates without merging.
+3. **`git switch main` (fast-forward only)** — refuses to merge if `main` has
+   diverged locally. Exits 2 with a hint to resolve manually. This prevents
+   silently pushing unreviewed commits to production.
+4. **Conditional `npm ci`** — runs only if `package-lock.json` changed between
+   the pre-pull and post-pull HEAD. This is the same Windows↔Linux esbuild
+   native-binary safeguard as `scripts/check-platform.mjs`, applied one level
+   earlier so the next `npm run publish` doesn't inherit a wrong-platform
+   binary.
+5. **`npm run publish`** — runs the full pipeline and exits 0 / 1 to propagate
+   the result to the Task Scheduler's "command failed" branch.
+
+All output is mirrored to `logs/publish.log` via `tee -a`, so the file
+accumulates full history across runs. Stdout still streams to the Task
+Scheduler email digest so you see the run summary in your inbox.
 
 ### What the publish script does
 
-`scripts/publish.ts` runs four steps in sequence:
+`scripts/publish.ts` runs four stages in sequence:
 
 1. `npm run data:build` — fetch all sources, normalise, aggregate
 2. `npm run data:validate` — Zod schema check
@@ -129,6 +162,39 @@ Or staging dry-run:
 ```sh
 npm run publish:staging:dry-run
 ```
+
+### Running individual stages
+
+`scripts/publish.ts` accepts `--only=<stages>` and `--skip=<stages>` flags to
+run a subset of the pipeline. Stages, in execution order, are:
+`data:build`, `data:validate`, `build`, `rsync`. The two flags are mutually
+exclusive; an unknown stage name exits 1 with a usage hint.
+
+Use cases:
+
+| Scenario | Command |
+|---|---|
+| rsync just failed — re-run only that step | `npm run publish:upload` |
+| See what rsync would do, no actual transfer | `npm run publish:upload:dry-run` |
+| Refresh only the data, no build or deploy | `npm run publish:data` |
+| Schema-check existing `src/data/` without re-fetching | `npm run publish:validate` |
+| Everything through build, no deploy | `npm run publish:build` |
+| Deploy the existing `dist/` without re-fetching data | `npm run publish:skip-data` |
+
+`--only=rsync` refuses to run if `dist/` doesn't exist (otherwise `--delete`
+would wipe the remote web root). `npm run publish:upload` is a thin alias.
+
+Equivalent raw invocations (these are what the aliases delegate to):
+
+```sh
+node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=rsync                       # production rsync only
+node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=rsync --staging             # staging rsync only
+node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --skip=data:build                  # deploy existing dist/
+node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=data:build,data:validate    # refresh + validate, no build
+```
+
+The default invocation (no `--only` / `--skip`) runs every stage in order —
+identical to the original behaviour.
 
 ## Manual: Local development
 

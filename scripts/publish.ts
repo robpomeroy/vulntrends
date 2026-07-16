@@ -8,9 +8,18 @@
  *   4. rsync dist/ → web host (production or staging)
  *
  * Flags:
- *   --staging   Deploy to the staging path instead of production
- *   --dry-run   Do everything except the rsync (useful for testing the
- *               pipeline without deploying)
+ *   --staging              Deploy to the staging path instead of production
+ *   --dry-run              Do everything except the rsync (useful for testing
+ *                          the pipeline without deploying)
+ *   --only=<stages>        Run only the named comma-separated stages, in order.
+ *                          Stages: data:build, data:validate, build, rsync.
+ *                          Example: --only=rsync  (re-run only the rsync step)
+ *   --skip=<stages>        Run every stage EXCEPT the named ones.
+ *                          Example: --skip=data:build  (deploy the existing
+ *                          dist/ without re-fetching data)
+ *
+ *   --only and --skip are mutually exclusive. Passing both, or an unknown
+ *   stage name, exits 1 with a usage hint.
  *
  * Reads DEPLOY_* variables from .env (loaded automatically by the
  * `--env-file-if-exists=.env` flag in the npm script). On any step
@@ -18,13 +27,22 @@
  * Synology Task Scheduler emails the result.
  *
  * Usage:
- *   npm run publish                  # production
- *   npm run publish:staging          # staging
- *   npm run publish:dry-run          # production, no rsync
- *   npm run publish:staging:dry-run  # staging, no rsync
+ *   npm run publish                  # full pipeline, production
+ *   npm run publish:staging          # full pipeline, staging
+ *   npm run publish:dry-run          # full pipeline, production, no rsync
+ *   npm run publish:staging:dry-run  # full pipeline, staging, no rsync
+ *
+ *   # Per-stage (delegates through this script with --only):
+ *   npm run publish:data             # fetch + aggregate only
+ *   npm run publish:validate         # Zod schema check only
+ *   npm run publish:build            # data + validate + build, no deploy
+ *   npm run publish:upload           # rsync existing dist/ only
+ *   npm run publish:upload:dry-run   # show what rsync would do
+ *   npm run publish:skip-data        # deploy existing dist/ without refetching
  */
 
 import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 // ── Flags ───────────────────────────────────────────────────────────
@@ -32,6 +50,87 @@ import { resolve } from 'node:path';
 const args = process.argv.slice(2);
 const staging = args.includes('--staging');
 const dryRun = args.includes('--dry-run');
+
+// Stages, in canonical execution order. Reused by --only/--skip
+// validation and by `main()` to gate each step.
+const STAGES = ['data:build', 'data:validate', 'build', 'rsync'] as const;
+type Stage = (typeof STAGES)[number];
+
+function parseStageList(raw: string): Stage[] {
+  return raw
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean) as Stage[];
+}
+
+function findArg(prefix: string): string | undefined {
+  // Walk argv manually so `--only=foo` returns `'foo'` and a
+  // space-separated `--only foo` (in case anyone passes it that
+  // way) works too.
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a === prefix) return args[i + 1];
+    if (a.startsWith(`${prefix}=`)) return a.slice(prefix.length + 1);
+  }
+  return undefined;
+}
+
+const onlyRaw = findArg('--only');
+const skipRaw = findArg('--skip');
+// Use `!== undefined` rather than truthiness: `--only=` parses to
+// `''`, which is falsy and would otherwise be treated as "no flag"
+// and silently fall through to running every stage.
+const onlyStages = onlyRaw !== undefined ? parseStageList(onlyRaw) : undefined;
+const skipStages = skipRaw !== undefined ? parseStageList(skipRaw) : undefined;
+
+// ── Flag validation ───────────────────────────────────────────────
+
+if (onlyStages && skipStages) {
+  console.error('✗ --only and --skip are mutually exclusive.');
+  console.error(`  --only=${onlyRaw}`);
+  console.error(`  --skip=${skipRaw}`);
+  console.error('  Pick one.');
+  process.exit(1);
+}
+
+const knownStages = new Set<string>(STAGES);
+for (const flag of ['--only', '--skip'] as const) {
+  const list = flag === '--only' ? onlyStages : skipStages;
+  if (!list) continue;
+  const bad = list.filter((s) => !knownStages.has(s));
+  if (bad.length > 0) {
+    console.error(`✗ Unknown ${flag} stage(s): ${bad.join(', ')}`);
+    console.error(`  Valid stages: ${[...STAGES].join(', ')}`);
+    process.exit(1);
+  }
+}
+
+if (onlyStages && onlyStages.length === 0) {
+  console.error('✗ --only= must include at least one stage.');
+  console.error(`  Valid stages: ${[...STAGES].join(', ')}`);
+  process.exit(1);
+}
+
+if (skipStages && skipStages.length === 0) {
+  console.error('✗ --skip= must include at least one stage.');
+  console.error(`  Valid stages: ${[...STAGES].join(', ')}`);
+  process.exit(1);
+}
+
+// Resolve the active stage set. Default (no flags) = all stages,
+// preserving the original behaviour exactly.
+const activeStages: Stage[] = onlyStages
+  ? STAGES.filter((s) => onlyStages.includes(s))
+  : skipStages
+    ? STAGES.filter((s) => !skipStages.includes(s))
+    : [...STAGES];
+
+// Warn loudly when data:build is skipped — the deployed dist/ will
+// reflect the previously-built data, not fresh data. The Synology
+// Task Scheduler emails stderr, so this is visible in the digest.
+if (skipStages?.includes('data:build')) {
+  console.error('⚠ --skip=data:build: deploying the previously-built dist/ without fetching fresh data.');
+}
 
 // ── Config ─────────────────────────────────────────────────────────
 
@@ -141,6 +240,15 @@ function rsync(): void {
     return;
   }
 
+  // Refuse to rsync if there's no dist/. --delete would otherwise
+  // wipe the entire web root on the remote. Catches the
+  // `--only=rsync` before any build was done mistake.
+  if (!existsSync(resolve(REPO_ROOT, 'dist'))) {
+    console.error('✗ --only=rsync refused: dist/ does not exist.');
+    console.error('  Run `npm run publish:build` first or omit --only.');
+    process.exit(1);
+  }
+
   console.log(`\n── rsync → ${targetLabel} ───────────────────────────`);
   console.log(`  host: ${DEPLOY_HOST}:${DEPLOY_PORT}`);
   console.log(`  user: ${DEPLOY_USER}`);
@@ -216,6 +324,7 @@ function main(): void {
   const mode = [
     targetLabel,
     dryRun ? 'dry-run' : null,
+    activeStages.length < STAGES.length ? `only=${activeStages.join(',')}` : null,
   ].filter(Boolean).join(' / ');
 
   console.log('══════════════════════════════════════════════════════');
@@ -226,11 +335,18 @@ function main(): void {
 
   validateConfig();
 
+  // Each step is gated on the active stage list. Default (no
+  // --only/--skip) = all stages, preserving the original behaviour.
+
   // Step 1: Refresh data
-  runStep('data:build', 'npm', ['run', 'data:build']);
+  if (activeStages.includes('data:build')) {
+    runStep('data:build', 'npm', ['run', 'data:build']);
+  }
 
   // Step 2: Validate
-  runStep('data:validate', 'npm', ['run', 'data:validate']);
+  if (activeStages.includes('data:validate')) {
+    runStep('data:validate', 'npm', ['run', 'data:validate']);
+  }
 
   // Step 3: Build site — invoke through `npm run build` (the
   // canonical entry point) and forward `--site` to the underlying
@@ -241,10 +357,14 @@ function main(): void {
   // makes Astro.site reflect the target environment, which drives
   // sitemap URLs, robots.txt, og:url, og:image, and the canonical
   // link in every page.
-  runStep('build', 'npm', ['run', 'build', '--', '--site', siteUrl]);
+  if (activeStages.includes('build')) {
+    runStep('build', 'npm', ['run', 'build', '--', '--site', siteUrl]);
+  }
 
   // Step 4: Deploy
-  rsync();
+  if (activeStages.includes('rsync')) {
+    rsync();
+  }
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
   console.log('\n══════════════════════════════════════════════════════');

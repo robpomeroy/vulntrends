@@ -31,6 +31,12 @@ annotations or editorial framing — and lets users draw their own conclusions.
 | `npm run publish` | Full pipeline: data refresh + validate + build + rsync to production |
 | `npm run publish:staging` | Same, but deploy to staging path |
 | `npm run publish:dry-run` | Full pipeline minus rsync (test without deploying) |
+| `npm run publish:data` | Fetch + aggregate only (delegates to `publish.ts --only=data:build`) |
+| `npm run publish:validate` | Zod schema check only (`publish.ts --only=data:validate`) |
+| `npm run publish:build` | Data + validate + build, no deploy (`publish.ts --only=data:build,data:validate,build`) |
+| `npm run publish:upload` | rsync existing `dist/` only (`publish.ts --only=rsync`) — refuses if `dist/` is missing |
+| `npm run publish:upload:dry-run` | Show what rsync would do (`publish.ts --only=rsync --dry-run`) |
+| `npm run publish:skip-data` | Deploy existing `dist/` without re-fetching data (`publish.ts --skip=data:build`) |
 
 ### Data build is decoupled from site build
 

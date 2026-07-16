@@ -18,7 +18,13 @@
     "publish": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts",
     "publish:staging": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --staging",
     "publish:dry-run": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --dry-run",
-    "publish:staging:dry-run": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --staging --dry-run"
+    "publish:staging:dry-run": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --staging --dry-run",
+    "publish:data": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=data:build",
+    "publish:validate": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=data:validate",
+    "publish:build": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=data:build,data:validate,build",
+    "publish:upload": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=rsync",
+    "publish:upload:dry-run": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=rsync --dry-run",
+    "publish:skip-data": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --skip=data:build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

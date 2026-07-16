@@ -1,6 +1,6 @@
 # VulnTrends
 
-![VulnTrens social preview](public/og-image.jpg)
+![VulnTrends social preview](public/og-image.jpg)
 
 Tracking trends in vulnerability patching across major software manufacturers.
 

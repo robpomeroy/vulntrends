@@ -93,7 +93,7 @@ log "git status (sanity check, expect clean)"
 git status --short | tee -a "$LOG_FILE" || true
 
 log "npm run publish"
-if npm run publish >> "$LOG_FILE" 2>&1; then
+if npm run publish 2>&1 | tee -a "$LOG_FILE"; then
   log "══════════════════════════════════════════════════════"
   log " daily-publish complete"
   log "══════════════════════════════════════════════════════"

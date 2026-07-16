@@ -69,7 +69,12 @@ function findArg(prefix: string): string | undefined {
   // way) works too.
   for (let i = 0; i < args.length; i++) {
     const a = args[i];
-    if (a === prefix) return args[i + 1];
+    if (a === prefix) {
+      // If the flag is present but the value is missing, return an
+      // empty string so validation fails loudly instead of silently
+      // falling back to running every stage.
+      return args[i + 1] ?? '';
+    }
     if (a.startsWith(`${prefix}=`)) return a.slice(prefix.length + 1);
   }
   return undefined;
@@ -321,11 +326,12 @@ function rsync(): void {
 
 function main(): void {
   const start = Date.now();
-  const mode = [
-    targetLabel,
-    dryRun ? 'dry-run' : null,
-    activeStages.length < STAGES.length ? `only=${activeStages.join(',')}` : null,
-  ].filter(Boolean).join(' / ');
+  const stagesLabel = onlyStages
+    ? `only=${activeStages.join(',')}`
+    : skipStages
+      ? `skip=${skipStages.join(',')}`
+      : null;
+  const mode = [targetLabel, dryRun ? 'dry-run' : null, stagesLabel].filter(Boolean).join(' / ');
 
   console.log('══════════════════════════════════════════════════════');
   console.log(`  VulnTrends publish — ${mode}`);

@@ -11,7 +11,8 @@
  *   --staging              Deploy to the staging path instead of production
  *   --dry-run              Do everything except the rsync (useful for testing
  *                          the pipeline without deploying)
- *   --only=<stages>        Run only the named comma-separated stages, in order.
+ *   --only=<stages>        Run only the named comma-separated stages (executed
+ *                          in canonical order according to `STAGES`).
  *                          Stages: data:build, data:validate, build, rsync.
  *                          Example: --only=rsync  (re-run only the rsync step)
  *   --skip=<stages>        Run every stage EXCEPT the named ones.
@@ -339,7 +340,9 @@ function main(): void {
   console.log(`  site:  ${siteUrl}`);
   console.log('══════════════════════════════════════════════════════');
 
-  validateConfig();
+  if (activeStages.includes('rsync')) {
+    validateConfig();
+  }
 
   // Each step is gated on the active stage list. Default (no
   // --only/--skip) = all stages, preserving the original behaviour.

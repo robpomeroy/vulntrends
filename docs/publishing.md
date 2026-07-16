@@ -187,10 +187,10 @@ would wipe the remote web root). `npm run publish:upload` is a thin alias.
 Equivalent raw invocations (these are what the aliases delegate to):
 
 ```sh
-npx tsx scripts/publish.ts --only=rsync                       # production rsync only
-npx tsx scripts/publish.ts --only=rsync --staging             # staging rsync only
-npx tsx scripts/publish.ts --skip=data:build                  # deploy existing dist/
-npx tsx scripts/publish.ts --only=data:build,data:validate    # refresh + validate, no build
+node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=rsync                       # production rsync only
+node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=rsync --staging             # staging rsync only
+node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --skip=data:build                  # deploy existing dist/
+node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/publish.ts --only=data:build,data:validate    # refresh + validate, no build
 ```
 
 The default invocation (no `--only` / `--skip`) runs every stage in order —

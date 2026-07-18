@@ -1,0 +1,114 @@
+---
+/**
+ * Blog index — lists all published posts sorted by publication date,
+ * most recent first. Draft posts are excluded.
+ *
+ * Posts with a `heroImage` frontmatter field get a 16:9 thumbnail on
+ * wide screens; posts without one get a clean text-only card.
+ */
+
+import { getCollection } from 'astro:content';
+import DashboardLayout from '@/layouts/Dashboard.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+/**
+ * Resolve the hero image URL for a post entry.
+ *
+ * The `heroImage` frontmatter is treated as a path served from `public/`,
+ * recommended as an absolute `/images/blog/<file>` URL. For convenience we
+ * also accept a repo-root `~/public/images/blog/<file>` path, which is
+ * normalised to a public-rooted URL.
+ *
+ * Posts without a heroImage return `null`.
+ */
+async function resolveHero(entry: typeof posts[number]): Promise<string | null> {
+  const ref = entry.data.heroImage;
+  if (!ref) return null;
+
+  // Strip a leading "~/" (repo root) — Astro serves `public/` at the site root.
+  const normalised = ref
+    .replace(/^~\/public\//, '/')
+    .replace(/^~\//, '/')
+    .replace(/^\.\.\/\.\.\/public\//, '/');
+
+  // Public-path references are served as-is from the site root (reject protocol-relative URLs).
+  if (normalised.startsWith('/') && !normalised.startsWith('//')) return normalised;
+
+  // Anything else is treated as a public-rooted path too — the schema
+  // intentionally keeps this simple. Authors should drop images in
+  // `public/images/blog/` and reference them as `/images/blog/<file>`.
+  return `/${normalised}`;
+}
+
+// Pre-resolve all hero URLs in parallel.
+const heroUrls = await Promise.all(posts.map(resolveHero));
+---
+
+<DashboardLayout>
+  <section class="max-w-3xl mx-auto">
+    <header class="mb-8 border-b border-vt-border pb-6">
+      <h2 class="text-3xl font-bold tracking-tight m-0 mb-2">Blog</h2>
+      <p class="text-vt-text-secondary m-0">
+        Notes on vulnerability patching trends, data methodology, and the
+        VulnTrends project.
+      </p>
+    </header>
+
+    {posts.length === 0 ? (
+      <p class="text-vt-text-muted">No posts yet.</p>
+    ) : (
+      <ul class="list-none m-0 p-0 space-y-8">
+              {posts.map((post, i) => {
+                const hero = heroUrls[i];
+                return (
+                  <li class="border-b border-vt-border pb-8 last:border-b-0">
+                    <a href={`/blog/${post.id}/`} class="block group">
+                      <div class={`grid gap-6 ${hero ? 'sm:grid-cols-[1fr_220px]' : ''}`}>
+                        <div>
+                          <h3 class="text-xl font-semibold text-vt-text-primary group-hover:text-vt-accent transition-colors m-0 mb-2">
+                            {post.data.title}
+                          </h3>
+                          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-vt-text-muted mb-3">
+                            <time datetime={post.data.pubDate.toISOString()}>
+                              {formatDate(post.data.pubDate)}
+                            </time>
+                            {post.data.tags.length > 0 && (
+                              <span class="text-vt-text-muted">
+                                · {post.data.tags.join(', ')}
+                              </span>
+                            )}
+                          </div>
+                          <p class="text-vt-text-secondary m-0">{post.data.description}</p>
+                        </div>
+                        {hero && (
+                          <div class="hidden sm:block">
+                            <img
+                              src={hero}
+                              alt={post.data.heroImageAlt ?? ''}
+                              loading="lazy"
+                              decoding="async"
+                              width="440"
+                              height="247"
+                              class="w-full h-auto aspect-video object-cover rounded border border-vt-border"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+    )}
+  </section>
+</DashboardLayout>

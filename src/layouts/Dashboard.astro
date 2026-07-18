@@ -17,6 +17,10 @@ interface Props {
 }
 
 const { lastUpdated } = Astro.props;
+const pathname = Astro.url.pathname;
+
+const isAboutActive = pathname === '/about/' || pathname.startsWith('/about/');
+const isBlogActive = pathname === '/blog/' || pathname.startsWith('/blog/');
 
 const formattedDate =
   lastUpdated && !Number.isNaN(Date.parse(lastUpdated))
@@ -64,9 +68,45 @@ const formattedDate =
   <body>
     <header class="bg-vt-bg-secondary border-b border-vt-border py-6">
       <div class="w-full max-w-[1400px] mx-auto px-6 flex items-start justify-between gap-4 flex-wrap">
-        <div>
+        <div class="min-w-0">
+          <nav aria-label="Primary" class="mb-4">
+            <ul class="list-none m-0 p-0 flex items-center gap-5 text-sm">
+              <li>
+                <a
+                  href="/about/"
+                  class={`pb-1 border-b transition-colors ${
+                    isAboutActive
+                      ? 'text-vt-text-primary border-vt-accent'
+                      : 'text-vt-text-muted border-transparent hover:text-vt-text-primary'
+                  }`}
+                  aria-current={isAboutActive ? 'page' : undefined}
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/blog/"
+                  class={`pb-1 border-b transition-colors ${
+                    isBlogActive
+                      ? 'text-vt-text-primary border-vt-accent'
+                      : 'text-vt-text-muted border-transparent hover:text-vt-text-primary'
+                  }`}
+                  aria-current={isBlogActive ? 'page' : undefined}
+                >
+                  Blog
+                </a>
+              </li>
+            </ul>
+          </nav>
           <h1 class="text-3xl font-bold tracking-tight m-0">
-            <span>Vuln<span class="text-vt-accent">Trends</span></span>
+            <a
+              href="/"
+              class="inline-flex items-center gap-3 text-vt-text-primary hover:text-vt-text-primary focus-visible:outline-2 focus-visible:outline-vt-accent focus-visible:rounded-sm"
+            >
+              <img src={faviconSvg} alt="" class="w-8 h-8 shrink-0" />
+              <span>Vuln<span class="text-vt-accent">Trends</span></span>
+            </a>
           </h1>
           <p class="text-vt-text-muted text-sm mt-1 max-w-2xl">
             Tracking trends in vulnerability patching across major software manufacturers
@@ -110,6 +150,7 @@ const formattedDate =
           <p class="text-sm font-semibold uppercase tracking-wide text-vt-text-muted mb-3">Project</p>
           <ul class="list-none text-sm space-y-1">
             <li><a href="/about/">About &amp; methodology</a></li>
+            <li><a href="/blog/">Blog</a></li>
             <li><a href="https://github.com/robpomeroy/vulntrends">GitHub</a></li>
             <li>MIT Licensed</li>
           </ul>

@@ -23,15 +23,14 @@ const blog = defineCollection({
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
-        /**
-         * Optional hero image. Resolved at build time as a `?url` import
-         * (e.g. `import hero from '../../public/images/blog/foo.jpg?url'`)
-         * so the existing `base` config is respected without hard-coding
-         * a path. Omit for posts without a hero image.
-         */
-        heroImage: z.string().optional(),
-        heroImageAlt: z.string().optional(),
-      }),
+    /**
+    * Optional hero image served from `public/` (recommended: `/images/blog/<file>`).
+    * Also accepts a repo-root path like `~/public/images/blog/<file>` which is
+    * normalised to a public-rooted URL at render time.
+    */
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+  }),
 });
 
 export const collections = { blog };

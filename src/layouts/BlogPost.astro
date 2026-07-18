@@ -36,9 +36,16 @@ const isoDate = pubDate.toISOString();
  * (served from the `public/` directory by Astro). Anything else is
  * ignored — the post header simply skips the hero in that case.
  */
-const heroSrc = heroImage
-  ? heroImage.replace(/^~\/public\//, '/').replace(/^~\//, '/')
-  : null;
+const heroSrc = (() => {
+  if (!heroImage) return null;
+
+  const normalised = heroImage
+    .replace(/^~\/public\//, '/')
+    .replace(/^~\//, '/')
+    .replace(/^\.\.\/\.\.\/public\//, '/');
+
+  return normalised.startsWith('/') && !normalised.startsWith('//') ? normalised : null;
+})();
 ---
 
 <DashboardLayout>

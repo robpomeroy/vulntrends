@@ -22,24 +22,27 @@ const formatDate = (date: Date) =>
   });
 
 /**
- * Resolve the hero image URL for a post entry. The frontmatter stores
- * the image as a *filesystem path relative to the post file* (so the
- * frontmatter stays portable), and `getEntry('blog', id)` exposes the
- * post's file location so we can `import.meta.glob` over `public/`.
+ * Resolve the hero image URL for a post entry.
  *
- * For simplicity we accept a public-rooted path (e.g. "/images/blog/foo.jpg")
- * or a `~`-prefixed repo path (e.g. "~/public/images/blog/foo.jpg"). Posts
- * without a heroImage return `null`.
+ * The `heroImage` frontmatter is treated as a path served from `public/`,
+ * recommended as an absolute `/images/blog/<file>` URL. For convenience we
+ * also accept a repo-root `~/public/images/blog/<file>` path, which is
+ * normalised to a public-rooted URL.
+ *
+ * Posts without a heroImage return `null`.
  */
 async function resolveHero(entry: typeof posts[number]): Promise<string | null> {
   const ref = entry.data.heroImage;
   if (!ref) return null;
 
   // Strip a leading "~/" (repo root) — Astro serves `public/` at the site root.
-  const normalised = ref.replace(/^~\//, '/').replace(/^\.\.\/\.\.\/public\//, '/');
+  const normalised = ref
+    .replace(/^~\/public\//, '/')
+    .replace(/^~\//, '/')
+    .replace(/^\.\.\/\.\.\/public\//, '/');
 
-  // Public-path references are served as-is from the site root.
-  if (normalised.startsWith('/')) return normalised;
+  // Public-path references are served as-is from the site root (reject protocol-relative URLs).
+  if (normalised.startsWith('/') && !normalised.startsWith('//')) return normalised;
 
   // Anything else is treated as a public-rooted path too — the schema
   // intentionally keeps this simple. Authors should drop images in

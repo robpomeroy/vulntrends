@@ -53,7 +53,7 @@ Today's developers benefit from:
 - static analysis
 - fuzz testing
 - dependency scanning
-- memory sanitizers
+- memory sanitisers
 - secure development lifecycles
 - mandatory code review
 - continuous integration pipelines

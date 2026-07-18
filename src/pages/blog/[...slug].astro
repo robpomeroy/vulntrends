@@ -1,0 +1,27 @@
+---
+/**
+ * Dynamic route for individual blog posts.
+ *
+ * Generates one static page per entry in the `blog` content collection
+ * (excluding drafts). The rendered Markdown body is placed inside the
+ * BlogPost layout's <slot />.
+ */
+
+import { getCollection, render } from 'astro:content';
+import BlogPost from '@/layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BlogPost entry={entry}>
+  <Content />
+</BlogPost>

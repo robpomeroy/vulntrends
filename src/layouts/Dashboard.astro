@@ -39,8 +39,8 @@ const formattedDate =
     : null;
 
 // Plausible Analytics — built into the page at build time. The script
-// tag is either emitted or absent; there is no runtime gate, so there
-// is no flash of unstyled content and no client-side JS decision.
+// tag is either emitted or absent; there is no runtime injection and no
+// client-side decision about whether to load analytics.
 //
 // Three guards, all required:
 //   1. PUBLIC_PLAUSIBLE_ENABLED === 'true' — opt-in via .env, defaults
@@ -52,12 +52,12 @@ const formattedDate =
 //      shipping analytics to staging.
 //   3. A script URL is configured — prevents a broken `<script src="">`
 //      tag if someone toggles the boolean on but forgets the URL.
+const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL;
+const plausibleDataDomain = import.meta.env.PUBLIC_PLAUSIBLE_DATA_DOMAIN || 'vulntrends.org';
 const plausibleEnabled =
   import.meta.env.PUBLIC_PLAUSIBLE_ENABLED === 'true' &&
-  !(Astro.site?.hostname?.startsWith('staging.') ?? false) &&
-  !!import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL;
-const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL;
-const plausibleDataDomain = import.meta.env.PUBLIC_PLAUSIBLE_DATA_DOMAIN;
+  !Astro.site.hostname.startsWith('staging.') &&
+  !!plausibleScriptUrl;
 ---
 
 <!doctype html>

@@ -292,8 +292,8 @@ Plausible Analytics is integrated at build time. The tracker `<script>`
 tag is rendered into every page's `<head>` by
 [`src/layouts/Dashboard.astro`](../src/layouts/Dashboard.astro) when the
 build runs — there is no runtime injection and no client-side gate. This
-means there is no flash of unstyled content and no performance cost on
-the visitor's device when analytics are off.
+means visitors pay no client-side cost when analytics are off, and there
+is no client-side decision about whether to load the tracker.
 
 The script is emitted only when **all three** of the following are true:
 

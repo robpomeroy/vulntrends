@@ -56,14 +56,22 @@ body {
   flex-direction: column;
 }
 
-a {
-  color: var(--vt-accent);
-  text-decoration: none;
-  transition: color var(--vt-transition);
-}
+/*
+ * Wrap base a-tag styling in @layer base so Tailwind v4 utilities
+ * (e.g. text-vt-text-primary on the brand logo) win the cascade.
+ * Without the layer, untitled declarations outrank utilities in v4
+ * and the accent colour leaks through onto text inside the <a>.
+ */
+@layer base {
+  a {
+    color: var(--vt-accent);
+    text-decoration: none;
+    transition: color var(--vt-transition);
+  }
 
-a:hover {
-  color: #7dd3fc;
+  a:hover {
+    color: #7dd3fc;
+  }
 }
 
 /* ---- D3 chart styles (SVG — cannot use Tailwind classes) ---- */

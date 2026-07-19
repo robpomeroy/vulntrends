@@ -8,8 +8,8 @@ import '@/styles/global.css';
 // build (e.g. /_astro/favicon.a1b2c3.svg). The hash changes whenever the
 // file changes, which busts LiteSpeed and browser caches automatically —
 // no manual ?v= query string, and no need to purge the LiteSpeed cache
-// from cPanel. Assets under public/ would be copied verbatim with no
-// hash, so they can't be imported from there.
+// from cPanel. Assets under public/ are copied verbatim (no content hash), so
+// the URL won’t change automatically when the favicon changes.
 import faviconSvg from '@/assets/favicon.svg?url';
 import faviconIco from '@/assets/favicon.ico?url';
 // og-image.jpg stays under public/ because content hashes don't help a

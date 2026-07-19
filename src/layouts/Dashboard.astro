@@ -4,12 +4,17 @@
  */
 
 import '@/styles/global.css';
-// Import public assets with ?url so Astro resolves them relative to the
-// configured `base` path. Bare string hrefs (e.g. "/favicon.svg") were
-// resolved at build time via `Astro.resolve()` in older Astro versions,
-// but that API was removed in Astro 7.
-import faviconSvg from '/favicon.svg?url';
-import faviconIco from '/favicon.ico?url';
+// Favicons live in src/assets/ so Astro/Vite hashes their filenames on
+// build (e.g. /_astro/favicon.a1b2c3.svg). The hash changes whenever the
+// file changes, which busts LiteSpeed and browser caches automatically —
+// no manual ?v= query string, and no need to purge the LiteSpeed cache
+// from cPanel. Assets under public/ are copied verbatim (no content hash), so
+// the URL won’t change automatically when the favicon changes.
+import faviconSvg from '@/assets/favicon.svg?url';
+import faviconIco from '@/assets/favicon.ico?url';
+// og-image.jpg stays under public/ because content hashes don't help a
+// social-card URL: crawlers fetch it once on share and the URL must be
+// stable across deploys for it to be re-cached by social platforms.
 import ogImage from '/og-image.jpg?url';
 
 interface Props {

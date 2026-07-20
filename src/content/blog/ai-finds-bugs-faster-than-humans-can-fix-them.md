@@ -1,7 +1,7 @@
 ---
 title: "AI Finds Bugs Faster Than Humans Can Fix Them"
 description: "Anthropic's Claude Mythos Preview is producing tens of thousands of high-severity findings. The bottleneck in cybersecurity has shifted from discovery to remediation."
-published: 2026-07-20
+pubDate: 2026-07-20
 tags: [vulnerability-management, ai-security, open-source, cve, patching]
 ---
 

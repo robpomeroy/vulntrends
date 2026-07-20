@@ -52,12 +52,11 @@ const formattedDate =
 //      shipping analytics to staging.
 //   3. A script URL is configured — prevents a broken `<script src="">`
 //      tag if someone toggles the boolean on but forgets the URL.
-const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL;
-const plausibleDataDomain = import.meta.env.PUBLIC_PLAUSIBLE_DATA_DOMAIN || 'vulntrends.org';
+const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL?.trim();
+const plausibleDataDomain = import.meta.env.PUBLIC_PLAUSIBLE_DATA_DOMAIN?.trim() || 'vulntrends.org';
+const isStaging = Astro.site.hostname.startsWith('staging.');
 const plausibleEnabled =
-  import.meta.env.PUBLIC_PLAUSIBLE_ENABLED === 'true' &&
-  !Astro.site.hostname.startsWith('staging.') &&
-  !!plausibleScriptUrl;
+  import.meta.env.PUBLIC_PLAUSIBLE_ENABLED === 'true' && !isStaging && !!plausibleScriptUrl;
 ---
 
 <!doctype html>

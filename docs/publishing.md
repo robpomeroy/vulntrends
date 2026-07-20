@@ -286,8 +286,6 @@ The preview server serves the site at `http://localhost:4321/`.
 All variables are read from `.env` (gitignored). Copy `.env.example`
 to `.env` and fill in the values.
 
-## Analytics
-
 Plausible Analytics is integrated at build time. The tracker `<script>`
 tag is rendered into every page's `<head>` by
 [`src/layouts/Dashboard.astro`](../src/layouts/Dashboard.astro) when the

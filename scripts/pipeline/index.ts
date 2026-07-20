@@ -104,6 +104,38 @@ async function main(): Promise<void> {
     console.log(`\n--- ${source.id} ---`);
     try {
       const records = await source.fetch();
+
+      // Silent-empty safeguard: if a source's fetch succeeds but
+      // extracts zero records, AND the previous run had cached data,
+      // reuse the cache instead of overwriting it with []. This
+      // catches parser regressions where the source returns 200 OK
+      // and a structurally valid but useless payload (e.g. an HTML
+      // page that no longer matches the expected shape, an endpoint
+      // that quietly changed its response format, an ad-redirect that
+      // slips past fetchWithRetry). Without this, a single such
+      // regression destroys historical data irrecoverably — the raw
+      // files are gitignored, so `git checkout` can't restore them.
+      if (records.length === 0) {
+        const prevPath = join(RAW_DIR, `${source.id}.json`);
+        try {
+          const prevJson = await readFile(prevPath, 'utf-8');
+          const prevRecords = JSON.parse(prevJson) as VulnerabilityRecord[];
+          if (Array.isArray(prevRecords) && prevRecords.length > 0) {
+            sourceCounts[source.id] = prevRecords.length;
+            allRecords.push(...prevRecords);
+            cachedFallbackSources.push(source.id);
+            console.error(
+              `  ⚠ ${source.id}: fetch returned 0 records; reusing ${prevRecords.length} cached records from previous run`,
+            );
+            // Skip the empty-array write below.
+            continue;
+          }
+        } catch {
+          // No previous file (first run) or JSON parse error — fall
+          // through to writing the empty array as normal.
+        }
+      }
+
       sourceCounts[source.id] = records.length;
       allRecords.push(...records);
 

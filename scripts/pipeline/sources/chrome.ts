@@ -4,15 +4,25 @@
  * Chrome security updates are published on the Chrome Releases blog:
  *   https://chromereleases.googleblog.com/
  *
- * The blog is HTML and needs scraping. Each stable-channel update post
- * lists CVE IDs and severity ratings. Patch dates are the blog post dates.
+ * Source: Blogger's Atom JSON feed, filtered to the "Stable updates"
+ * and "Stable channel update" categories. The HTML page is subject to
+ * ad-network redirects that break scraping; the Atom feed is the
+ * canonical machine-readable form and does not have that problem.
+ *
+ * Feed URL: https://chromereleases.googleblog.com/feeds/posts/default/-/Stable%20updates?alt=json
+ *
+ * Pagination: Blogger's JSON feed uses `start-index` and `max-results`
+ * query parameters. Each page is up to 150 entries.
  */
 
 import { buildRecord, parseDate } from '../normalise.js';
 import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
-const CHROME_BLOG_URL = 'https://chromereleases.googleblog.com/';
+const CHROME_FEED_URL =
+  'https://chromereleases.googleblog.com/feeds/posts/default/-/Stable%20updates?alt=json';
+const FEED_PAGE_SIZE = 150;
+const FEED_MAX_PAGES = 20; // 20 × 150 = 3000 entries — far more than history needs
 
 interface ChromeUpdate {
   title: string;
@@ -20,99 +30,106 @@ interface ChromeUpdate {
   date: string;
   cveIds: string[];
   severities: string[];
+  /** HTML body of the blog post, used for CVE/severity extraction. */
+  bodyHtml: string;
+}
+
+interface AtomEntry {
+  title: { $t: string };
+  published: { $t: string };
+  link?: Array<{ rel?: string; href: string; type?: string }>;
+  category?: Array<{ term: string }>;
+  content?: { $t: string };
+}
+
+interface AtomFeed {
+  feed?: {
+    entry?: AtomEntry[];
+    openSearch$totalResults?: { $t: string };
+  };
 }
 
 /**
- * Fetch the Chrome Releases blog and extract stable channel update posts.
+ * Fetch Chrome stable-channel release posts from the Atom feed.
  */
 async function fetchUpdatePosts(): Promise<ChromeUpdate[]> {
   const updates: ChromeUpdate[] = [];
-  let nextUrl: string | undefined = CHROME_BLOG_URL;
 
-  // Paginate through the blog — follow "Older Posts" links
-  for (let page = 0; page < 100; page++) {
-    if (!nextUrl) break;
-
-    const response = await fetchWithRetry(nextUrl, {
+  for (let page = 0; page < FEED_MAX_PAGES; page++) {
+    const startIndex = page * FEED_PAGE_SIZE + 1;
+    const url = `${CHROME_FEED_URL}&max-results=${FEED_PAGE_SIZE}&start-index=${startIndex}`;
+    const response = await fetchWithRetry(url, {
       headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
     });
     if (!response.ok) {
-      console.warn(`  Chrome: blog fetch failed at page ${page}: ${response.status}`);
+      console.warn(`  Chrome: feed fetch failed at page ${page}: ${response.status}`);
       break;
     }
-    const html: string = await response.text();
+    const data = (await response.json()) as AtomFeed;
+    const entries = data.feed?.entry ?? [];
+    if (entries.length === 0) break;
 
-    // Extract blog post entries — Chrome releases uses Blogger's HTML structure
-    // Posts have class "post" and contain date headers
-    const postRegex =
-      /<article[^>]*class="[^"]*post[^"]*"[^>]*>[\s\S]*?<h3[^>]*><a[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>[\s\S]*?<time[^>]*datetime="([^"]+)"[\s\S]*?<\/article>/gi;
+    for (const entry of entries) {
+      // The feed is filtered to "Stable updates" via the URL path
+      // (`/-/Stable%20updates`). Some legacy entries may be tagged
+      // "Stable channel update" instead — accept those too.
+      const categories = (entry.category ?? []).map((c) => c.term.toLowerCase());
+      const isStableUpdate =
+        categories.some((c) => c.includes('stable updates')) ||
+        categories.some((c) => c.includes('stable channel update'));
+      if (!isStableUpdate) continue;
 
-    let match: RegExpExecArray | null;
-    while ((match = postRegex.exec(html)) !== null) {
-      const url = match[1];
-      const title = match[2].trim();
-      const date = parseDate(match[3]);
+      const title = entry.title?.$t?.trim();
+      if (!title) continue;
 
-      // Only interested in stable channel security posts.
-      // The "stable channel" / "stable update" check also implicitly
-      // filters out posts with empty titles (empty string won't match
-      // the regex), so by this point title is guaranteed non-empty.
-      if (!title.match(/stable channel|stable update/i)) continue;
+      // Prefer the alternate HTML link; fall back to the first link.
+      const link =
+        entry.link?.find((l) => l.rel === 'alternate')?.href ?? entry.link?.[0]?.href;
+      if (!link) continue;
+
+      const date = parseDate(entry.published?.$t);
       if (!date) continue;
 
-      // Fetch the full post to extract CVE details
       updates.push({
         title,
-        url,
+        url: link,
         date,
         cveIds: [],
         severities: [],
+        bodyHtml: entry.content?.$t ?? '',
       });
     }
 
-    // Find "Older Posts" link
-    const olderMatch: RegExpMatchArray | null = html.match(
-      /<a[^>]*class="[^"]*blog-pager-older-link[^"]*"[^>]*href="([^"]+)"/i,
-    );
-    nextUrl = olderMatch?.[1];
-
-    if (nextUrl) {
-      await new Promise((resolve) => setTimeout(resolve, 300));
-    }
+    if (entries.length < FEED_PAGE_SIZE) break;
+    await new Promise((resolve) => setTimeout(resolve, 200));
   }
 
   return updates;
 }
 
 /**
- * Fetch a single Chrome release blog post and extract CVE details.
+ * Extract CVE IDs and severity ratings from a Chrome release post's
+ * HTML body. The body comes from the Atom feed's `content.$t` field,
+ * so no per-post HTTP request is needed.
  */
-async function enrichUpdate(update: ChromeUpdate): Promise<ChromeUpdate> {
-  try {
-    const response = await fetchWithRetry(update.url, {
-      headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
-    });
-    if (!response.ok) return update;
-    const html = await response.text();
+function enrichUpdate(update: ChromeUpdate): ChromeUpdate {
+  const html = update.bodyHtml;
 
-    // Extract CVE IDs
-    const cveRegex = /CVE-\d{4}-\d{4,}/gi;
-    const cveMatches = html.match(cveRegex);
-    update.cveIds = cveMatches
-      ? [...new Set(cveMatches.map((m) => m.toUpperCase()))]
-      : [];
+  // Extract CVE IDs
+  const cveRegex = /CVE-\d{4}-\d{4,}/gi;
+  const cveMatches = html.match(cveRegex);
+  update.cveIds = cveMatches
+    ? [...new Set(cveMatches.map((m) => m.toUpperCase()))]
+    : [];
 
-    // Extract severity — Chrome uses "High", "Medium", "Low"
-    const severityRegex = /"(High|Medium|Low|Critical)"/gi;
-    const severityMatches = html.match(severityRegex);
-    update.severities = severityMatches
-      ? [...new Set(severityMatches.map((m) => m.replace(/"/g, '')))]
-      : [];
+  // Extract severity — Chrome uses "High", "Medium", "Low", "Critical"
+  const severityRegex = /"(High|Medium|Low|Critical)"/gi;
+  const severityMatches = html.match(severityRegex);
+  update.severities = severityMatches
+    ? [...new Set(severityMatches.map((m) => m.replace(/"/g, '')))]
+    : [];
 
-    return update;
-  } catch {
-    return update;
-  }
+  return update;
 }
 
 /**
@@ -123,15 +140,10 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   const updates = await fetchUpdatePosts();
   console.log(`Google Chrome: found ${updates.length} stable channel updates`);
 
-  // Enrich updates with CVE details (in small batches)
+  // Enrich updates with CVE details from the already-fetched post bodies
   const allRecords: VulnerabilityRecord[] = [];
-  const batchSize = 5;
 
-  for (let i = 0; i < updates.length; i += batchSize) {
-    const batch = updates.slice(i, i + batchSize);
-    const enriched = await Promise.all(batch.map(enrichUpdate));
-
-    for (const update of enriched) {
+  for (const update of updates.map(enrichUpdate)) {
       if (update.cveIds.length === 0) {
         // Some posts don't list individual CVEs — create one record per post
         allRecords.push(
@@ -164,11 +176,6 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
           );
         }
       }
-    }
-
-    if (i + batchSize < updates.length) {
-      await new Promise((resolve) => setTimeout(resolve, 300));
-    }
   }
 
   console.log(`Google Chrome: ${allRecords.length} records extracted`);

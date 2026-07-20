@@ -37,6 +37,26 @@ const formattedDate =
         minute: '2-digit',
       })
     : null;
+
+// Plausible Analytics — built into the page at build time. The script
+// tag is either emitted or absent; there is no runtime injection and no
+// client-side decision about whether to load analytics.
+//
+// Three guards, all required:
+//   1. PUBLIC_PLAUSIBLE_ENABLED === 'true' — opt-in via .env, defaults
+//      off so fresh clones and dev machines don't emit the script.
+//   2. !isStaging — Astro.site.hostname is set by `astro build --site`
+//      in scripts/publish.ts. For staging deploys the hostname starts
+//      with `staging.`, so the script is auto-excluded regardless of
+//      the boolean. This is what keeps a shared .env from accidentally
+//      shipping analytics to staging.
+//   3. A script URL is configured — prevents a broken `<script src="">`
+//      tag if someone toggles the boolean on but forgets the URL.
+const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL?.trim();
+const plausibleDataDomain = import.meta.env.PUBLIC_PLAUSIBLE_DATA_DOMAIN?.trim() || 'vulntrends.org';
+const isStaging = Astro.site.hostname.startsWith('staging.');
+const plausibleEnabled =
+  import.meta.env.PUBLIC_PLAUSIBLE_ENABLED === 'true' && !isStaging && !!plausibleScriptUrl;
 ---
 
 <!doctype html>
@@ -69,6 +89,9 @@ const formattedDate =
     <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
     <meta name="twitter:image:alt" content="VulnTrends dashboard preview — discovered and backlog charts" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+    {plausibleEnabled && (
+      <script defer data-domain={plausibleDataDomain} src={plausibleScriptUrl}></script>
+    )}
   </head>
   <body>
     <header class="bg-vt-bg-secondary border-b border-vt-border py-6">

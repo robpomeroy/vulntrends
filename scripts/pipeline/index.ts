@@ -68,6 +68,29 @@ const SOURCES: Array<{ id: SourceId; fetch: () => Promise<VulnerabilityRecord[]>
   { id: 'nvd', fetch: fetchNvd },
 ];
 
+/**
+ * Sources that are *expected* to return an empty array on a healthy
+ * run. The silent-empty safeguard in the main loop skips these when
+ * deciding whether a 0-record result is a parser regression — for
+ * them, zero is the correct answer.
+ *
+ * Add a source here when its parser is a documented stub that always
+ * returns `[]` (e.g. because the upstream API was retired). The
+ * safeguard still applies to all other sources: a previously-working
+ * source that suddenly returns 0 will fall back to the cached
+ * `src/data/raw/<source>.json` instead of overwriting with `[]`.
+ */
+const ZERO_RECORD_ALLOWLIST: ReadonlySet<SourceId> = new Set<SourceId>([
+  // Project Zero: source API retired (Monorail endpoint deprecated,
+  // migrated to issuetracker.google.com). Coverage comes from NVD's
+  // `google` vendor query. See scripts/pipeline/sources/projectzero.ts.
+  'projectzero',
+  // Cisco: no public advisory feed available (openVuln API requires
+  // OAuth; OXML feed deprecated). Coverage comes from NVD's `cisco`
+  // vendor query. See scripts/pipeline/sources/cisco.ts.
+  'cisco',
+]);
+
 async function writeJson(path: string, data: unknown): Promise<void> {
   const json = JSON.stringify(data, null, 2) + '\n';
   await writeFile(path, json, 'utf-8');
@@ -92,7 +115,12 @@ async function main(): Promise<void> {
     nvd: 0,
   };
 
-  const allRecords: VulnerabilityRecord[] = [];
+  cons//
+      // Sources in ZERO_RECORD_ALLOWLIST (documented stubs that
+      // legitimately return []) are exempt: for them, 0 records is
+      // the correct answer and the safeguard would only mask real
+      // progress when a stub is revived.
+      if (records.length === 0 && !ZERO_RECORD_ALLOWLIST.has(source.id)
 
   // Track which sources failed and whether each had a cached fallback.
   // Used at the end to decide whether to abort the pipeline.

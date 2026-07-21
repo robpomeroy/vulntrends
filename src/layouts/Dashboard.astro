@@ -16,6 +16,13 @@ import faviconIco from '@/assets/favicon.ico?url';
 // social-card URL: crawlers fetch it once on share and the URL must be
 // stable across deploys for it to be re-cached by social platforms.
 import ogImage from '/og-image.jpg?url';
+// Project version is the single source of truth in package.json. The
+// footer reads it via this import so a `package.json` bump is reflected
+// on the next `astro build` with no other change. The `with { type:
+// 'json' }` syntax requires Node 22+ and TypeScript 5.3+, both of which
+// are this project's minimums (see package.json `engines`).
+import pkg from '../../package.json' with { type: 'json' };
+const siteVersion = pkg.version;
 
 interface Props {
   lastUpdated?: string;
@@ -182,6 +189,7 @@ const plausibleEnabled =
             <li><a href="https://github.com/robpomeroy/vulntrends">GitHub</a></li>
             <li>MIT Licensed</li>
           </ul>
+          <p class="text-sm text-vt-text-muted mt-4">v{siteVersion}</p>
         </div>
       </div>
     </footer>

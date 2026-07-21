@@ -174,6 +174,30 @@ Svelte + D3 charts                ← interactive dashboard
 - **Neutral framing** — do not add AI-era annotations, editorial commentary,
   or interpretive labels to charts or copy. Present data as-is.
 
+### Versioning
+
+- The project version lives in the `version` field of `package.json` —
+  that is the single source of truth. Bump it there; nothing else needs
+  to change.
+- `package-lock.json` mirrors the version automatically on `npm install`.
+  Never hand-edit the lockfile's `version` field.
+- The site footer reads the version via a JSON import in
+  `src/layouts/Dashboard.astro`, so a `package.json` bump is reflected
+  on the next `astro build` with no other change. The footer renders
+  it as `v<version>` in the "Project" column.
+- Follow [semantic versioning](https://semver.org/):
+  - **patch** (e.g. `1.0.0` → `1.0.1`) for parser fixes, dependency
+    updates, doc corrections, and other changes that don't alter the
+    user-visible behaviour of the site or the data schema.
+  - **minor** (e.g. `1.0.0` → `1.1.0`) for new data sources, new
+    dashboard features, or additive changes to the data schema.
+  - **major** (e.g. `1.0.0` → `2.0.0`) for breaking changes to the
+    data schema, the site structure, or anything that requires users
+    to update tooling that consumes the JSON.
+- The `version` field in `.vscode/launch.json` is the VS Code
+  launch-config schema version, not the project version. Do not touch
+  it when bumping the project.
+
 ## Adding a new data source
 
 1. Create a parser at `scripts/pipeline/sources/<vendor>.ts` exporting

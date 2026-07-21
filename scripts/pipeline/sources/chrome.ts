@@ -15,6 +15,7 @@
  * query parameters. Each page is up to 150 entries.
  */
 
+import { createHash } from 'node:crypto';
 import { buildRecord, parseDate } from '../normalise.js';
 import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
@@ -145,10 +146,15 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
 
   for (const update of updates.map(enrichUpdate)) {
       if (update.cveIds.length === 0) {
-        // Some posts don't list individual CVEs — create one record per post
+        // Some posts don't list individual CVEs — create one record
+        // per post. The id is derived from the post URL (hashed for
+        // brevity) so that two posts on the same date without CVEs
+        // don't collide in the dedup pass, which keys no-CVE records
+        // purely by id.
+        const id = `chrome-${createHash('sha256').update(update.url).digest('hex').slice(0, 12)}`;
         allRecords.push(
           buildRecord({
-            id: `chrome-${update.date}`,
+            id,
             source: 'chrome',
             manufacturer: 'Google',
             product: 'Chrome',

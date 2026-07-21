@@ -115,7 +115,7 @@ async function main(): Promise<void> {
       // slips past fetchWithRetry). Without this, a single such
       // regression destroys historical data irrecoverably — the raw
       // files are gitignored, so `git checkout` can't restore them.
-      if (records.length === 0) {
+      if (records.length === 0 && source.id !== 'projectzero') {
         const prevPath = join(RAW_DIR, `${source.id}.json`);
         try {
           const prevJson = await readFile(prevPath, 'utf-8');

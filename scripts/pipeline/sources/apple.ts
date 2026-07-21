@@ -57,16 +57,16 @@ async function fetchAdvisoryIndex(): Promise<AppleAdvisory[]> {
   const tableMatch = html.match(/<table[^>]*class="gb-table"[^>]*>([\s\S]*?)<\/table>/i);
   if (tableMatch) {
     const tableBody = tableMatch[1];
-    const rowRegex = /<tr>([\s\S]*?)<\/tr>/gi;
+    const rowRegex = /<tr\b[^>]*>([\s\S]*?)<\/tr>/gi;
     let rowMatch: RegExpExecArray | null;
     while ((rowMatch = rowRegex.exec(tableBody)) !== null) {
       const row = rowMatch[1];
       // The link cell is the first <td>; the date cell is the third.
       const linkMatch = row.match(
-        /<a\b[^>]*href="(https:\/\/support\.apple\.com\/en-us\/(\d+))"[^>]*>([\s\S]*?)<\/a>/i,
+        /<a\b[^>]*href="((?:https:\/\/support\.apple\.com)?\/en-us\/(\d+))"[^>]*>([\s\S]*?)<\/a>/i,
       );
       if (!linkMatch) continue;
-      const url = linkMatch[1];
+      const url = linkMatch[1].startsWith('http') ? linkMatch[1] : `https://support.apple.com${linkMatch[1]}`;
       const numericId = linkMatch[2];
       const rawTitle = linkMatch[3];
       // Title text in the new layout sits inside one or more <p>
@@ -133,9 +133,17 @@ async function fetchAdvisoryIndex(): Promise<AppleAdvisory[]> {
  */
 function normaliseAppleDate(raw: string | undefined): string | undefined {
   if (!raw) return undefined;
-  const d = new Date(`${raw} UTC`);
-  if (Number.isNaN(d.getTime())) return undefined;
-  return d.toISOString().slice(0, 10);
+  const m = raw.trim().match(/^(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})$/);
+  if (!m) return undefined;
+
+  const day = Number.parseInt(m[1], 10);
+  const year = Number.parseInt(m[3], 10);
+  const month = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].indexOf(
+    m[2].toLowerCase(),
+  );
+  if (!Number.isFinite(day) || !Number.isFinite(year) || month < 0) return undefined;
+
+  return new Date(Date.UTC(year, month, day)).toISOString().slice(0, 10);
 }
 
 /**

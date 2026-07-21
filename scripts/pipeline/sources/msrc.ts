@@ -100,7 +100,7 @@ async function fetchCvrfRecords(update: CvrfUpdate): Promise<VulnerabilityRecord
 function parseCvrfAsJson(
   body: string,
   _update: CvrfUpdate,
-  patchedDate: Date,
+  patchedDate: string,
 ): VulnerabilityRecord[] {
   let data: any;
   try {
@@ -143,7 +143,7 @@ function parseCvrfAsJson(
 function parseCvrfAsXml(
   body: string,
   _update: CvrfUpdate,
-  patchedDate: Date,
+  patchedDate: string,
 ): VulnerabilityRecord[] {
   const records: VulnerabilityRecord[] = [];
 
@@ -217,13 +217,16 @@ function parseCvrfAsXml(
  * produce a readable title.
  */
 function stripHtml(s: string): string {
-  return s
-    .replace(/<[^>]+>/g, '')
+  const decoded = s
+    // Decode &amp; first so sequences like "&amp;lt;" become "&lt;" and get decoded further.
+    .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/&amp;/g, '&');
+    .replace(/&#39;/g, "'");
+
+  return decoded.replace(/<[^>]+>/g, '');
 }
 
 /**

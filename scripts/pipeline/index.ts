@@ -115,12 +115,7 @@ async function main(): Promise<void> {
     nvd: 0,
   };
 
-  cons//
-      // Sources in ZERO_RECORD_ALLOWLIST (documented stubs that
-      // legitimately return []) are exempt: for them, 0 records is
-      // the correct answer and the safeguard would only mask real
-      // progress when a stub is revived.
-      if (records.length === 0 && !ZERO_RECORD_ALLOWLIST.has(source.id)
+  const allRecords: VulnerabilityRecord[] = [];
 
   // Track which sources failed and whether each had a cached fallback.
   // Used at the end to decide whether to abort the pipeline.
@@ -143,7 +138,12 @@ async function main(): Promise<void> {
       // slips past fetchWithRetry). Without this, a single such
       // regression destroys historical data irrecoverably — the raw
       // files are gitignored, so `git checkout` can't restore them.
-      if (records.length === 0 && source.id !== 'projectzero') {
+      //
+      // Sources in ZERO_RECORD_ALLOWLIST (documented stubs that
+      // legitimately return []) are exempt: for them, 0 records is
+      // the correct answer and the safeguard would only mask real
+      // progress when a stub is revived.
+      if (records.length === 0 && !ZERO_RECORD_ALLOWLIST.has(source.id)) {
         const prevPath = join(RAW_DIR, `${source.id}.json`);
         try {
           const prevJson = await readFile(prevPath, 'utf-8');

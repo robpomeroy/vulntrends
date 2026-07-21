@@ -68,6 +68,29 @@ const SOURCES: Array<{ id: SourceId; fetch: () => Promise<VulnerabilityRecord[]>
   { id: 'nvd', fetch: fetchNvd },
 ];
 
+/**
+ * Sources that are *expected* to return an empty array on a healthy
+ * run. The silent-empty safeguard in the main loop skips these when
+ * deciding whether a 0-record result is a parser regression — for
+ * them, zero is the correct answer.
+ *
+ * Add a source here when its parser is a documented stub that always
+ * returns `[]` (e.g. because the upstream API was retired). The
+ * safeguard still applies to all other sources: a previously-working
+ * source that suddenly returns 0 will fall back to the cached
+ * `src/data/raw/<source>.json` instead of overwriting with `[]`.
+ */
+const ZERO_RECORD_ALLOWLIST: ReadonlySet<SourceId> = new Set<SourceId>([
+  // Project Zero: source API retired (Monorail endpoint deprecated,
+  // migrated to issuetracker.google.com). Coverage comes from NVD's
+  // `google` vendor query. See scripts/pipeline/sources/projectzero.ts.
+  'projectzero',
+  // Cisco: no public advisory feed available (openVuln API requires
+  // OAuth; OXML feed deprecated). Coverage comes from NVD's `cisco`
+  // vendor query. See scripts/pipeline/sources/cisco.ts.
+  'cisco',
+]);
+
 async function writeJson(path: string, data: unknown): Promise<void> {
   const json = JSON.stringify(data, null, 2) + '\n';
   await writeFile(path, json, 'utf-8');
@@ -104,6 +127,43 @@ async function main(): Promise<void> {
     console.log(`\n--- ${source.id} ---`);
     try {
       const records = await source.fetch();
+
+      // Silent-empty safeguard: if a source's fetch succeeds but
+      // extracts zero records, AND the previous run had cached data,
+      // reuse the cache instead of overwriting it with []. This
+      // catches parser regressions where the source returns 200 OK
+      // and a structurally valid but useless payload (e.g. an HTML
+      // page that no longer matches the expected shape, an endpoint
+      // that quietly changed its response format, an ad-redirect that
+      // slips past fetchWithRetry). Without this, a single such
+      // regression destroys historical data irrecoverably — the raw
+      // files are gitignored, so `git checkout` can't restore them.
+      //
+      // Sources in ZERO_RECORD_ALLOWLIST (documented stubs that
+      // legitimately return []) are exempt: for them, 0 records is
+      // the correct answer and the safeguard would only mask real
+      // progress when a stub is revived.
+      if (records.length === 0 && !ZERO_RECORD_ALLOWLIST.has(source.id)) {
+        const prevPath = join(RAW_DIR, `${source.id}.json`);
+        try {
+          const prevJson = await readFile(prevPath, 'utf-8');
+          const prevRecords = JSON.parse(prevJson) as VulnerabilityRecord[];
+          if (Array.isArray(prevRecords) && prevRecords.length > 0) {
+            sourceCounts[source.id] = prevRecords.length;
+            allRecords.push(...prevRecords);
+            cachedFallbackSources.push(source.id);
+            console.error(
+              `  ⚠ ${source.id}: fetch returned 0 records; reusing ${prevRecords.length} cached records from previous run`,
+            );
+            // Skip the empty-array write below.
+            continue;
+          }
+        } catch {
+          // No previous file (first run) or JSON parse error — fall
+          // through to writing the empty array as normal.
+        }
+      }
+
       sourceCounts[source.id] = records.length;
       allRecords.push(...records);
 

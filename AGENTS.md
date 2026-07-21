@@ -49,7 +49,7 @@ This lets you iterate on the website freely without re-downloading data.
 ### Data pipeline resilience
 
 A scheduled `npm run publish` must not deploy a degraded site when
-sources fail. The pipeline has three safeguards:
+sources fail. The pipeline has four safeguards:
 
 1. **Defensive fetching.** All source parsers go through
    `scripts/pipeline/fetch-with-retry.ts`, which adds:
@@ -59,8 +59,8 @@ sources fail. The pipeline has three safeguards:
    - **Retryable status codes** are 429/502/503/504 only — other 4xx
      fail fast because they won't fix themselves
 
-2. **Cached fallback.** When a source fetch throws, the pipeline reads
-   the existing `src/data/raw/<source>.json` from the previous run and
+2. **Cached fallback (throw path).** When a source fetch throws, the pipeline
+   reads the existing `src/data/raw/<source>.json` from the previous run and
    uses those records instead of overwriting with `[]`. A single
    network hiccup no longer wipes out a healthy previous dataset —
    the deployed site is at worst one run stale.
@@ -76,6 +76,29 @@ sources fail. The pipeline has three safeguards:
    warning is emitted to stderr listing which sources were stale,
    so the operator can spot a degrading situation before it becomes
    a real problem.
+
+4. **Silent-empty cache fallback.** A previously-working source can
+   regress to returning `0` records *without throwing* — e.g. when
+   an upstream page changes its HTML shape, an endpoint quietly
+   switches response format, or an ad-redirect slips past retry
+   logic. Such failures are invisible to safeguard #2 (no exception)
+   and to safeguard #3 (no `failedSources` increment), so they would
+   silently clobber the raw JSON file with `[]`.
+
+   The orchestrator detects this case in `scripts/pipeline/index.ts`:
+   if a source returns 0 records and the previous run had cached data,
+   it reuses the cache and surfaces a warning. This is the *most
+   important* safeguard because `src/data/*` is gitignored — a
+   silent-empty regression cannot be recovered by `git checkout` or
+   any other mechanism short of rebuilding from the upstream source.
+
+   **Allow-list for documented zero-record stubs.** Sources that are
+   known stubs and always return `[]` (currently `projectzero` and
+   `cisco`) are exempt from safeguard #4 via the
+   `ZERO_RECORD_ALLOWLIST` set at the top of `index.ts`. When adding
+   a new deprecated stub source, add its `SourceId` to that set with
+   a comment explaining why. The safeguard would otherwise mask
+   real progress when a stub is revived.
 
 The Synology Task Scheduler email surfaces both the threshold-abort
 and the cached-fallback warning (both go to stderr).
@@ -167,16 +190,30 @@ Svelte + D3 charts                ← interactive dashboard
    cross-source deduplication.
 5. Run `npm run data:build` and `npm run data:validate` to verify.
 
+### Caveat: deduplication of records without CVE IDs
+
+`deduplicateRecords` (`scripts/pipeline/normalise.ts`) keys every record
+by `record.id` first, then by CVE id. Records that lack a CVE list
+(common for "one record per advisory/post" fallback paths) therefore
+have `record.id` as their *only* identity. If your parser falls back
+to a date-based id (e.g. `chrome-2026-07-15`), two records from the
+same date will collide and the later one will be silently dropped.
+
+**For no-CVE fallback records, derive the id from a stable per-record
+identifier** — the post URL, the advisory ID, or a hash of the URL.
+See `scripts/pipeline/sources/chrome.ts` for the canonical pattern
+(`createHash('sha256').update(url).digest('hex').slice(0, 12)`).
+
 ## Data sources
 
 | Source | Type | Notes |
 |---|---|---|
 | Mozilla MFSA | JSON feed | Well-structured, good patch-timing data |
-| Microsoft MSRC | CVRF API | Structured JSON, requires API key |
+| Microsoft MSRC | CVRF API | Update list is JSON (OData-wrapped); per-update CVRF documents are **XML**, parsed via regex over the CVRF 1.1 schema. `Accept` header is ignored on the per-update path. |
 | Project Zero | Issue tracker API | Rich disclosure timeline metadata |
 | NVD/CVE | REST API | Cross-vendor canonical source, requires `NVD_API_KEY` |
-| Google Chrome | HTML scraping | Chrome Releases blog, patch dates vary |
-| Apple | HTML scraping | Defensive parser with NVD fallback on failure |
+| Google Chrome | Atom JSON feed | Blogger's Atom feed (`/feeds/posts/default/-/Stable%20updates?alt=json`). HTML scraping is broken (ad-network redirects); do not switch back. |
+| Apple | HTML parsing | Index page uses a `<table class="gb-table">` with numeric support-article IDs (e.g. `/en-us/127594`). Old `HT\d{6,9}` link pattern is gone — do not revert to regex over it. |
 | Palo Alto | JSON API | `security.paloaltonetworks.com/json` — CVSS + publication dates |
 | Fortinet | HTML scraping | `fortiguard.com/psirt` — separate Published and Updated dates give real patch-lag signal |
 | Cisco | NVD-only | openVuln API requires OAuth; OXML feed deprecated. Coverage via NVD `cisco` CPE vendor. |

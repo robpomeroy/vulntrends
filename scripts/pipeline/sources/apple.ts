@@ -30,6 +30,14 @@ interface AppleAdvisory {
 /**
  * Fetch the Apple security updates index page.
  * This page lists all security advisories with links to individual pages.
+ *
+ * As of 2026 the page uses a single `<table class="gb-table">` whose
+ * rows have three cells: a link+name (e.g. "iOS 26.5.2 and iPadOS
+ * 26.5.2" linking to /en-us/127594), the device list, and a release
+ * date in the format "29 Jun 2026". The earlier HT\d{6,9} ID pattern
+ * is no longer present, so the table-row walker is now the primary
+ * strategy. We keep a relaxed HT-ID regex as a fallback in case Apple
+ * reverts the layout.
  */
 async function fetchAdvisoryIndex(): Promise<AppleAdvisory[]> {
   const response = await fetchWithRetry(APPLE_ADVISORIES_URL, {
@@ -43,85 +51,159 @@ async function fetchAdvisoryIndex(): Promise<AppleAdvisory[]> {
   const advisories: AppleAdvisory[] = [];
   const seen = new Set<string>();
 
-  // Strategy 1: Look for links to /en-us/HTXXXXXX pages (Apple's advisory IDs)
-  // Apple advisory links typically point to support articles like /en-us/HT213123
-  const linkRegex =
-    /href="(https:\/\/support\.apple\.com\/en-us\/(HT\d{6,9})[^"]*)"[^>]*>([^<]+)</gi;
-  let match: RegExpExecArray | null;
+  // Strategy 1: walk the advisory table. The table is the only
+  // `<table class="gb-table">` on the page; its rows each link to an
+  // individual advisory with a numeric support article ID.
+  const tableMatch = html.match(/<table[^>]*class="gb-table"[^>]*>([\s\S]*?)<\/table>/i);
+  if (tableMatch) {
+    const tableBody = tableMatch[1];
+    const rowRegex = /<tr\b[^>]*>([\s\S]*?)<\/tr>/gi;
+    let rowMatch: RegExpExecArray | null;
+    while ((rowMatch = rowRegex.exec(tableBody)) !== null) {
+      const row = rowMatch[1];
+      // The link cell is the first <td>; the date cell is the third.
+      const linkMatch = row.match(
+        /<a\b[^>]*href="((?:https:\/\/support\.apple\.com)?\/en-us\/(\d+))"[^>]*>([\s\S]*?)<\/a>/i,
+      );
+      if (!linkMatch) continue;
+      const url = linkMatch[1].startsWith('http') ? linkMatch[1] : `https://support.apple.com${linkMatch[1]}`;
+      const numericId = linkMatch[2];
+      const rawTitle = linkMatch[3];
+      // Title text in the new layout sits inside one or more <p>
+      // tags. Strip tags and collapse whitespace.
+      const title = rawTitle.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() || numericId;
 
-  while ((match = linkRegex.exec(html)) !== null) {
-    const id = match[2];
-    if (seen.has(id)) continue;
-    seen.add(id);
-    // Fall back to the advisory ID when the HTML link text is empty,
-    // so the title is always non-empty per the Zod schema contract.
-    const title = match[3].trim() || id;
-    advisories.push({
-      id,
-      title,
-      url: match[1],
-      date: undefined,
-      cveIds: [],
-    });
-  }
+      // Date cell: third <td>. Apple formats it as "29 Jun 2026".
+      const cellRegex = /<td\b[^>]*>([\s\S]*?)<\/td>/gi;
+      const cells: string[] = [];
+      let cellMatch: RegExpExecArray | null;
+      while ((cellMatch = cellRegex.exec(row)) !== null) {
+        cells.push(cellMatch[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
+      }
+      const dateText = cells[2];
 
-  // Strategy 2: If Strategy 1 found nothing, try a more relaxed pattern
-  if (advisories.length === 0) {
-    console.warn('  Apple: primary link pattern found no advisories, trying fallback...');
-    const fallbackRegex =
-      /href="([^"]*HT\d{6,9}[^"]*)"[^>]*>([^<]+)/gi;
-    while ((match = fallbackRegex.exec(html)) !== null) {
-      const url = match[1];
-      const idMatch = url.match(/HT\d{6,9}/);
-      if (!idMatch) continue;
-      const id = idMatch[0];
-      if (seen.has(id)) continue;
-      // Fall back to the advisory ID when the HTML link text is empty.
-      const title = match[2].trim() || id;
-      seen.add(id);
+      // Use the numeric ID as the advisory key — it's stable and
+      // unique. The old HT\d{6,9} IDs are no longer used.
+      if (seen.has(numericId)) continue;
+      seen.add(numericId);
+
+      // Normalise the date to ISO (YYYY-MM-DD) for the record field.
+      const isoDate = normaliseAppleDate(dateText);
+
       advisories.push({
-        id,
+        id: numericId,
         title,
-        url: url.startsWith('http') ? url : `https://support.apple.com${url}`,
-        date: undefined,
+        url,
+        date: isoDate,
         cveIds: [],
       });
     }
+  }
+  if (advisories.length > 0) return advisories;
+
+  // Strategy 2: relaxed HT\d{6,9} pattern, in case Apple ever reverts
+  // to the old layout. Mirrors the previous parser's fallback.
+  console.warn('  Apple: primary table pattern found no advisories, trying fallback...');
+  const fallbackRegex = /href="([^"]*HT\d{6,9}[^"]*)"[^>]*>([^<]+)/gi;
+  let match: RegExpExecArray | null;
+  while ((match = fallbackRegex.exec(html)) !== null) {
+    const url = match[1];
+    const idMatch = url.match(/HT\d{6,9}/);
+    if (!idMatch) continue;
+    const id = idMatch[0];
+    if (seen.has(id)) continue;
+    const title = match[2].trim() || id;
+    seen.add(id);
+    advisories.push({
+      id,
+      title,
+      url: url.startsWith('http') ? url : `https://support.apple.com${url}`,
+      date: undefined,
+      cveIds: [],
+    });
   }
 
   return advisories;
 }
 
 /**
+ * Convert an Apple "Release date" cell value ("29 Jun 2026", "5 Jul 2026")
+ * to ISO `YYYY-MM-DD`. Returns `undefined` if the value can't be parsed.
+ * The en-GB locale matches Apple's published format.
+ */
+function normaliseAppleDate(raw: string | undefined): string | undefined {
+  if (!raw) return undefined;
+  const m = raw.trim().match(/^(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})$/);
+  if (!m) return undefined;
+
+  const day = Number.parseInt(m[1], 10);
+  const year = Number.parseInt(m[3], 10);
+  const month = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].indexOf(
+    m[2].toLowerCase(),
+  );
+  if (!Number.isFinite(day) || !Number.isFinite(year) || month < 0) return undefined;
+
+  return new Date(Date.UTC(year, month, day)).toISOString().slice(0, 10);
+}
+
+/**
  * Fetch a single Apple advisory page and extract vulnerability records.
- * Uses multiple strategies to find dates and CVE IDs.
+ *
+ * The release date is taken from the index table when available
+ * (parsed in `fetchAdvisoryIndex`), and only falls back to per-page
+ * extraction when the index didn't supply one. The per-page strategies
+ * are kept as a defensive measure in case Apple's individual advisory
+ * pages still use JSON-LD / `<time>` tags that the index dropped.
  */
 async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<VulnerabilityRecord[]> {
+  // Date from the index table — primary source. `advisory.date` is
+  // already in ISO `YYYY-MM-DD` form (or undefined if the cell was
+  // missing or unparseable).
+  let patchedDate = advisory.date ? parseDate(advisory.date) : undefined;
+
+  let html = '';
   try {
     const response = await fetchWithRetry(advisory.url, {
       headers: { 'User-Agent': 'VulnTrends/0.1 (https://github.com/vulntrends)' },
     });
     if (!response.ok) {
-      console.warn(`  Apple: skip ${advisory.id} — HTTP ${response.status}`);
+      // If we already have a date from the index, don't bail out —
+      // we can still emit a record using the index date.
+      if (!patchedDate) {
+        console.warn(`  Apple: skip ${advisory.id} — HTTP ${response.status}`);
+        return [];
+      }
+      html = '';
+    } else {
+      html = await response.text();
+    }
+  } catch (err) {
+    // If we already have a date, proceed with index date only — the
+    // CVE-ID extraction below needs the page, but a no-CVE advisory
+    // record can still be emitted if the page fetch failed.
+    if (!patchedDate) {
+      console.warn(`  Apple: error fetching ${advisory.id}:`, err);
       return [];
     }
-    const html = await response.text();
+    html = '';
+  }
 
-    // Strategy 1: Look for JSON-LD structured data with datePublished
+  if (!patchedDate) {
+    // Strategy 1: JSON-LD datePublished / dateModified
     const dateMatch =
       html.match(/"datePublished"\s*:\s*"([^"]+)"/i) ??
       html.match(/"dateModified"\s*:\s*"([^"]+)"/i) ??
-      // Strategy 2: Look for human-readable dates near the top of the article
+      // Strategy 2: <time datetime="...">
       html.match(/<time[^>]*datetime="([^"]+)"/i) ??
-      // Strategy 3: Look for "Posted: Month DD, YYYY" pattern
+      // Strategy 3: "Posted: Month DD, YYYY"
       html.match(/Posted:\s*([A-Z][a-z]+ \d{1,2}, \d{4})/i);
-    const patchedDate = parseDate(dateMatch?.[1]);
-    // Skip advisories with no parseable date — falling back to "today"
-    // would inject future-dated points and distort time-series aggregates.
-    if (!patchedDate) {
+    const fallback = parseDate(dateMatch?.[1]);
+    if (!fallback) {
       console.warn(`  Apple: skip ${advisory.id} — no parseable date`);
       return [];
     }
+    patchedDate = fallback;
+  }
 
     // Extract CVE IDs from the page
     const cveIds = extractCveIds(html) ?? [];
@@ -157,10 +239,6 @@ async function fetchAdvisoryRecords(advisory: AppleAdvisory): Promise<Vulnerabil
         rawUrl: advisory.url,
       }),
     );
-  } catch (err) {
-    console.warn(`  Apple: error fetching ${advisory.id}:`, err);
-    return [];
-  }
 }
 
 /**

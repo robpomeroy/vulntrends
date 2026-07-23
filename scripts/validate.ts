@@ -16,6 +16,7 @@ import {
   manufacturerInfoArraySchema,
   patchLagPointArraySchema,
   pipelineMetaSchema,
+  severityMixPointArraySchema,
   timeSeriesPointArraySchema,
   vulnerabilityRecordArraySchema,
 } from '../src/lib/schema.js';
@@ -57,10 +58,12 @@ const tasks: ValidationTask[] = [
   { label: 'aggregated/fixed-by-month.json', path: join(AGG_DIR, 'fixed-by-month.json'), schema: timeSeriesPointArraySchema },
   { label: 'aggregated/patch-lag-by-month.json', path: join(AGG_DIR, 'patch-lag-by-month.json'), schema: patchLagPointArraySchema },
   { label: 'aggregated/backlog-by-month.json', path: join(AGG_DIR, 'backlog-by-month.json'), schema: backlogPointArraySchema },
+  { label: 'aggregated/severity-mix-by-month.json', path: join(AGG_DIR, 'severity-mix-by-month.json'), schema: severityMixPointArraySchema },
   { label: 'aggregated/discovered-by-year.json', path: join(AGG_DIR, 'discovered-by-year.json'), schema: timeSeriesPointArraySchema },
   { label: 'aggregated/fixed-by-year.json', path: join(AGG_DIR, 'fixed-by-year.json'), schema: timeSeriesPointArraySchema },
   { label: 'aggregated/patch-lag-by-year.json', path: join(AGG_DIR, 'patch-lag-by-year.json'), schema: patchLagPointArraySchema },
   { label: 'aggregated/backlog-by-year.json', path: join(AGG_DIR, 'backlog-by-year.json'), schema: backlogPointArraySchema },
+  { label: 'aggregated/severity-mix-by-year.json', path: join(AGG_DIR, 'severity-mix-by-year.json'), schema: severityMixPointArraySchema },
   { label: 'aggregated/manufacturers.json', path: join(AGG_DIR, 'manufacturers.json'), schema: manufacturerInfoArraySchema },
 ];
 

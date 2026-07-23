@@ -28,6 +28,7 @@ import { fetchRecords as fetchPan } from './sources/pan.js';
 import { fetchRecords as fetchFortinet } from './sources/fortinet.js';
 import { fetchRecords as fetchCisco } from './sources/cisco.js';
 import { fetchRecords as fetchAdobe } from './sources/adobe.js';
+import { fetchRecords as fetchOsv } from './sources/osv.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '..', '..', 'src', 'data');
@@ -65,6 +66,11 @@ const SOURCES: Array<{ id: SourceId; fetch: () => Promise<VulnerabilityRecord[]>
   { id: 'fortinet', fetch: fetchFortinet },
   { id: 'cisco', fetch: fetchCisco },
   { id: 'adobe', fetch: fetchAdobe },
+  // OSV is opt-in: it requires an explicit `OSV_LOOKUP_CVE_LIST` env
+  // var pointing to a CVE-ID list (see sources/osv.ts). Without that,
+  // the stub returns `[]`. Sources that are expected to legitimately
+  // return `[]` are handled by ZERO_RECORD_ALLOWLIST below.
+  { id: 'osv', fetch: fetchOsv },
   { id: 'nvd', fetch: fetchNvd },
 ];
 
@@ -89,6 +95,10 @@ const ZERO_RECORD_ALLOWLIST: ReadonlySet<SourceId> = new Set<SourceId>([
   // OAuth; OXML feed deprecated). Coverage comes from NVD's `cisco`
   // vendor query. See scripts/pipeline/sources/cisco.ts.
   'cisco',
+  // OSV: opt-in source that returns [] unless `OSV_LOOKUP_CVE_LIST`
+  // is configured. The safeguard would otherwise mask a fresh-CVE-list
+  // regression on the very first run.
+  'osv',
 ]);
 
 async function writeJson(path: string, data: unknown): Promise<void> {
@@ -113,6 +123,7 @@ async function main(): Promise<void> {
     cisco: 0,
     adobe: 0,
     nvd: 0,
+    osv: 0,
   };
 
   const allRecords: VulnerabilityRecord[] = [];
@@ -122,11 +133,35 @@ async function main(): Promise<void> {
   const failedSources: SourceId[] = [];
   const cachedFallbackSources: SourceId[] = [];
 
+  // Per-source timing for the E4 metadata extension. Captures the wall-clock
+  // duration of each source fetch so the operator can spot a degrading
+  // source before it fails outright.
+  const sourceFetchStartedAt = new Map<SourceId, number>();
+  const sourceFetchDurationMs = new Map<SourceId, number>();
+  // ISO timestamp of the pipeline run — stamped onto every record's
+  // provenance field (see E6 in docs/plans/2026-07-22-improvement-plan.md).
+  const pipelineRunTimestamp = new Date().toISOString();
+
   // Fetch each source
   for (const source of SOURCES) {
     console.log(`\n--- ${source.id} ---`);
+    const sourceStart = Date.now();
+    sourceFetchStartedAt.set(source.id, sourceStart);
     try {
       const records = await source.fetch();
+      sourceFetchDurationMs.set(source.id, Date.now() - sourceStart);
+
+      // Attach provenance metadata to every record before downstream
+      // processing. The `source` field is redundant with the record's
+      // own `source` field but is included for clarity in the
+      // per-record provenance object.
+      const recordsWithProvenance = records.map((r) => ({
+        ...r,
+        provenance: {
+          fetchedAt: pipelineRunTimestamp,
+          source: source.id,
+        },
+      }));
 
       // Silent-empty safeguard: if a source's fetch succeeds but
       // extracts zero records, AND the previous run had cached data,
@@ -164,12 +199,12 @@ async function main(): Promise<void> {
         }
       }
 
-      sourceCounts[source.id] = records.length;
-      allRecords.push(...records);
+      sourceCounts[source.id] = recordsWithProvenance.length;
+      allRecords.push(...recordsWithProvenance);
 
       // Write per-source raw JSON
-      await writeJson(join(RAW_DIR, `${source.id}.json`), records);
-      console.log(`  Written ${records.length} records to raw/${source.id}.json`);
+      await writeJson(join(RAW_DIR, `${source.id}.json`), recordsWithProvenance);
+      console.log(`  Written ${recordsWithProvenance.length} records to raw/${source.id}.json`);
     } catch (err) {
       console.error(`  ERROR fetching ${source.id}:`, err);
 
@@ -247,11 +282,45 @@ async function main(): Promise<void> {
   // Write merged raw file
   await writeJson(join(RAW_DIR, 'all.json'), deduped);
 
+  // Compute per-source metadata (E4 extension). For each source,
+  // calculate the min/max discoveredDate across its records in the
+  // post-dedup dataset so the operator can see at a glance which
+  // sources have full historical coverage.
+  const perSource: Partial<Record<SourceId, {
+    fetchDurationMs: number;
+    cachedFallback: boolean;
+    minDiscoveredDate?: string;
+    maxDiscoveredDate?: string;
+  }>> = {};
+  const dateRanges: Record<SourceId, { min: string; max: string }> = {} as Record<SourceId, { min: string; max: string }>;
+  for (const r of deduped) {
+    const cur = dateRanges[r.source];
+    if (!cur) {
+      dateRanges[r.source] = { min: r.discoveredDate, max: r.discoveredDate };
+    } else {
+      if (r.discoveredDate < cur.min) cur.min = r.discoveredDate;
+      if (r.discoveredDate > cur.max) cur.max = r.discoveredDate;
+    }
+  }
+  for (const id of Object.keys(SOURCES.reduce((acc, s) => ({ ...acc, [s.id]: true }), {} as Record<string, boolean>)) as SourceId[]) {
+    const range = dateRanges[id];
+    // Always emit an entry for every source, even if it has zero
+    // records (stubs, opt-in sources like OSV). Without this, the
+    // schema's `record(SourceId, …)` expects a key for every source.
+    perSource[id] = {
+      fetchDurationMs: sourceFetchDurationMs.get(id) ?? 0,
+      cachedFallback: cachedFallbackSources.includes(id),
+      minDiscoveredDate: range?.min,
+      maxDiscoveredDate: range?.max,
+    };
+  }
+
   // Write metadata
   const meta: PipelineMeta = {
     lastUpdated: new Date().toISOString(),
     sourceCounts,
     totalRecords: deduped.length,
+    sources: perSource,
   };
   await writeJson(join(DATA_DIR, 'meta.json'), meta);
 

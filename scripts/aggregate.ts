@@ -208,12 +208,43 @@ function aggregatePatchLag(
 /**
  * Aggregate backlog data — for each month/year, count vulnerabilities that
  * were discovered but not yet patched at that point in time.
+ *
+ * Two refinements over the naïve running-count approach:
+ *
+ *   1. **Stale horizon.** Records that have been discovered but have
+ *      no `patchedDate` AND are older than `BACKLOG_STALE_YEARS` are
+ *      assumed to have been patched silently (or no longer relevant).
+ *      Without a horizon, a manufacturer with missing patch data
+ *      (e.g. only NVD coverage, or a vendor that doesn't publish
+ *      per-CVE patch dates) appears to accumulate an ever-growing
+ *      open backlog — visually misleading. The horizon is configurable
+ *      via the `BACKLOG_STALE_YEARS` env var (default 5 years).
+ *
+ *   2. **Implicit close at horizon.** When the timeline walks past
+ *      `today - BACKLOG_STALE_YEARS`, every still-open vulnerability
+ *      is auto-closed at that date. This produces a smooth tail-off
+ *      rather than a sharp cliff at the latest data date.
+ *
+ * The chosen stale horizon is also emitted to the audit log so the
+ * operator can see which assumption was applied for this run.
  */
 function aggregateBacklog(
   records: VulnerabilityRecord[],
   granularity: 'month' | 'year',
 ): BacklogPoint[] {
+  const staleYears = (() => {
+    const n = Number.parseInt(process.env.BACKLOG_STALE_YEARS ?? '5', 10);
+    return Number.isFinite(n) && n > 0 ? n : 5;
+  })();
+  console.log(`  Backlog: stale horizon = ${staleYears} year(s)`);
+  const staleCutoff = (() => {
+    const d = new Date();
+    d.setUTCFullYear(d.getUTCFullYear() - staleYears);
+    return d.toISOString().slice(0, 10);
+  })();
+
   // Build a timeline of events: +1 when discovered, -1 when patched
+  // (either via an explicit `patchedDate` or the stale horizon).
   type Event = { date: string; manufacturer: string; delta: number };
   const events: Event[] = [];
 
@@ -229,13 +260,17 @@ function aggregateBacklog(
       delta: 1,
     });
 
-    if (record.patchedDate) {
-      const patchBucket =
-        granularity === 'month'
-          ? toMonth(record.patchedDate)
-          : toYear(record.patchedDate);
+    // Close on patchedDate, or on staleCutoff if no patch date and
+    // discoveredDate is older than the horizon.
+    let closeDate: string | undefined = record.patchedDate;
+    if (!closeDate && record.discoveredDate < staleCutoff) {
+      closeDate = staleCutoff;
+    }
+    if (closeDate) {
+      const closeBucket =
+        granularity === 'month' ? toMonth(closeDate) : toYear(closeDate);
       events.push({
-        date: patchBucket,
+        date: closeBucket,
         manufacturer: record.manufacturer,
         delta: -1,
       });
@@ -284,6 +319,39 @@ function aggregateBacklog(
   return points;
 }
 
+/**
+ * Aggregate severity-mix data (E3 in docs/plans/2026-07-22-improvement-plan.md).
+ * For each month/year, count records per severity bucket.
+ *
+ * Records with no severity are excluded (CVSS-derived severity is
+ * computed during buildRecord when cvss is present, so this only
+ * drops records with neither a vendor-supplied severity nor a CVSS
+ * score — typically only the most obscure NVD-only records).
+ */
+function aggregateSeverityMix(
+  records: VulnerabilityRecord[],
+  granularity: 'month' | 'year',
+): Array<{ date: string; severity: 'critical' | 'high' | 'medium' | 'low'; count: number }> {
+  const buckets = new Map<string, number>();
+  for (const record of records) {
+    if (!record.severity) continue;
+    const bucket = granularity === 'month' ? toMonth(record.discoveredDate) : toYear(record.discoveredDate);
+    const key = `${bucket}|${record.severity}`;
+    buckets.set(key, (buckets.get(key) ?? 0) + 1);
+  }
+  const points: Array<{ date: string; severity: 'critical' | 'high' | 'medium' | 'low'; count: number }> = [];
+  for (const [key, count] of buckets) {
+    const [date, severity] = key.split('|');
+    points.push({ date, severity: severity as 'critical' | 'high' | 'medium' | 'low', count });
+  }
+  points.sort((a, b) =>
+    a.date === b.date
+      ? a.severity.localeCompare(b.severity)
+      : a.date.localeCompare(b.date),
+  );
+  return points;
+}
+
 async function main(): Promise<void> {
   console.log('=== VulnTrends aggregation ===\n');
 
@@ -302,11 +370,13 @@ async function main(): Promise<void> {
   const fixedMonth = aggregateTimeSeries(records, 'month', 'patchedDate');
   const patchLagMonth = aggregatePatchLag(records, 'month');
   const backlogMonth = aggregateBacklog(records, 'month');
+  const severityMixMonth = aggregateSeverityMix(records, 'month');
 
   await writeJson(join(AGG_DIR, 'discovered-by-month.json'), discoveredMonth);
   await writeJson(join(AGG_DIR, 'fixed-by-month.json'), fixedMonth);
   await writeJson(join(AGG_DIR, 'patch-lag-by-month.json'), patchLagMonth);
   await writeJson(join(AGG_DIR, 'backlog-by-month.json'), backlogMonth);
+  await writeJson(join(AGG_DIR, 'severity-mix-by-month.json'), severityMixMonth);
 
   // Generate yearly aggregates
   console.log('Aggregating yearly data...');
@@ -314,18 +384,20 @@ async function main(): Promise<void> {
   const fixedYear = aggregateTimeSeries(records, 'year', 'patchedDate');
   const patchLagYear = aggregatePatchLag(records, 'year');
   const backlogYear = aggregateBacklog(records, 'year');
+  const severityMixYear = aggregateSeverityMix(records, 'year');
 
   await writeJson(join(AGG_DIR, 'discovered-by-year.json'), discoveredYear);
   await writeJson(join(AGG_DIR, 'fixed-by-year.json'), fixedYear);
   await writeJson(join(AGG_DIR, 'patch-lag-by-year.json'), patchLagYear);
   await writeJson(join(AGG_DIR, 'backlog-by-year.json'), backlogYear);
+  await writeJson(join(AGG_DIR, 'severity-mix-by-year.json'), severityMixYear);
 
   // Write manufacturer list
   await writeJson(join(AGG_DIR, 'manufacturers.json'), MANUFACTURERS as ManufacturerInfo[]);
 
   console.log('\n=== Aggregation complete ===');
-  console.log(`Monthly: ${discoveredMonth.length} discovered, ${fixedMonth.length} fixed, ${patchLagMonth.length} patch-lag, ${backlogMonth.length} backlog`);
-  console.log(`Yearly:  ${discoveredYear.length} discovered, ${fixedYear.length} fixed, ${patchLagYear.length} patch-lag, ${backlogYear.length} backlog`);
+  console.log(`Monthly: ${discoveredMonth.length} discovered, ${fixedMonth.length} fixed, ${patchLagMonth.length} patch-lag, ${backlogMonth.length} backlog, ${severityMixMonth.length} severity-mix`);
+  console.log(`Yearly:  ${discoveredYear.length} discovered, ${fixedYear.length} fixed, ${patchLagYear.length} patch-lag, ${backlogYear.length} backlog, ${severityMixYear.length} severity-mix`);
   console.log(`Manufacturers: ${MANUFACTURERS.length}`);
   console.log(`Output written to src/data/aggregated/`);
 }

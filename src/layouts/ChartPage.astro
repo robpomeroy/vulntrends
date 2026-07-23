@@ -1,0 +1,145 @@
+---
+/**
+ * Chart page layout — full-width header, back-link, chart container,
+ * explanation body. Used by the four `src/pages/charts/*.astro`
+ * click-through pages.
+ *
+ * This is a thin shell over the dashboard's main container so a click
+ * through the dashboard feels like zooming into the same chart, not
+ * landing on a different site.
+ */
+
+import '@/styles/global.css';
+import faviconSvg from '@/assets/favicon.svg?url';
+import faviconIco from '@/assets/favicon.ico?url';
+import ogImage from '/og-image.jpg?url';
+import pkg from '../../package.json' with { type: 'json' };
+const siteVersion = pkg.version;
+
+interface Props {
+  /** Page <title> suffix appended after "VulnTrends —". */
+  title: string;
+  /** Plain-language description used for meta description and OG. */
+  description: string;
+  /** Short keyword phrase used in the page header (also the chart name). */
+  chartName: string;
+  /** Slug of the underlying CSV file (without "data/" prefix). */
+  csvFilename: string;
+  /** Inline base chart component JSX (e.g. `<DiscoveredChart ... />`). */
+  chart?: unknown;
+  /** Inline explanation slot (ChartExplanation content collection entry). */
+  explanationHtml?: unknown;
+}
+
+const { title, description, chartName, csvFilename, chart, explanationHtml } = Astro.props;
+
+const canonicalUrl = Astro.url.href;
+const pathname = Astro.url.pathname;
+const isDashboardActive = pathname === '/' || pathname === '';
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={faviconSvg} />
+    <link rel="icon" href={faviconIco} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} — VulnTrends</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Twitter card. Crawlers fetch og-image once on share,
+         so it stays under public/ (see Dashboard.astro comment). -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site ?? Astro.url).toString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- JSON-LD Dataset structured data. The CSV download makes this a
+         legitimate structured-data candidate for academic/citation use.
+         Google indexes Dataset markup and may surface the chart in
+         dataset search results. -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Dataset',
+      name: title,
+      description,
+      url: canonicalUrl,
+      keywords: 'vulnerability, CVE, security, patching, ' + chartName,
+      creator: { '@type': 'Organization', name: 'VulnTrends', url: 'https://vulntrends.org' },
+      distribution: [
+        {
+          '@type': 'DataDownload',
+          encodingFormat: 'text/csv',
+          contentUrl: new URL(`data/${csvFilename}`, Astro.site ?? Astro.url).toString(),
+        },
+      ],
+    })} />
+  </head>
+  <body class="bg-vt-bg-primary text-vt-text-primary min-h-screen">
+    <header class="border-b border-vt-border">
+      <div class="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between gap-6 flex-wrap">
+        <div class="flex items-baseline gap-3">
+          <a href="/" class="text-lg font-semibold text-vt-accent hover:text-vt-accent-hover">VulnTrends</a>
+          <span class="text-vt-text-muted text-sm">v{siteVersion}</span>
+        </div>
+        <nav class="flex gap-6 text-sm">
+          <a
+            href="/"
+            class:list={[
+              'hover:text-vt-accent',
+              isDashboardActive ? 'text-vt-text-primary font-semibold' : 'text-vt-text-muted',
+            ]}
+          >
+            Dashboard
+          </a>
+          <a href="/about/" class="text-vt-text-muted hover:text-vt-accent">About</a>
+          <a href="/blog/" class="text-vt-text-muted hover:text-vt-accent">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-6 py-8">
+      <div class="mb-6">
+        <a href="/" class="text-vt-text-muted hover:text-vt-accent text-sm">← Back to dashboard</a>
+      </div>
+
+      <header class="mb-6">
+        <h1 class="text-2xl font-semibold mb-2">{chartName}</h1>
+        <p class="text-vt-text-secondary max-w-3xl">{description}</p>
+      </header>
+
+      <section class="bg-vt-bg-secondary border border-vt-border rounded-lg p-6 mb-8">
+        <slot />
+      </section>
+
+      <section class="mb-12">
+        <div class="flex items-center justify-between gap-4 mb-4">
+          <h2 class="text-lg font-semibold">About this chart</h2>
+          <a
+            href={`/data/${csvFilename}`}
+            class="text-vt-accent hover:text-vt-accent-hover text-sm inline-flex items-center gap-2"
+            download
+          >
+            <span aria-hidden="true">⬇</span>
+            <span>Download CSV</span>
+          </a>
+        </div>
+        <div class="max-w-3xl vt-prose">
+          <slot name="explanation" />
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-vt-border">
+      <div class="mx-auto max-w-7xl px-6 py-6 text-vt-text-muted text-sm">
+        VulnTrends is an open-source project. Data: public vendor advisories
+        and the National Vulnerability Database. Licensed MIT.
+      </div>
+    </footer>
+  </body>
+</html>

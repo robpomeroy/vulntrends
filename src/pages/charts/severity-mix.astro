@@ -1,0 +1,39 @@
+---
+/**
+ * Click-through page: Severity mix.
+ */
+
+import SeverityMixChart from '@/components/charts/SeverityMixChart.svelte';
+import ChartPage from '@/layouts/ChartPage.astro';
+import { loadDashboardData } from '@/lib/load';
+import { getEntry, render } from 'astro:content';
+
+const data = await loadDashboardData();
+const explanationEntry = await getEntry('chartExplanations', 'severity-mix');
+if (!explanationEntry) {
+  throw new Error('Missing chartExplanations/severity-mix entry');
+}
+const { Content: Explanation } = await render(explanationEntry);
+---
+
+<ChartPage
+  title={explanationEntry.data.title}
+  description={explanationEntry.data.description}
+  chartName={explanationEntry.data.title}
+  csvFilename="severity-mix.csv"
+>
+  {data.meta ? (
+    <SeverityMixChart
+      client:load
+      data={data.severityMixMonth ?? []}
+      granularity="month"
+      selectedManufacturers={[]}
+      initialDateRange={{ start: '2013-01', end: data.meta.lastUpdated.slice(0, 7) }}
+      mainHeight={540}
+    />
+  ) : (
+    <p class="text-vt-text-muted">No data yet. Run <code>npm run data:build</code>.</p>
+  )}
+
+  <Explanation slot="explanation" />
+</ChartPage>

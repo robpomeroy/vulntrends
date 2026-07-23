@@ -36,7 +36,7 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
       Most vendor advisories only publish a patch date, not a separate
       discovery date — the chart only shows the subset of CVEs with full
       data. This can over-represent vendors that publish more detail (e.g.
-      Mozilla and Project Zero, which report Reported/Fixed timestamps), and
+      Mozilla, which reports explicit Reported/Fixed timestamps), and
       under-represent vendors that don't.
     </p>
 
@@ -51,13 +51,74 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
 
     <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Data sources</h3>
 
+    <p class="mb-4 text-vt-text-secondary">
+      The pipeline currently ingests data from the following sources.
+      "Direct" means the project runs a parser against the vendor's own
+      advisory feed; "NVD-backed" means we get the coverage from NVD's
+      CPE-based vendor queries (no live parser, but the timeline metadata
+      is what NVD exposes for that vendor); "stub" means a parser slot
+      exists in the pipeline but is currently a no-op awaiting an
+      upstream-API upgrade.
+    </p>
+
+    <h4 class="mt-6 mb-2 text-base font-semibold text-vt-text-secondary">Direct feeds</h4>
     <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
-      <li><strong class="text-vt-text-primary">Mozilla</strong> — Mozilla Foundation Security Advisories (MFSA)</li>
-      <li><strong class="text-vt-text-primary">Google</strong> — Chrome Releases blog and Project Zero</li>
-      <li><strong class="text-vt-text-primary">Microsoft</strong> — Security Response Center (MSRC) CVRF API</li>
-      <li><strong class="text-vt-text-primary">Apple</strong> — Security advisories (with NVD fallback)</li>
-      <li><strong class="text-vt-text-primary">Project Zero</strong> — Issue tracker with disclosure timelines</li>
-      <li><strong class="text-vt-text-primary">NVD/CVE</strong> — National Vulnerability Database (cross-vendor)</li>
+      <li><strong class="text-vt-text-primary">Mozilla</strong> — Mozilla Foundation Security Advisories (MFSA JSON feed).</li>
+      <li><strong class="text-vt-text-primary">Microsoft</strong> — Security Response Center (MSRC) CVRF API. The parser uses per-vulnerability <code>RevisionHistory</code> dates to recover each CVE's true first-disclosure date rather than the catalog-wide <code>CurrentReleaseDate</code>. <strong>Mariner documents are filtered out</strong> at the parser — MSRC also publishes a per-distro catalog for Mariner (their Linux distribution) whose CVEs are upstream Linux entries (kernel, glibc, OpenSSL, …); without the filter, every re-import of that catalog would spike the <em>Vulnerabilities discovered</em> chart with thousands of non-Microsoft CVEs dated to the import moment. The filter is documented in <code>scripts/pipeline/sources/msrc.ts</code> and has a regression test in <code>scripts/pipeline/test-msrc-mariner.mjs</code>.</li>
+      <li><strong class="text-vt-text-primary">Google Chrome</strong> — Chrome Releases blog (Blogger's Atom JSON feed). HTML scraping is unreliable for this page (ad-network redirects), so the parser consumes the structured feed instead.</li>
+      <li><strong class="text-vt-text-primary">Apple</strong> — Support articles on <code>support.apple.com</code> (the <code>gb-table</code> index, since the legacy <code>HT\d+</code> URL pattern is gone).</li>
+      <li><strong class="text-vt-text-primary">Palo Alto Networks</strong> — <code>security.paloaltonetworks.com/json</code>.</li>
+      <li><strong class="text-vt-text-primary">Fortinet</strong> — PSIRT page at <code>fortiguard.com/psirt</code>; separate Published and Updated dates give a real patch-lag signal.</li>
+      <li><strong class="text-vt-text-primary">Adobe</strong> — <code>helpx.adobe.com/security.html</code> index + best-effort per-bulletin CVE fetch (rate-limited; the per-CVE detail step is a graceful-degradation path, not a guarantee).</li>
+    </ul>
+
+    <h4 class="mt-6 mb-2 text-base font-semibold text-vt-text-secondary">NVD-backed vendors</h4>
+    <p class="mb-4 text-vt-text-secondary">
+      These manufacturers don't currently expose a usable public advisory
+      feed (or we haven't wired one up yet), so the dashboard's coverage
+      for them comes from NVD's vendor CPE queries. You get
+      <code>discoveredDate</code> from the CVE's NVD <code>published</code>
+      field; missing <code>patchedDate</code> shows up as a "missing
+      discovery data" gap on the patch-lag chart — see the
+      <em>Data confidence</em> section above.
+    </p>
+    <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
+      <li><strong class="text-vt-text-primary">Oracle</strong></li>
+      <li><strong class="text-vt-text-primary">Samsung</strong> — no public advisory programme before 2013.</li>
+      <li><strong class="text-vt-text-primary">Google</strong> — NVD's <code>google</code> CPE vendor covers Chrome and Android-family CVEs that the Chrome Releases feed doesn't capture.</li>
+    </ul>
+
+    <h4 class="mt-6 mb-2 text-base font-semibold text-vt-text-secondary">Stubs (no live data today)</h4>
+    <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
+      <li>
+        <strong class="text-vt-text-primary">Project Zero</strong> — parser slot
+        reserved. The old Monorail endpoint
+        (<code>bugs.chromium.org/p/project-zero</code>) returns HTTP 404
+        after Google's migration to <code>issuetracker.google.com</code>.
+        Until the parser is upgraded, Project Zero coverage flows in via
+        NVD's <code>google</code> query. We're missing PZ's Reported/Fixed
+        timeline metadata specifically.
+      </li>
+      <li>
+        <strong class="text-vt-text-primary">Cisco</strong> — parser slot reserved.
+        The legacy OXML feed is
+        deprecated and the openVuln API requires OAuth credentials from
+        the Cisco API Console. Coverage today comes from NVD's <code>cisco</code>
+        query; we're missing Cisco's own patch-timing
+        data specifically.
+      </li>
+      <li>
+        <strong class="text-vt-text-primary">OSV</strong> — opt-in. Returns
+        data only when the <code>OSV_LOOKUP_CVE_LIST</code> environment
+        variable points at a CVE-ID list. The pipeline ships with no
+        list configured, so this source returns <code>[]</code> on a
+        default run.
+      </li>
+    </ul>
+
+    <h4 class="mt-6 mb-2 text-base font-semibold text-vt-text-secondary">Cross-vendor backbone</h4>
+    <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
+      <li><strong class="text-vt-text-primary">NVD/CVE</strong> — National Vulnerability Database. The canonical CVE feed the project leans on as both a backbone (gap-filler for vendors we don't parse directly) and a record-level cross-source validator (the <code>SOURCE_PRECEDENCE</code> map in <code>scripts/pipeline/normalise.ts</code> prefers vendor advisories over NVD when both report the same CVE).</li>
     </ul>
 
     <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Limitations</h3>
@@ -75,8 +136,13 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
       </li>
       <li>
         Backlog figures represent vulnerabilities that have been discovered
-        but not yet patched, based on the dates available. Actual backlogs
-        may differ if patch information is incomplete.
+        but not yet patched, based on the dates available. The aggregator
+        applies a 5-year stale horizon: a vulnerability with no recorded
+        patch date and a discovery older than 5 years is assumed to have
+        been patched silently and dropped from the backlog. Without this
+        horizon, a manufacturer with sparse patch data would appear to
+        accumulate an ever-growing open backlog. The horizon is
+        configurable via the <code>BACKLOG_STALE_YEARS</code> env var.
       </li>
       <li>
         Apple advisory data is scraped from HTML pages and may be affected by
@@ -89,6 +155,96 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
         the patch was a no-op or the vendor advisory covered multiple CVEs.
       </li>
     </ul>
+
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Coverage eras</h3>
+
+    <p class="mb-4 text-vt-text-secondary">
+      Vulnerability data is split into two coverage eras. The dashboard
+      defaults to the full-coverage era (2013+) because the data from
+      earlier years is opportunistic — many manufacturers had no public
+      advisory programme before 2013, and NVD's CPE-based vendor matching
+      was immature.
+    </p>
+
+    <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
+      <li>
+        <strong class="text-vt-text-primary">Full coverage (2013–present)</strong> —
+        All 10 manufacturers have advisory programmes and NVD CPE coverage
+        is mature. Charts over this range are cross-vendor comparable.
+      </li>
+      <li>
+        <strong class="text-vt-text-primary">Partial coverage (1999–2012)</strong> —
+        Data exists but is incomplete and not cross-vendor comparable.
+        Visible when you select "Full history" in the range selector.
+      </li>
+    </ul>
+
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Data integrity</h3>
+
+    <p class="mb-4 text-vt-text-secondary">
+      The pipeline runs a series of semantic checks on every dataset via
+      <code>npm run data:audit</code>. These checks surface (but don't
+      block) issues like future-dated records, CVE-year mismatches,
+      per-source year-over-year outliers, per-manufacturer patch-date
+      coverage gaps, and a dedicated <strong>catalogue-re-publication</strong>
+      check (A6) that flags any record whose <code>discoveredDate</code>
+      falls in the last 18 months but whose CVE-year is at least 2
+      years earlier — the signature of an upstream "we just re-imported
+      our historical catalog" artefact that produced the misleading
+      MSRC spike through 2024-Q3. A6 hard-errors the build if it
+      triggers, so a regression in the parser filter or the dedup
+      merge fails fast rather than silently producing a chart with a
+      month of fabricated data.
+    </p>
+
+    <p class="mb-4 text-vt-text-secondary">
+      The dedup merge (which combines vendor and NVD records into a
+      single canonical record per CVE) is gated on a CVE-year sanity
+      check: a candidate <code>discoveredDate</code> more than 1 year
+      from any CVE in the record's <code>cveIds</code> list is treated
+      as an upstream artefact and discarded. When both candidates fail
+      the check the record is dropped entirely. The logic and the
+      Mariner filter both have dedicated regression tests; run
+      <code>npm run data:test</code> after any change to
+      <code>scripts/pipeline/normalise.ts</code> or
+      <code>scripts/pipeline/sources/msrc.ts</code>. The
+      <a href="/analyst-guide" class="text-vt-accent hover:underline">analyst guide</a>
+      has more detail on the date-selection rules.
+    </p>
+
+    <p class="mb-4 text-vt-text-secondary">
+      Every record carries a <code>provenance</code> field capturing
+      when and from where it was fetched, so individual data points can
+      be traced to their source for citation and drift detection.
+    </p>
+
+    <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Snapshot archive</h3>
+
+    <p class="mb-4 text-vt-text-secondary">
+      Each successful pipeline run writes a copy of the raw data and
+      metadata to <code>data-archive/&lt;YYYY-MM-DD&gt;/</code>, along
+      with a SHA-256 manifest in <code>data-archive/manifest.json</code>.
+      The archive acts as Tier-2 retention: if a future parser regression
+      defeats the silent-empty safeguard, the archive provides a
+      known-good dataset to restore from. Old snapshots are pruned by
+      <code>npm run data:prune</code>: daily for the last 90 days,
+      monthly (1st of month) for the previous 5 years, yearly thereafter.
+    </p>
+
+    <p class="mb-4 text-vt-text-secondary">
+      The archive is not committed to the repository &mdash; production
+      (the Synology NAS running the daily publish) has read-only Git
+      access, so the snapshot can only be replicated to a backup
+      destination via rsync. Set
+      <code>ARCHIVE_RSYNC_TARGET</code> in <code>.env</code> to a
+      destination (either <code>user@host:/path/to/archive</code> for
+      SSH, or a local <code>/path/to/archive</code>) and
+      <code>npm run publish</code> will mirror <code>data-archive/</code>
+      there after the local snapshot is written and pruned. If the
+      variable is unset, the local archive is still written and can be
+      rsynced manually. See <code>.env.example</code> for the full
+      configuration options.
+    </p>
 
     <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Neutral framing</h3>
 

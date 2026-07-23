@@ -16,9 +16,22 @@ export const sourceIdSchema = z.enum([
   'cisco',
   'adobe',
   'nvd',
+  'osv',
 ]);
 
 export const severitySchema = z.enum(['critical', 'high', 'medium', 'low']);
+
+/**
+ * Provenance metadata schema (see E6 in docs/plans/2026-07-22-improvement-plan.md).
+ * Attached to each record by the pipeline orchestrator so downstream
+ * consumers (CSV downloads, click-through pages) can cite where each
+ * data point came from.
+ */
+export const provenanceSchema = z.object({
+  fetchedAt: z.string().datetime(),
+  source: sourceIdSchema,
+  sourceVersion: z.string().optional(),
+});
 
 export const vulnerabilityRecordSchema = z.object({
   id: z.string().min(1),
@@ -40,13 +53,25 @@ export const vulnerabilityRecordSchema = z.object({
   patchedDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   patchLagDays: z.number().int().optional(),
   cveIds: z.array(z.string()).optional(),
-  rawUrl: z.url().optional(),
+  rawUrl: z.string().url().optional(),
+  provenance: provenanceSchema.optional(),
+});
+
+/**
+ * Per-source operational metadata. See SourceMeta in scripts/pipeline/types.ts.
+ */
+export const sourceMetaSchema = z.object({
+  fetchDurationMs: z.number().int().nonnegative(),
+  cachedFallback: z.boolean(),
+  minDiscoveredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  maxDiscoveredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
 });
 
 export const pipelineMetaSchema = z.object({
-  lastUpdated: z.iso.datetime(),
+  lastUpdated: z.string().datetime(),
   sourceCounts: z.record(sourceIdSchema, z.number().int()),
   totalRecords: z.number().int(),
+  sources: z.record(sourceIdSchema, sourceMetaSchema).optional(),
 });
 
 // Date format patterns for aggregated chart points.
@@ -79,6 +104,17 @@ export const backlogPointSchema = z.object({
   openCount: z.number().int(),
 });
 
+/**
+ * Severity-mix chart data (see E3 in docs/plans/2026-07-22-improvement-plan.md).
+ * Tracks the number of CVEs at each severity bucket per time bucket.
+ * Together the four rows for a given date form the percentage stack.
+ */
+export const severityMixPointSchema = z.object({
+  date: z.string().regex(MONTHLY_DATE_REGEX).or(z.string().regex(YEARLY_DATE_REGEX)),
+  severity: severitySchema,
+  count: z.number().int(),
+});
+
 export const manufacturerInfoSchema = z.object({
   name: z.string(),
   colour: z.string(),
@@ -89,6 +125,7 @@ export const vulnerabilityRecordArraySchema = z.array(vulnerabilityRecordSchema)
 export const timeSeriesPointArraySchema = z.array(timeSeriesPointSchema);
 export const patchLagPointArraySchema = z.array(patchLagPointSchema);
 export const backlogPointArraySchema = z.array(backlogPointSchema);
+export const severityMixPointArraySchema = z.array(severityMixPointSchema);
 export const manufacturerInfoArraySchema = z.array(manufacturerInfoSchema);
 
 // Type exports for use in Astro components
@@ -96,4 +133,5 @@ export type VulnerabilityRecordParsed = z.infer<typeof vulnerabilityRecordSchema
 export type TimeSeriesPointParsed = z.infer<typeof timeSeriesPointSchema>;
 export type PatchLagPointParsed = z.infer<typeof patchLagPointSchema>;
 export type BacklogPointParsed = z.infer<typeof backlogPointSchema>;
+export type SeverityMixPointParsed = z.infer<typeof severityMixPointSchema>;
 export type ManufacturerInfoParsed = z.infer<typeof manufacturerInfoSchema>;

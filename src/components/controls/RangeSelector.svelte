@@ -14,6 +14,7 @@
   import {
     dashboardStore,
     setDateRange,
+    FULL_COVERAGE_START_YEAR,
     type DateRange,
     type Granularity,
   } from '@/lib/store';
@@ -45,8 +46,14 @@
    * bucket, so:
    *   - "Last year"  -> the most recent year,   start = end = latestDate
    *   - "Last 2 years" -> the most recent 2 years, start = year-1
+   *
+   * The "since2013" preset jumps to the start of the full-coverage era
+   * (2013-01 by default; see `FULL_COVERAGE_START_YEAR`). Pre-2013 data
+   * is opportunistic samples and not cross-vendor comparable.
    */
-  function computePreset(preset: 'year' | '2y' | 'all'): DateRange | null {
+  function computePreset(
+    preset: 'year' | '2y' | 'since2013' | 'all',
+  ): DateRange | null {
     if (preset === 'all') return null;
 
     const [yearStr, monthStr] = latestDate.split('-');
@@ -54,6 +61,13 @@
     const month = monthStr ? parseInt(monthStr, 10) : 12;
 
     let start: string;
+    if (preset === 'since2013') {
+      // Always start at the first month/year of the full-coverage era
+      // regardless of the latest date or current granularity.
+      return granularity === 'month'
+        ? { start: `${FULL_COVERAGE_START_YEAR}-01`, end: latestDate }
+        : { start: `${FULL_COVERAGE_START_YEAR}`, end: latestDate };
+    }
     if (granularity === 'month') {
       const monthsBack = preset === 'year' ? 11 : 23;
       const totalMonths = (year * 12) + (month - 1) - monthsBack;
@@ -68,7 +82,7 @@
   }
 
   /** Check if a preset is currently active. */
-  function isActive(preset: 'year' | '2y' | 'all'): boolean {
+  function isActive(preset: 'year' | '2y' | 'since2013' | 'all'): boolean {
     if (preset === 'all') return currentRange === null;
     const target = computePreset(preset);
     if (!target) return false;
@@ -79,7 +93,7 @@
     );
   }
 
-  function selectPreset(preset: 'year' | '2y' | 'all') {
+  function selectPreset(preset: 'year' | '2y' | 'since2013' | 'all') {
     setDateRange(computePreset(preset));
   }
 
@@ -121,13 +135,26 @@
   <button
     type="button"
     class="text-xs px-2 py-1 rounded transition-colors
+      {isActive('since2013')
+        ? 'bg-vt-accent text-vt-bg-primary font-semibold'
+        : 'text-vt-text-muted hover:text-vt-text-primary hover:bg-vt-bg-tertiary'}"
+    onclick={() => selectPreset('since2013')}
+    aria-pressed={isActive('since2013')}
+    title={`From ${FULL_COVERAGE_START_YEAR} onwards — full cross-vendor coverage`}
+  >
+    Since {FULL_COVERAGE_START_YEAR}
+  </button>
+  <button
+    type="button"
+    class="text-xs px-2 py-1 rounded transition-colors
       {isActive('all')
         ? 'bg-vt-accent text-vt-bg-primary font-semibold'
         : 'text-vt-text-muted hover:text-vt-text-primary hover:bg-vt-bg-tertiary'}"
     onclick={() => selectPreset('all')}
     aria-pressed={isActive('all')}
+    title="Include partial-coverage era (pre-2013) — not cross-vendor comparable"
   >
-    All time
+    Full history
   </button>
   {#if currentRange !== null}
     <span class="text-xs text-vt-text-muted ml-1">

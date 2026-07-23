@@ -165,9 +165,14 @@ async function main(): Promise<void> {
     source: string;
   }> = [];
   for (const r of records) {
-    if (!r.id.match(/^CVE-(\d{4})-\d{4,}$/)) continue;
+    const cveMatch = r.id.match(/^CVE-(\d{4})-\d{4,}$/);
+    if (!cveMatch) continue;
     if (r.discoveredDate < eighteenMonthsAgoIso) continue;
-    const cveYear = Number.parseInt(RegExp.$1, 10);
+    // Capture the year group explicitly rather than reading the
+    // legacy `RegExp.$1` global — the global is brittle (any
+    // intervening regex call would clobber it) and harder to
+    // reason about. The A2 check above uses the same pattern.
+    const cveYear = Number.parseInt(cveMatch[1], 10);
     const discYear = Number.parseInt(r.discoveredDate.slice(0, 4), 10);
     if (discYear - cveYear > 1) {
       // `discoveredDate` is recent (last 18 months) but the CVE is

@@ -158,8 +158,25 @@ function extractCvss(severity?: OsvSeverity[]): number | undefined {
  * Map OSV manufacturer-ish signals to our canonical list. OSV doesn't
  * carry an explicit vendor field; we infer from the ecosystem and
  * alias list.
+ *
+ * Returns `undefined` when the manufacturer can't be confidently
+ * mapped to one of the project's canonical manufacturers. The
+ * caller (`osvToRecord`) treats this as "don't emit a record" —
+ * an OSV entry with manufacturer "Unknown" would otherwise win
+ * dedup precedence over the NVD record (OSV: precedence 2, NVD:
+ * precedence 3) and leak a non-filterable "Unknown" series into
+ * the aggregated charts. Skipping the record at source is safer
+ * than emitting it and hoping downstream code handles the
+ * mismatch.
+ *
+ * The canonical manufacturer list is duplicated from
+ * `src/lib/manufacturers.ts` MANUFACTURERS — the pipeline scripts
+ * can't import from `src/lib/` cleanly, and the alternative
+ * (vendor-specific exclusion rules) would be harder to keep
+ * in sync than this hand-maintained mirror. The same pattern
+ * is used by `scripts/pipeline/sources/nvd.ts` VENDOR_QUERIES.
  */
-function inferManufacturer(vuln: OsvVulnerability, cveId: string): string {
+function inferManufacturer(vuln: OsvVulnerability, cveId: string): string | undefined {
   const e = (vuln.affected?.[0] as { package?: { ecosystem?: string } } | undefined)
     ?.package?.ecosystem;
   const combined = `${vuln.id} ${cveId} ${vuln.summary ?? ''} ${vuln.details ?? ''}`.toLowerCase();
@@ -169,12 +186,13 @@ function inferManufacturer(vuln: OsvVulnerability, cveId: string): string {
   if (e === 'Adobe') return 'Adobe';
   if (combined.includes('microsoft')) return 'Microsoft';
   if (combined.includes('oracle')) return 'Oracle';
-  return 'Unknown';
+  return undefined;
 }
 
 /**
  * Convert an OSV vulnerability to a normalised record. Returns null
- * when the record is missing data we require (id, discoveredDate).
+ * when the record is missing data we require (id, discoveredDate,
+ * or a mappable manufacturer).
  */
 function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
   // OSV `id` may be GHSA-…; we lift CVE ids from the `aliases` array.
@@ -184,6 +202,13 @@ function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
 
   const discoveredDate = parseDate(vuln.published ?? vuln.modified);
   if (!discoveredDate) return null;
+
+  // Resolve the manufacturer up front. If we can't confidently map
+  // it to one of the project's canonical manufacturers, skip the
+  // record entirely — see inferManufacturer's comment for the
+  // precedence-leak rationale.
+  const manufacturer = inferManufacturer(vuln, cveId);
+  if (!manufacturer) return null;
 
   // OSV's `modified` is sometimes used as a proxy for when a fix was
   // applied (most OSV records get touched when a patch is pushed).
@@ -201,7 +226,7 @@ function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
   return buildRecord({
     id: cveId,
     source: 'osv',
-    manufacturer: inferManufacturer(vuln, cveId),
+    manufacturer,
     title,
     cvss,
     discoveredDate,
@@ -280,15 +305,20 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
 
   const slice = cves.slice(0, OSV_LOOKUP_LIMIT);
   const records: VulnerabilityRecord[] = [];
-  for (const cve of slice) {
+  for (let i = 0; i < slice.length; i++) {
+    const cve = slice[i];
     const vuln = await fetchOsvRecord(cve);
     if (vuln) {
       const rec = osvToRecord(vuln);
       if (rec) records.push(rec);
     }
     // OSV has no published rate limit, but we add a small delay
-    // out of politeness for the free public service.
-    if (slice.indexOf(cve) % 10 === 9) {
+    // out of politeness for the free public service. Indexed
+    // counter rather than `slice.indexOf(cve)` — the latter was
+    // O(n²) (rescanning the list every iteration) and also
+    // misbehaved for duplicate CVEs in the list, which would
+    // always match the first occurrence's index.
+    if (i % 10 === 9) {
       await new Promise((resolve) => setTimeout(resolve, 200));
     }
   }

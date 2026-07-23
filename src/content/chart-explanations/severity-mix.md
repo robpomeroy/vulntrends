@@ -70,8 +70,6 @@ indicate one or more of:
   the year (e.g. a major RCE class). Compare with the absolute
   count on the "discovered" chart to disambiguate.
 
-A growing proportion of *low* / *medium* CVEs is generally a
-positive sign: it suggests researchers are finding more
-low-severity issues (defence-in-depth findings, hardening), not
-that the surface area is getting riskier. Always pair this
-chart with the absolute discovered count.
+A growing proportion of *low* / *medium* CVEs may reflect shifts in reporting,
+scoring practices, or research focus. Pair this chart with the absolute
+"discovered" count to distinguish a changing mix from changes in overall volume.

@@ -231,6 +231,21 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
       monthly (1st of month) for the previous 5 years, yearly thereafter.
     </p>
 
+    <p class="mb-4 text-vt-text-secondary">
+      The archive is not committed to the repository &mdash; production
+      (the Synology NAS running the daily publish) has read-only Git
+      access, so the snapshot can only be replicated to a backup
+      destination via rsync. Set
+      <code>ARCHIVE_RSYNC_TARGET</code> in <code>.env</code> to a
+      destination (either <code>user@host:/path/to/archive</code> for
+      SSH, or a local <code>/path/to/archive</code>) and
+      <code>npm run publish</code> will mirror <code>data-archive/</code>
+      there after the local snapshot is written and pruned. If the
+      variable is unset, the local archive is still written and can be
+      rsynced manually. See <code>.env.example</code> for the full
+      configuration options.
+    </p>
+
     <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Neutral framing</h3>
 
     <p class="mb-4 text-vt-text-secondary">

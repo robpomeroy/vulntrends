@@ -6,10 +6,9 @@
  * with sha256 checksums. This gives us:
  *
  *  - **Recovery**: if a future parser regression defeats the silent-empty
- *    safeguard, `git checkout data-archive/<date>/` restores a known-good
- *    dataset. The 2026-07-20 incident (gitignored data + silent-empty
- *    success) was the canonical failure mode; the archive prevents the
- *    next one.
+ *    safeguard, restoring a known-good dataset from a snapshot prevents
+ *    the next incident of the 2026-07-20 type (gitignored data +
+ *    silent-empty success).
  *
  *  - **Auditability**: diff snapshots between runs to see exactly what
  *    NVD/MSRC/etc. changed (e.g. the next MSRC-style bulk re-stamp).
@@ -17,15 +16,27 @@
  *  - **Reproducibility**: the aggregated charts for any historical date
  *    can be regenerated from the snapshot.
  *
- * The archive directory is intended to be committed to the repo (or to a
- * separate `vulntrends-data` repo if size becomes a concern). Snapshots
- * are append-only — never modify a past snapshot's files. If a run is
- * bad, delete the snapshot directory and re-run.
+ * The archive directory is a LOCAL STAGING AREA, not part of the Git
+ * repo (see `.gitignore` for the data-archive/ rules). Production
+ * (Synology) has read-only Git access — it can `git pull` but not
+ * `git push` — so the archive cannot be committed from production.
+ * Instead, `scripts/publish.ts` rsyncs the local `data-archive/` to a
+ * backup target configured via the `ARCHIVE_RSYNC_TARGET` env var
+ * (either `user@host:/path` for SSH or `/path` for a local destination).
+ * See `.env.example` and the C2 entry in
+ * `docs/plans/2026-07-22-improvement-plan.md` for the full design.
+ *
+ * Snapshots are append-only — never modify a past snapshot's files.
+ * If a run is bad, delete the snapshot directory and re-run.
  *
  * Retention policy (enforced by `scripts/prune-archive.ts`):
  *  - Daily snapshots for the last 90 days
  *  - Monthly snapshots (1st of month) for the previous 5 years
  *  - Yearly snapshots (Jan 1) thereafter
+ *
+ * `npm run data:prune` runs as a sub-step of `npm run publish` BEFORE
+ * the rsync, so the remote target mirrors the pruned local state
+ * (rsync uses `--delete`).
  *
  * Usage: `npm run data:archive` (called by `npm run publish`).
  */

@@ -434,10 +434,13 @@ scripts/
 ├── aggregate.ts          # raw → time-bucketed JSON
 ├── validate.ts           # Zod schema check
 ├── data-audit.ts         # semantic sanity check
-└── archive-snapshot.ts   # tier-2 archive management (separate concern)
+└── archive-snapshot.ts   # tier-2 archive (local staging; replicated
+                          #  to ARCHIVE_RSYNC_TARGET via publish.ts)
 ```
 
 ---
 
-Last updated: 2026-07-22, after the MSRC Mariner re-import fix (PR
-groundwork landed alongside the dedup-pass-check change).
+Last updated: 2026-07-23. Archive replication was switched from
+"committed to the repo" to "rsynced to ARCHIVE_RSYNC_TARGET" after it
+became clear that production (Synology) has read-only Git access and
+could never push the snapshot blobs from the daily publish.

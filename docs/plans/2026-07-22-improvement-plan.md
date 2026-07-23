@@ -37,8 +37,8 @@ folded those refinements in.
 
 | # | Item | Description |
 |---|---|---|
-| C2 | Tiered retention strategy (T2 snapshots) | Daily copies of `raw/all.json` + `meta.json` to `data-archive/<YYYY-MM-DD>/`, committed to repo. Recovery source, audit trail, reproducibility. Use separate repo if size becomes an issue. |
-| C3 | Snapshot integrity verification | `sha256sum` per snapshot in `data-archive/manifest.json`. Detect bit-rot and accidental edits. |
+| C2 | Tiered retention strategy (T2 snapshots) | Daily copies of `raw/all.json` + `meta.json` to local `data-archive/<YYYY-MM-DD>/`; replicated to `ARCHIVE_RSYNC_TARGET` via rsync (not committed to Git — production Git is read-only). Recovery source, audit trail, reproducibility. |
+| C3 | Snapshot integrity verification | `sha256sum` per snapshot in `data-archive/manifest.json`. Detect bit-rot and accidental edits. Manifest lives at the rsync target, not in Git. |
 | E6 | Provenance tracking per record | `provenance: { source, fetchedAt, sourceVersion? }` field. Enables audit trail for cybersecurity-adjacent credibility. |
 
 ### Phase 4 — Chart Click-Through Pages
@@ -71,7 +71,7 @@ folded those refinements in.
 
 1. **Trust model.** Provenance (E6) + snapshot archive (C2) = audit trail.
 2. **Supply-chain risk of OSV.** Treat as third-party dependency; NVD as redundant cross-check.
-3. **Immutability.** T2 archive append-only; pre-commit hook + branch protection.
+3. **Immutability.** T2 archive append-only on the backup target; rsync `--delete` only removes snapshots already pruned locally by the retention policy. No Git-based immutability (production has read-only Git access).
 4. **Data-loss scenarios.** `git push` as last step in `daily-publish.sh` = off-site backup.
 5. **CVE as regulated identifier.** Preserve CVE-id dedup; CVE-year sanity check works because CVE IDs encode assignment year.
 6. **Drift detection.** Weekly diff of snapshots to detect upstream rewrites (catches next MSRC-style bulk re-stamp).

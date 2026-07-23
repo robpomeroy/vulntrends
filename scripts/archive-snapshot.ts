@@ -77,6 +77,7 @@ const ARCHIVE_FILES = [
   'raw/fortinet.json',
   'raw/cisco.json',
   'raw/adobe.json',
+  'raw/osv.json',
   'raw/nvd.json',
 ] as const;
 

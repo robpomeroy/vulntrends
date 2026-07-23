@@ -51,7 +51,7 @@ function provenanceHeader(meta: PipelineMeta, chartName: string): string {
     `# Source: https://vulntrends.org`,
     `#`,
   ];
-  return lines.join('\n');
+  return lines.join('\n') + '\n';
 }
 
 /** Escape a CSV cell. Wraps in quotes if it contains comma/quote/newline. */

@@ -13,7 +13,7 @@
  *                          the pipeline without deploying)
  *   --only=<stages>        Run only the named comma-separated stages (executed
  *                          in canonical order according to `STAGES`).
-//                          Stages: data:build, data:validate, data:audit, data:archive, data:csv, build, rsync.
+ *                          Stages: data:build, data:validate, data:audit, data:archive, data:csv, build, rsync.
  *                          Example: --only=rsync  (re-run only the rsync step)
  *   --skip=<stages>        Run every stage EXCEPT the named ones.
  *                          Example: --skip=data:build  (deploy the existing

@@ -28,7 +28,7 @@ export const severitySchema = z.enum(['critical', 'high', 'medium', 'low']);
  * data point came from.
  */
 export const provenanceSchema = z.object({
-  fetchedAt: z.iso.datetime(),
+  fetchedAt: z.string().datetime(),
   source: sourceIdSchema,
   sourceVersion: z.string().optional(),
 });
@@ -53,7 +53,7 @@ export const vulnerabilityRecordSchema = z.object({
   patchedDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   patchLagDays: z.number().int().optional(),
   cveIds: z.array(z.string()).optional(),
-  rawUrl: z.url().optional(),
+  rawUrl: z.string().url().optional(),
   provenance: provenanceSchema.optional(),
 });
 
@@ -68,7 +68,7 @@ export const sourceMetaSchema = z.object({
 });
 
 export const pipelineMetaSchema = z.object({
-  lastUpdated: z.iso.datetime(),
+  lastUpdated: z.string().datetime(),
   sourceCounts: z.record(sourceIdSchema, z.number().int()),
   totalRecords: z.number().int(),
   sources: z.record(sourceIdSchema, sourceMetaSchema).optional(),

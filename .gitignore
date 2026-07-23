@@ -29,6 +29,14 @@ pnpm-debug.log*
 src/data/*
 !src/data/.gitkeep
 
+# Snapshot archive — populated by `npm run data:archive` (called by publish).
+# Committed to the repo as the Tier-2 retention layer (see docs/plans/2026-07-22-improvement-plan.md).
+# Use Git LFS if file sizes grow large.
+data-archive/*/raw/
+data-archive/*/meta.json
+!data-archive/.gitkeep
+!data-archive/manifest.json
+
 # Ignore logs
 logs/*
 !logs/.gitkeep

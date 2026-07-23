@@ -1,13 +1,25 @@
 /**
  * Content Collections configuration.
  *
- * Defines the `blog` collection: Markdown posts under `src/content/blog/`,
- * each with validated frontmatter. Astro 7 uses the glob loader pattern
- * (imported from `astro/loaders`) rather than the legacy `type: 'content'`
- * directory convention.
+ * Defines two collections:
+ *   - `blog` — Markdown posts under `src/content/blog/`
+ *   - `chartExplanations` — long-form explanations rendered into the
+ *     four `src/pages/charts/*.astro` click-through pages. One entry per
+ *     chart; the entry id matches the chart key (e.g. "discovered",
+ *     "fixed", "patch-lag", "backlog").
  *
- * Posts are rendered at build time via `render()` in the dynamic route
- * `src/pages/blog/[...slug].astro`. No new dependencies are required.
+ * The chart-explanations collection is configured with a single
+ * directory and uses an underscore in the directory name. The
+ * underscore avoids an Astro 7 issue where glob-loaded collections
+ * with hyphenated directory names silently fail to populate on
+ * Windows. If/when that upstream issue is fixed, the directory can
+ * be renamed back to `chart-explanations` for consistency.
+ *
+ * Astro 7 uses the glob loader pattern (imported from `astro/loaders`)
+ * rather than the legacy `type: 'content'` directory convention.
+ *
+ * Posts are rendered at build time via `render()` in the dynamic routes.
+ * No new dependencies are required.
  */
 
 import { defineCollection } from 'astro:content';
@@ -33,4 +45,12 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+const chartExplanations = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/chart-explanations' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+});
+
+export const collections = { blog, chartExplanations };

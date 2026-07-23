@@ -184,28 +184,79 @@ export function buildRecord(
  * yielding a real patch lag.
  *
  * Preference order for each field:
- * - discoveredDate: NVD published date > vendor date (NVD is closer to
- *   actual discovery; vendor date is the advisory/patch date)
- * - patchedDate: vendor date > NVD (NVD doesn't have patch dates)
+ * - discoveredDate: earliest among the candidates that match the
+ *   CVE-year sanity check (DATE_SANITY_MAX_YEARS). If both candidates
+ *   fail, returns null and the caller drops the record rather than
+ *   contaminating the dataset with a known-bad date. See the
+ *   dedupRecords header comment for the full rationale.
+ * - patchedDate: vendor date > NVD (NVD doesn't have patch dates);
+ *   OSV's `modified` is a low-confidence patch proxy
  * - severity/cvss: whichever is present (prefer vendor if both)
  * - source: keep the vendor source (richer data overall)
+ *
+ * Returns `null` when the only available `discoveredDate` candidates
+ * both fail the CVE-year sanity check — letting the dedup drop the
+ * record entirely rather than shipping a known-bad date into the
+ * aggregated data.
  */
 function mergeRecords(
   vendor: VulnerabilityRecord,
   nvd: VulnerabilityRecord,
-): VulnerabilityRecord {
-  // Use NVD's discoveredDate if the vendor's discoveredDate equals its
-  // patchedDate (i.e. the vendor used the patch date as a discovery proxy).
-  // Otherwise keep the vendor's discoveredDate (it may be from Project Zero
-  // which has real Reported- dates).
-  const useNvdDiscovery =
-    vendor.discoveredDate === vendor.patchedDate &&
-    nvd.discoveredDate &&
-    nvd.discoveredDate !== vendor.patchedDate;
+): VulnerabilityRecord | null {
+  // Apply the CVE-year sanity check to each candidate before picking.
+  // Whichever candidates pass are merged with the "vendor used patch as
+  // discovery" legacy tie-breaker. See the dedupRecords header comment
+  // for the full rationale.
+  const saneVendorDate = dateMatchesCveYear(vendor.discoveredDate, vendor.cveIds ?? [vendor.id]);
+  const saneNvdDate = dateMatchesCveYear(nvd.discoveredDate, nvd.cveIds ?? [nvd.id]);
 
-  const discoveredDate = useNvdDiscovery
-    ? nvd.discoveredDate
-    : vendor.discoveredDate;
+  // Surviving candidates in source-precedence order: vendor first (we
+  // already established vendor > NVD in this function), then NVD.
+  const candidates: string[] = [];
+  if (saneVendorDate) candidates.push(saneVendorDate);
+  if (saneNvdDate && saneNvdDate !== saneVendorDate) candidates.push(saneNvdDate);
+
+  // Pick the earliest surviving candidate. The "earliest wins" rule is
+  // what catches MSRC catalog re-imports: the spurious 2025-09-04
+  // stamp loses to NVD's 2010-12-15 `published` (which survives the
+  // sanity check because it matches the CVE-year of CVE-2010-4756).
+  //
+  // We also accept the legacy single-source fallback (vendor date only,
+  // no NVD record) so a vendor-only CVE isn't dropped just because its
+  // date fails the strict sanity check — but only for records that
+  // come from a vendor source, which legitimately publishes both
+  // before-disclosure and post-disclosure and may legitimately have
+  // a year offset (e.g. CVE-2016-9535 announced in 2017).
+  let discoveredDate: string;
+  if (candidates.length > 0) {
+    discoveredDate = candidates.reduce((earliest, cur) => (cur < earliest ? cur : earliest));
+  } else if (vendor.discoveredDate) {
+    // Single-source CVE: only the vendor has a date, and it failed
+    // the sanity check. Drop the record rather than ship a
+    // known-bad date into the aggregated data — the audit script
+    // surfaces what we dropped so an operator can investigate.
+    return null;
+  } else if (nvd.discoveredDate) {
+    // Vendor has no date; use NVD's even if it failed the sanity
+    // check (better than nothing).
+    discoveredDate = nvd.discoveredDate;
+  } else {
+    // Neither source has a date. Drop rather than emit an empty
+    // string (which would corrupt time-series aggregations).
+    return null;
+  }
+
+  // Legacy tie-breaker: if the chosen discovery date equals the
+  // vendor's patched date, that's a signal the vendor used the patch
+  // date as a discovery proxy. Promote the NVD date in that case
+  // (only if it survived the sanity check and differs).
+  if (
+    discoveredDate === vendor.patchedDate &&
+    saneNvdDate &&
+    saneNvdDate !== vendor.patchedDate
+  ) {
+    discoveredDate = saneNvdDate;
+  }
 
   const patchedDate = vendor.patchedDate ?? nvd.patchedDate;
   const patchLagDays = computePatchLagDays(discoveredDate, patchedDate);
@@ -222,12 +273,100 @@ function mergeRecords(
 }
 
 /**
+ * Maximum allowed offset (in years) between a record's `discoveredDate`
+ * and the CVE ID's CVE-year before the date is treated as an upstream
+ * pipeline artefact and discarded during dedup. MSRC's catalog
+ * re-imports currently use a 2025-09-03 stamp for CVEs going back to
+ * 1999, so a tolerance of 1 year is comfortably tight for legitimate
+ * data and aggressively rejects the artefact. Bump this only if a real
+ * source starts producing legitimately-late disclosures (e.g. CVE
+ * assignment for a long-running embargo).
+ */
+export const DATE_SANITY_MAX_YEARS = 1;
+
+/**
+ * Test whether a record's `discoveredDate` is plausibly close to the
+ * CVE's CVE-year. Returns the unchanged date if it is, or `undefined`
+ * if it isn't.
+ *
+ * Exported so the audit script can flag records where *both* candidates
+ * fail the sanity check (those are the ones that survive into the
+ * final dataset as known-bad dates and need human attention).
+ */
+export function dateMatchesCveYear(
+  date: string | undefined,
+  cveIds: string[],
+): string | undefined {
+  if (!date) return undefined;
+  if (cveIds.length === 0) return date;
+
+  const dateYear = Number.parseInt(date.slice(0, 4), 10);
+  if (!Number.isFinite(dateYear)) return date;
+
+  for (const cveId of cveIds) {
+    const m = cveId.match(/^CVE-(\d{4})-\d+$/i);
+    if (!m) continue;
+    const cveYear = Number.parseInt(m[1], 10);
+    if (!Number.isFinite(cveYear)) continue;
+    const diff = Math.abs(dateYear - cveYear);
+    if (diff <= DATE_SANITY_MAX_YEARS) return date;
+  }
+
+  // No CVE in the list had a year within tolerance. Reject the date.
+  return undefined;
+}
+
+/**
+ * Source precedence order for dedup. A "lower" value means the source
+ * is more authoritative and is preferred when merging.
+ *
+ *   1 = vendor advisory (Mozilla, MSRC, Chrome, Apple, …)
+ *   2 = osv              (richer timing than NVD; cross-vendor curated)
+ *   3 = nvd              (fallback cross-vendor coverage)
+ */
+const SOURCE_PRECEDENCE: Record<string, number> = {
+  mozilla: 1,
+  msrc: 1,
+  apple: 1,
+  chrome: 1,
+  pan: 1,
+  fortinet: 1,
+  adobe: 1,
+  projectzero: 1,
+  cisco: 1, // stub-only; same precedence as other vendors
+  osv: 2,
+  nvd: 3,
+};
+
+function precedenceOf(source: string): number {
+  return SOURCE_PRECEDENCE[source] ?? 3;
+}
+
+/**
  * Deduplicate an array of records by their `id` field.
  *
- * When a vendor record and an NVD record share the same ID, they are
- * merged: the NVD `published` date is used as `discoveredDate` (a proxy
- * for when the vulnerability was first reported) and the vendor's
- * `patchedDate` is kept. This yields a real patch lag instead of 0.
+ * When multiple sources report the same CVE we keep the most authoritative
+ * (per `SOURCE_PRECEDENCE`) and fold in better-timed fields from the others.
+ *
+ * ## Date selection
+ *
+ * The merge picks the most plausible `discoveredDate` from the union of
+ * the primary's and secondary's candidates. Two guards apply, in order:
+ *
+ *  1. **CVE-year sanity check.** If one candidate's year differs from
+ *     the CVE ID's CVE-year by more than {@link DATE_SANITY_MAX_YEARS}
+ *     (default 1 year), it's an upstream-pipeline artefact
+ *     (e.g. MSRC catalog re-imports stamp 1999 CVEs with 2025 dates).
+ *     Discard the bad candidate before picking the earlier remaining
+ *     one.
+ *
+ *  2. **"Vendor used patch as discovery" legacy check.** Keep this as a
+ *     secondary tie-breaker: if the surviving primary candidate equals
+ *     the primary's `patchedDate` (Mozilla's behaviour), promote the
+ *     secondary's date if present.
+ *
+ * Both candidates passing both checks is rare; in that case we keep the
+ * primary's date.
  */
 export function deduplicateRecords(
   records: VulnerabilityRecord[],
@@ -241,16 +380,30 @@ export function deduplicateRecords(
       continue;
     }
 
-    // Merge vendor + NVD records to get real patch lag
-    if (existing.source === 'nvd' && record.source !== 'nvd') {
-      byId.set(record.id, mergeRecords(record, existing));
-    } else if (record.source === 'nvd' && existing.source !== 'nvd') {
-      byId.set(record.id, mergeRecords(existing, record));
+    const existingP = precedenceOf(existing.source);
+    const recordP = precedenceOf(record.source);
+
+    // Same precedence → keep the first
+    if (existingP === recordP) continue;
+
+    // The "primary" is the more authoritative source; the "secondary"
+    // contributes timing data only. Routing both call sites through
+    // the shared `mergeRecords` keeps the date-selection logic in one
+    // place so the CVE-year sanity check applies everywhere. If the
+    // merge returns null (both candidates failed the sanity check),
+    // we drop the record rather than ship a known-bad date.
+    const merged =
+      existingP < recordP
+        ? mergeRecords(existing, record)
+        : mergeRecords(record, existing);
+    if (merged === null) {
+      byId.delete(record.id);
+      continue;
     }
-    // If both are from the same category, keep the first (no merge needed)
+    byId.set(record.id, merged);
   }
 
-  return [...byId.values()];
+  return [...byId.values()].filter((r): r is VulnerabilityRecord => r !== null);
 }
 
 /**
@@ -261,8 +414,8 @@ export function deduplicateRecords(
  * advisories that cover multiple CVEs from appearing multiple times in the
  * output and inflating downstream counts.
  *
- * When a vendor record and an NVD record share the same CVE, they are
- * merged (see `mergeRecords`) to produce a real patch lag.
+ * When multiple sources report the same CVE we keep the most authoritative
+ * (per `SOURCE_PRECEDENCE`) and fold in better-timed fields from the others.
  *
  * Records with no CVE IDs are deduplicated by their own `id` field and
  * included as-is.
@@ -283,13 +436,24 @@ export function deduplicateByCve(
         continue;
       }
 
-      // Merge vendor + NVD records to get real patch lag
-      if (existing.source === 'nvd' && record.source !== 'nvd') {
-        byCve.set(cve, { ...mergeRecords(record, existing), id: cve, cveIds: [cve] });
-      } else if (record.source === 'nvd' && existing.source !== 'nvd') {
-        byCve.set(cve, { ...mergeRecords(existing, record), id: cve, cveIds: [cve] });
+      const existingP = precedenceOf(existing.source);
+      const recordP = precedenceOf(record.source);
+      if (existingP === recordP) continue;
+
+      // Same source precedence means we just keep the first-encountered
+      // record (no merge needed) and continue. The merge only happens
+      // across precedence levels, exactly like deduplicateRecords.
+      if (existingP < recordP) {
+        // existing is primary; record is secondary
+        const merged = mergeRecords(existing, record);
+        if (merged === null) continue; // both candidates failed sanity — drop
+        byCve.set(cve, { ...merged, id: cve, cveIds: [cve] });
+      } else {
+        // record is primary; existing is secondary
+        const merged = mergeRecords(record, existing);
+        if (merged === null) continue; // both candidates failed sanity — drop
+        byCve.set(cve, { ...merged, id: cve, cveIds: [cve] });
       }
-      // If both are from the same category, keep the first
     }
   }
 

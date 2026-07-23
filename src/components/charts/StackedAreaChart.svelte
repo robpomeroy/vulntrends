@@ -20,18 +20,86 @@
     brushY,
     renderBrushStrip,
   } from '@/lib/d3/brush';
-  import { inDateRange, type DateRange } from '@/lib/store';
+  import { dashboardStore, inDateRange, type DateRange } from '@/lib/store';
 
   interface Props {
     data: Array<{ date: string; manufacturer: string; count: number }>;
     yLabel: string;
     granularity: 'month' | 'year';
     selectedManufacturers: string[];
-    /** Optional time-range filter. null = show all time. */
+    /**
+     * Time-range filter. Omit this prop to let the brush and
+     * RangeSelector own the date range via the shared `dashboardStore`
+     * (recommended for click-through pages where the chart is the
+     * only component on the page). On the dashboard, Dashboard.svelte
+     * passes the store-derived value explicitly so multiple charts
+     * stay in sync via the same store instance.
+     *
+     * Pass `null` to force "show all time" — the brush won't be able
+     * to override this. (Useful for charts you want to lock at full
+     * history even when there's an active brush selection.)
+     */
     dateRange?: DateRange | null;
+    /**
+     * Initial range to seed the store with on mount, used by
+     * click-through pages to default to "Since 2013" before the user
+     * touches the brush. Only applied when the store's current
+     * dateRange is null (i.e. the user hasn't made a choice yet).
+     * Ignored if `dateRange` is also passed (the dashboard pattern).
+     */
+    initialDateRange?: DateRange | null;
+    /**
+     * Override the main chart's height in pixels. Default 260
+     * (matches the dashboard grid card). Larger values are used by
+     * the click-through pages for a more readable full-width view.
+     * The brush strip and gaps scale proportionally below.
+     */
+    mainHeight?: number;
   }
 
-  let { data, yLabel, granularity, selectedManufacturers, dateRange = null }: Props = $props();
+  let {
+    data,
+    yLabel,
+    granularity,
+    selectedManufacturers,
+    // `undefined` default (not `null`) — see the comment on the
+    // `dateRange` prop type. This is what lets the derived
+    // distinguish "parent didn't pass dateRange — use the store"
+    // from "parent explicitly passed null — force all time".
+    dateRange = undefined as DateRange | null | undefined,
+    initialDateRange = null,
+    mainHeight: mainHeightProp = 260,
+  }: Props = $props();
+
+  /**
+   * Read from the shared store so the brush on a click-through
+   * page (where no `dateRange` prop is passed) updates the visible
+   * window. The dashboard's `Dashboard.svelte` already binds
+   * `dateRange` to the store, so this derived value is identical to
+   * the prop there — but on standalone chart pages it lets the
+   * brush drive the chart through the per-island store.
+   *
+   * We fall back to the store whenever the prop is missing OR
+   * explicitly null (`dateRange == null` in JS loose equality
+   * matches both). The reason: in Svelte 5, when a Svelte wrapper
+   * component doesn't receive `dateRange` from its parent, the
+   * Astro→Svelte island bridge can pass it as either `undefined`
+   * or `null` — there's no clean way to distinguish "omitted"
+   * from "explicitly null" through a wrapping Svelte component.
+   * We treat both identically: "no explicit range, let the
+   * store/initialDateRange decide".
+   *
+   * When `initialDateRange` is set, it's used as the seed for the
+   * store-derived path so the chart has a sensible starting range
+   * even before the user touches the brush. After the first user
+   * interaction the store takes over fully.
+   */
+  let storeDateRange = $derived($dashboardStore.dateRange);
+  let effectiveDateRange = $derived(
+    dateRange == null
+      ? (storeDateRange ?? initialDateRange)
+      : dateRange,
+  );
 
   let container: HTMLDivElement;
   let tooltip: Tooltip;
@@ -49,7 +117,7 @@
   );
 
   // Filter data by selected manufacturers, then by date range
-  let filteredData = $derived(inDateRange(fullData, dateRange));
+  let filteredData = $derived(inDateRange(fullData, effectiveDateRange));
 
   $effect(() => {
     if (!svg || !filteredData) return;
@@ -61,10 +129,10 @@
     const el = container;
     const width = el.clientWidth;
 
-    // Layout: main chart (260px) + gap (BRUSH_LAYOUT.gap) + brush strip
-    // (BRUSH_LAYOUT.stripHeight). Constants live in lib/d3/brush so
-    // every chart renders the strip identically.
-    const mainHeight = 260;
+    // Layout: main chart (configurable, default 260px) + gap (BRUSH_LAYOUT.gap)
+// + brush strip (BRUSH_LAYOUT.stripHeight). Constants live in lib/d3/brush
+// so every chart renders the strip identically.
+    const mainHeight = mainHeightProp;
     const height = mainHeight + BRUSH_LAYOUT.gap + BRUSH_LAYOUT.stripHeight;
     // margin.left is wider than usual so 4–5 digit y-axis tick labels
     // (e.g. "25,000" on the backlog chart) don't overlap the rotated
@@ -92,8 +160,8 @@
         : d3.timeParse('%Y');
 
     if (filteredData.length === 0) {
-      const message = dateRange
-        ? `No data in selected range (${dateRange.start} -> ${dateRange.end})`
+      const message = effectiveDateRange
+        ? `No data in selected range (${effectiveDateRange.start} -> ${effectiveDateRange.end})`
         : 'No data available';
       d3.select(svg)
         .append('text')
@@ -125,7 +193,7 @@
       yOffset: stripY,
       data: brushData,
       granularity,
-      dateRange,
+      dateRange: effectiveDateRange,
     });
   }
 

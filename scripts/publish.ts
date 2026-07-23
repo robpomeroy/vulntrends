@@ -13,7 +13,7 @@
  *                          the pipeline without deploying)
  *   --only=<stages>        Run only the named comma-separated stages (executed
  *                          in canonical order according to `STAGES`).
- *                          Stages: data:build, data:validate, build, rsync.
+//                          Stages: data:build, data:validate, data:audit, data:archive, data:csv, build, rsync.
  *                          Example: --only=rsync  (re-run only the rsync step)
  *   --skip=<stages>        Run every stage EXCEPT the named ones.
  *                          Example: --skip=data:build  (deploy the existing
@@ -54,7 +54,7 @@ const dryRun = args.includes('--dry-run');
 
 // Stages, in canonical execution order. Reused by --only/--skip
 // validation and by `main()` to gate each step.
-const STAGES = ['data:build', 'data:validate', 'build', 'rsync'] as const;
+const STAGES = ['data:build', 'data:validate', 'data:audit', 'data:archive', 'data:csv', 'build', 'rsync'] as const;
 type Stage = (typeof STAGES)[number];
 
 function parseStageList(raw: string): Stage[] {
@@ -355,6 +355,27 @@ function main(): void {
   // Step 2: Validate
   if (activeStages.includes('data:validate')) {
     runStep('data:validate', 'npm', ['run', 'data:validate']);
+  }
+
+  // Step 2.4: Semantic data audit (E5). Emits warnings (not errors) for
+  // data quality issues like CVE-year mismatches, future dates, YoY
+  // outliers, and per-manufacturer patch-date coverage gaps. Runs
+  // after validate so the Zod-shape check has already confirmed the
+  // file structure.
+  if (activeStages.includes('data:audit')) {
+    runStep('data:audit', 'npm', ['run', 'data:audit']);
+  }
+
+  // Step 2.5: Archive snapshot (Tier-2 retention). Runs after validate
+  // so we only archive known-good data. See scripts/archive-snapshot.ts.
+  if (activeStages.includes('data:archive')) {
+    runStep('data:archive', 'npm', ['run', 'data:archive']);
+  }
+
+  // Step 2.6: Export CSVs for click-through downloads. The CSV files
+  // must exist before `astro build` so they're included in dist/.
+  if (activeStages.includes('data:csv')) {
+    runStep('data:csv', 'npm', ['run', 'data:csv']);
   }
 
   // Step 3: Build site — invoke through `npm run build` (the

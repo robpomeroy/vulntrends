@@ -141,3 +141,115 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---- Long-form prose (chart explanations) ----
+ *
+ * Hand-rolled typography for the Markdown rendered into the click-through
+ * chart pages. We avoid the `@tailwindcss/typography` plugin to keep the
+ * dependency footprint small — the explanations only need a handful of
+ * element styles, and rolling our own keeps us on the project's
+ * existing design tokens.
+ *
+ * Wrapped in `@layer base` so Tailwind utilities (e.g. text-vt-text-muted
+ * on the inline download link) win the cascade where they apply.
+ */
+@layer base {
+  .vt-prose h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--vt-text-primary);
+    border-bottom: 1px solid var(--vt-border);
+    padding-bottom: 0.5rem;
+  }
+
+  .vt-prose h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--vt-text-primary);
+  }
+
+  .vt-prose p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    line-height: 1.65;
+    color: var(--vt-text-secondary);
+  }
+
+  /* Last paragraph in a section has no bottom margin so it sits
+     cleanly against the next heading. */
+  .vt-prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .vt-prose ul,
+  .vt-prose ol {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    color: var(--vt-text-secondary);
+    line-height: 1.65;
+  }
+
+  .vt-prose ul {
+    list-style: disc;
+  }
+
+  .vt-prose ol {
+    list-style: decimal;
+  }
+
+  .vt-prose li {
+    margin-bottom: 0.375rem;
+  }
+
+  .vt-prose li > p {
+    margin-bottom: 0.5rem;
+  }
+
+  .vt-prose a {
+    color: var(--vt-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .vt-prose a:hover {
+    color: #7dd3fc;
+  }
+
+  .vt-prose strong {
+    color: var(--vt-text-primary);
+    font-weight: 600;
+  }
+
+  .vt-prose em {
+    color: var(--vt-text-primary);
+    font-style: italic;
+  }
+
+  .vt-prose code {
+    background-color: var(--vt-bg-tertiary);
+    color: var(--vt-text-primary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--vt-radius-sm);
+    font-size: 0.875em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .vt-prose hr {
+    border: 0;
+    border-top: 1px solid var(--vt-border);
+    margin: 2rem 0;
+  }
+
+  .vt-prose blockquote {
+    border-left: 3px solid var(--vt-accent);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: var(--vt-text-secondary);
+    font-style: italic;
+  }
+}

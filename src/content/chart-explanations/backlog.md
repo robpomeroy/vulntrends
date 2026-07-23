@@ -77,11 +77,11 @@ how completely their patch data is captured.
 
 ## How to interpret
 
-A growing backlog for a manufacturer over multiple consecutive
-years is a strong indicator of under-investment in security
-patches. A flatline can be healthy (stable patching throughput)
-or unhealthy (stagnation against a growing number of new
-disclosures — compare with the "discovered" chart).
+A growing backlog for a manufacturer over multiple consecutive years is a strong
+indicator of under-investment in security years can indicate that patching
+throughput is not keeping pace with new disclosures (or that patch-date coverage
+is incomplete). Compare with the "discovered" chart and the patch-date coverage
+limitations above.
 
 Sudden drops in a manufacturer's backlog curve usually reflect a new patch-data
 source becoming available, not a sudden wave of simultaneous fixes — for

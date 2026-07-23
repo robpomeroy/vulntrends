@@ -81,15 +81,15 @@ updates records for non-fix reasons).
 
 ## How to interpret
 
-A rising patch lag trend is a strong negative signal for a
-manufacturer. It often indicates:
+A rising patch lag trend can indicate slower patch turnaround for a
+manufacturer. Possible contributing factors include:
 
 - Increasing product surface area (more code to patch)
 - Resource constraints in the security team
 - A change in disclosure practice (more internal discoveries going
   public without a coinciding patch)
 
-A falling patch lag is generally positive, but check the
-confidence indicator first: a manufacturer whose confidence rose
-along with patch lag reduction may just be publishing more
-discovery dates, not actually patching faster.
+A falling patch lag trend can indicate faster patch turnaround, but check the
+confidence indicator first: a manufacturer whose confidence rose along with a
+patch lag reduction may just be publishing more discovery dates, not actually
+patching faster.

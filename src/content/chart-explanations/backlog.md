@@ -83,9 +83,8 @@ patches. A flatline can be healthy (stable patching throughput)
 or unhealthy (stagnation against a growing number of new
 disclosures — compare with the "discovered" chart).
 
-Sudden drops in a manufacturer's backlog curve usually reflect a
-new patch-data source becoming available, not a sudden wave of
-simultaneous fixes — for example, when a vendor starts publishing
-historical patch dates. Always check the meta.json
-`sourceCounts.delta` values in the about page to spot this kind
+Sudden drops in a manufacturer's backlog curve usually reflect a new patch-data
+source becoming available, not a sudden wave of simultaneous fixes — for
+example, when a vendor starts publishing historical patch dates. Always check
+`src/data/meta.json` (especially `sourceCounts` and `sources`) to spot this kind
 of data-source change before drawing conclusions.

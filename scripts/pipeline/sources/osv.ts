@@ -85,14 +85,24 @@ function cvssVectorToScore(vector: string): number | undefined {
   // and is accurate within 0.1 for the Impact+Exploitability halves.
   const AV: Record<string, number> = { N: 0.85, A: 0.62, L: 0.55, P: 0.2 };
   const AC: Record<string, number> = { L: 0.77, H: 0.44 };
+  // PR base values for scope-UNCHANGED (S:U). The scope-CHANGED (S:C)
+  // values are 0.5× the unchanged ones, so we look them up here too.
+  // See https://www.first.org/cvss/v3.1/specification-document#7-2-3-2
   const PR: Record<string, number> = {
     N: 0.85,
     L: 0.62,
     H: 0.27,
-    // Scope-modifier prefix handled below
+    // Scope-changed (S:C) variants
+    'C:N': 0.85,
+    'C:L': 0.68,
+    'C:H': 0.5,
   };
   const UI: Record<string, number> = { N: 0.85, R: 0.62 };
+  // S here is the Scope metric (Changed/Unchanged), NOT impact values.
+  // C/I/A below use the CI (Confidentiality/Integrity/Availability
+  // Impact) map, keyed by H/L/N (High/Low/None).
   const S: Record<string, number> = { C: 1.0, U: 0.0, I: 0.0, A: 0.0 };
+  const CI: Record<string, number> = { H: 0.56, L: 0.22, N: 0.0 };
 
   const av = AV[metrics.AV];
   const ac = AC[metrics.AC];
@@ -105,9 +115,13 @@ function cvssVectorToScore(vector: string): number | undefined {
   const ui = UI[metrics.UI];
   const s = S[metrics.S];
 
-  const c = (metrics.C && S[metrics.C]) ?? 0;
-  const i = (metrics.I && S[metrics.I]) ?? 0;
-  const a = (metrics.A && S[metrics.A]) ?? 0;
+  // C/I/A metric values are H/L/N (impact levels), not scope values.
+  // Previously looked up in S which only has C/U/I/A, so every lookup
+  // returned undefined and silently zeroed-out the impact sub-scores
+  // (making the function return 0 for most vectors).
+  const c = CI[metrics.C] ?? 0;
+  const i = CI[metrics.I] ?? 0;
+  const a = CI[metrics.A] ?? 0;
 
   if (!av || !ac || pr === undefined || !ui) return undefined;
 

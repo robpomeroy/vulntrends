@@ -33,7 +33,7 @@ advisory date, not the date our pipeline ingested it.
 
 The chart counts records from any source whose parser populates
 `discoveredDate` — the full set is documented in
-[`src/lib/manufacturers.ts`](../../../../scripts/pipeline/types.ts).
+[`src/lib/manufacturers.ts`](../../lib/manufacturers.ts).
 Where multiple sources report the same CVE (identical `id`),
 deduplication prefers vendor advisories over NVD, since advisories
 typically have more accurate timing.

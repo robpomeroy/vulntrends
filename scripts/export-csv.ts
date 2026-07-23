@@ -29,7 +29,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '..', 'src', 'data');
 const AGG_DIR = join(DATA_DIR, 'aggregated');
 // Output to public/ so Astro copies CSVs into dist/data/ verbatim and
-// serves them at /data/<file>.cs v. Same pattern as og-image.jpg.
+// serves them at /data/<file>.csv. Same pattern as og-image.jpg.
 const PUBLIC_DATA_DIR = resolve(__dirname, '..', 'public', 'data');
 
 async function readJson<T>(path: string): Promise<T> {

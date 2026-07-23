@@ -35,9 +35,9 @@
      * passes the store-derived value explicitly so multiple charts
      * stay in sync via the same store instance.
      *
-     * Pass `null` to force "show all time" — the brush won't be able
-     * to override this. (Useful for charts you want to lock at full
-     * history even when there's an active brush selection.)
+     * Note: due to the Astro→Svelte island bridge, an omitted `dateRange`
+     * may arrive as either `undefined` or `null`; both are treated as
+     * "use the shared store" (optionally seeded by `initialDateRange`).
      */
     dateRange?: DateRange | null;
     /**

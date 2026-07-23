@@ -201,13 +201,25 @@ async function main(): Promise<void> {
   }
 
   // ---- A3: Future-dated records ----
-  const futureDated: VulnerabilityRecord[] = [];
+  // A record is "future-dated" if EITHER discoveredDate or patchedDate
+  // is more than FUTURE_DATE_GRACE_DAYS beyond today. We compare against
+  // the cutoff (not todayIso) so the grace window actually applies;
+  // previously the constant was decorative and any record dated
+  // tomorrow tripped the check.
+  //
+  // Each record counts at most once even if both dates are future — the
+  // `seen` Set guards against double-counting. The reported count is
+  // records-with-a-future-date, not date-occurrences.
   const futureCutoff = new Date(today.getTime() + FUTURE_DATE_GRACE_DAYS * 86_400_000);
+  const futureCutoffIso = futureCutoff.toISOString().slice(0, 10);
+  const futureDated: VulnerabilityRecord[] = [];
+  const seen = new Set<string>();
   for (const r of records) {
-    if (r.discoveredDate > todayIso) {
-      futureDated.push(r);
-    }
-    if (r.patchedDate && r.patchedDate > todayIso) {
+    const isFuture =
+      r.discoveredDate > futureCutoffIso ||
+      (!!r.patchedDate && r.patchedDate > futureCutoffIso);
+    if (isFuture && !seen.has(r.id)) {
+      seen.add(r.id);
       futureDated.push(r);
     }
   }

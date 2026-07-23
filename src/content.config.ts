@@ -4,22 +4,27 @@
  * Defines two collections:
  *   - `blog` — Markdown posts under `src/content/blog/`
  *   - `chartExplanations` — long-form explanations rendered into the
- *     four `src/pages/charts/*.astro` click-through pages. One entry per
- *     chart; the entry id matches the chart key (e.g. "discovered",
- *     "fixed", "patch-lag", "backlog").
+ *     click-through chart pages. One entry per chart; the entry id
+ *     matches the chart key (e.g. "discovered", "fixed",
+ *     "patch-lag", "backlog", "severity-mix").
  *
- * The chart-explanations collection is configured with a single
- * directory and uses an underscore in the directory name. The
- * underscore avoids an Astro 7 issue where glob-loaded collections
- * with hyphenated directory names silently fail to populate on
- * Windows. If/when that upstream issue is fixed, the directory can
- * be renamed back to `chart-explanations` for consistency.
+ * Note on naming: the collection KEY in the `collections` export is
+ * `chartExplanations` (camelCase — must be a valid JavaScript
+ * identifier, since `getEntry('chartExplanations', ...)` is called
+ * from the chart page templates). The on-disk directory uses the
+ * natural hyphenated form `src/content/chart-explanations/` for
+ * readability. The two are decoupled: Astro's glob loader reads
+ * files from the `base` path and indexes them under the
+ * collection's export key, so the directory name and the key do
+ * not have to match. The glob pattern used here is `*.md` underneath
+ * `src/content/chart-explanations/` and likewise contains no
+ * collection-name reference.
  *
  * Astro 7 uses the glob loader pattern (imported from `astro/loaders`)
  * rather than the legacy `type: 'content'` directory convention.
  *
- * Posts are rendered at build time via `render()` in the dynamic routes.
- * No new dependencies are required.
+ * Posts are rendered at build time via `render()` in the dynamic
+ * routes. No new dependencies are required.
  */
 
 import { defineCollection } from 'astro:content';

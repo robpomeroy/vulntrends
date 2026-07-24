@@ -16,7 +16,7 @@
  * readability. The two are decoupled: Astro's glob loader reads
  * files from the `base` path and indexes them under the
  * collection's export key, so the directory name and the key do
- * not have to match. The glob pattern used here is `*.md` underneath
+ * not have to match. The glob pattern used here is `**` + `/*.md` underneath
  * `src/content/chart-explanations/` and likewise contains no
  * collection-name reference.
  *

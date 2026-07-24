@@ -222,8 +222,8 @@ function aggregatePatchLag(
  *
  *   2. **Implicit close at horizon.** When the timeline walks past
  *      `today - BACKLOG_STALE_YEARS`, every still-open vulnerability
- *      is auto-closed at that date. This produces a smooth tail-off
- *      rather than a sharp cliff at the latest data date.
+ *      is auto-closed at that cutoff date. This caps unbounded growth
+ *      when patch dates are missing, but will typically create a step change.
  *
  * The chosen stale horizon is also emitted to the audit log so the
  * operator can see which assumption was applied for this run.

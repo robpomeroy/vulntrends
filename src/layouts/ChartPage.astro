@@ -25,14 +25,9 @@ interface Props {
   chartName: string;
   /** Slug of the underlying CSV file (without "data/" prefix). */
   csvFilename: string;
-  /** Inline base chart component JSX (e.g. `<DiscoveredChart ... />`). */
-  chart?: unknown;
-  /** Inline explanation slot (ChartExplanation content collection entry). */
-  explanationHtml?: unknown;
 }
 
-const { title, description, chartName, csvFilename, chart, explanationHtml } = Astro.props;
-
+const { title, description, chartName, csvFilename } = Astro.props;
 const canonicalUrl = Astro.url.href;
 const pathname = Astro.url.pathname;
 const isDashboardActive = pathname === '/' || pathname === '';

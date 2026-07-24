@@ -64,7 +64,7 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
     <h4 class="mt-6 mb-2 text-base font-semibold text-vt-text-secondary">Direct feeds</h4>
     <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
       <li><strong class="text-vt-text-primary">Mozilla</strong> — Mozilla Foundation Security Advisories (MFSA JSON feed).</li>
-      <li><strong class="text-vt-text-primary">Microsoft</strong> — Security Response Center (MSRC) CVRF API. The parser uses per-vulnerability <code>RevisionHistory</code> dates to recover each CVE's true first-disclosure date rather than the catalog-wide <code>CurrentReleaseDate</code>. <strong>Mariner documents are filtered out</strong> at the parser — MSRC also publishes a per-distro catalog for Mariner (their Linux distribution) whose CVEs are upstream Linux entries (kernel, glibc, OpenSSL, …); without the filter, every re-import of that catalog would spike the <em>Vulnerabilities discovered</em> chart with thousands of non-Microsoft CVEs dated to the import moment. The filter is documented in <code>scripts/pipeline/sources/msrc.ts</code> and has a regression test in <code>scripts/pipeline/test-msrc-mariner.mjs</code>.</li>
+      <li><strong class="text-vt-text-primary">Microsoft</strong> — Security Response Center (MSRC) CVRF API. The parser uses per-vulnerability <code>RevisionHistory</code> dates to recover each CVE's true first-disclosure date rather than the catalogue-wide <code>CurrentReleaseDate</code>. <strong>Mariner documents are filtered out</strong> at the parser — MSRC also publishes a per-distro catalogue for Mariner (their Linux distribution) whose CVEs are upstream Linux entries (kernel, glibc, OpenSSL, …); without the filter, every re-import of that catalogue would spike the <em>Vulnerabilities discovered</em> chart with thousands of non-Microsoft CVEs dated to the import moment. The filter is documented in <code>scripts/pipeline/sources/msrc.ts</code> and has a regression test in <code>scripts/pipeline/test-msrc-mariner.mjs</code>.</li>
       <li><strong class="text-vt-text-primary">Google Chrome</strong> — Chrome Releases blog (Blogger's Atom JSON feed). HTML scraping is unreliable for this page (ad-network redirects), so the parser consumes the structured feed instead.</li>
       <li><strong class="text-vt-text-primary">Apple</strong> — Support articles on <code>support.apple.com</code> (the <code>gb-table</code> index, since the legacy <code>HT\d+</code> URL pattern is gone).</li>
       <li><strong class="text-vt-text-primary">Palo Alto Networks</strong> — <code>security.paloaltonetworks.com/json</code>.</li>
@@ -190,7 +190,7 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
       check (A6) that flags any record whose <code>discoveredDate</code>
       falls in the last 18 months but whose CVE-year is at least 2
       years earlier — the signature of an upstream "we just re-imported
-      our historical catalog" artefact that produced the misleading
+      our historical catalogue" artefact that produced the misleading
       MSRC spike through 2024-Q3. A6 hard-errors the build if it
       triggers, so a regression in the parser filter or the dedup
       merge fails fast rather than silently producing a chart with a

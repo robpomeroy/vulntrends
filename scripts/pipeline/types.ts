@@ -17,7 +17,8 @@ export type SourceId =
   | 'fortinet'
   | 'cisco'
   | 'adobe'
-  | 'nvd';
+  | 'nvd'
+  | 'osv';
 
 /** Severity levels, ordered from most to least severe. */
 export type Severity = 'critical' | 'high' | 'medium' | 'low';
@@ -55,6 +56,27 @@ export interface VulnerabilityRecord {
   cveIds?: string[];
   /** URL to the original advisory or issue. */
   rawUrl?: string;
+  /**
+   * Provenance metadata — when and from where this record was fetched.
+   * Enables audit trails and drift detection (see docs/plans/
+   * 2026-07-22-improvement-plan.md §E6).
+   */
+  provenance?: Provenance;
+}
+
+/**
+ * Provenance metadata attached to each vulnerability record. Captures the
+ * pipeline run that produced the record so downstream consumers (the
+ * click-through pages, CSV downloads) can cite exactly where each data
+ * point came from.
+ */
+export interface Provenance {
+  /** ISO timestamp when the source was fetched. */
+  fetchedAt: string;
+  /** Source identifier (same as `record.source`, denormalised for clarity). */
+  source: SourceId;
+  /** Optional source-specific version string (e.g. MSRC update ID). */
+  sourceVersion?: string;
 }
 
 /**
@@ -67,6 +89,30 @@ export interface PipelineMeta {
   sourceCounts: Record<SourceId, number>;
   /** Total records across all sources (after deduplication). */
   totalRecords: number;
+  /**
+   * Per-source operational metadata. Added with the E4 extension
+   * (see docs/plans/2026-07-22-improvement-plan.md). Surfaces
+   * duration, cached-fallback status, and date-range coverage so
+   * the operator can diagnose a degrading source before it fails.
+   */
+  sources?: Partial<Record<SourceId, SourceMeta>>;
+}
+
+/**
+ * Per-source metadata. The date range is the min/max `discoveredDate`
+ * across that source's records. `cachedFallback` is true when this
+ * source's records came from the previous run's cache (see pipeline/
+   * index.ts §silent-empty safeguard).
+ */
+export interface SourceMeta {
+  /** Wall-clock duration of the source's fetch in milliseconds. */
+  fetchDurationMs: number;
+  /** True if the records came from a cached fallback, not a fresh fetch. */
+  cachedFallback: boolean;
+  /** Earliest `discoveredDate` across this source's records (ISO date). */
+  minDiscoveredDate?: string;
+  /** Latest `discoveredDate` across this source's records (ISO date). */
+  maxDiscoveredDate?: string;
 }
 
 /** Aggregated time-series data point for discovered/fixed charts. */

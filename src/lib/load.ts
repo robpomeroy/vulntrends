@@ -148,6 +148,30 @@ export async function loadBacklogByYear(): Promise<BacklogPoint[]> {
   );
 }
 
+/** Load severity-mix-by-month. */
+export async function loadSeverityMixByMonth(): Promise<
+  Array<{ date: string; severity: 'critical' | 'high' | 'medium' | 'low'; count: number }>
+> {
+  return loadJsonWithFallback<
+    Array<{ date: string; severity: 'critical' | 'high' | 'medium' | 'low'; count: number }>
+  >(
+    join(AGG_DIR, 'severity-mix-by-month.json'),
+    join(AGG_DIR_FALLBACK, 'severity-mix-by-month.json'),
+  );
+}
+
+/** Load severity-mix-by-year. */
+export async function loadSeverityMixByYear(): Promise<
+  Array<{ date: string; severity: 'critical' | 'high' | 'medium' | 'low'; count: number }>
+> {
+  return loadJsonWithFallback<
+    Array<{ date: string; severity: 'critical' | 'high' | 'medium' | 'low'; count: number }>
+  >(
+    join(AGG_DIR, 'severity-mix-by-year.json'),
+    join(AGG_DIR_FALLBACK, 'severity-mix-by-year.json'),
+  );
+}
+
 /**
  * Load all data needed for the dashboard in a single call.
  *
@@ -166,7 +190,7 @@ export async function loadDashboardData() {
       throw err;
     });
 
-  const [meta, manufacturers, discoveredMonth, fixedMonth, patchLagMonth, backlogMonth, discoveredYear, fixedYear, patchLagYear, backlogYear] =
+  const [meta, manufacturers, discoveredMonth, fixedMonth, patchLagMonth, backlogMonth, discoveredYear, fixedYear, patchLagYear, backlogYear, severityMixMonth, severityMixYear] =
     await Promise.all([
       loadMeta(),
       loadManufacturers(),
@@ -178,6 +202,8 @@ export async function loadDashboardData() {
       optional(loadFixedByYear()),
       optional(loadPatchLagByYear()),
       optional(loadBacklogByYear()),
+      optional(loadSeverityMixByMonth()),
+      optional(loadSeverityMixByYear()),
     ]);
 
   return {
@@ -191,5 +217,7 @@ export async function loadDashboardData() {
     fixedYear,
     patchLagYear,
     backlogYear,
+    severityMixMonth,
+    severityMixYear,
   };
 }

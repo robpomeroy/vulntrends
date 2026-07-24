@@ -15,7 +15,12 @@
     brushY,
     renderBrushStrip,
   } from '@/lib/d3/brush';
-  import { inDateRange, type DateRange } from '@/lib/store';
+  import {
+    dashboardStore,
+    inDateRange,
+    type DateRange,
+  } from '@/lib/store';
+  import ZoomControls from '@/components/controls/ZoomControls.svelte';
 
   interface Props {
     data: Array<{
@@ -44,9 +49,68 @@
     selectedManufacturers: string[];
     /** Optional time-range filter. null = show all time. */
     dateRange?: DateRange | null;
+    /**
+     * Initial range to seed the store with on mount, used by
+     * click-through pages to default to "Since 2013" before the user
+     * touches the brush. Only applied when the store's current
+     * dateRange is null. Ignored if `dateRange` is also passed.
+     */
+    initialDateRange?: DateRange | null;
+    /**
+     * Override the main chart's height in pixels. Default 260.
+     * Larger values are used by the click-through pages for a more
+     * readable full-width view.
+     */
+    mainHeight?: number;
+    /**
+     * If true, hide the in-card "hide low confidence" toggle (used
+     * by the click-through pages where it's redundant with the
+     * manufacturer filter).
+     */
+    showConfidenceToggle?: boolean;
+    /**
+     * Show the +/–/reset zoom controls above the chart. Dashboard
+     * card layouts drive zoom via the range selector + brush, so
+     * they pass `false`. Click-through pages default to `true`
+     * because the brush is otherwise the only zoom control.
+     */
+    showZoomControls?: boolean;
   }
 
-  let { data, granularity, selectedManufacturers, dateRange = null }: Props = $props();
+  let {
+    data,
+    granularity,
+    selectedManufacturers,
+    // `undefined` default (not `null`) — see the matching note on
+    // StackedAreaChart. The three-way distinction lets click-through
+    // pages omit the prop entirely and let the shared store drive
+    // the brush, while the dashboard passes a real dateRange and
+    // individual callers can still force "all time" by passing null.
+    dateRange = undefined as DateRange | null | undefined,
+    initialDateRange = null,
+    mainHeight: mainHeightProp = 260,
+    showConfidenceToggle = true,
+    showZoomControls = true,
+  }: Props = $props();
+
+  // Read from the shared store so the brush on a click-through page
+  // (where no dateRange prop is passed) updates the visible window.
+  // On the dashboard, Dashboard.svelte already passes the store-derived
+  // value via the dateRange prop, so effectiveDateRange is identical.
+  //
+  // `dateRange == null` (loose) catches both `undefined` and `null`,
+  // so even when a Svelte wrapper passes through a null `dateRange`
+  // from a parent that didn't specify one, we still fall through to
+  // the store. This matches StackedAreaChart's behaviour.
+  // When `initialDateRange` is set, it's used as the seed for the
+  // store-derived path so the chart has a sensible starting range
+  // even before the user touches the brush.
+  let storeDateRange = $derived($dashboardStore.dateRange);
+  let effectiveDateRange = $derived(
+    dateRange == null
+      ? (storeDateRange ?? initialDateRange)
+      : dateRange,
+  );
 
   let container: HTMLDivElement;
   let tooltip: Tooltip;
@@ -92,7 +156,14 @@
       }),
   );
 
-  let filteredData = $derived(inDateRange(mfrFilteredData, dateRange));
+  // Sorted ascending bucket keys for the zoom controls. Uses the
+  // raw `data` rather than `mfrFilteredData` so the clamp stays
+  // consistent with the brush strip's data extent regardless of
+  // any active filter (manufacturers / confidence) — the brush
+  // renders the full data range for the same reason.
+  let dataKeys = $derived([...new Set(data.map((d) => d.date))].sort());
+
+  let filteredData = $derived(inDateRange(mfrFilteredData, effectiveDateRange));
 
   // Data confidence: fraction of records in the current view that have
   // a known patch lag (i.e. both a discovery and a patch date). Shown
@@ -138,7 +209,7 @@
     // Layout: main chart (260px) + gap (BRUSH_LAYOUT.gap) + brush strip
     // (BRUSH_LAYOUT.stripHeight). Constants live in lib/d3/brush so
     // every chart renders the strip identically.
-    const mainHeight = 260;
+    const mainHeight = mainHeightProp;
     const height = mainHeight + BRUSH_LAYOUT.gap + BRUSH_LAYOUT.stripHeight;
     // margin.left is wider than usual so 4–5 digit y-axis tick labels
     // (e.g. "2,500" on the patch lag chart) don't overlap the rotated
@@ -188,7 +259,7 @@
       yOffset: stripY,
       data: brushData,
       granularity,
-      dateRange,
+      dateRange: effectiveDateRange,
     });
   }
 
@@ -436,6 +507,11 @@
 </script>
 
 <div class="vt-chart" bind:this={container}>
+  {#if showZoomControls}
+    <div class="flex items-center justify-end mb-3">
+      <ZoomControls {dataKeys} resetRange={initialDateRange} />
+    </div>
+  {/if}
   <svg bind:this={svg}></svg>
   <!--
     Footer row (below the brush strip): data confidence badge +

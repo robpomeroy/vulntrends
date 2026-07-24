@@ -8,6 +8,25 @@
  * CVRF document, however, is served as XML — the server ignores the
  * `Accept: application/json` header on that path. So this parser does a
  * content-type sniff and parses the body accordingly.
+ *
+ * ## Mariner handling
+ *
+ * MSRC publishes a separate CVRF document per Mariner (their Linux
+ * distribution) advisory. Each Mariner document references ~30 upstream
+ * Linux CVE IDs (e.g. CVE-2010-0291, the Linux kernel `do_mremap()`
+ * vulnerability), and each `<vuln:Vulnerability>` in the document is
+ * tagged with `<vuln:Note Title="Mariner" Type="Tag">Mariner</vuln:Note>`.
+ *
+ * If we naively imported these as Microsoft records, two problems appear:
+ *  1. The "Discovered" chart gets a misleading spike every time MSRC
+ *     re-imports the Mariner catalog (currently 64 documents × ~30
+ *     CVEs each, refreshed a few times a year).
+ *  2. Those upstream CVEs are already in NVD's Linux CPE coverage, so
+ *     including them as Microsoft double-counts them.
+ *
+ * We therefore skip both Mariner-titled documents and any individual
+ * vulnerability tagged with the Mariner note. The upstream CVEs remain
+ * in the dataset via NVD.
  */
 
 import { buildRecord, parseDate } from '../normalise.js';
@@ -22,6 +41,29 @@ interface CvrfUpdate {
   Alias: string;
   DocumentTitle: string;
   CurrentReleaseDate: string;
+}
+
+/**
+ * Mariner documents have a `DocumentTitle` of "Mariner Release Notes"
+ * in the MSRC update list. We skip these at the document level so we
+ * don't even fetch the body — saving bandwidth and avoiding the
+ * "MSRC re-imported the Mariner catalog" spike on the Discovered chart.
+ */
+function isMarinerDocument(update: CvrfUpdate): boolean {
+  return /mariner/i.test(update.DocumentTitle);
+}
+
+/**
+ * Per-vulnerability Mariner check. Some Mariner-tagged CVEs also
+ * appear in regular Security Update documents; the per-vuln Mariner
+ * note lets us drop them at the record level.
+ *
+ * Matches `<vuln:Note Title="Mariner" ...>Mariner</vuln:Note>`.
+ */
+const MARINER_NOTE_REGEX = /<vuln:Note\b[^>]*\bTitle="Mariner"[^>]*>/;
+
+function isMarinerVulnerability(block: string): boolean {
+  return MARINER_NOTE_REGEX.test(block);
 }
 
 /**
@@ -155,6 +197,13 @@ function parseCvrfAsXml(
   while ((blockMatch = vulnBlockRegex.exec(body)) !== null) {
     const block = blockMatch[1];
 
+    // Skip Mariner-tagged vulnerabilities. They're upstream Linux CVEs
+    // that NVD already covers; including them as Microsoft records
+    // would double-count and produce misleading spikes whenever MSRC
+    // re-imports the Mariner catalog. See the file-level Mariner
+    // handling comment for the full rationale.
+    if (isMarinerVulnerability(block)) continue;
+
     // CVE id (mandatory — skip blocks without one).
     const cveMatch = block.match(/<vuln:CVE>\s*(CVE-\d{4}-\d{4,})\s*<\/vuln:CVE>/);
     if (!cveMatch) continue;
@@ -192,7 +241,33 @@ function parseCvrfAsXml(
       if (Number.isFinite(parsed)) cvss = parsed;
     }
 
-    // MSRC doesn't provide discovery dates — use the patch date as a proxy.
+    // Per-vulnerability publication date.
+    //
+    // MSRC's `CurrentReleaseDate` (the update-level timestamp) is "when this
+    // CVRF document was last refreshed", NOT "when this CVE was disclosed".
+    // Bulk catalog re-publications (e.g. 2026-Jul, 2026-Feb) stamp every
+    // CVE with the re-publication date — including CVEs from 1999 — which
+    // produces a misleading 25k+ spike on the "Discovered" chart.
+    //
+    // The authoritative per-CVE date lives in `<vuln:RevisionHistory>` as a
+    // series of `<cvrf:Date>` entries (one per revision). The earliest of
+    // these is the CVE's initial publication date. Fall back to
+    // `CurrentReleaseDate` only when no RevisionHistory is present.
+    const revBlock = block.match(
+      /<vuln:RevisionHistory>([\s\S]*?)<\/vuln:RevisionHistory>/,
+    );
+    let perVulnDate: string | undefined;
+    if (revBlock) {
+      const revDates = [
+        ...revBlock[1].matchAll(/<cvrf:Date>([^<]+)<\/cvrf:Date>/g),
+      ]
+        .map((m) => m[1])
+        .sort();
+      if (revDates.length > 0) perVulnDate = parseDate(revDates[0]);
+    }
+    const effectiveDate = perVulnDate ?? patchedDate;
+    if (!effectiveDate) continue;
+
     records.push(
       buildRecord({
         id: cveId,
@@ -200,7 +275,12 @@ function parseCvrfAsXml(
         manufacturer: 'Microsoft',
         title,
         cvss,
-        discoveredDate: patchedDate,
+        // Use the per-CVE initial publication date as `discoveredDate`
+        // (this is when the CVE was first made public). The update-level
+        // `patchedDate` stays as the document's last refresh, which for
+        // normal monthly updates is a reasonable proxy for the patch
+        // release date.
+        discoveredDate: effectiveDate,
         patchedDate,
         cveIds: [cveId],
         rawUrl: `https://msrc.microsoft.com/update-guide/vulnerability/${cveId}`,
@@ -238,14 +318,30 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   console.log(`Microsoft MSRC: found ${updates.length} updates`);
 
   const allRecords: VulnerabilityRecord[] = [];
+  const skippedMariner: string[] = [];
   const batchSize = 3;
   for (let i = 0; i < updates.length; i += batchSize) {
     const batch = updates.slice(i, i + batchSize);
-    const batchRecords = await Promise.all(batch.map(fetchCvrfRecords));
+    // Filter out Mariner documents at the orchestrator level so we
+    // never even fetch the body. Logging the skip here keeps the
+    // pipeline run auditable — an operator can see how many Mariner
+    // docs were excluded in the run log.
+    const filteredBatch = batch.filter((u) => {
+      if (isMarinerDocument(u)) {
+        skippedMariner.push(u.ID);
+        return false;
+      }
+      return true;
+    });
+    if (filteredBatch.length === 0) continue;
+    const batchRecords = await Promise.all(filteredBatch.map(fetchCvrfRecords));
     allRecords.push(...batchRecords.flat());
     if (i + batchSize < updates.length) {
       await new Promise((resolve) => setTimeout(resolve, 300));
     }
+  }
+  if (skippedMariner.length > 0) {
+    console.log(`Microsoft MSRC: skipped ${skippedMariner.length} Mariner document(s) (${skippedMariner.slice(0, 5).join(', ')}${skippedMariner.length > 5 ? '…' : ''})`);
   }
 
   console.log(`Microsoft MSRC: ${allRecords.length} records extracted`);

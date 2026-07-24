@@ -13,7 +13,7 @@
  *                          the pipeline without deploying)
  *   --only=<stages>        Run only the named comma-separated stages (executed
  *                          in canonical order according to `STAGES`).
- *                          Stages: data:build, data:validate, build, rsync.
+ *                          Stages: data:build, data:validate, data:audit, data:archive, data:csv, build, rsync.
  *                          Example: --only=rsync  (re-run only the rsync step)
  *   --skip=<stages>        Run every stage EXCEPT the named ones.
  *                          Example: --skip=data:build  (deploy the existing
@@ -54,7 +54,7 @@ const dryRun = args.includes('--dry-run');
 
 // Stages, in canonical execution order. Reused by --only/--skip
 // validation and by `main()` to gate each step.
-const STAGES = ['data:build', 'data:validate', 'build', 'rsync'] as const;
+const STAGES = ['data:build', 'data:validate', 'data:audit', 'data:archive', 'data:csv', 'build', 'rsync'] as const;
 type Stage = (typeof STAGES)[number];
 
 function parseStageList(raw: string): Stage[] {
@@ -146,6 +146,15 @@ const DEPLOY_USER = process.env.DEPLOY_USER;
 const DEPLOY_KEY = process.env.DEPLOY_KEY;
 const DEPLOY_PROD_PATH = process.env.DEPLOY_PROD_PATH;
 const DEPLOY_STAGING_PATH = process.env.DEPLOY_STAGING_PATH;
+
+// Optional Tier-2 archive replication target. If set, after the
+// local `data:archive` + `data:prune` steps, the data-archive/
+// directory is rsynced here so a backup copy lives off-host. See
+// .env.example for the supported forms (SSH `user@host:/path` or
+// local `/path`) and the auto-detect heuristic. If unset, a warning
+// is logged and the publish continues — the local snapshot is still
+// written as a staging area and can be rsynced manually.
+const ARCHIVE_RSYNC_TARGET = process.env.ARCHIVE_RSYNC_TARGET || '';
 
 // SITE_URL overrides the `site` config in astro.config.mjs at build
 // time. Production defaults to vulntrends.org; the staging deploy
@@ -323,6 +332,169 @@ function rsync(): void {
   }
 }
 
+/**
+ * Detect whether an ARCHIVE_RSYNC_TARGET is the SSH form
+ * (`user@host:/path`) or the local form (`/path`).
+ *
+ * The distinguishing feature of the SSH form is the `user@host:`
+ * prefix — there must be an `@` *before* the first `:`. A Windows
+ * drive-letter path like `C:\path\to\archive` has a `:` at position
+ * 1 but no `@` before it, and a POSIX local path like
+ * `/srv/archive` has no `:` at all. Only the SSH form has both an
+ * `@` and a `:`.
+ *
+ * Returns `true` for SSH, `false` for local.
+ */
+function isArchiveTargetSsh(target: string): boolean {
+  const atSign = target.indexOf('@');
+  const firstColon = target.indexOf(':');
+  // SSH form: an @ exists, a : exists, and the @ precedes the :.
+  // Any other shape (no :, or no @, or : before @) → local path.
+  if (atSign === -1 || firstColon === -1) return false;
+  return atSign < firstColon;
+}
+
+/**
+ * Rsync the local `data-archive/` directory to `ARCHIVE_RSYNC_TARGET`
+ * (or skip with a warning if the target is unset).
+ *
+ * Mirrors the web-deploy `rsync()` function's patterns:
+ *   - Reuses `DEPLOY_KEY` + `DEPLOY_PORT` for the SSH connection
+ *     (the Synology already has the key configured for the web
+ *     deploy; no separate archive credential is needed unless the
+ *     archive host trusts a different key).
+ *   - Uses the same `--chmod=D755,F644` and `--exclude=@eaDir/`
+ *     conventions so Synology-isms don't leak.
+ *   - Uses `--delete` so the target mirrors the *pruned* local
+ *     state. (We prune locally first, then replicate — see the
+ *     `data:archive` stage block in `main()` for the ordering.)
+ *   - In dry-run mode, adds `--dry-run` to rsync and logs the
+ *     command without transferring.
+ *
+ * Failure here is logged to stderr but does NOT abort the publish.
+ * The archive is a backup concern; if replication fails, the web
+ * deploy should still proceed so users see fresh data. The stderr
+ * message is visible in the Synology Task Scheduler email digest.
+ */
+function replicateArchive(): void {
+  if (!ARCHIVE_RSYNC_TARGET) {
+    console.warn('\n── archive replication: SKIPPED ──────────────────');
+    console.warn('  ARCHIVE_RSYNC_TARGET is not set in .env.');
+    console.warn('  The local data-archive/ snapshot was still written;');
+    console.warn('  rsync it manually if a backup copy is needed.');
+    return;
+  }
+
+  // Refuse to replicate if the local data-archive/ doesn't exist.
+  // The data:archive sub-step would have created it; this catches
+  // the `--only=rsync` with stale state case.
+  const archiveDir = resolve(REPO_ROOT, 'data-archive');
+  if (!existsSync(archiveDir)) {
+    console.error('✗ archive replication refused: data-archive/ does not exist.');
+    console.error('  Run `npm run data:archive` first or omit --only.');
+    // Not fatal — same reasoning as the rsync failure path below.
+    return;
+  }
+
+  const sshForm = isArchiveTargetSsh(ARCHIVE_RSYNC_TARGET);
+
+  // If the SSH form was selected but DEPLOY_KEY is unset, we can't
+  // build a -e ssh ... command — falling back to default ssh would
+  // result in a confusing "permission denied" on the remote. Fail
+  // loud and early with an actionable hint. In dry-run mode we
+  // allow it (matches the web deploy's behaviour: deploy vars are
+  // not required for dry-run).
+  if (sshForm && !DEPLOY_KEY && !dryRun) {
+    console.error('✗ archive replication: ARCHIVE_RSYNC_TARGET uses SSH');
+    console.error(`  (${ARCHIVE_RSYNC_TARGET}) but DEPLOY_KEY is not set.`);
+    console.error('  The SSH form reuses DEPLOY_KEY for the rsync -e option.');
+    console.error('  Either set DEPLOY_KEY, switch to a local-path target,');
+    console.error('  or unset ARCHIVE_RSYNC_TARGET to disable replication.');
+    return;
+  }
+
+  console.log('\n── archive replication ──────────────────────────');
+  console.log(`  target: ${ARCHIVE_RSYNC_TARGET}`);
+  // In dry-run mode DEPLOY_KEY may be unset, so the SSH form may not
+  // actually have a key to use. Surface that honestly in the log.
+  console.log(
+    `  mode:   ${
+      sshForm
+        ? DEPLOY_KEY
+          ? 'SSH rsync (reusing DEPLOY_KEY)'
+          : 'SSH rsync (dry-run, DEPLOY_KEY not set)'
+        : 'local rsync'
+    }`,
+  );
+
+  // Synology creates @eaDir directories inside any directory it
+  // touches (media-indexer cache). Same convention as the web
+  // deploy — keeps them out of the backup.
+  const excludes = ['@eaDir/'];
+  // Force a known permission set on the target regardless of
+  // what the local files have. Same D755/F644 as the web deploy
+  // so behaviour is predictable.
+  const chmod = 'D755,F644';
+
+  // Build the SSH command string. We reuse DEPLOY_KEY and
+  // DEPLOY_PORT (the Synology already has the key on disk and
+  // trusts the host) rather than introducing separate
+  // ARCHIVE_SSH_* env vars. If a future user needs a different
+  // key for the archive host, the right move is to add those
+  // vars — but that's deferred per the plan.
+  const sshCmd = DEPLOY_KEY
+    ? `ssh -p ${DEPLOY_PORT} -i "${DEPLOY_KEY}" -o StrictHostKeyChecking=accept-new`
+    : null;
+
+  // argv array passed to execFileSync — no shell, so each option
+  // is a separate element. Order: flags first, then -e for SSH
+  // (or omitted for local), then source + dest.
+  const rsyncArgs: string[] = [
+    '-avz',
+    '--delete',
+    '--chmod',
+    chmod,
+    ...excludes.flatMap((e) => ['--exclude', e]),
+  ];
+  if (dryRun) rsyncArgs.push('--dry-run');
+  if (sshForm && sshCmd) {
+    rsyncArgs.push('-e', sshCmd);
+  }
+  rsyncArgs.push(
+    'data-archive/', // trailing slash = contents of, not the dir itself
+    sshForm ? `${ARCHIVE_RSYNC_TARGET}/` : `${ARCHIVE_RSYNC_TARGET}/`,
+  );
+
+  // For the log line, mirror the rsync() function's style: wrap
+  // the SSH command in single quotes so the reader can see it's
+  // one argument. The execFileSync call passes each element as
+  // a separate argv token regardless, so no shell-level escaping
+  // is needed.
+  const sshLog = sshCmd ? `-e '${sshCmd}' ` : '';
+  const dryRunLog = dryRun ? '--dry-run ' : '';
+  console.log(
+    `$ rsync -avz --delete --chmod='${chmod}' ` +
+      excludes.map((e) => `--exclude='${e}' `).join('') +
+      `${dryRunLog}${sshLog}data-archive/ ${ARCHIVE_RSYNC_TARGET}/`,
+  );
+
+  try {
+    execFileSync('rsync', rsyncArgs, {
+      cwd: REPO_ROOT,
+      stdio: 'inherit',
+      timeout: 10 * 60 * 1000, // 10 min cap
+    });
+    console.log('✓ archive replication completed');
+  } catch (err) {
+    // Non-fatal: the archive is a backup concern, not a deployment
+    // blocker. Surface the error loudly to stderr (so it shows in
+    // the Synology Task Scheduler email digest) but let the web
+    // deploy continue.
+    console.error('✗ archive replication FAILED (continuing publish)');
+    console.error(err);
+  }
+}
+
 // ── Main ───────────────────────────────────────────────────────────
 
 function main(): void {
@@ -355,6 +527,39 @@ function main(): void {
   // Step 2: Validate
   if (activeStages.includes('data:validate')) {
     runStep('data:validate', 'npm', ['run', 'data:validate']);
+  }
+
+  // Step 2.4: Semantic data audit (E5). Emits warnings (not errors) for
+  // data quality issues like CVE-year mismatches, future dates, YoY
+  // outliers, and per-manufacturer patch-date coverage gaps. Runs
+  // after validate so the Zod-shape check has already confirmed the
+  // file structure.
+  if (activeStages.includes('data:audit')) {
+    runStep('data:audit', 'npm', ['run', 'data:audit']);
+  }
+
+  // Step 2.5: Archive snapshot (Tier-2 retention). Runs after validate
+  // so we only archive known-good data. See scripts/archive-snapshot.ts.
+  if (activeStages.includes('data:archive')) {
+    runStep('data:archive', 'npm', ['run', 'data:archive']);
+
+    // Sub-step: prune old local snapshots BEFORE the rsync, so the
+    // rsync's --delete flag mirrors the pruned state to the target.
+    // Without this ordering, the target would grow unbounded and the
+    // local prune would have no effect on the remote copy.
+    runStep('data:prune', 'npm', ['run', 'data:prune']);
+
+    // Sub-step: rsync the local data-archive/ to ARCHIVE_RSYNC_TARGET
+    // (if configured). Wrapped in its own try/guard by replicateArchive
+    // so a replication failure does not block the web deploy that
+    // follows — the archive is a backup concern, not a deploy blocker.
+    replicateArchive();
+  }
+
+  // Step 2.6: Export CSVs for click-through downloads. The CSV files
+  // must exist before `astro build` so they're included in dist/.
+  if (activeStages.includes('data:csv')) {
+    runStep('data:csv', 'npm', ['run', 'data:csv']);
   }
 
   // Step 3: Build site — invoke through `npm run build` (the

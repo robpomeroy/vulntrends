@@ -10,6 +10,15 @@ import { writable } from 'svelte/store';
 export type Granularity = 'month' | 'year';
 
 /**
+ * The "full coverage" era boundary. Pre-2013 data is opportunistic
+ * samples (vendors lacked advisory programmes, NVD CPE coverage was
+ * immature, several sources don't exist yet). Charts default to
+ * 2013+ so cross-vendor comparisons are honest. Users can still
+ * select "Full history" to see everything.
+ */
+export const FULL_COVERAGE_START_YEAR = 2013;
+
+/**
  * A date range filter applied to all charts. `null` means "all time"
  * (no zoom). Stored as ISO date strings (e.g. "2024-01") to match the
  * aggregated chart data format.
@@ -27,6 +36,11 @@ export interface DashboardState {
   /**
    * Active time-range filter. `null` = show all data.
    * Set by the RangeSelector or by the brush on a chart.
+   *
+   * The initial value is `null` (all time) so the dashboard renders
+   * whatever data the user has. The RangeSelector offers a
+   * "Since 2013" preset that defaults the view to the
+   * full-coverage era; the brush overrides the preset.
    */
   dateRange: DateRange | null;
 }

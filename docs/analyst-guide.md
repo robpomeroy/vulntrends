@@ -306,7 +306,7 @@ warnings are advisory.
 | **A1** | warn | Source `currentYear` count > 5× trailing-3-year median. Catches bulk re-publication regressions like the 2025-Sep spike. |
 | **A2** | warn | `|CVEYear − discoveredYear| > 5`. Coarse net for upstream pipeline artefacts. |
 | **A3** | error | Records dated more than 7 days in the future (timezone shift, "today" fallback). |
-| **A6** | warn (within tolerance) / error (exceeds) | Catalog-re-publication residual: a record has a `discoveredDate` in the last 18 months but a CVE-year ≥ 2 years before. Catches cases where the dedup missed something. Tolerance: `A6_RESIDUAL_TOLERANCE` (currently 50) — see [backlog §1.4](../backlog.md). |
+ | **A6** | warn (within tolerance) / error (exceeds) | Catalog-re-publication residual: a record has a `discoveredDate` in the last 18 months but a CVE-year ≥ 2 years before. Catches cases where the dedup missed something. Tolerance: `A6_RESIDUAL_TOLERANCE` (currently 50) — see [backlog §1.4](./backlog.md#14-plan-to-fix-at-source). |
 | **E2** | warn | Per-manufacturer patch-date coverage < 10%. |
 | **E5-dup** | error | Duplicate record IDs after dedup. |
 
@@ -315,7 +315,7 @@ counts per source will tell you whether the known mix (MSRC cross-CNA
 + NVD delayed-publish + Apple/Adobe late-patch) has shifted. If it
 fires as an error, the count has exceeded the tolerance and a
 regression is likely — investigate before deploying. See
-[`docs/backlog.md`](../backlog.md) for the full breakdown of the 30
+[`docs/backlog.md`](backlog.md) for the full breakdown of the 30
 known residuals and the plan to fix them at source.
 
 ### Known residual: cross-CNA MSRC records

@@ -221,12 +221,10 @@ function mergeRecords(
   // stamp loses to NVD's 2010-12-15 `published` (which survives the
   // sanity check because it matches the CVE-year of CVE-2010-4756).
   //
-  // We also accept the legacy single-source fallback (vendor date only,
-  // no NVD record) so a vendor-only CVE isn't dropped just because its
-  // date fails the strict sanity check — but only for records that
-  // come from a vendor source, which legitimately publishes both
-  // before-disclosure and post-disclosure and may legitimately have
-  // a year offset (e.g. CVE-2016-9535 announced in 2017).
+  // If both candidates fail the sanity check, we drop the merged record
+  // rather than ship a known-bad date into the aggregated data.
+  // This is intentionally strict: large CVE-year/date divergences are
+  // almost always upstream catalogue re-publication artefacts.
   let discoveredDate: string;
   if (candidates.length > 0) {
     discoveredDate = candidates.reduce((earliest, cur) => (cur < earliest ? cur : earliest));

@@ -179,8 +179,8 @@ body {
     color: var(--vt-text-secondary);
   }
 
-  /* Last paragraph in a section has no bottom margin so it sits
-     cleanly against the next heading. */
+  /* Last paragraph in the prose container has no bottom margin so the
+     explanation doesn't end with extra whitespace. */
   .vt-prose p:last-child {
     margin-bottom: 0;
   }

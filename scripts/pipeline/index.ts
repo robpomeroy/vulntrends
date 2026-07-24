@@ -305,8 +305,8 @@ async function main(): Promise<void> {
   for (const id of Object.keys(SOURCES.reduce((acc, s) => ({ ...acc, [s.id]: true }), {} as Record<string, boolean>)) as SourceId[]) {
     const range = dateRanges[id];
     // Always emit an entry for every source, even if it has zero
-    // records (stubs, opt-in sources like OSV). Without this, the
-    // schema's `record(SourceId, …)` expects a key for every source.
+    // records (stubs, opt-in sources like OSV), so meta.json is easier
+    // to diff and operators can see status/timing for every source.
     perSource[id] = {
       fetchDurationMs: sourceFetchDurationMs.get(id) ?? 0,
       cachedFallback: cachedFallbackSources.includes(id),

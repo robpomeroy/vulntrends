@@ -130,8 +130,8 @@
     const width = el.clientWidth;
 
     // Layout: main chart (configurable, default 260px) + gap (BRUSH_LAYOUT.gap)
-// + brush strip (BRUSH_LAYOUT.stripHeight). Constants live in lib/d3/brush
-// so every chart renders the strip identically.
+    // + brush strip (BRUSH_LAYOUT.stripHeight). Constants live in lib/d3/brush
+    // so every chart renders the strip identically.
     const mainHeight = mainHeightProp;
     const height = mainHeight + BRUSH_LAYOUT.gap + BRUSH_LAYOUT.stripHeight;
     // margin.left is wider than usual so 4–5 digit y-axis tick labels

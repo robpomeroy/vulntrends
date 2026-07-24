@@ -32,7 +32,7 @@
  *    step will keep the vendor version per its precedence rules).
  */
 
-import { buildRecord, cvssToSeverity, parseDate } from '../normalise.js';
+import { buildRecord, parseDate } from '../normalise.js';
 import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
@@ -134,7 +134,7 @@ function cvssVectorToScore(vector: string): number | undefined {
 
   if (impact <= 0) return 0;
   const base = s === 1 ? 1.08 * (impact + exploit) : impact + exploit;
-  return Math.min(10, Math.round(base * 10) / 10);
+  return Math.min(10, Math.ceil(base * 10) / 10);
 }
 
 /** Extract a numeric CVSS score from an OSV severity array. */

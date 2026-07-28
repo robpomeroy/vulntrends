@@ -3,6 +3,8 @@ title: "The Evolution of Patch Tuesday"
 description: "Microsoft's monthly patch cycle was designed for human-speed security work. Twenty-three years in, it is buckling under machine-speed discovery."
 pubDate: 2026-07-28
 tags: [patch-tuesday, microsoft, vulnerability-management, ai-security, msrc]
+heroImage: '/images/blog/the-evolution-of-patch-tuesday.jpg'
+heroImageAlt: '16:9 infographic showing the evolution of Patch Tuesday from 1990s manual updates and floppy disks, through Microsoft’s monthly patching model, to modern cloud automation and future AI-assisted security.'
 ---
 
 # The Evolution of Patch Tuesday

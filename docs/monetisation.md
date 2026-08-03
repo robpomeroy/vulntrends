@@ -319,8 +319,14 @@ The remaining plumbing (slot rendering, env-var gating, staging exclude,
 2. **Check the build was actually rebuilt** — `npm run publish` runs
    `npm run build`, but if you edited `.env` *after* the last publish, wait for
    the next scheduled run.
-3. **Check the `<script>` is in the HTML** — `grep pagead2 dist/index.html`. If
-   absent, the staging guard is tripping (your hostname starts with `staging.`).
+3. **Check the `<script>` is in the HTML on a page with ads** —
+   `grep pagead2 dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html`
+   or `grep pagead2 dist/charts/discovered/index.html`. Should match (one
+   occurrence in `<head>`). Don't check `dist/index.html` (the dashboard) —
+   that page is deliberately ad-free by design and the script is never
+   emitted there, even when ads are enabled. If the script is absent on
+   a page with ads, the staging guard is tripping (your hostname starts
+   with `staging.`).
 4. **Check the AdSense dashboard status** — "Your account is being reviewed"
    means ads won't render yet.
 

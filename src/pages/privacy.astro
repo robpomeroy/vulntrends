@@ -7,10 +7,13 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
     <h2 class="mb-4 text-xl">Privacy policy</h2>
 
     <p class="mb-4 text-vt-text-secondary">
-      Last updated: 3 August 2026. This policy describes the data that
-      VulnTrends collects about its visitors, how that data is used,
-      and how to exercise your rights under applicable privacy laws
-      (UK GDPR / EU GDPR / CCPA).
+      Last updated: 3 August 2026 (revised: clarified that the
+      privacy page is also ad-free, and that AdSense cookies may be
+      set on ad-bearing pages regardless of personalised-ad consent).
+      This policy describes the data that VulnTrends collects about
+      its visitors, how that data is used, and how to exercise your
+      rights under applicable privacy laws (UK GDPR / EU GDPR /
+      CCPA).
     </p>
 
     <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Data VulnTrends collects</h3>
@@ -66,9 +69,12 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
 
     <p class="mb-4 text-vt-text-secondary">
       Some pages — blog posts and chart click-through pages — display
-      ads served by Google AdSense. The dashboard, about page, and blog
-      index are deliberately ad-free (see the monetisation convention
-      in <code>AGENTS.md</code> for why).
+      ads served by Google AdSense. The dashboard, about page, blog
+      index, and privacy page are deliberately ad-free (see the
+      monetisation convention in <code>AGENTS.md</code> for why). The
+      AdSense script is only emitted on pages with an AdSlot, so the
+      consent dialog and any ad-related cookies only appear on those
+      pages.
     </p>
 
     <p class="mb-4 text-vt-text-secondary">
@@ -125,8 +131,22 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
       The only cookies set by VulnTrends itself are the consent cookie
       stored by Google's CMP after you respond to the consent dialog.
       All other cookies on pages with ads are set by Google AdSense
-      (or its ATPs). The dashboard, about page, and blog index set
-      <strong class="text-vt-text-primary">no cookies</strong>.
+      (or its ATPs). The dashboard, about page, blog index, and
+      privacy page set
+      <strong class="text-vt-text-primary">no cookies</strong> — the
+      AdSense script is never loaded there, so neither AdSense
+      cookies nor the CMP consent cookie are set.
+    </p>
+
+    <p class="mb-4 text-vt-text-secondary">
+      On pages with ads (blog posts and chart pages), the AdSense
+      script loads and AdSense may set cookies regardless of whether
+      you consent to personalised ads. Choosing
+      <strong class="text-vt-text-primary">decline</strong> in the
+      consent dialog limits how those cookies are used (to non-
+      personalised ads) but does not prevent them from being set.
+      The only way to avoid AdSense cookies entirely is to use
+      browser-level ad blocking or to not visit those pages.
     </p>
 
     <h3 class="mt-8 mb-3 text-lg text-vt-text-secondary">Your rights</h3>

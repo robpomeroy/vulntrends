@@ -3,6 +3,8 @@ title: "Which Vendors Patch the Fastest?"
 description: "Patching speed varies enormously between Microsoft, Apple, Mozilla, Cisco, Oracle and the rest. Here is what the data actually shows, and why the answer is more complicated than a leaderboard."
 pubDate: 2026-08-03
 tags: [patching, vulnerability-management, msrc, vendor-comparison, mttp]
+heroImage: '/images/blog/which-vendors-patch-the-fastest.jpg'
+heroImageAlt: "16:9 infographic titled 'Which Vendors Patch the Fastest?' showing racing cars labelled with technology vendors speeding toward a finish line marked 'Patch Released.' Google, Mozilla and Microsoft lead the race, followed by Apple, Samsung, Adobe, Oracle and Cisco, with a side chart illustrating declining mean time to patch over recent years."
 ---
 
 # Which Vendors Patch the Fastest?

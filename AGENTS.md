@@ -183,6 +183,10 @@ design**, not a config option. This is a product decision: the
 dashboard is the data tool, and ads on it would undermine the
 project's credibility as a neutral, data-driven visualisation.
 
+For the full **operator runbook** — going live, creating ad units in
+AdSense, configuring the CMP, changing ads later, and troubleshooting
+— see [`docs/monetisation.md`](docs/monetisation.md).
+
 - **AdSense is opt-in via `.env`.** Three guards gate every emission:
   `PUBLIC_ADSENSE_ENABLED === 'true'`, `!isStaging`, and
   `PUBLIC_ADSENSE_CLIENT` is set. See `src/lib/ads.ts` for the shared

@@ -70,19 +70,29 @@ PUBLIC_ADSENSE_CLIENT=ca-pub-9736445479382875 \
   npm run build
 ```
 
-then check:
+then check that the script is on pages with ads and the slot markup
+is present:
 
 ```bash
-grep -l "pagead2.googlesyndication.com" dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html
-grep -l "adsbygoogle" dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html
-grep -l "pagead2.googlesyndication.com" dist/charts/discovered/index.html
-grep -l "adsbygoogle" dist/charts/discovered/index.html
+# Script tag — should appear once in <head> on pages with ads
+grep -c "pagead2.googlesyndication.com" dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html
+grep -c "pagead2.googlesyndication.com" dist/charts/discovered/index.html
+
+# Slot markup — should appear once per AdSlot
+grep -c '<ins class="adsbygoogle"' dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html
+grep -c '<ins class="adsbygoogle"' dist/charts/discovered/index.html
 ```
 
-All four should match on the pages with ads. The AdSense `<script>`
-tag is only emitted on pages that actually have an AdSlot — the
-dashboard, about, blog index, and privacy pages are completely
-script-free:
+Each should return `1` (one script tag, one `<ins>` element). The
+substring `adsbygoogle` alone is **not** specific enough — it
+appears in the script URL path (`adsbygoogle.js`), the `<ins>`
+class, and the activation script (`adsbygoogle.push({})`), so a
+naive `grep adsbygoogle` counts 3 matches per page-with-ads rather
+than 1. Always grep for the specific markers.
+
+The AdSense `<script>` tag is only emitted on pages that actually
+have an AdSlot — the dashboard, about, blog index, and privacy
+pages are completely script-free:
 
 ```bash
 grep -c "pagead2" dist/index.html
@@ -320,13 +330,17 @@ The remaining plumbing (slot rendering, env-var gating, staging exclude,
    `npm run build`, but if you edited `.env` *after* the last publish, wait for
    the next scheduled run.
 3. **Check the `<script>` is in the HTML on a page with ads** —
-   `grep pagead2 dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html`
-   or `grep pagead2 dist/charts/discovered/index.html`. Should match (one
-   occurrence in `<head>`). Don't check `dist/index.html` (the dashboard) —
-   that page is deliberately ad-free by design and the script is never
-   emitted there, even when ads are enabled. If the script is absent on
-   a page with ads, the staging guard is tripping (your hostname starts
-   with `staging.`).
+   `grep -c "pagead2.googlesyndication.com" dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html`
+   or `grep -c "pagead2.googlesyndication.com" dist/charts/discovered/index.html`.
+   Should return `1` (one script tag in `<head>`). Use the host
+   (`pagead2.googlesyndication.com`) rather than the bare substring
+   `adsbygoogle` — that substring also matches the `<ins>` class
+   and the activation script, so a naive grep would double-count.
+   Don't check `dist/index.html` (the dashboard) — that page is
+   deliberately ad-free by design and the script is never emitted
+   there, even when ads are enabled. If the script is absent on a
+   page with ads, the staging guard is tripping (your hostname
+   starts with `staging.`).
 4. **Check the AdSense dashboard status** — "Your account is being reviewed"
    means ads won't render yet.
 
@@ -351,10 +365,14 @@ This would be a regression. The dashboard layout does not import
 dashboard (the `hasAds` prop defaults to `false`). If you see ads on
 `/`:
 
-1. `grep -c "pagead2" dist/index.html` — should return `0`. If it
-   returns more, the script was unexpectedly emitted.
-2. `grep -c "adsbygoogle" dist/index.html` — should return `0`. If
-   it returns more, an `<AdSlot>` was unexpectedly rendered.
+1. `grep -c "pagead2.googlesyndication.com" dist/index.html` — should
+   return `0`. If it returns more, the script was unexpectedly emitted.
+   Use the host rather than the bare substring `adsbygoogle` —
+   `adsbygoogle` also matches the `<ins>` class and the activation
+   script, so a naive grep would double-count.
+2. `grep -c '<ins class="adsbygoogle"' dist/index.html` — should
+   return `0`. If it returns more, an `<AdSlot>` was unexpectedly
+   rendered.
 3. Check that `src/layouts/Dashboard.astro` doesn't have an
    `<AdSlot>` import or emission, and that `src/pages/index.astro`
    doesn't pass `hasAds` to the layout.

@@ -246,7 +246,7 @@ After the CMP is published:
    or `https://vulntrends.org/charts/discovered/`. (The dashboard, about,
    blog index, and privacy pages are ad-free — see the scope note above.)
 2. Set the browser's location to an EEA country (Chrome DevTools → Sensors →
-   Location → set to "Berlin (51.5, -0.13)" or similar).
+   Location → set to "London (51.5, -0.13)" or similar).
 3. Reload. The consent banner should appear at the bottom of the screen.
 4. Click "Accept" / "Reject" / "Manage options" — your choice is stored in a
    first-party cookie and the banner should not reappear on subsequent loads.

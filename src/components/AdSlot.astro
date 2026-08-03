@@ -31,6 +31,11 @@
  * muted text. This is not strictly required by AdSense policy in
  * all jurisdictions, but it's the tasteful default and matches
  * user expectations.
+ *
+ * The visible `<p>` carries `aria-hidden="true"` so screen readers
+ * see only the `<aside aria-label="Advertisement">` accessible name
+ * — without it, AT would announce "Advertisement" twice. The
+ * aside's aria-label is the single accessible name for the region.
  */
 
 import { getAdsConfig } from '@/lib/ads';
@@ -47,7 +52,7 @@ const { enabled, client } = getAdsConfig(Astro.site);
 
 {enabled && (
   <aside class="vt-ad" aria-label="Advertisement">
-    <p class="vt-ad-label">Advertisement</p>
+    <p class="vt-ad-label" aria-hidden="true">Advertisement</p>
     <ins
       class="adsbygoogle"
       style="display:block"

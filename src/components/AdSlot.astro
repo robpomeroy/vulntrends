@@ -42,7 +42,7 @@ interface Props {
 }
 
 const { slot, format = 'auto', layout } = Astro.props;
-const { enabled } = getAdsConfig(Astro.site);
+const { enabled, client } = getAdsConfig(Astro.site);
 ---
 
 {enabled && (
@@ -51,7 +51,7 @@ const { enabled } = getAdsConfig(Astro.site);
     <ins
       class="adsbygoogle"
       style="display:block"
-      data-ad-client={import.meta.env.PUBLIC_ADSENSE_CLIENT}
+      data-ad-client={client}
       data-ad-slot={slot}
       data-ad-format={format}
       data-ad-layout={layout}

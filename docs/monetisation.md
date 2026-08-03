@@ -1,8 +1,8 @@
 # Monetisation: operating AdSense on VulnTrends
 
 VulnTrends carries light advertising on content pages (blog posts and chart
-explanations) via Google AdSense. The dashboard, about page, and blog index
-are deliberately ad-free — see the **Monetisation** subsection in
+explanations) via Google AdSense. The dashboard, about page, blog index, and
+privacy page are deliberately ad-free — see the **Monetisation** subsection in
 [`AGENTS.md`](../AGENTS.md) for the rationale and the env-var gating pattern.
 
 This guide is the runbook for **going live** with ads, for
@@ -73,13 +73,27 @@ PUBLIC_ADSENSE_CLIENT=ca-pub-9736445479382875 \
 then check:
 
 ```bash
-grep -l "pagead2.googlesyndication.com" dist/index.html
+grep -l "pagead2.googlesyndication.com" dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html
 grep -l "adsbygoogle" dist/blog/ai-finds-bugs-faster-than-humans-can-fix-them/index.html
+grep -l "pagead2.googlesyndication.com" dist/charts/discovered/index.html
 grep -l "adsbygoogle" dist/charts/discovered/index.html
 ```
 
-All three should match. `dist/about/index.html` and `dist/blog/index.html`
-should *not* contain `adsbygoogle` — those pages are deliberately ad-free.
+All four should match on the pages with ads. The AdSense `<script>`
+tag is only emitted on pages that actually have an AdSlot — the
+dashboard, about, blog index, and privacy pages are completely
+script-free:
+
+```bash
+grep -c "pagead2" dist/index.html
+grep -c "pagead2" dist/about/index.html
+grep -c "pagead2" dist/blog/index.html
+grep -c "pagead2" dist/privacy/index.html
+```
+
+Each should return `0`. This is intentional — loading the AdSense
+loader on pages with no ads would set cookies and could trigger the
+CMP consent dialog on pages with no ads, which would be confusing.
 
 ### 2.3 Confirm staging auto-exclusion
 
@@ -187,6 +201,13 @@ the **EEA, UK, and Switzerland** based on settings you configure in the AdSense
 dashboard. No code change is required on VulnTrends — only a one-time dashboard
 configuration.
 
+**Important scope note:** the AdSense `<script>` tag is only emitted on pages
+that actually have an AdSlot — blog posts and chart click-through pages. The
+dashboard, about page, blog index, and privacy page are deliberately
+script-free, so the CMP dialog will never appear there. This is intentional:
+a consent dialog on a page with no ads is confusing. Verify the CMP on a
+blog post or chart page, not on `/`.
+
 ### 4.1 Configure the consent message
 
 1. Sign in to the AdSense dashboard.
@@ -210,7 +231,10 @@ configuration.
 
 After the CMP is published:
 
-1. Open `https://vulntrends.org` in a browser.
+1. Open a **page with an ad** in a browser — e.g.
+   `https://vulntrends.org/blog/ai-finds-bugs-faster-than-humans-can-fix-them/`
+   or `https://vulntrends.org/charts/discovered/`. (The dashboard, about,
+   blog index, and privacy pages are ad-free — see the scope note above.)
 2. Set the browser's location to an EEA country (Chrome DevTools → Sensors →
    Location → set to "Berlin (51.5, -0.13)" or similar).
 3. Reload. The consent banner should appear at the bottom of the screen.
@@ -302,26 +326,32 @@ The remaining plumbing (slot rendering, env-var gating, staging exclude,
 
 ### The CMP consent banner doesn't appear for EEA visitors
 
-1. **Check the AdSense dashboard** → Privacy & messaging → European regulations.
+1. **Check you're on a page with ads.** The CMP only loads on blog posts
+   and chart pages. Test on `/blog/<slug>/` or `/charts/<chart>/`, not on
+   `/`. See section 4's scope note.
+2. **Check the AdSense dashboard** → Privacy & messaging → European regulations.
    The message must be **Published**, not in draft.
-2. **Check the location detection** — test in Chrome DevTools with Sensors →
+3. **Check the location detection** — test in Chrome DevTools with Sensors →
    Location overridden to an EEA capital. AdSense uses IP geolocation in
    production; VPNs and corporate proxies may give false locations.
-3. **Check that the URL field in the CMP message points to a working privacy
+4. **Check that the URL field in the CMP message points to a working privacy
    policy page** — AdSense requires this for the "Learn more" link in the
    consent dialog. Use `https://vulntrends.org/privacy/`.
 
 ### The dashboard is showing ads
 
-This would be a regression — the dashboard layout does not import `AdSlot`, so
-it cannot render ads. If you see ads on `/`:
+This would be a regression. The dashboard layout does not import
+`AdSlot`, and the AdSense `<script>` tag is not emitted on the
+dashboard (the `hasAds` prop defaults to `false`). If you see ads on
+`/`:
 
-1. `grep adsbygoogle dist/index.html` — should return zero matches.
-2. Check that `src/layouts/Dashboard.astro` doesn't have an accidental
-   `<AdSlot>` import (or `<script>` referencing `pagead2`).
-3. If the dashboard does load the AdSense `<script>` tag in `<head>`, that's by
-   design — the script is benign if there are no slots on the page. AdSense's
-   `adsbygoogle.push({})` only triggers when a matching `<ins>` is present.
+1. `grep -c "pagead2" dist/index.html` — should return `0`. If it
+   returns more, the script was unexpectedly emitted.
+2. `grep -c "adsbygoogle" dist/index.html` — should return `0`. If
+   it returns more, an `<AdSlot>` was unexpectedly rendered.
+3. Check that `src/layouts/Dashboard.astro` doesn't have an
+   `<AdSlot>` import or emission, and that `src/pages/index.astro`
+   doesn't pass `hasAds` to the layout.
 
 ### AdSense account suspended or disabled
 
@@ -360,7 +390,7 @@ Five things to check, in order:
 |---|---|
 | [`src/lib/ads.ts`](../src/lib/ads.ts) | Shared helper. `getAdsConfig(site)` returns `{ enabled, client }` after applying the three guards. |
 | [`src/components/AdSlot.astro`](../src/components/AdSlot.astro) | The reusable ad slot — renders the `<ins>` + activation script when enabled. Props: `slot`, optional `format`, optional `layout`. |
-| [`src/layouts/Dashboard.astro`](../src/layouts/Dashboard.astro) | Loads the AdSense `<script>` in `<head>`; Privacy link in the footer Project column. |
+| [`src/layouts/Dashboard.astro`](../src/layouts/Dashboard.astro) | Loads the AdSense `<script>` in `<head>` only when the page passes `hasAds={true}` (blog posts only). Privacy link in the footer Project column. |
 | [`src/layouts/ChartPage.astro`](../src/layouts/ChartPage.astro) | Loads the AdSense `<script>` in `<head>`; renders an `<AdSlot>` at the bottom of the explanation section; Privacy link in the footer. |
 | [`src/layouts/BlogPost.astro`](../src/layouts/BlogPost.astro) | Renders an in-article `<AdSlot>` after the article body. |
 | [`src/pages/privacy.astro`](../src/pages/privacy.astro) | Privacy policy. Required disclosure under GDPR/UK GDPR and AdSense's publisher agreement. |

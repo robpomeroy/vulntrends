@@ -30,9 +30,18 @@ import { getAdsConfig } from '@/lib/ads';
 
 interface Props {
   lastUpdated?: string;
+  /**
+   * Whether this page renders any AdSlot components. The AdSense
+   * `<script>` tag is only emitted when true (combined with the
+   * build-level enabled flag). Pages without ads — the dashboard,
+   * about, blog index, privacy — pass `false` or omit it; the
+   * script tag is then omitted entirely, so the CMP consent dialog
+   * never shows on pages with no ads.
+   */
+  hasAds?: boolean;
 }
 
-const { lastUpdated } = Astro.props;
+const { lastUpdated, hasAds = false } = Astro.props;
 const pathname = Astro.url.pathname;
 
 const isAboutActive = pathname === '/about/' || pathname.startsWith('/about/');
@@ -74,7 +83,14 @@ const plausibleEnabled =
 // integration guide; load errors are non-fatal (the rest of the page
 // renders normally). Google’s own CMP dialog handles consent for
 // EEA/UK/Switzerland users automatically.
+//
+// The script is only emitted when *both* the build-level flag is true
+// AND the page actually has AdSlots (`hasAds` prop). This avoids
+// loading the AdSense loader on ad-free pages (dashboard, about,
+// blog index, privacy) — which would otherwise set cookies and
+// potentially trigger the CMP consent dialog on pages with no ads.
 const { enabled: adsEnabled, client: adsenseClient } = getAdsConfig(Astro.site);
+const adsScriptEnabled = adsEnabled && hasAds;
 ---
 
 <!doctype html>
@@ -110,7 +126,7 @@ const { enabled: adsEnabled, client: adsenseClient } = getAdsConfig(Astro.site);
     {plausibleEnabled && (
       <script defer data-domain={plausibleDataDomain} src={plausibleScriptUrl}></script>
     )}
-    {adsEnabled && (
+    {adsScriptEnabled && (
       <script
         async
         crossorigin="anonymous"

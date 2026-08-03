@@ -17,9 +17,8 @@ import pkg from '../../package.json' with { type: 'json' };
 const siteVersion = pkg.version;
 // AdSense config — same three-guard pattern as Plausible uses in
 // Dashboard.astro. See src/lib/ads.ts for the rationale. Chart pages
-// always render a single AdSlot at the bottom of the explanation
-// section (below), so `hasAds` is hard-coded true here. The AdSense
-// script will emit whenever the build-level flag is on.
+// always render a single AdSlot at the bottom of the explanation section
+// (below). The AdSense script will emit whenever the build-level flag is on.
 // Plausible (the analytics script) is only on Dashboard layouts.
 import { getAdsConfig } from '@/lib/ads';
 import AdSlot from '@/components/AdSlot.astro';

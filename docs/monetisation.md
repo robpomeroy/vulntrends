@@ -52,7 +52,7 @@ PUBLIC_ADSENSE_CLIENT=ca-pub-9736445479382875
 Replace the `ca-pub-...` value with the one from your AdSense account:
 **AdSense dashboard → Account → Account information → Publisher ID**.
 (The existing `public/ads.txt` file already contains this ID for direct
-ad.txt verification — they should match.)
+ad.txt verification — the publisher ID should match.)
 
 `staging` should keep `PUBLIC_ADSENSE_ENABLED=false` (or unset). Staging
 deploys are auto-excluded regardless — see the staging guard in

@@ -15,6 +15,13 @@ import faviconIco from '@/assets/favicon.ico?url';
 import ogImage from '/og-image.jpg?url';
 import pkg from '../../package.json' with { type: 'json' };
 const siteVersion = pkg.version;
+// AdSense config — same three-guard pattern as Plausible uses in
+// Dashboard.astro. See src/lib/ads.ts for the rationale. Chart pages
+// additionally include a single AdSlot at the bottom of the explanation
+// section (below), so the script must be loaded here even though
+// Plausible (the analytics script) is only on Dashboard layouts.
+import { getAdsConfig } from '@/lib/ads';
+import AdSlot from '@/components/AdSlot.astro';
 
 interface Props {
   /** Page <title> suffix appended after "VulnTrends —". */
@@ -31,6 +38,7 @@ const { title, description, chartName, csvFilename } = Astro.props;
 const canonicalUrl = Astro.url.href;
 const pathname = Astro.url.pathname;
 const isDashboardActive = pathname === '/' || pathname === '';
+const { enabled: adsEnabled, client: adsenseClient } = getAdsConfig(Astro.site);
 ---
 
 <!doctype html>
@@ -74,6 +82,14 @@ const isDashboardActive = pathname === '/' || pathname === '';
         },
       ],
     })} />
+
+    {adsEnabled && (
+      <script
+        async
+        crossorigin="anonymous"
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+      ></script>
+    )}
   </head>
   <body class="bg-vt-bg-primary text-vt-text-primary min-h-screen">
     <header class="border-b border-vt-border">
@@ -127,13 +143,20 @@ const isDashboardActive = pathname === '/' || pathname === '';
         <div class="max-w-3xl vt-prose">
           <slot name="explanation" />
         </div>
+        {/*
+          Bottom-of-content ad. Sits below the chart-explanation prose
+          so readers see it after they've finished reading, not while
+          reading. Slot ID is a placeholder until AdSense approves the
+          site; the component renders nothing while ads are disabled.
+        */}
+        <AdSlot slot="0000000000" />
       </section>
     </main>
 
     <footer class="border-t border-vt-border">
-      <div class="mx-auto max-w-7xl px-6 py-6 text-vt-text-muted text-sm">
-        VulnTrends is an open-source project. Data: public vendor advisories
-        and the National Vulnerability Database. Licensed MIT.
+      <div class="mx-auto max-w-7xl px-6 py-6 text-vt-text-muted text-sm flex flex-wrap items-center gap-4">
+        <span>VulnTrends is an open-source project. Data: public vendor advisories and the National Vulnerability Database. Licensed MIT.</span>
+        <a href="/privacy/" class="hover:text-vt-accent">Privacy</a>
       </div>
     </footer>
   </body>

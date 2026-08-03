@@ -1,0 +1,64 @@
+---
+/**
+ * AdSlot — a single AdSense ad unit, conditionally rendered.
+ *
+ * Renders nothing when ads are disabled (staging, ads off, or no
+ * client ID). When enabled, emits the standard AdSense `<ins>` tag
+ * plus the activation script that pushes the slot into AdSense's
+ * `adsbygoogle` queue.
+ *
+ * Usage:
+ *   <AdSlot slot="1234567890" format="fluid" layout="in-article" />
+ *   <AdSlot slot="0987654321" />
+ *
+ * Args:
+ *   slot: AdSense ad-unit slot ID (the number from the AdSense dashboard
+ *         when you create an ad unit — e.g. "1234567890").
+ *   format: AdSense ad format. Defaults to "auto" (responsive, picks
+ *           the best fit for the container). Other valid values:
+ *           "fluid", "rectangle", "vertical", "horizontal".
+ *   layout: AdSense layout keyword. "in-article" is the only one in
+ *           current use; others ("in-feed", "auto") can be added
+ *           when needed.
+ *
+ * The component reads the same env vars as the layout-level scripts
+ * (PUBLIC_ADSENSE_ENABLED, PUBLIC_ADSENSE_CLIENT) via the shared
+ * `getAdsConfig` helper, so a single env-var toggle gates the
+ * whole site: script in <head>, ad slots in pages, and the CMP
+ * dialog management.
+ *
+ * AdSense's "Advertisement" label is rendered above the unit in
+ * muted text. This is not strictly required by AdSense policy in
+ * all jurisdictions, but it's the tasteful default and matches
+ * user expectations.
+ */
+
+import { getAdsConfig } from '@/lib/ads';
+
+interface Props {
+  slot: string;
+  format?: 'auto' | 'fluid' | 'rectangle' | 'vertical' | 'horizontal';
+  layout?: 'in-article' | 'in-feed' | 'auto';
+}
+
+const { slot, format = 'auto', layout } = Astro.props;
+const { enabled } = getAdsConfig(Astro.site);
+---
+
+{enabled && (
+  <aside class="vt-ad" aria-label="Advertisement">
+    <p class="vt-ad-label">Advertisement</p>
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client={import.meta.env.PUBLIC_ADSENSE_CLIENT}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-ad-layout={layout}
+      data-full-width-responsive="true"
+    ></ins>
+    <script is:inline>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </aside>
+)}

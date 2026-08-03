@@ -253,3 +253,47 @@ body {
     font-style: italic;
   }
 }
+
+/*
+ * Ad containers — used by the AdSlot component on blog posts and chart
+ * pages. The dashboard layout deliberately does not include any
+ * AdSlot, so this class is unused on the dashboard itself.
+ *
+ * Design goals:
+ * - Max 768px so the ad fits comfortably inside the .max-w-3xl prose
+ *   column on blog posts and chart explanations.
+ * - Centred with vertical margin so the ad sits as its own block
+ *   within the article flow, not jammed against surrounding prose.
+ * - A muted "Advertisement" label above the slot, small and unobtrusive.
+ * - overflow: hidden to prevent AdSense's responsive sizing from
+ *   pushing the container past its max-width during layout shift.
+ * - Subtle top border to separate the ad from the content above
+ *   without being jarring.
+ */
+.vt-ad {
+  max-width: 768px;
+  margin: 2.5rem auto;
+  padding: 1rem 0;
+  overflow: hidden;
+  border-top: 1px solid var(--vt-border);
+  border-bottom: 1px solid var(--vt-border);
+  text-align: center;
+}
+
+.vt-ad-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vt-text-muted);
+  margin: 0 0 0.75rem 0;
+  font-weight: 500;
+}
+
+/* AdSense's <ins> element fills its container. The component-level
+   style="display:block" plus data-full-width-responsive="true" lets
+   AdSense auto-size. min-height prevents a layout-shift flash before
+   the ad loads. */
+.vt-ad ins.adsbygoogle {
+  display: block;
+  min-height: 90px;
+}

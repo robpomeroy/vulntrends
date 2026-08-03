@@ -174,6 +174,55 @@ Svelte + D3 charts                ← interactive dashboard
 - **Neutral framing** — do not add AI-era annotations, editorial commentary,
   or interpretive labels to charts or copy. Present data as-is.
 
+### Monetisation
+
+Ads appear on content pages only — blog posts (in-article) and chart
+click-through pages (bottom of explanation). The dashboard (`/`),
+about page (`/about/`), and blog index (`/blog/`) are **ad-free by
+design**, not a config option. This is a product decision: the
+dashboard is the data tool, and ads on it would undermine the
+project's credibility as a neutral, data-driven visualisation.
+
+- **AdSense is opt-in via `.env`.** Three guards gate every emission:
+  `PUBLIC_ADSENSE_ENABLED === 'true'`, `!isStaging`, and
+  `PUBLIC_ADSENSE_CLIENT` is set. See `src/lib/ads.ts` for the shared
+  implementation; both `Dashboard.astro` and `ChartPage.astro` `<head>`
+  sections use it. Staging deploys (any `staging.*` hostname) are
+  auto-excluded regardless of the boolean.
+- **One ad per page, max.** No ad-stacking, no multiple units per
+  page. The `AdSlot` component (`src/components/AdSlot.astro`) renders
+  the standard AdSense `<ins>` tag plus the activation script. It
+  reads the same env vars as the layout-level scripts, so a single
+  env-var toggle gates the whole site.
+- **Google's CMP, not a custom cookie banner.** The AdSense script
+  loads Google's Consent Management Platform automatically, which
+  displays a consent dialog to EEA/UK/Switzerland users based on
+  settings configured in the AdSense dashboard's "Privacy &
+  messaging" tab. Building a separate cookie banner would be
+  redundant and could conflict with Google's CMP. Plausible is
+  cookieless and doesn't require consent under GDPR, so no banner
+  is needed for analytics either.
+- **Privacy policy is a prerequisite.** AdSense requires a privacy
+  policy at `/privacy/` disclosing cookie usage and listing the ad
+  technology providers. The page exists in the codebase; keeping it
+  accurate is a maintenance responsibility.
+- **AdSense approval is a deployment prerequisite.** The
+  `ca-pub-XXXXXXXXXXXXXXXX` ID won't work until Google approves the
+  site. Until then, keep `PUBLIC_ADSENSE_ENABLED=false` even in the
+  production `.env`. The code is safe to merge and deploy with ads
+  disabled (no script tag, no ad slots rendered).
+- **CMP dashboard configuration** (one-time manual setup): in the
+  AdSense dashboard, navigate to Privacy & messaging → European
+  regulations and configure:
+  - The GDPR consent message text (or use the default)
+  - The ad technology providers list (use the "commonly used set"
+    default — same as Google's recommended baseline)
+  - The message display options (bottom-of-screen banner, dismiss
+    on consent)
+  This is a one-time setup task done in the AdSense web UI, not in
+  the codebase. Without it, the CMP dialog won't appear to EEA/UK
+  users even when ads are enabled.
+
 ### Versioning
 
 - The project version lives in the `version` field of `package.json` —

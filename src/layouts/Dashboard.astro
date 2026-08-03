@@ -23,6 +23,10 @@ import ogImage from '/og-image.jpg?url';
 // are this project's minimums (see package.json `engines`).
 import pkg from '../../package.json' with { type: 'json' };
 const siteVersion = pkg.version;
+// AdSense config — same three-guard pattern as Plausible below.
+// See src/lib/ads.ts for the rationale. Ads load Google’s CMP
+// automatically for EEA/UK/Switzerland users; no custom banner needed.
+import { getAdsConfig } from '@/lib/ads';
 
 interface Props {
   lastUpdated?: string;
@@ -64,6 +68,13 @@ const plausibleDataDomain = import.meta.env.PUBLIC_PLAUSIBLE_DATA_DOMAIN?.trim()
 const isStaging = Astro.site.hostname.startsWith('staging.');
 const plausibleEnabled =
   import.meta.env.PUBLIC_PLAUSIBLE_ENABLED === 'true' && !isStaging && !!plausibleScriptUrl;
+
+// AdSense — same pattern. See src/lib/ads.ts for the three-guard
+// implementation. The script is async + crossorigin per AdSense's
+// integration guide; load errors are non-fatal (the rest of the page
+// renders normally). Google’s own CMP dialog handles consent for
+// EEA/UK/Switzerland users automatically.
+const { enabled: adsEnabled, client: adsenseClient } = getAdsConfig(Astro.site);
 ---
 
 <!doctype html>
@@ -98,6 +109,13 @@ const plausibleEnabled =
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
     {plausibleEnabled && (
       <script defer data-domain={plausibleDataDomain} src={plausibleScriptUrl}></script>
+    )}
+    {adsEnabled && (
+      <script
+        async
+        crossorigin="anonymous"
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+      ></script>
     )}
   </head>
   <body>
@@ -186,6 +204,7 @@ const plausibleEnabled =
           <ul class="list-none text-sm space-y-1">
             <li><a href="/about/">About &amp; methodology</a></li>
             <li><a href="/blog/">Blog</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
             <li><a href="https://github.com/robpomeroy/vulntrends">GitHub</a></li>
             <li>MIT Licensed</li>
           </ul>

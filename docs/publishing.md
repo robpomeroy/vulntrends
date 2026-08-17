@@ -61,9 +61,9 @@ task scheduler/cron.
 
 ### Setting up the scheduled task
 
-The Synology Task Scheduler runs `scripts/daily-publish.sh` once a day. That
-script handles `git pull`, conditional `npm ci`, and `npm run publish`, with
-log output mirrored to `logs/publish.log`.
+The production deployment server runs `scripts/daily-publish.sh` once a day.
+That script handles `git pull`, conditional `npm ci`, and `npm run publish`,
+with log output mirrored to `logs/publish.log`.
 
 Configure the task action as the path to the script:
 
@@ -100,8 +100,9 @@ so any failure aborts the rest:
    the result to the Task Scheduler's "command failed" branch.
 
 All output is mirrored to `logs/publish.log` via `tee -a`, so the file
-accumulates full history across runs. Stdout still streams to the Task
-Scheduler email digest so you see the run summary in your inbox.
+accumulates full history across runs. Stdout still streams to the deployment
+server's task scheduler, which can send an email digest so you see the run
+summary in your inbox.
 
 ### What the publish script does
 
@@ -136,7 +137,7 @@ The rsync invocation uses the following flags:
   shell-level escaping is involved.
 
 If any step fails, the script prints the error to stderr and exits non-zero. The
-Synology Task Scheduler will email you the full output.
+deployment server's email offers full output.
 
 ### Staging
 
@@ -313,9 +314,9 @@ Set `PUBLIC_PLAUSIBLE_ENABLED=true` in your local `.env` (along with the
 script URL) to test the integration in `npm run dev`. Leave it `false` to
 keep local page views out of the Plausible dashboard.
 
-### Synology scheduled task
+### Deployment server scheduled task
 
-The Synology `.env` must have `PUBLIC_PLAUSIBLE_ENABLED=true` and
+The deployment server's `.env` must have `PUBLIC_PLAUSIBLE_ENABLED=true` and
 `PUBLIC_PLAUSIBLE_SCRIPT_URL` set, otherwise the production deploy will
 ship without analytics. The daily-publish script fails fast if `.env` is
 missing entirely, so the file is guaranteed present — but its values

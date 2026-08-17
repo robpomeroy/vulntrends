@@ -445,7 +445,7 @@ scripts/
 
 ---
 
-Last updated: 2026-07-23. Archive replication was switched from
-"committed to the repo" to "rsynced to ARCHIVE_RSYNC_TARGET" after it
-became clear that production (Synology) has read-only Git access and
-could never push the snapshot blobs from the daily publish.
+Last updated: 2026-07-23. Archive replication was switched from "committed to
+the repo" to "rsynced to ARCHIVE_RSYNC_TARGET" after it became clear that
+production has read-only Git access and could never push the snapshot blobs from
+the daily publish.

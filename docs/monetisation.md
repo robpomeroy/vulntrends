@@ -41,7 +41,7 @@ no recurring maintenance required afterwards.
 
 ### 2.1 Set the two env vars in `.env`
 
-On the Synology NAS (production):
+In the production deployment environment:
 
 ```ini
 # Marketing / AdSense
@@ -279,7 +279,8 @@ on every blog post automatically when ads are enabled.
 
 ### 5.3 Disabling ads temporarily
 
-To pause ads without removing the code, set on the Synology `.env`:
+To pause ads without removing the code, set in the production deployment
+environment's `.env`:
 
 ```ini
 PUBLIC_ADSENSE_ENABLED=false
@@ -323,9 +324,9 @@ The remaining plumbing (slot rendering, env-var gating, staging exclude,
 
 ### Ads don't appear after enabling
 
-1. **Check the env vars are set on the Synology `.env`** — the build reads
-   `.env` at `npm run publish` time. A missing var means `getAdsConfig` returns
-   `enabled: false`.
+1. **Check the env vars are set in the production deployment environment's
+   `.env`** — the build reads `.env` at `npm run publish` time. A missing var
+   means `getAdsConfig` returns `enabled: false`.
 2. **Check the build was actually rebuilt** — `npm run publish` runs
    `npm run build`, but if you edited `.env` *after* the last publish, wait for
    the next scheduled run.

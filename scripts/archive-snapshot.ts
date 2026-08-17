@@ -18,7 +18,7 @@
  *
  * The archive directory is a LOCAL STAGING AREA, not part of the Git
  * repo (see `.gitignore` for the data-archive/ rules). Production
- * (Synology) has read-only Git access — it can `git pull` but not
+ * should have read-only Git access — it can `git pull` but not
  * `git push` — so the archive cannot be committed from production.
  * Instead, `scripts/publish.ts` rsyncs the local `data-archive/` to a
  * backup target configured via the `ARCHIVE_RSYNC_TARGET` env var

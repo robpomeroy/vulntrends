@@ -16,7 +16,7 @@ annotations or editorial framing — and lets users draw their own conclusions.
 - **Styling**: Tailwind CSS (dark-first dashboard aesthetic)
 - **Data validation**: Zod schemas
 - **Pipeline tooling**: tsx + TypeScript (Node 22+)
-- **Deployment**: Synology NAS scheduled task → rsync to Namecheap web host
+- **Deployment**: Deployment server  → scheduled task → rsync to web host
 
 ## Commands
 
@@ -100,7 +100,7 @@ sources fail. The pipeline has four safeguards:
    a comment explaining why. The safeguard would otherwise mask
    real progress when a stub is revived.
 
-The Synology Task Scheduler email surfaces both the threshold-abort
+The deployment server's scheduled task email surfaces both the threshold-abort
 and the cached-fallback warning (both go to stderr).
 
 ### Cross-platform `node_modules` (Windows ↔ Linux)
@@ -130,7 +130,7 @@ file in the repo root is picked up automatically. Copy `.env.example` to
 `.env` to get started.
 
 The `.env` file also holds the `DEPLOY_*` variables used by
-`scripts/publish.ts` for rsync to the Namecheap web host (host, port,
+`scripts/publish.ts` for rsync to the web host (host, port,
 user, SSH key path, production/staging paths). See `.env.example` for
 the full list.
 

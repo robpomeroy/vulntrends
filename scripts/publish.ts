@@ -1,5 +1,5 @@
 /**
- * End-to-end publish script — runs on the Synology NAS as a scheduled task.
+ * End-to-end publish script — runs on the deployment server as a scheduled task.
  *
  * Steps:
  *   1. npm run data:build   (fetch all sources, normalise, aggregate)
@@ -25,7 +25,7 @@
  * Reads DEPLOY_* variables from .env (loaded automatically by the
  * `--env-file-if-exists=.env` flag in the npm script). On any step
  * failure the script prints to stderr and exits non-zero so the
- * Synology Task Scheduler emails the result.
+ * deployment server emails the result.
  *
  * Usage:
  *   npm run publish                  # full pipeline, production
@@ -132,8 +132,8 @@ const activeStages: Stage[] = onlyStages
     : [...STAGES];
 
 // Warn loudly when data:build is skipped — the deployed dist/ will
-// reflect the previously-built data, not fresh data. The Synology
-// Task Scheduler emails stderr, so this is visible in the digest.
+// reflect the previously-built data, not fresh data. The deployment
+// server emails stderr, so this is visible in the digest.
 if (skipStages?.includes('data:build')) {
   console.error('⚠ --skip=data:build: deploying the previously-built dist/ without fetching fresh data.');
 }
@@ -360,11 +360,11 @@ function isArchiveTargetSsh(target: string): boolean {
  *
  * Mirrors the web-deploy `rsync()` function's patterns:
  *   - Reuses `DEPLOY_KEY` + `DEPLOY_PORT` for the SSH connection
- *     (the Synology already has the key configured for the web
+ *     (the deployment server already has the key configured for the web
  *     deploy; no separate archive credential is needed unless the
  *     archive host trusts a different key).
  *   - Uses the same `--chmod=D755,F644` and `--exclude=@eaDir/`
- *     conventions so Synology-isms don't leak.
+ *     conventions so deployment server-isms don't leak.
  *   - Uses `--delete` so the target mirrors the *pruned* local
  *     state. (We prune locally first, then replicate — see the
  *     `data:archive` stage block in `main()` for the ordering.)
@@ -374,7 +374,7 @@ function isArchiveTargetSsh(target: string): boolean {
  * Failure here is logged to stderr but does NOT abort the publish.
  * The archive is a backup concern; if replication fails, the web
  * deploy should still proceed so users see fresh data. The stderr
- * message is visible in the Synology Task Scheduler email digest.
+ * message is visible in the deployment server email digest.
  */
 function replicateArchive(): void {
   if (!ARCHIVE_RSYNC_TARGET) {
@@ -437,7 +437,7 @@ function replicateArchive(): void {
   const chmod = 'D755,F644';
 
   // Build the SSH command string. We reuse DEPLOY_KEY and
-  // DEPLOY_PORT (the Synology already has the key on disk and
+  // DEPLOY_PORT (the deployment server already has the key on disk and
   // trusts the host) rather than introducing separate
   // ARCHIVE_SSH_* env vars. If a future user needs a different
   // key for the archive host, the right move is to add those
@@ -488,7 +488,7 @@ function replicateArchive(): void {
   } catch (err) {
     // Non-fatal: the archive is a backup concern, not a deployment
     // blocker. Surface the error loudly to stderr (so it shows in
-    // the Synology Task Scheduler email digest) but let the web
+    // the deployment server email digest) but let the web
     // deploy continue.
     console.error('✗ archive replication FAILED (continuing publish)');
     console.error(err);

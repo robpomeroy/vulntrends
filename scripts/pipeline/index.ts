@@ -223,7 +223,7 @@ async function main(): Promise<void> {
           allRecords.push(...prevRecords);
           usedCache = true;
           cachedFallbackSources.push(source.id);
-          // Log to stderr so the Synology Task Scheduler email surfaces
+          // Log to stderr so the deployment server email surfaces
           // it (errors are normally sent to stderr; stdout goes to the
           // log file). The user asked for visibility on cached-fallback
           // usage so this is emitted even though it's not a hard error.

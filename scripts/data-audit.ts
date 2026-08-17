@@ -4,49 +4,47 @@
  * Runs after `data:validate` (Zod schema validation). Where Zod validates
  * shape, this script validates plausibility:
  *
- *  - **A1**: Per-source year-over-year outliers.
- *    If a source's count for the current year exceeds N× the trailing
- *    3-year median, warn. Catches bulk re-publication regressions like
- *    the MSRC `2026-Jul` update.
+ *  - **A1**: Per-source year-over-year outliers. If a source's count for the
+ *    current year exceeds N× the trailing 3-year median, warn. Catches bulk
+ *    re-publication regressions like the MSRC `2026-Jul` update.
  *
- *  - **A2**: CVE-year vs discovered-year divergence.
- *    If `|CVEYear − discoveredYear| > 5`, flag the record. A CVE ID encodes
- *    the assignment year; if `discoveredDate` is years off, the parser
- *    almost certainly picked up the wrong timestamp (e.g. MSRC
- *    `CurrentReleaseDate` for a bulk catalog re-publication).
+ *  - **A2**: CVE-year vs discovered-year divergence. If `|CVEYear −
+ *    discoveredYear| > 5`, flag the record. A CVE ID encodes the assignment
+ *    year; if `discoveredDate` is years off, the parser almost certainly picked
+ *    up the wrong timestamp (e.g. MSRC `CurrentReleaseDate` for a bulk catalog
+ *    re-publication).
  *
- *  - **A3**: Future-dated records.
- *    Records dated beyond `today + 7 days` are almost always parser bugs
- *    (timezone shift, epoch injection, "today" fallback). Hard-fail.
+ *  - **A3**: Future-dated records. Records dated beyond `today + 7 days` are
+ *    almost always parser bugs (timezone shift, epoch injection, "today"
+ *    fallback). Hard-fail.
  *
- *  - **A6**: MSRC residual date contamination.
- *    Even after the parser filters out Mariner documents and the dedup
- *    applies the CVE-year sanity check, *some* MSRC records may still
- *    survive with implausible `discoveredDate` values (e.g. when the
- *    vendor date passed the sanity check but the NVD record was
- *    missing). A6 tracks this residual so the operator can spot
+ *  - **A6**: MSRC residual date contamination. Even after the parser filters
+ *    out Mariner documents and the dedup applies the CVE-year sanity check,
+ *    *some* MSRC records may still survive with implausible `discoveredDate`
+ *    values (e.g. when the vendor date passed the sanity check but the NVD
+ *    record was missing). A6 tracks this residual so the operator can spot
  *    regressions in either layer of defence.
  *
  *    A6 uses a tolerance threshold (`A6_RESIDUAL_TOLERANCE`, currently
- *    50) rather than zero-tolerance. The current production baseline
- *    is ~30 known residuals (documented in `docs/backlog.md`):
+ *    50) rather than zero-tolerance. The current production baseline is ~30
+ *        known residuals (documented in `docs/backlog.md`):
  *      - 6 MSRC cross-CNA re-imports (e.g. "HackerOne: CVE-…")
  *      - 21 NVD delayed-publishes (legitimate, not a bug)
- *      - 3 Apple/Adobe late-patch advisories (legitimate)
- *    With a tolerance of 50, a regression that adds 20+ new residuals
- *    to the baseline will still block publication; legitimate
- *    variations within the known-baseline range are advisory only.
+ *      - 3 Apple/Adobe late-patch advisories (legitimate) With a tolerance of
+ *        50, a regression that adds 20+ new residuals to the baseline will
+ *        still block publication; legitimate variations within the
+ *        known-baseline range are advisory only.
  *
- *  - **E2**: Per-manufacturer patch-date coverage.
- *    Manufacturers with < 10% patch-date coverage inflate the backlog.
- *    Warn so the operator can decide whether to exclude them.
+ *  - **E2**: Per-manufacturer patch-date coverage. Manufacturers with < 10%
+ *    patch-date coverage inflate the backlog. Warn so the operator can decide
+ *    whether to exclude them.
  *
- *  - **E5-dup**: Duplicate CVE IDs across sources after dedup.
- *    The pipeline dedupes by CVE ID; if duplicates remain, dedup is broken.
+ *  - **E5-dup**: Duplicate CVE IDs across sources after dedup. The pipeline
+ *    dedupes by CVE ID; if duplicates remain, dedup is broken.
  *
- * Emits warnings to stderr (so the Synology Task Scheduler email surfaces
- * them) and exits non-zero on hard failures. Warnings alone do NOT block
- * publication — they are advisory.
+ * Emits warnings to stderr (so the deployment server task scheduler email
+ * surfaces them) and exits non-zero on hard failures. Warnings alone do NOT
+ * block publication — they are advisory.
  *
  * Usage: `npm run data:audit` (or as part of `publish:validate`).
  */

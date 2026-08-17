@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Daily publish runner — invoked by the Synology Task Scheduler.
+# Daily publish runner — invoked by scheduled task
 #
 # Replaces the one-liner previously in the scheduler:
 #   cd /volume1/deployments/vulntrends && \

@@ -19,16 +19,16 @@
 import type { ManufacturerInfo } from '../../scripts/pipeline/types.js';
 
 export const MANUFACTURERS: ManufacturerInfo[] = [
-  { name: 'Adobe', colour: '#a86ecd' },
-  { name: 'Apple', colour: '#3f6521' },
-  { name: 'Cisco', colour: '#568c81' },
-  { name: 'Fortinet', colour: '#c39b69' },
-  { name: 'Google', colour: '#923881' },
-  { name: 'Microsoft', colour: '#fd7eaa' },
-  { name: 'Mozilla', colour: '#4fbc6a' },
-  { name: 'Oracle', colour: '#11a2f2' },
-  { name: 'Palo Alto', colour: '#0d5a9b' },
-  { name: 'Samsung', colour: '#b35c05' },
+  { name: 'Adobe', colour: '#006400' },
+  { name: 'Apple', colour: '#00008b' },
+  { name: 'Cisco', colour: '#b03060' },
+  { name: 'Fortinet', colour: '#ff0000' },
+  { name: 'Google', colour: '#ffd700' },
+  { name: 'Microsoft', colour: '#7cfc00' },
+  { name: 'Mozilla', colour: '#00ffff' },
+  { name: 'Oracle', colour: '#ff00ff' },
+  { name: 'Palo Alto', colour: '#6495ed' },
+  { name: 'Samsung', colour: '#ffdab9' },
 ];
 
 /**

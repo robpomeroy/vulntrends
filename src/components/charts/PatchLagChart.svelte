@@ -268,7 +268,12 @@
     innerHeight: number,
     margin: { top: number; right: number; bottom: number; left: number },
   ) {
-    const manufacturers = [...new Set(filteredData.map((d) => d.manufacturer))];
+    // Unique manufacturers, sorted alphabetically so the series order is
+    // stable and predictable rather than following the order of first
+    // appearance in the (date-then-name-sorted) data.
+    const manufacturers = [...new Set(filteredData.map((d) => d.manufacturer))].sort((a, b) =>
+      a.localeCompare(b),
+    );
     const parseDate =
       granularity === 'month' ? d3.timeParse('%Y-%m') : d3.timeParse('%Y');
 
@@ -281,12 +286,14 @@
       byManufacturer.get(d.manufacturer)!.push(d);
     }
 
-    const grouped = [...byManufacturer.entries()].map(([manufacturer, values]) => ({
-      manufacturer,
-      values: values
-        .map((d) => ({ ...d, _date: parseDate(d.date) as Date }))
-        .sort((a, b) => a._date.getTime() - b._date.getTime()),
-    }));
+    const grouped = manufacturers
+      .map((manufacturer) => ({
+        manufacturer,
+        values: (byManufacturer.get(manufacturer) ?? [])
+          .map((d) => ({ ...d, _date: parseDate(d.date) as Date }))
+          .sort((a, b) => a._date.getTime() - b._date.getTime()),
+      }))
+      .filter((g) => g.values.length > 0);
 
     // Scales. The y-scale only considers buckets with a real lag
     // measurement (knownCount > 0); the aggregator's 0 placeholders

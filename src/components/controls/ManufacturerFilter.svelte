@@ -9,9 +9,11 @@
 
   interface Props {
     /**
-     * Manufacturer names in the order they appear in the data. The dot
-     * colours are NOT read from this prop — they are resolved live via
-     * `getManufacturerColour(name)` so the dots can never desync from the
+     * The full set of manufacturers that appear in the data. The chips are
+     * sorted alphabetically for display (independent of the prop order,
+     * which follows the generated JSON and is not alphabetical), matching
+     * the charts' series order. Dot colours are resolved live via
+     * `getManufacturerColour(name)` so they can never desync from the
      * charts (which also read `src/lib/manufacturers.ts`). The `colour`
      * field is retained for the shared `ManufacturerInfo` type only.
      */
@@ -19,6 +21,13 @@
   }
 
   let { manufacturers }: Props = $props();
+
+  // Sort alphabetically so the filter chips match the charts' series order
+  // (which are sorted in the chart components). The prop order follows the
+  // generated JSON, which is not alphabetical.
+  let sortedManufacturers = $derived(
+    [...manufacturers].sort((a, b) => a.name.localeCompare(b.name)),
+  );
 
   let selectedSet = $derived(new Set($dashboardStore.selectedManufacturers));
   let allSelected = $derived($dashboardStore.selectedManufacturers.length === 0);
@@ -37,7 +46,7 @@
     </button>
   </div>
   <div class="flex flex-wrap gap-2">
-    {#each manufacturers as m (m.name)}
+    {#each sortedManufacturers as m (m.name)}
       <button
         type="button"
         class="inline-flex items-center gap-1.5 py-1 px-2.5 border rounded-full text-sm cursor-pointer transition-all

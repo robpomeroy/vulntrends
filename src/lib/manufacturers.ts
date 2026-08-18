@@ -2,11 +2,15 @@
  * Canonical manufacturer list with display names and chart colours.
  *
  * This is the **single source of truth** for manufacturer colours. All other
- * code (D3 theme, aggregated JSON, filter UI) derives from this definition:
+ * code (D3 theme, filter UI) derives from this definition:
  *
  *   - `src/lib/d3/theme.ts` imports `getManufacturerColour()` for chart colours
- *   - `scripts/aggregate.ts` writes `manufacturers.json` from `MANUFACTURERS`
- *   - The build-time loader reads that JSON and passes it to the filter UI
+ *   - `src/components/controls/ManufacturerFilter.svelte` calls
+ *     `getManufacturerColour()` directly for the chip dots (live import,
+ *     so the dots and charts always stay in sync)
+ *   - `scripts/aggregate.ts` writes `manufacturers.json` from `MANUFACTURERS`,
+ *     but that JSON now supplies only the **name list / order** to the filter
+ *     UI — the colours come from this module, not from the JSON
  *
  * When adding a new data source, add its manufacturer here if not already
  * present. Never duplicate colour values elsewhere.

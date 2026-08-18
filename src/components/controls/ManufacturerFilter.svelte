@@ -5,8 +5,16 @@
    */
 
   import { dashboardStore, toggleManufacturer, selectAllManufacturers } from '@/lib/store';
+  import { getManufacturerColour } from '@/lib/manufacturers';
 
   interface Props {
+    /**
+     * Manufacturer names in the order they appear in the data. The dot
+     * colours are NOT read from this prop — they are resolved live via
+     * `getManufacturerColour(name)` so the dots can never desync from the
+     * charts (which also read `src/lib/manufacturers.ts`). The `colour`
+     * field is retained for the shared `ManufacturerInfo` type only.
+     */
     manufacturers: Array<{ name: string; colour: string }>;
   }
 
@@ -39,7 +47,7 @@
         onclick={() => toggleManufacturer(m.name)}
         aria-pressed={allSelected || selectedSet.has(m.name)}
       >
-        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: {m.colour}"></span>
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: {getManufacturerColour(m.name)}"></span>
         <span>{m.name}</span>
       </button>
     {/each}

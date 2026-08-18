@@ -203,8 +203,12 @@
     margin: { top: number; right: number; bottom: number; left: number },
     parseDate: (s: string) => Date | null,
   ) {
-    // Get unique manufacturers and dates
-    const manufacturers = [...new Set(filteredData.map((d) => d.manufacturer))];
+    // Get unique manufacturers and dates. Sorted alphabetically so the
+    // series order is stable and predictable rather than following the
+    // order of first appearance in the (date-then-name-sorted) data.
+    const manufacturers = [...new Set(filteredData.map((d) => d.manufacturer))].sort((a, b) =>
+      a.localeCompare(b),
+    );
     const dates = [...new Set(filteredData.map((d) => d.date))].sort();
 
     // Build a matrix: date -> manufacturer -> count
@@ -357,11 +361,15 @@
       focus.attr('transform', `translate(${x(d._date)},0)`);
       focus.style('opacity', 1);
 
-      // Build tooltip rows — structured data, no HTML interpolation
+      // Build tooltip rows — structured data, no HTML interpolation.
+      // Reverse-alphabetical so the top of the list matches the top of the
+      // visual stack: d3.stack lays the first (alphabetically lowest)
+      // manufacturer at the bottom, so reading top-to-bottom is reverse
+      // alphabetical.
       const rows = manufacturers
         .map((m) => ({ m, v: d[m] ?? 0 }))
         .filter((r) => r.v > 0)
-        .sort((a, b) => b.v - a.v);
+        .sort((a, b) => b.m.localeCompare(a.m));
 
       tooltip.show(
         event,

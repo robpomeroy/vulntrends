@@ -202,8 +202,13 @@ validateSiteUrl(targetLabel, siteUrl);
 
 const REPO_ROOT = resolve(process.cwd());
 
-function runStep(label: string, command: string, args: string[], options?: { fatal?: boolean }): void {
-  const { fatal = true } = options ?? {};
+function runStep(
+  label: string,
+  command: string,
+  args: string[],
+  options?: { fatal?: boolean; nonFatalMessage?: string },
+): void {
+  const { fatal = true, nonFatalMessage } = options ?? {};
   const start = Date.now();
   console.log(`\n── ${label} ──────────────────────────────────────`);
   console.log(`$ ${command} ${args.join(' ')}`);
@@ -226,8 +231,8 @@ function runStep(label: string, command: string, args: string[], options?: { fat
       process.exit(1);
     }
     console.error(
-      `  ⚠ ${label} is non-fatal — continuing with the previous run's data. ` +
-        `The site may be one run stale.`,
+      `  ⚠ ${label} is non-fatal — continuing. ` +
+        (nonFatalMessage ?? 'The site may be one run stale.'),
     );
   }
 }
@@ -526,12 +531,15 @@ function main(): void {
   // Each step is gated on the active stage list. Default (no
   // --only/--skip) = all stages, preserving the original behaviour.
 
-  // Step 1: Refresh data. Non-fatal: if the fetch exceeds the step's time
-  // cap (e.g. NVD is slow), the pipeline's cached-fallback has already
-  // preserved the previous run's data, so we warn and continue rather than
-  // block the deploy. The site is at worst one run stale.
+  // Step 1: Refresh data. Non-fatal: if the step fails or times out (e.g.
+  // NVD is slow), we warn and continue so the deploy is not blocked. Downstream
+  // steps will use whatever data is currently on disk (typically the previous
+  // run), so the site may be one run stale.
   if (activeStages.includes('data:build')) {
-    runStep('data:build', 'npm', ['run', 'data:build'], { fatal: false });
+    runStep('data:build', 'npm', ['run', 'data:build'], {
+      fatal: false,
+      nonFatalMessage: "continuing with the previous run's data. The site may be one run stale.",
+    });
   }
 
   // Step 2: Validate

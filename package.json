@@ -1,7 +1,7 @@
 {
   "name": "vulntrends",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Tracking trends in vulnerability patching across major software manufacturers",
   "license": "MIT",
   "engines": {

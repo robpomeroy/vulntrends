@@ -202,7 +202,8 @@ validateSiteUrl(targetLabel, siteUrl);
 
 const REPO_ROOT = resolve(process.cwd());
 
-function runStep(label: string, command: string, args: string[]): void {
+function runStep(label: string, command: string, args: string[], options?: { fatal?: boolean }): void {
+  const { fatal = true } = options ?? {};
   const start = Date.now();
   console.log(`\n── ${label} ──────────────────────────────────────`);
   console.log(`$ ${command} ${args.join(' ')}`);
@@ -211,7 +212,7 @@ function runStep(label: string, command: string, args: string[]): void {
     execFileSync(command, args, {
       cwd: REPO_ROOT,
       stdio: 'inherit',
-      timeout: 30 * 60 * 1000, // 30 min hard cap per step
+      timeout: 45 * 60 * 1000, // 45 min hard cap per step
       encoding: 'utf-8',
       shell: process.platform === 'win32', // npm.cmd on Windows
     });
@@ -221,7 +222,13 @@ function runStep(label: string, command: string, args: string[]): void {
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
     console.error(`✗ ${label} FAILED after ${elapsed}s`);
     console.error(err);
-    process.exit(1);
+    if (fatal) {
+      process.exit(1);
+    }
+    console.error(
+      `  ⚠ ${label} is non-fatal — continuing with the previous run's data. ` +
+        `The site may be one run stale.`,
+    );
   }
 }
 
@@ -519,9 +526,12 @@ function main(): void {
   // Each step is gated on the active stage list. Default (no
   // --only/--skip) = all stages, preserving the original behaviour.
 
-  // Step 1: Refresh data
+  // Step 1: Refresh data. Non-fatal: if the fetch exceeds the step's time
+  // cap (e.g. NVD is slow), the pipeline's cached-fallback has already
+  // preserved the previous run's data, so we warn and continue rather than
+  // block the deploy. The site is at worst one run stale.
   if (activeStages.includes('data:build')) {
-    runStep('data:build', 'npm', ['run', 'data:build']);
+    runStep('data:build', 'npm', ['run', 'data:build'], { fatal: false });
   }
 
   // Step 2: Validate

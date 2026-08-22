@@ -227,11 +227,18 @@ function runStep(
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
     console.error(`✗ ${label} FAILED after ${elapsed}s`);
     console.error(err);
-    if (fatal) {
+    // A step is only non-fatal when it was killed by the timeout (the
+    // subprocess was making progress but ran out of wall-clock time).
+    // Any other failure — a non-zero exit, a pipeline abort, a genuine
+    // error — is fatal even when `fatal: false`, so real problems still
+    // block the deploy. Only timeouts are safe to continue past, because
+    // the on-disk data (whatever state it's in) is the best we have.
+    const timedOut = err instanceof Error && 'code' in err && err.code === 'ETIMEDOUT';
+    if (fatal || !timedOut) {
       process.exit(1);
     }
     console.error(
-      `  ⚠ ${label} is non-fatal — continuing. ` +
+      `  ⚠ ${label} timed out — continuing with whatever data is currently on disk. ` +
         (nonFatalMessage ?? 'The site may be one run stale.'),
     );
   }
@@ -531,14 +538,16 @@ function main(): void {
   // Each step is gated on the active stage list. Default (no
   // --only/--skip) = all stages, preserving the original behaviour.
 
-  // Step 1: Refresh data. Non-fatal: if the step fails or times out (e.g.
-  // NVD is slow), we warn and continue so the deploy is not blocked. Downstream
-  // steps will use whatever data is currently on disk (typically the previous
-  // run), so the site may be one run stale.
+  // Step 1: Refresh data. Non-fatal on TIMEOUT only: if the fetch exceeds
+  // the step's time cap (e.g. NVD is slow), we warn and continue so the
+  // deploy is not blocked. Downstream steps use whatever data is currently
+  // on disk — which may be a partial/mixed snapshot if the pipeline was
+  // interrupted mid-write, not necessarily the previous run. Genuine
+  // failures (non-zero exit, pipeline abort) still block the deploy.
   if (activeStages.includes('data:build')) {
     runStep('data:build', 'npm', ['run', 'data:build'], {
       fatal: false,
-      nonFatalMessage: "continuing with the previous run's data. The site may be one run stale.",
+      nonFatalMessage: 'continuing with whatever data is currently on disk. The site may be one run stale.',
     });
   }
 

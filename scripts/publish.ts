@@ -237,10 +237,7 @@ function runStep(
     if (fatal || !timedOut) {
       process.exit(1);
     }
-    console.error(
-      `  ⚠ ${label} timed out — continuing with whatever data is currently on disk. ` +
-        (nonFatalMessage ?? 'The site may be one run stale.'),
-    );
+    console.error(`  ⚠ ${label} timed out — ${nonFatalMessage ?? 'continuing.'}`);
   }
 }
 

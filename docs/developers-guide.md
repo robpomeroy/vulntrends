@@ -266,13 +266,19 @@ degraded site when sources fail:
    previous run had data reuses the cache (with a warning), preventing
    unrecoverable data loss (since `src/data/*` is gitignored).
 
-### Non-fatal `data:build` in publish
+### Non-fatal `data:build` (timeout only)
 
-In `scripts/publish.ts`, the `data:build` step is **non-fatal**
-(`fatal: false`). If it fails or times out (e.g. NVD is slow), the publish warns
-and continues with whatever data is on disk (typically the previous run), so the
-deploy is not blocked. The site may be one run stale. The `runStep` helper takes
-a `nonFatalMessage` option so the warning text can be tailored per step.
+In `scripts/publish.ts`, the `data:build` step is configured `fatal: false`,
+but a step is only **non-fatal when it times out** (`err.code === 'ETIMEDOUT'`,
+e.g. NVD is slow). On timeout the publish warns and continues with whatever
+data is on disk — which may be a partial/mixed snapshot if the pipeline was
+interrupted mid-write, not necessarily the previous run — so the deploy is not
+blocked. The site may be one run stale.
+
+Any genuine failure — a non-zero exit, a pipeline abort, a parser error — is
+**still fatal** even with `fatal: false`, so real problems block the deploy. The
+`runStep` helper prints the `nonFatalMessage` option so the warning text can be
+tailored per step.
 
 ---
 

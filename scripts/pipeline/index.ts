@@ -10,11 +10,12 @@
  * Usage: `npm run data:build` (runs this then aggregate.ts)
  */
 
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
+import { writeJsonAtomic } from './atomic-write.js';
 import { deduplicateByCve, deduplicateRecords } from './normalise.js';
 import type { PipelineMeta, SourceId, VulnerabilityRecord } from './types.js';
 
@@ -102,8 +103,7 @@ const ZERO_RECORD_ALLOWLIST: ReadonlySet<SourceId> = new Set<SourceId>([
 ]);
 
 async function writeJson(path: string, data: unknown): Promise<void> {
-  const json = JSON.stringify(data, null, 2) + '\n';
-  await writeFile(path, json, 'utf-8');
+  await writeJsonAtomic(path, data);
 }
 
 async function main(): Promise<void> {

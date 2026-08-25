@@ -16,7 +16,7 @@
  *   `tsx scripts/aggregate.ts`
  */
 
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, mkdir } from 'node:fs/promises';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -27,6 +27,7 @@ import type {
   TimeSeriesPoint,
   VulnerabilityRecord,
 } from './pipeline/types.js';
+import { writeJsonAtomic } from './pipeline/atomic-write.js';
 import { MANUFACTURERS } from '../src/lib/manufacturers.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -40,8 +41,7 @@ async function readJson<T>(path: string): Promise<T> {
 }
 
 async function writeJson(path: string, data: unknown): Promise<void> {
-  const json = JSON.stringify(data, null, 2) + '\n';
-  await writeFile(path, json, 'utf-8');
+  await writeJsonAtomic(path, data);
 }
 
 /** Format a date as "YYYY-MM". */

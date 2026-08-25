@@ -202,7 +202,13 @@ validateSiteUrl(targetLabel, siteUrl);
 
 const REPO_ROOT = resolve(process.cwd());
 
-function runStep(label: string, command: string, args: string[]): void {
+function runStep(
+  label: string,
+  command: string,
+  args: string[],
+  options?: { fatal?: boolean; nonFatalMessage?: string },
+): void {
+  const { fatal = true, nonFatalMessage } = options ?? {};
   const start = Date.now();
   console.log(`\n── ${label} ──────────────────────────────────────`);
   console.log(`$ ${command} ${args.join(' ')}`);
@@ -211,7 +217,7 @@ function runStep(label: string, command: string, args: string[]): void {
     execFileSync(command, args, {
       cwd: REPO_ROOT,
       stdio: 'inherit',
-      timeout: 30 * 60 * 1000, // 30 min hard cap per step
+      timeout: 45 * 60 * 1000, // 45 min hard cap per step
       encoding: 'utf-8',
       shell: process.platform === 'win32', // npm.cmd on Windows
     });
@@ -219,6 +225,25 @@ function runStep(label: string, command: string, args: string[]): void {
     console.log(`✓ ${label} completed in ${elapsed}s`);
   } catch (err) {
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    const timedOut = err instanceof Error && 'code' in err && err.code === 'ETIMEDOUT';
+
+    // A step configured non-fatal on timeout: surface a distinct status and
+    // return BEFORE the generic failure logging. The subprocess was making
+    // progress but ran out of wall-clock time; the on-disk data (whatever
+    // state it's in) is the best we have, and the deploy continues without
+    // blocking. An expected timeout should not look like a hard failure in
+    // logs/alerts.
+    if (!fatal && timedOut) {
+      console.error(
+        `  ⚠ ${label} TIMED OUT after ${elapsed}s — ${nonFatalMessage ?? 'continuing.'}`,
+      );
+      return;
+    }
+
+    // Every other failure — a timeout with fatal: true, a non-zero exit, a
+    // pipeline abort, a genuine error — is fatal and blocks the deploy, even
+    // when `fatal: false` (real problems must not be silently hidden by a
+    // non-fatal flag meant for timeouts).
     console.error(`✗ ${label} FAILED after ${elapsed}s`);
     console.error(err);
     process.exit(1);
@@ -519,9 +544,20 @@ function main(): void {
   // Each step is gated on the active stage list. Default (no
   // --only/--skip) = all stages, preserving the original behaviour.
 
-  // Step 1: Refresh data
+  // Step 1: Refresh data. Non-fatal on TIMEOUT only: if the fetch exceeds
+  // the step's time cap (e.g. NVD is slow), we warn with a distinct
+  // "TIMED OUT" status and continue so the deploy is not blocked. The step
+  // does NOT print "FAILED" or dump the error for an expected timeout.
+  // Downstream steps use whatever data is currently on disk — which may be a
+  // partial/mixed snapshot if the pipeline was interrupted mid-write, not
+  // necessarily the previous run. Genuine failures (non-zero exit, pipeline
+  // abort) still block the deploy.
   if (activeStages.includes('data:build')) {
-    runStep('data:build', 'npm', ['run', 'data:build']);
+    runStep('data:build', 'npm', ['run', 'data:build'], {
+      fatal: false,
+       nonFatalMessage:
+         'continuing with whatever data is currently on disk (may be stale or partially updated if the pipeline was interrupted mid-write).',
+    });
   }
 
   // Step 2: Validate

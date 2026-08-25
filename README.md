@@ -97,6 +97,16 @@ Svelte + D3 charts                ← interactive dashboard
 4. Add the manufacturer to `src/lib/manufacturers.ts` with a display name and colour.
 5. Run `npm run data:build` and `npm run data:validate` to verify.
 
+## Documentation
+
+- [`docs/developers-guide.md`](docs/developers-guide.md) — building the site,
+  versioning, and the non-obvious gotchas.
+- [`docs/publishing.md`](docs/publishing.md) — deploying and refreshing data.
+- [`docs/analyst-guide.md`](docs/analyst-guide.md) — the data schema and
+  data-quality checks.
+- [`docs/monetisation.md`](docs/monetisation.md) — operating AdSense.
+- [`docs/backlog.md`](docs/backlog.md) — known data-quality issues.
+
 ## Licence
 
 MIT — see [LICENSE](LICENSE).

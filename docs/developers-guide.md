@@ -218,16 +218,18 @@ passing to `StackedAreaChart`.
 
 ## Testing
 
-The pipeline tests run without a test framework - they use `node:assert` so we
-get pass/fail output without adding a devDependency:
+The pipeline tests run without a test framework - they use small hand-rolled
+`expect()` helpers (and occasionally `node:assert`) so we get pass/fail output
+without adding a devDependency:
 
 ```sh
 npm run data:test
 ```
 
-This runs the dedup/date-sanity tests and the MSRC Mariner filter tests. Add new
-test cases to the relevant `scripts/pipeline/test-*.mjs` file as new date
-semantics or parser behaviours are added.
+This runs the dedup/date-sanity tests, the MSRC Mariner filter tests, and the
+atomic-write tests. Add new test cases to the relevant
+`scripts/pipeline/test-*.mjs` file as new date semantics or parser behaviours
+are added.
 
 ---
 

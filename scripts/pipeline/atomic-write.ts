@@ -14,7 +14,7 @@
  * Atomic writes close that gap at the root.
  */
 
-import { mkdir, rename, writeFile } from 'node:fs/promises';
+import { mkdir, rename, rm, writeFile } from 'node:fs/promises';
 import { basename, dirname, join } from 'node:path';
 import { randomBytes } from 'node:crypto';
 
@@ -24,6 +24,15 @@ export async function writeJsonAtomic(path: string, data: unknown): Promise<void
   const dir = dirname(path);
   await mkdir(dir, { recursive: true });
   const tmp = join(dir, `.${basename(path)}.${randomBytes(4).toString('hex')}.tmp`);
-  await writeFile(tmp, json, 'utf-8');
-  await rename(tmp, path);
+  try {
+    await writeFile(tmp, json, 'utf-8');
+    await rename(tmp, path);
+  } catch (err) {
+    // If the write or rename fails (e.g. permissions, locking), remove the
+    // temp file so it doesn't orphan a `.*.tmp` in src/data/** and clutter
+    // the tree / confuse debugging. Best-effort: if cleanup itself fails,
+    // the original error is what matters.
+    await rm(tmp, { force: true }).catch(() => {});
+    throw err;
+  }
 }

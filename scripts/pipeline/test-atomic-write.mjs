@@ -11,7 +11,7 @@
 // silently break publishes — creating missing directories, overwriting an
 // existing file, and not leaving a `.*.tmp` file behind on success.
 
-import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { writeJsonAtomic } from './atomic-write.js';
@@ -63,6 +63,24 @@ try {
     await writeJsonAtomic(file, { n: 1 });
     const entries = await readdir(dir);
     expect('no .tmp file remains', entries.every((e) => !e.endsWith('.tmp')));
+  });
+
+  await inTempDir(async (dir) => {
+    console.log('Test 4: cleans up the .tmp file when rename fails');
+    // Make the destination a directory so `rename(tmp, path)` fails, then
+    // assert the temp file was removed on the error path.
+    const dest = join(dir, 'data.json');
+    await rm(dest, { force: true });
+    await mkdir(dest, { recursive: true });
+    let threw = false;
+    try {
+      await writeJsonAtomic(dest, { n: 1 });
+    } catch {
+      threw = true;
+    }
+    const entries = await readdir(dir);
+    expect('rename failure propagates', threw);
+    expect('no .tmp file remains after failure', entries.every((e) => !e.endsWith('.tmp')));
   });
 
   // Assert the helper still works via `expect` so the import itself is

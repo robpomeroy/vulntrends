@@ -1,7 +1,7 @@
 // Tests for the shared atomic JSON writer (`writeJsonAtomic`).
 //
-// Runs without a test framework — uses node:assert so we get pass/fail
-// output without adding a devDependency. Invoke via
+// Runs without a test framework — prints pass/fail output and exits non-zero
+// on failure without adding a devDependency. Invoke via
 // `npx tsx scripts/pipeline/test-atomic-write.mjs`.
 //
 // `writeJsonAtomic` is a pipeline-critical primitive: it writes output
@@ -11,8 +11,7 @@
 // silently break publishes — creating missing directories, overwriting an
 // existing file, and not leaving a `.*.tmp` file behind on success.
 
-import { strict as assert } from 'node:assert';
-import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { writeJsonAtomic } from './atomic-write.js';
@@ -66,7 +65,7 @@ try {
     expect('no .tmp file remains', entries.every((e) => !e.endsWith('.tmp')));
   });
 
-  // Assert the helper still works via node:assert so the import itself is
+  // Assert the helper still works via `expect` so the import itself is
   // loader-verified (the checks above already cover behaviour).
   expect('imports load and helper is a function', typeof writeJsonAtomic === 'function');
 } catch (err) {

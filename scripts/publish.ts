@@ -555,7 +555,8 @@ function main(): void {
   if (activeStages.includes('data:build')) {
     runStep('data:build', 'npm', ['run', 'data:build'], {
       fatal: false,
-      nonFatalMessage: 'continuing with whatever data is currently on disk. The site may be one run stale.',
+       nonFatalMessage:
+         'continuing with whatever data is currently on disk (may be stale or partially updated if the pipeline was interrupted mid-write).',
     });
   }
 

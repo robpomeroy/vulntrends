@@ -8,9 +8,8 @@
  * sees the old complete file or the new complete file.
  *
  * The publish pipeline treats a `data:build` timeout as non-fatal and
- * continues with whatever data is on disk. Because the aggregator and
- * pipeline write directly with `writeFile`, a timeout mid-write could
- * otherwise leave a truncated JSON file that `data:validate` would fail
+ * continues with whatever data is on disk. Without atomic writes, a timeout
+ * mid-write could leave a truncated JSON file that `data:validate` would fail
  * against (or, worse, that a `--skip=data:validate` deploy would ship).
  * Atomic writes close that gap at the root.
  */

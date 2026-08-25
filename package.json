@@ -15,7 +15,7 @@
     "data:build": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/pipeline/index.ts && tsx --env-file-if-exists=.env scripts/aggregate.ts",
     "data:validate": "node scripts/check-platform.mjs && tsx scripts/validate.ts",
     "data:audit": "node scripts/check-platform.mjs && tsx scripts/data-audit.ts",
-    "data:test": "node scripts/check-platform.mjs && tsx scripts/pipeline/test-dedup-date.mjs && tsx scripts/pipeline/test-msrc-mariner.mjs",
+    "data:test": "node scripts/check-platform.mjs && tsx scripts/pipeline/test-dedup-date.mjs && tsx scripts/pipeline/test-msrc-mariner.mjs && tsx scripts/pipeline/test-atomic-write.mjs",
     "data:archive": "node scripts/check-platform.mjs && tsx scripts/archive-snapshot.ts",
     "data:csv": "node scripts/check-platform.mjs && tsx scripts/export-csv.ts",
     "data:prune": "node scripts/check-platform.mjs && tsx scripts/prune-archive.ts",

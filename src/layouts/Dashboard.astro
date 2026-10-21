@@ -27,6 +27,7 @@ const siteVersion = pkg.version;
 // See src/lib/ads.ts for the rationale. Ads load Google’s CMP
 // automatically for EEA/UK/Switzerland users; no custom banner needed.
 import { getAdsConfig } from '@/lib/ads';
+import PlausibleScript from '@/components/PlausibleScript.astro';
 
 interface Props {
   lastUpdated?: string;
@@ -62,21 +63,10 @@ const formattedDate =
 // tag is either emitted or absent; there is no runtime injection and no
 // client-side decision about whether to load analytics.
 //
-// Three guards, all required:
-//   1. PUBLIC_PLAUSIBLE_ENABLED === 'true' — opt-in via .env, defaults
-//      off so fresh clones and dev machines don't emit the script.
-//   2. !isStaging — Astro.site.hostname is set by `astro build --site`
-//      in scripts/publish.ts. For staging deploys the hostname starts
-//      with `staging.`, so the script is auto-excluded regardless of
-//      the boolean. This is what keeps a shared .env from accidentally
-//      shipping analytics to staging.
-//   3. A script URL is configured — prevents a broken `<script src="">`
-//      tag if someone toggles the boolean on but forgets the URL.
-const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL?.trim();
-const plausibleDataDomain = import.meta.env.PUBLIC_PLAUSIBLE_DATA_DOMAIN?.trim() || 'vulntrends.org';
-const isStaging = Astro.site.hostname.startsWith('staging.');
-const plausibleEnabled =
-  import.meta.env.PUBLIC_PLAUSIBLE_ENABLED === 'true' && !isStaging && !!plausibleScriptUrl;
+// The three guards (opt-in flag, staging exclusion, script URL present)
+// live in src/lib/plausible.ts — see getPlausibleConfig. The tracker
+// markup itself lives in src/components/PlausibleScript.astro, which
+// both this layout and ChartPage.astro render.
 
 // AdSense — same pattern. See src/lib/ads.ts for the three-guard
 // implementation. The script is async + crossorigin per AdSense's
@@ -123,9 +113,7 @@ const adsScriptEnabled = adsEnabled && hasAds;
     <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
     <meta name="twitter:image:alt" content="VulnTrends dashboard preview — discovered and backlog charts" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
-    {plausibleEnabled && (
-      <script defer data-domain={plausibleDataDomain} src={plausibleScriptUrl}></script>
-    )}
+    <PlausibleScript />
     {adsScriptEnabled && (
       <script
         async

@@ -281,15 +281,17 @@ The preview server serves the site at `http://localhost:4321/`.
 | Variable | Purpose |
 |---|---|
 | `PUBLIC_PLAUSIBLE_ENABLED` | Set to `true` to emit the Plausible tracker into every page. Defaults to `false`. |
-| `PUBLIC_PLAUSIBLE_SCRIPT_URL` | Full URL of the Plausible tracker script (e.g. `https://plausible.io/js/script.js`). Required when enabled. |
-| `PUBLIC_PLAUSIBLE_DATA_DOMAIN` | Domain reported to Plausible via `data-domain`. Defaults to `vulntrends.org`. |
+| `PUBLIC_PLAUSIBLE_SCRIPT_URL` | Full URL of Plausible's per-site tracker script (e.g. `https://plausible.pomeroy.me/js/pa-<id>.js`). Required when enabled. The domain and event endpoint are baked into this script. |
 
 All variables are read from `.env` (gitignored). Copy `.env.example`
 to `.env` and fill in the values.
 
 Plausible Analytics is integrated at build time. The tracker `<script>`
 tag is rendered into every page's `<head>` by
-[`src/layouts/Dashboard.astro`](../src/layouts/Dashboard.astro) when the
+[`src/components/PlausibleScript.astro`](../src/components/PlausibleScript.astro),
+which is included in both
+[`src/layouts/Dashboard.astro`](../src/layouts/Dashboard.astro) and
+[`src/layouts/ChartPage.astro`](../src/layouts/ChartPage.astro), when the
 build runs — there is no runtime injection and no client-side gate. This
 means visitors pay no client-side cost when analytics are off, and there
 is no client-side decision about whether to load the tracker.
@@ -297,7 +299,8 @@ is no client-side decision about whether to load the tracker.
 The script is emitted only when **all three** of the following are true:
 
 1. `PUBLIC_PLAUSIBLE_ENABLED=true` in `.env`.
-2. The build is **not** a staging build — the layout checks
+2. The build is **not** a staging build — the shared helper
+   ([`src/lib/plausible.ts`](../src/lib/plausible.ts)) checks
    `Astro.site.hostname` and skips emission for any `staging.*`
    subdomain. `Astro.site` is set per environment by
    `scripts/publish.ts`, which passes `--site` to `astro build`. This
@@ -307,6 +310,10 @@ The script is emitted only when **all three** of the following are true:
 3. `PUBLIC_PLAUSIBLE_SCRIPT_URL` is set — a guard against a broken
    `<script src="">` if the boolean is toggled on but the URL is
    forgotten.
+
+The three guards live in `getPlausibleConfig`
+([`src/lib/plausible.ts`](../src/lib/plausible.ts)) so that every layout
+applies them identically.
 
 ### Local development
 
@@ -324,17 +331,34 @@ must be set correctly.
 
 ### Verifying the integration
 
-After `npm run build`, confirm the script tag is present (PowerShell):
+After `npm run build`, confirm the tracker and its bootstrap are present
+(PowerShell):
 
 ```powershell
 Select-String -Path dist\index.html -Pattern 'plausible'
 ```
 
-The output should contain a line like
-`<script defer data-domain="vulntrends.org" src="https://plausible.io/js/script.js"></script>`.
+The output should contain **two** things on every page: the per-site
+tracker tag
+
+```
+<script async src="https://plausible.pomeroy.me/js/pa-<id>.js"></script>
+```
+
+and the inline bootstrap that initialises it
+
+```
+window.plausible=window.plausible||function(){...
+```
+
+Note that `is:inline` is a build-time directive and is stripped from the
+output, so the bootstrap appears in a plain `<script>` element — it must
+**not** be a `type="module"` script, or it would be deferred past the
+async tracker and the pageview would never be sent.
+
 Repeat for every page in `dist/` (or any individual page) — the script
-should appear in every HTML file because all pages route through
-`Dashboard.astro`. To verify staging auto-exclusion, run
+should appear in every HTML file, because both `Dashboard.astro` and
+`ChartPage.astro` render it. To verify staging auto-exclusion, run
 `npm run build -- --site https://staging.vulntrends.org` with the
 boolean enabled and confirm the grep returns nothing.
 

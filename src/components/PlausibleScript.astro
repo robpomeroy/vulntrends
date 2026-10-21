@@ -1,0 +1,61 @@
+---
+/**
+ * Plausible Analytics — tracker script for a page.
+ *
+ * Renders nothing when analytics are disabled (staging, the flag is
+ * off, or the script URL is missing). When enabled it emits
+ * Plausible's current two-script installation snippet.
+ *
+ * ## Why two script tags
+ *
+ * Plausible's per-site script (`https://<instance>/js/pa-<id>.js`)
+ * is self-contained: it has the reporting domain and the event
+ * endpoint baked in, and it does not read a `data-domain` or
+ * `data-api` attribute. The legacy `js/script.js` did read those
+ * attributes, which is why older integrations carried a
+ * `data-domain="..."` attribute.
+ *
+ * The per-site script also does not self-initialise reliably on its
+ * own — it guards its initialiser with `if (window.plausible &&
+ * window.plausible.l)`. Without the bootstrap below, `window.plausible`
+ * stays a bare stub with no `l` flag and no event listeners, so the
+ * script loads but never sends a pageview. The bootstrap defines the
+ * queue stub, sets `plausible.o`, and calls `plausible.init()`.
+ *
+ * ## Why `is:inline` on both tags
+ *
+ * - The inline bootstrap: without `is:inline`, Astro treats the tag as
+ *   a module, rewrites it to `<script type="module">`, and defers it.
+ *   A deferred module runs after parsing, which is too late to define
+ *   the `window.plausible` stub before the async tracker executes.
+ *   `is:inline` keeps it a classic synchronous script, byte-for-byte.
+ * - The external tracker: `is:inline` is the documented way to load a
+ *   remote script without Astro trying to bundle or resolve it.
+ *
+ * ## Script ordering
+ *
+ * The tracker is `async`, so it may run before or after the
+ * bootstrap. Both orders are safe: the tracker replays anything
+ * queued on `window.plausible.q`, and the bootstrap sets
+ * `plausible.o` before calling `init()`. Whichever runs first, the
+ * script initialises exactly once.
+ *
+ * The three guards (opt-in flag, staging exclusion, URL present) are
+ * applied in `src/lib/plausible.ts` — see `getPlausibleConfig`.
+ */
+
+import { getPlausibleConfig } from '@/lib/plausible';
+
+const { enabled, scriptUrl } = getPlausibleConfig(Astro.site);
+---
+
+{enabled && (
+  <>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async is:inline src={scriptUrl}></script>
+    <script is:inline>
+      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+      plausible.init()
+    </script>
+  </>
+)}

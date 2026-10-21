@@ -19,9 +19,13 @@ const siteVersion = pkg.version;
 // Dashboard.astro. See src/lib/ads.ts for the rationale. Chart pages
 // always render a single AdSlot at the bottom of the explanation section
 // (below). The AdSense script will emit whenever the build-level flag is on.
-// Plausible (the analytics script) is only on Dashboard layouts.
 import { getAdsConfig } from '@/lib/ads';
 import AdSlot from '@/components/AdSlot.astro';
+// Plausible Analytics — chart pages are tracked too. These are the
+// click-through destinations from the dashboard, so excluding them
+// would leave the most-trafficked pages invisible to analytics. The
+// guards live in src/lib/plausible.ts; the markup in PlausibleScript.astro.
+import PlausibleScript from '@/components/PlausibleScript.astro';
 
 interface Props {
   /** Page <title> suffix appended after "VulnTrends —". */
@@ -84,6 +88,7 @@ const { enabled: adsEnabled, client: adsenseClient } = getAdsConfig(Astro.site);
       ],
     })} />
 
+    <PlausibleScript />
     {adsEnabled && (
       <script
         async

@@ -55,7 +55,7 @@ interface OsvVulnerability {
   references?: Array<{ url: string; type?: string }>;
 }
 
-function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
+export function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
   // Extract canonical CVE ID
   const cveId =
     (vuln.aliases ?? []).find((a) => /^CVE-\d{4}-\d{4,}$/i.test(a)) ??
@@ -66,12 +66,10 @@ function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
   const discoveredDate = parseDate(vuln.published ?? vuln.modified);
   if (!discoveredDate) return null;
 
-  // Check if any range records a fix commit/version
-  const hasFix = vuln.affected?.some((a) =>
-    a.ranges?.some((r) => r.events?.some((e) => Boolean(e.fixed))),
-  );
-  const patchedDate = hasFix ? parseDate(vuln.modified ?? vuln.published) : undefined;
-
+  // The Linux kernel OSV entries identify fix commits and affected versions,
+  // not an independent patch release timestamp. We intentionally leave
+  // patchedDate undefined rather than deriving it from OSV metadata timestamps
+  // (such as vuln.modified), which would fabricate artificial patch lags.
   const cvss = extractCvss(vuln.severity);
   const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
   const title = (rawTitle || `Linux kernel vulnerability ${cveId}`).slice(0, 200);
@@ -89,10 +87,24 @@ function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
     cvss,
     discoveredDate,
     publishedDate: parseDate(vuln.published),
-    patchedDate,
+    patchedDate: undefined,
     cveIds: [cveId],
     rawUrl: advisoryRef?.url ?? `https://www.cve.org/CVERecord?id=${cveId}`,
   });
+}
+
+export function parseLinuxVulns(osvVulns: OsvVulnerability[]): VulnerabilityRecord[] {
+  const records: VulnerabilityRecord[] = [];
+  const seen = new Set<string>();
+
+  for (const vuln of osvVulns) {
+    const rec = osvToRecord(vuln);
+    if (!rec) continue;
+    if (seen.has(rec.id)) continue;
+    seen.add(rec.id);
+    records.push(rec);
+  }
+  return records;
 }
 
 export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
@@ -113,17 +125,7 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   const osvVulns = extractZipJsonEntries<OsvVulnerability>(buffer);
   console.log(`Linux (Kernel): read ${osvVulns.length} entries from archive`);
 
-  const records: VulnerabilityRecord[] = [];
-  const seen = new Set<string>();
-
-  for (const vuln of osvVulns) {
-    const rec = osvToRecord(vuln);
-    if (!rec) continue;
-    if (seen.has(rec.id)) continue;
-    seen.add(rec.id);
-    records.push(rec);
-  }
-
+  const records = parseLinuxVulns(osvVulns);
   console.log(`Linux (Kernel): ${records.length} records extracted`);
   return records;
 }

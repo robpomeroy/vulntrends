@@ -36,26 +36,9 @@ interface OsvRedHatVuln {
   references?: Array<{ url: string; type?: string }>;
 }
 
-export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
-  console.log('Red Hat: downloading OSV bulk archive...');
-  const response = await fetchWithRetry(REDHAT_OSV_ZIP_URL, {
-    headers: { 'User-Agent': 'VulnTrends/0.1' },
-    timeoutMs: 60_000,
-  });
-
-  if (!response.ok) {
-    throw new Error(`Red Hat OSV zip fetch failed: HTTP ${response.status}`);
-  }
-
-  console.log('Red Hat: extracting records from zip...');
-  const arrayBuffer = await response.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
-  const osvVulns = extractZipJsonEntries<OsvRedHatVuln>(buffer);
-  console.log(`Red Hat: read ${osvVulns.length} entries from archive`);
-
-  const records: VulnerabilityRecord[] = [];
-  const seenCves = new Set<string>();
+export function parseRedHatVulns(osvVulns: OsvRedHatVuln[]): VulnerabilityRecord[] {
+  const advisoryRecords: VulnerabilityRecord[] = [];
+  const cveRecords = new Map<string, VulnerabilityRecord>();
 
   for (const vuln of osvVulns) {
     const patchDate = parseDate(vuln.published ?? vuln.modified);
@@ -84,7 +67,7 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
 
     if (cveList.length === 0) {
       // If the advisory specifies no CVEs, record under the advisory ID
-      records.push(
+      advisoryRecords.push(
         buildRecord({
           id: vuln.id,
           source: 'redhat',
@@ -100,30 +83,51 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
       );
     } else {
       for (const cveId of cveList) {
-        // Keep the earliest patch date if a CVE is mentioned across multiple errata
-        const key = `${cveId}`;
-        if (seenCves.has(key)) continue;
-        seenCves.add(key);
+        const candidate = buildRecord({
+          id: cveId,
+          source: 'redhat',
+          manufacturer: 'Red Hat',
+          product,
+          title: `${title} — ${cveId}`,
+          cvss,
+          discoveredDate: patchDate,
+          publishedDate: patchDate,
+          patchedDate: patchDate,
+          cveIds: [cveId],
+          rawUrl,
+        });
 
-        records.push(
-          buildRecord({
-            id: cveId,
-            source: 'redhat',
-            manufacturer: 'Red Hat',
-            product,
-            title: `${title} — ${cveId}`,
-            cvss,
-            discoveredDate: patchDate,
-            publishedDate: patchDate,
-            patchedDate: patchDate,
-            cveIds: [cveId],
-            rawUrl,
-          }),
-        );
+        // Retain the earliest patch release date when multiple RHSAs address the same CVE
+        const existing = cveRecords.get(cveId);
+        if (!existing || (existing.patchedDate && patchDate < existing.patchedDate)) {
+          cveRecords.set(cveId, candidate);
+        }
       }
     }
   }
 
+  return [...advisoryRecords, ...cveRecords.values()];
+}
+
+export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
+  console.log('Red Hat: downloading OSV bulk archive...');
+  const response = await fetchWithRetry(REDHAT_OSV_ZIP_URL, {
+    headers: { 'User-Agent': 'VulnTrends/0.1' },
+    timeoutMs: 60_000,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Red Hat OSV zip fetch failed: HTTP ${response.status}`);
+  }
+
+  console.log('Red Hat: extracting records from zip...');
+  const arrayBuffer = await response.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  const osvVulns = extractZipJsonEntries<OsvRedHatVuln>(buffer);
+  console.log(`Red Hat: read ${osvVulns.length} entries from archive`);
+
+  const records = parseRedHatVulns(osvVulns);
   console.log(`Red Hat: ${records.length} records extracted`);
   return records;
 }

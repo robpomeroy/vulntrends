@@ -49,6 +49,10 @@ const tasks: ValidationTask[] = [
   { label: 'raw/fortinet.json', path: join(RAW_DIR, 'fortinet.json'), schema: vulnerabilityRecordArraySchema },
   { label: 'raw/cisco.json', path: join(RAW_DIR, 'cisco.json'), schema: vulnerabilityRecordArraySchema },
   { label: 'raw/adobe.json', path: join(RAW_DIR, 'adobe.json'), schema: vulnerabilityRecordArraySchema },
+  { label: 'raw/linux.json', path: join(RAW_DIR, 'linux.json'), schema: vulnerabilityRecordArraySchema },
+  { label: 'raw/redhat.json', path: join(RAW_DIR, 'redhat.json'), schema: vulnerabilityRecordArraySchema },
+  { label: 'raw/ubuntu.json', path: join(RAW_DIR, 'ubuntu.json'), schema: vulnerabilityRecordArraySchema },
+  { label: 'raw/osv.json', path: join(RAW_DIR, 'osv.json'), schema: vulnerabilityRecordArraySchema },
   { label: 'raw/nvd.json', path: join(RAW_DIR, 'nvd.json'), schema: vulnerabilityRecordArraySchema },
   { label: 'raw/all.json', path: join(RAW_DIR, 'all.json'), schema: vulnerabilityRecordArraySchema },
   // Meta

@@ -138,7 +138,7 @@ function cvssVectorToScore(vector: string): number | undefined {
 }
 
 /** Extract a numeric CVSS score from an OSV severity array. */
-function extractCvss(severity?: OsvSeverity[]): number | undefined {
+export function extractCvss(severity?: OsvSeverity[]): number | undefined {
   if (!severity || severity.length === 0) return undefined;
   // Prefer CVSS_V3, then CVSS_V2
   const v3 = severity.find((s) => s.type === 'CVSS_V3');
@@ -184,6 +184,9 @@ function inferManufacturer(vuln: OsvVulnerability, cveId: string): string | unde
   if (e === 'Chrome' || e === 'Android') return 'Google';
   if (e === 'macOS' || combined.includes('apple')) return 'Apple';
   if (e === 'Adobe') return 'Adobe';
+  if (e === 'Linux' || combined.includes('linux kernel')) return 'Linux';
+  if (e?.startsWith('Red Hat') || combined.includes('red hat') || combined.includes('rhel')) return 'Red Hat';
+  if (e?.startsWith('Ubuntu') || combined.includes('ubuntu')) return 'Ubuntu';
   if (combined.includes('microsoft')) return 'Microsoft';
   if (combined.includes('oracle')) return 'Oracle';
   return undefined;

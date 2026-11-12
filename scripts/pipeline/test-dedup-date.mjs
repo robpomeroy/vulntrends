@@ -14,6 +14,7 @@ import { strict as assert } from 'node:assert';
 import {
   dateMatchesCveYear,
   DATE_SANITY_MAX_YEARS,
+  deduplicateByCve,
   deduplicateRecords,
 } from './normalise.js';
 
@@ -210,6 +211,7 @@ group('deduplicateRecords: legacy "vendor used patch as discovery" tie-breaker',
   });
   const nvd = makeRecord({
     source: 'nvd',
+    manufacturer: 'Mozilla',
     discoveredDate: '2025-09-20',
     patchedDate: undefined,
   });
@@ -275,6 +277,77 @@ group('deduplicateRecords: same precedence keeps first', () => {
     'same precedence + same id: only the first survives',
     merged.length === 1 && merged[0]?.discoveredDate === '2025-09-01',
   );
+});
+
+group('deduplicateByCve: cross-manufacturer coexistence for shared CVEs', () => {
+  const linuxKernel = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'linux',
+    manufacturer: 'Linux',
+    product: 'Linux Kernel',
+    discoveredDate: '2024-02-15',
+    patchedDate: '2024-02-15',
+  });
+  const ubuntuNotice = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'ubuntu',
+    manufacturer: 'Ubuntu',
+    product: 'linux',
+    discoveredDate: '2024-03-01',
+    patchedDate: '2024-03-01',
+  });
+  const redhatErrata = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'redhat',
+    manufacturer: 'Red Hat',
+    product: 'kernel',
+    discoveredDate: '2024-03-10',
+    patchedDate: '2024-03-10',
+  });
+  const nvdLinux = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'nvd',
+    manufacturer: 'Linux',
+    discoveredDate: '2024-02-10',
+    patchedDate: undefined,
+  });
+  const nvdUbuntu = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'nvd',
+    manufacturer: 'Ubuntu',
+    discoveredDate: '2024-02-10',
+    patchedDate: undefined,
+  });
+
+  const merged = deduplicateByCve([
+    linuxKernel,
+    ubuntuNotice,
+    redhatErrata,
+    nvdLinux,
+    nvdUbuntu,
+  ]);
+
+  expect('shared CVE yields 3 records (one per manufacturer)', merged.length === 3);
+
+  const linuxRec = merged.find((r) => r.manufacturer === 'Linux');
+  const ubuntuRec = merged.find((r) => r.manufacturer === 'Ubuntu');
+  const redhatRec = merged.find((r) => r.manufacturer === 'Red Hat');
+
+  expect('Linux record exists and has CVE ID', linuxRec?.id === 'CVE-2024-26600');
+  expect('Linux record merges NVD discovery date', linuxRec?.discoveredDate === '2024-02-10');
+  expect('Linux record retains kernel patch date', linuxRec?.patchedDate === '2024-02-15');
+
+  expect('Ubuntu record exists and has CVE ID', ubuntuRec?.id === 'CVE-2024-26600');
+  expect('Ubuntu record merges NVD discovery date', ubuntuRec?.discoveredDate === '2024-02-10');
+  expect('Ubuntu record retains USN patch date', ubuntuRec?.patchedDate === '2024-03-01');
+
+  expect('Red Hat record exists and has CVE ID', redhatRec?.id === 'CVE-2024-26600');
+  expect('Red Hat record retains RHSA patch date', redhatRec?.patchedDate === '2024-03-10');
 });
 
 // ============================================================================

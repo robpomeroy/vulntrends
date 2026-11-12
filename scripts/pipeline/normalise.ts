@@ -130,6 +130,22 @@ const MANUFACTURER_ALIASES: Record<string, string> = {
   adobe: 'Adobe',
   'adobe inc': 'Adobe',
   'adobe systems': 'Adobe',
+  // Linux
+  linux: 'Linux',
+  'linux kernel': 'Linux',
+  'kernel.org': 'Linux',
+  // Red Hat
+  redhat: 'Red Hat',
+  'red hat': 'Red Hat',
+  'red hat inc': 'Red Hat',
+  'red hat, inc.': 'Red Hat',
+  'red hat enterprise linux': 'Red Hat',
+  rhel: 'Red Hat',
+  // Ubuntu
+  ubuntu: 'Ubuntu',
+  canonical: 'Ubuntu',
+  'canonical ltd': 'Ubuntu',
+  'canonical ltd.': 'Ubuntu',
 };
 
 export function normaliseManufacturer(raw: string): string {
@@ -332,6 +348,9 @@ const SOURCE_PRECEDENCE: Record<string, number> = {
   adobe: 1,
   projectzero: 1,
   cisco: 1, // stub-only; same precedence as other vendors
+  linux: 1,
+  redhat: 1,
+  ubuntu: 1,
   osv: 2,
   nvd: 3,
 };
@@ -372,9 +391,10 @@ export function deduplicateRecords(
   const byId = new Map<string, VulnerabilityRecord>();
 
   for (const record of records) {
-    const existing = byId.get(record.id);
+    const key = `${record.manufacturer}|${record.id}`;
+    const existing = byId.get(key);
     if (!existing) {
-      byId.set(record.id, record);
+      byId.set(key, record);
       continue;
     }
 
@@ -395,10 +415,10 @@ export function deduplicateRecords(
         ? mergeRecords(existing, record)
         : mergeRecords(record, existing);
     if (merged === null) {
-      byId.delete(record.id);
+      byId.delete(key);
       continue;
     }
-    byId.set(record.id, merged);
+    byId.set(key, merged);
   }
 
   return [...byId.values()].filter((r): r is VulnerabilityRecord => r !== null);
@@ -407,10 +427,12 @@ export function deduplicateRecords(
 /**
  * Deduplicate records by CVE ID rather than record ID.
  *
- * Materialises one output record per CVE key, setting `id` and `cveIds` to
- * that single CVE so every returned record has a unique ID. This prevents
- * advisories that cover multiple CVEs from appearing multiple times in the
- * output and inflating downstream counts.
+ * Materialises one output record per (manufacturer, CVE) key, setting `id`
+ * and `cveIds` to that single CVE so every returned record has a unique ID
+ * within that manufacturer. This prevents advisories that cover multiple
+ * CVEs from appearing multiple times in the output and inflating downstream
+ * counts, while allowing distinct manufacturers (e.g. Linux Kernel, Red Hat,
+ * Ubuntu) to each track their own disclosure/patch status for a shared CVE.
  *
  * When multiple sources report the same CVE we keep the most authoritative
  * (per `SOURCE_PRECEDENCE`) and fold in better-timed fields from the others.
@@ -428,9 +450,10 @@ export function deduplicateByCve(
     if (cves.length === 0) continue;
 
     for (const cve of cves) {
-      const existing = byCve.get(cve);
+      const key = `${record.manufacturer}|${cve}`;
+      const existing = byCve.get(key);
       if (!existing) {
-        byCve.set(cve, { ...record, id: cve, cveIds: [cve] });
+        byCve.set(key, { ...record, id: cve, cveIds: [cve] });
         continue;
       }
 
@@ -445,12 +468,12 @@ export function deduplicateByCve(
         // existing is primary; record is secondary
         const merged = mergeRecords(existing, record);
         if (merged === null) continue; // both candidates failed sanity — drop
-        byCve.set(cve, { ...merged, id: cve, cveIds: [cve] });
+        byCve.set(key, { ...merged, id: cve, cveIds: [cve] });
       } else {
         // record is primary; existing is secondary
         const merged = mergeRecords(record, existing);
         if (merged === null) continue; // both candidates failed sanity — drop
-        byCve.set(cve, { ...merged, id: cve, cveIds: [cve] });
+        byCve.set(key, { ...merged, id: cve, cveIds: [cve] });
       }
     }
   }
@@ -459,8 +482,9 @@ export function deduplicateByCve(
   const byId = new Map<string, VulnerabilityRecord>();
   for (const record of records) {
     if (!record.cveIds || record.cveIds.length === 0) {
-      if (!byId.has(record.id)) {
-        byId.set(record.id, record);
+      const key = `${record.manufacturer}|${record.id}`;
+      if (!byId.has(key)) {
+        byId.set(key, record);
       }
     }
   }

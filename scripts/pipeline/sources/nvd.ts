@@ -27,7 +27,7 @@ const NVD_API_KEY = process.env.NVD_API_KEY;
  * The CPE match string format is `cpe:2.3:a:<vendor>:*:*:*:*:*:*:*:*:*`
  * which matches all products from that vendor.
  */
-const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string }> = [
+const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string; cpeMatch?: string }> = [
   { cpeVendor: 'mozilla', manufacturer: 'Mozilla' },
   { cpeVendor: 'google', manufacturer: 'Google' },
   { cpeVendor: 'chrome', manufacturer: 'Google' },
@@ -39,6 +39,9 @@ const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string }> = [
   { cpeVendor: 'fortinet', manufacturer: 'Fortinet' },
   { cpeVendor: 'cisco', manufacturer: 'Cisco' },
   { cpeVendor: 'adobe', manufacturer: 'Adobe' },
+  { cpeVendor: 'linux', manufacturer: 'Linux', cpeMatch: 'cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*:*' },
+  { cpeVendor: 'redhat', manufacturer: 'Red Hat', cpeMatch: 'cpe:2.3:o:redhat:enterprise_linux:*:*:*:*:*:*:*:*:*' },
+  { cpeVendor: 'canonical', manufacturer: 'Ubuntu', cpeMatch: 'cpe:2.3:o:canonical:ubuntu_linux:*:*:*:*:*:*:*:*:*' },
 ];
 
 interface NvdCve {
@@ -82,6 +85,7 @@ interface NvdResponse {
 async function fetchCvePage(
   cpeVendor: string,
   startIndex: number,
+  cpeMatch?: string,
 ): Promise<NvdResponse> {
   const headers: Record<string, string> = {
     Accept: 'application/json',
@@ -91,9 +95,8 @@ async function fetchCvePage(
     headers['apiKey'] = NVD_API_KEY;
   }
 
-  // virtualMatchString filters server-side by CPE vendor.
-  // Format: cpe:2.3:a:<vendor>:*:*:*:*:*:*:*:*:*
-  const matchString = `cpe:2.3:a:${cpeVendor}:*:*:*:*:*:*:*:*:*`;
+  // virtualMatchString filters server-side by CPE vendor or custom match string.
+  const matchString = cpeMatch || `cpe:2.3:a:${cpeVendor}:*:*:*:*:*:*:*:*:*`;
 
   const params = new URLSearchParams({
     virtualMatchString: matchString,
@@ -175,7 +178,7 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   const seenIds = new Set<string>();
   const allRecords: VulnerabilityRecord[] = [];
 
-  for (const { cpeVendor, manufacturer } of VENDOR_QUERIES) {
+  for (const { cpeVendor, manufacturer, cpeMatch } of VENDOR_QUERIES) {
     console.log(`  NVD: querying vendor "${cpeVendor}" → ${manufacturer}...`);
 
     // Per-vendor resilience: a single vendor failure (e.g. network
@@ -186,13 +189,14 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
       let totalResults = Infinity;
 
       while (startIndex < totalResults) {
-        const data = await fetchCvePage(cpeVendor, startIndex);
+        const data = await fetchCvePage(cpeVendor, startIndex, cpeMatch);
         totalResults = data.totalResults;
 
         for (const vuln of data.vulnerabilities) {
-          // Deduplicate by CVE ID across vendor queries
-          if (seenIds.has(vuln.cve.id)) continue;
-          seenIds.add(vuln.cve.id);
+          // Deduplicate by CVE ID per manufacturer across vendor queries
+          const key = `${manufacturer}|${vuln.cve.id}`;
+          if (seenIds.has(key)) continue;
+          seenIds.add(key);
 
           const record = cveToRecord(vuln.cve, manufacturer);
           if (record) allRecords.push(record);

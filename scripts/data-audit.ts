@@ -335,18 +335,19 @@ async function main(): Promise<void> {
     );
   }
 
-  // ---- Duplicate CVE IDs after dedup ----
+  // ---- Duplicate CVE IDs after dedup (per manufacturer) ----
   const seenIds = new Map<string, VulnerabilityRecord[]>();
   for (const r of records) {
-    const arr = seenIds.get(r.id) ?? [];
+    const key = `${r.manufacturer}|${r.id}`;
+    const arr = seenIds.get(key) ?? [];
     arr.push(r);
-    seenIds.set(r.id, arr);
+    seenIds.set(key, arr);
   }
   const dups: Array<{ id: string; count: number; sources: string[] }> = [];
-  for (const [id, arr] of seenIds) {
+  for (const [key, arr] of seenIds) {
     if (arr.length > 1) {
       dups.push({
-        id,
+        id: key,
         count: arr.length,
         sources: [...new Set(arr.map((r) => r.source))],
       });

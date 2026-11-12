@@ -11,7 +11,7 @@
 
 import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
 import { fetchWithRetry } from '../fetch-with-retry.js';
-import { extractZipJsonEntries } from '../zip-reader.js';
+import { iterateZipJsonEntries } from '../zip-reader.js';
 import { extractCvss } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
 
@@ -36,7 +36,7 @@ interface OsvRedHatVuln {
   references?: Array<{ url: string; type?: string }>;
 }
 
-export function parseRedHatVulns(osvVulns: OsvRedHatVuln[]): VulnerabilityRecord[] {
+export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): VulnerabilityRecord[] {
   const advisoryRecords: VulnerabilityRecord[] = [];
   const cveRecords = new Map<string, VulnerabilityRecord>();
 
@@ -54,7 +54,7 @@ export function parseRedHatVulns(osvVulns: OsvRedHatVuln[]): VulnerabilityRecord
     }
     const fromDetails = extractCveIds(vuln.details);
     if (fromDetails) {
-      for (const c of fromDetails) cveSet.add(c);
+      for (const c of fromDetails) cveSet.add(c.toUpperCase());
     }
 
     const cveList = [...cveSet];
@@ -120,14 +120,11 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
     throw new Error(`Red Hat OSV zip fetch failed: HTTP ${response.status}`);
   }
 
-  console.log('Red Hat: extracting records from zip...');
+  console.log('Red Hat: streaming records from zip...');
   const arrayBuffer = await response.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  const osvVulns = extractZipJsonEntries<OsvRedHatVuln>(buffer);
-  console.log(`Red Hat: read ${osvVulns.length} entries from archive`);
-
-  const records = parseRedHatVulns(osvVulns);
+  const records = parseRedHatVulns(iterateZipJsonEntries<OsvRedHatVuln>(buffer));
   console.log(`Red Hat: ${records.length} records extracted`);
   return records;
 }

@@ -12,7 +12,7 @@
 
 import { buildRecord, parseDate } from '../normalise.js';
 import { fetchWithRetry } from '../fetch-with-retry.js';
-import { extractZipJsonEntries } from '../zip-reader.js';
+import { iterateZipJsonEntries } from '../zip-reader.js';
 import { extractCvss } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
 
@@ -56,12 +56,13 @@ interface OsvVulnerability {
 }
 
 export function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
-  // Extract canonical CVE ID
-  const cveId =
+  // Extract and canonicalise CVE ID to uppercase
+  const rawCveId =
     (vuln.aliases ?? []).find((a) => /^CVE-\d{4}-\d{4,}$/i.test(a)) ??
     (/^CVE-\d{4}-\d{4,}$/i.test(vuln.id) ? vuln.id : undefined);
 
-  if (!cveId) return null;
+  if (!rawCveId) return null;
+  const cveId = rawCveId.toUpperCase();
 
   const discoveredDate = parseDate(vuln.published ?? vuln.modified);
   if (!discoveredDate) return null;
@@ -93,7 +94,7 @@ export function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null 
   });
 }
 
-export function parseLinuxVulns(osvVulns: OsvVulnerability[]): VulnerabilityRecord[] {
+export function parseLinuxVulns(osvVulns: Iterable<OsvVulnerability>): VulnerabilityRecord[] {
   const records: VulnerabilityRecord[] = [];
   const seen = new Set<string>();
 
@@ -118,14 +119,11 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
     throw new Error(`Linux OSV zip fetch failed: HTTP ${response.status}`);
   }
 
-  console.log('Linux (Kernel): extracting records from zip...');
+  console.log('Linux (Kernel): streaming records from zip...');
   const arrayBuffer = await response.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  const osvVulns = extractZipJsonEntries<OsvVulnerability>(buffer);
-  console.log(`Linux (Kernel): read ${osvVulns.length} entries from archive`);
-
-  const records = parseLinuxVulns(osvVulns);
+  const records = parseLinuxVulns(iterateZipJsonEntries<OsvVulnerability>(buffer));
   console.log(`Linux (Kernel): ${records.length} records extracted`);
   return records;
 }

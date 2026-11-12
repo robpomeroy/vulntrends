@@ -4,7 +4,7 @@
 // that extractZipJsonEntries accurately parses and extracts JSON entries.
 
 import { deflateRawSync } from 'node:zlib';
-import { extractZipJsonEntries } from './zip-reader.js';
+import { extractZipJsonEntries, iterateZipEntries, iterateZipJsonEntries } from './zip-reader.js';
 
 let passed = 0;
 let failed = 0;
@@ -83,6 +83,15 @@ const zipBuf = createZipWithEntry('CVE-2026-9999.json', testObj);
 const results = extractZipJsonEntries(zipBuf);
 expect('extracts 1 entry', results.length === 1);
 expect('content matches original JSON', results[0]?.id === 'CVE-2026-9999');
+
+// Test generator streaming
+const streamedEntries = [...iterateZipEntries(zipBuf)];
+expect('iterateZipEntries streams 1 entry', streamedEntries.length === 1);
+expect('streamed entry filename matches', streamedEntries[0]?.filename === 'CVE-2026-9999.json');
+
+const streamedJson = [...iterateZipJsonEntries(zipBuf)];
+expect('iterateZipJsonEntries streams 1 JSON object', streamedJson.length === 1);
+expect('streamed JSON content matches', streamedJson[0]?.id === 'CVE-2026-9999');
 
 console.log(
   `\n${'='.repeat(60)}\nResults: ${passed} passed, ${failed} failed\n${'='.repeat(60)}`,

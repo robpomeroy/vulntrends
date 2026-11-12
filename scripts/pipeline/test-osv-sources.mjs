@@ -51,6 +51,17 @@ group('Linux Kernel OSV parser', () => {
   expect('record is successfully parsed', rec !== null);
   expect('discoveredDate is derived from published', rec?.discoveredDate === '2024-03-01');
   expect('patchedDate is undefined (not set to modified)', rec?.patchedDate === undefined);
+
+  // Normalise lowercase CVE ID aliases to uppercase
+  const lowercaseVuln = {
+    id: 'cve-2024-4444',
+    aliases: ['cve-2024-4444'],
+    summary: 'Lowercase CVE id test',
+    published: '2024-03-01T12:00:00Z',
+  };
+  const recLower = osvToRecord(lowercaseVuln);
+  expect('lowercase CVE ID is canonicalised to uppercase', recLower?.id === 'CVE-2024-4444');
+  expect('cveIds contains uppercase CVE ID', recLower?.cveIds[0] === 'CVE-2024-4444');
 });
 
 // 2. Red Hat: Retains earliest RHSA patch release date when multiple advisories resolve the same CVE
@@ -126,6 +137,35 @@ group('Ubuntu OSV parser: non-USN standalone tracking records', () => {
   expect('standalone record is parsed', rec !== undefined);
   expect('discoveredDate is parsed correctly', rec?.discoveredDate === '2024-01-10');
   expect('patchedDate is undefined (not set to modified)', rec?.patchedDate === undefined);
+
+  // Standalone record with lowercase CVE alias is canonicalised to uppercase
+  const lowercaseStandalone = {
+    id: 'UBUNTU-cve-2024-5555',
+    aliases: ['cve-2024-5555'],
+    summary: 'Lowercase standalone CVE',
+    published: '2024-02-01T10:00:00Z',
+  };
+  const recsLower = parseUbuntuVulns([lowercaseStandalone]);
+  const recLower = recsLower.find((r) => r.id === 'CVE-2024-5555');
+  expect('lowercase standalone CVE is canonicalised to uppercase', recLower !== undefined && recLower.id === 'CVE-2024-5555');
+
+  // Standalone record followed later by a USN for the same CVE: USN takes precedence
+  const standaloneBeforeUsn = {
+    id: 'UBUNTU-CVE-2024-7777',
+    aliases: ['cve-2024-7777'],
+    summary: 'Earlier standalone entry',
+    published: '2024-01-01T10:00:00Z',
+  };
+  const laterUsnForSameCve = {
+    id: 'USN-7000-1',
+    summary: 'USN notice resolving CVE-2024-7777',
+    published: '2024-03-15T10:00:00Z',
+    aliases: ['CVE-2024-7777'],
+  };
+  const orderTestRecs = parseUbuntuVulns([standaloneBeforeUsn, laterUsnForSameCve]);
+  const matched = orderTestRecs.filter((r) => r.id === 'CVE-2024-7777');
+  expect('only USN record survives when standalone is seen first', matched.length === 1);
+  expect('surviving record has USN patch date', matched[0]?.patchedDate === '2024-03-15');
 });
 
 console.log(

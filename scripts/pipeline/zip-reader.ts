@@ -13,10 +13,10 @@ export interface ZipEntry {
   data: Buffer;
 }
 
-export function extractZipEntries(
+export function* iterateZipEntries(
   buffer: Buffer,
   filter?: (filename: string) => boolean,
-): ZipEntry[] {
+): Generator<ZipEntry> {
   // Find End of Central Directory (EOCD) signature: 0x06054b50
   // Search from the end backwards (comments can be up to 65535 bytes)
   let eocdOffset = -1;
@@ -44,7 +44,6 @@ export function extractZipEntries(
     }
   }
 
-  const entries: ZipEntry[] = [];
   let curOffset = cdOffset;
 
   for (let i = 0; i < totalEntries && curOffset < buffer.length; i++) {
@@ -120,32 +119,40 @@ export function extractZipEntries(
       continue;
     }
 
-    entries.push({
+    yield {
       filename,
       data: decompressed,
-    });
+    };
   }
+}
 
-  return entries;
+export function extractZipEntries(
+  buffer: Buffer,
+  filter?: (filename: string) => boolean,
+): ZipEntry[] {
+  return [...iterateZipEntries(buffer, filter)];
+}
+
+export function* iterateZipJsonEntries<T>(
+  buffer: Buffer,
+  filter?: (filename: string) => boolean,
+): Generator<T> {
+  for (const entry of iterateZipEntries(buffer, (name) => {
+    if (!name.endsWith('.json')) return false;
+    return filter ? filter(name) : true;
+  })) {
+    try {
+      const parsed = JSON.parse(entry.data.toString('utf8')) as T;
+      yield parsed;
+    } catch {
+      // Ignore corrupted individual JSON files in upstream archives
+    }
+  }
 }
 
 export function extractZipJsonEntries<T>(
   buffer: Buffer,
   filter?: (filename: string) => boolean,
 ): T[] {
-  const entries = extractZipEntries(buffer, (name) => {
-    if (!name.endsWith('.json')) return false;
-    return filter ? filter(name) : true;
-  });
-
-  const results: T[] = [];
-  for (const entry of entries) {
-    try {
-      const parsed = JSON.parse(entry.data.toString('utf8')) as T;
-      results.push(parsed);
-    } catch {
-      // Ignore corrupted individual JSON files in upstream archives
-    }
-  }
-  return results;
+  return [...iterateZipJsonEntries<T>(buffer, filter)];
 }

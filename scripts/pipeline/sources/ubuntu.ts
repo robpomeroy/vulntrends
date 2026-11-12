@@ -12,7 +12,7 @@
 
 import { buildRecord, parseDate } from '../normalise.js';
 import { fetchWithRetry } from '../fetch-with-retry.js';
-import { extractZipJsonEntries } from '../zip-reader.js';
+import { iterateZipJsonEntries } from '../zip-reader.js';
 import { extractCvss } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
 
@@ -46,124 +46,130 @@ interface OsvUbuntuVuln {
   references?: Array<{ url: string; type?: string }>;
 }
 
-export function parseUbuntuVulns(osvVulns: OsvUbuntuVuln[]): VulnerabilityRecord[] {
+export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): VulnerabilityRecord[] {
   const usnAdvisoryRecords: VulnerabilityRecord[] = [];
   const usnCveRecords = new Map<string, VulnerabilityRecord>();
+  const standaloneRecords = new Map<string, VulnerabilityRecord>();
 
-  // Process USN notices first (authoritative patch release notices)
-  const usnEntries = osvVulns.filter((v) => v.id.startsWith('USN-'));
-  const otherEntries = osvVulns.filter((v) => !v.id.startsWith('USN-'));
+  for (const vuln of osvVulns) {
+    if (vuln.id.startsWith('USN-')) {
+      // Process authoritative Ubuntu Security Notices (USNs)
+      const patchDate = parseDate(vuln.published ?? vuln.modified);
+      if (!patchDate) continue;
 
-  for (const vuln of usnEntries) {
-    const patchDate = parseDate(vuln.published ?? vuln.modified);
-    if (!patchDate) continue;
+      // Collect all CVE IDs referenced by this USN
+      const cveSet = new Set<string>();
 
-    // Collect all CVE IDs referenced by this USN
-    const cveSet = new Set<string>();
-
-    for (const alias of vuln.aliases ?? []) {
-      if (/^CVE-\d{4}-\d{4,}$/i.test(alias)) cveSet.add(alias.toUpperCase());
-    }
-    for (const up of vuln.upstream ?? []) {
-      const m = up.match(/CVE-\d{4}-\d{4,}/i);
-      if (m) cveSet.add(m[0].toUpperCase());
-    }
-    for (const aff of vuln.affected ?? []) {
-      const cves = aff.database_specific?.cves_map?.cves ?? [];
-      for (const c of cves) {
-        if (/^CVE-\d{4}-\d{4,}$/i.test(c.id)) cveSet.add(c.id.toUpperCase());
+      for (const alias of vuln.aliases ?? []) {
+        if (/^CVE-\d{4}-\d{4,}$/i.test(alias)) cveSet.add(alias.toUpperCase());
       }
-    }
+      for (const up of vuln.upstream ?? []) {
+        const m = up.match(/CVE-\d{4}-\d{4,}/i);
+        if (m) cveSet.add(m[0].toUpperCase());
+      }
+      for (const aff of vuln.affected ?? []) {
+        const cves = aff.database_specific?.cves_map?.cves ?? [];
+        for (const c of cves) {
+          if (/^CVE-\d{4}-\d{4,}$/i.test(c.id)) cveSet.add(c.id.toUpperCase());
+        }
+      }
 
-    const cveList = [...cveSet];
-    const cvss = extractCvss(vuln.severity);
-    const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
-    const title = (rawTitle || `Ubuntu Security Notice ${vuln.id}`).slice(0, 200);
-    const product = vuln.affected?.[0]?.package?.name || 'Ubuntu';
-    const rawUrl = `https://ubuntu.com/security/notices/${vuln.id}`;
+      const cveList = [...cveSet];
+      const cvss = extractCvss(vuln.severity);
+      const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
+      const title = (rawTitle || `Ubuntu Security Notice ${vuln.id}`).slice(0, 200);
+      const product = vuln.affected?.[0]?.package?.name || 'Ubuntu';
+      const rawUrl = `https://ubuntu.com/security/notices/${vuln.id}`;
 
-    if (cveList.length === 0) {
-      usnAdvisoryRecords.push(
-        buildRecord({
-          id: vuln.id,
-          source: 'ubuntu',
-          manufacturer: 'Ubuntu',
-          product,
-          title,
-          cvss,
-          discoveredDate: patchDate,
-          publishedDate: patchDate,
-          patchedDate: patchDate,
-          rawUrl,
-        }),
-      );
+      if (cveList.length === 0) {
+        usnAdvisoryRecords.push(
+          buildRecord({
+            id: vuln.id,
+            source: 'ubuntu',
+            manufacturer: 'Ubuntu',
+            product,
+            title,
+            cvss,
+            discoveredDate: patchDate,
+            publishedDate: patchDate,
+            patchedDate: patchDate,
+            rawUrl,
+          }),
+        );
+      } else {
+        for (const cveId of cveList) {
+          const candidate = buildRecord({
+            id: cveId,
+            source: 'ubuntu',
+            manufacturer: 'Ubuntu',
+            product,
+            title: `${title} — ${cveId}`,
+            cvss,
+            discoveredDate: patchDate,
+            publishedDate: patchDate,
+            patchedDate: patchDate,
+            cveIds: [cveId],
+            rawUrl,
+          });
+
+          // Retain the earliest patch release date when multiple USNs address the same CVE
+          const existing = usnCveRecords.get(cveId);
+          if (!existing || (existing.patchedDate && patchDate < existing.patchedDate)) {
+            usnCveRecords.set(cveId, candidate);
+          }
+        }
+      }
     } else {
-      for (const cveId of cveList) {
-        const candidate = buildRecord({
+      // Standalone Ubuntu CVE tracking records for any CVE not covered by a USN.
+      // Note: For standalone Ubuntu CVE entries (non-USN), vuln.modified is the timestamp when
+      // Canonical's automated OSV exporter last regenerated the JSON metadata file, not when a
+      // security package was released to Ubuntu archives. Real security fixes in Ubuntu are
+      // published through USNs (handled above). If a CVE does not have a USN notice, patchedDate
+      // intentionally remains undefined to prevent fabricating artificial patch lags.
+      let rawCveId = (vuln.aliases ?? []).find((a) => /^CVE-\d{4}-\d{4,}$/i.test(a));
+      if (!rawCveId && /^UBUNTU-CVE-\d{4}-\d{4,}$/i.test(vuln.id)) {
+        rawCveId = vuln.id.replace(/^UBUNTU-/i, '');
+      }
+      if (!rawCveId) continue;
+      const cveId = rawCveId.toUpperCase();
+
+      if (standaloneRecords.has(cveId)) continue;
+
+      const date = parseDate(vuln.published ?? vuln.modified);
+      if (!date) continue;
+
+      const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
+      const title = (rawTitle || `Ubuntu CVE ${cveId}`).slice(0, 200);
+      const product = vuln.affected?.[0]?.package?.name || 'Ubuntu';
+
+      standaloneRecords.set(
+        cveId,
+        buildRecord({
           id: cveId,
           source: 'ubuntu',
           manufacturer: 'Ubuntu',
           product,
-          title: `${title} — ${cveId}`,
-          cvss,
-          discoveredDate: patchDate,
-          publishedDate: patchDate,
-          patchedDate: patchDate,
+          title,
+          cvss: extractCvss(vuln.severity),
+          discoveredDate: date,
+          publishedDate: parseDate(vuln.published),
+          patchedDate: undefined,
           cveIds: [cveId],
-          rawUrl,
-        });
-
-        // Retain the earliest patch release date when multiple USNs address the same CVE
-        const existing = usnCveRecords.get(cveId);
-        if (!existing || (existing.patchedDate && patchDate < existing.patchedDate)) {
-          usnCveRecords.set(cveId, candidate);
-        }
-      }
+          rawUrl: `https://ubuntu.com/security/${cveId}`,
+        }),
+      );
     }
   }
 
-  // Next, include standalone Ubuntu CVE tracking records for any CVE not already in a USN.
-  // Note: For standalone Ubuntu CVE entries (non-USN), vuln.modified is the timestamp when
-  // Canonical's automated OSV exporter last regenerated the JSON metadata file, not when a
-  // security package was released to Ubuntu archives. Real security fixes in Ubuntu are
-  // published through USNs (handled above). If a CVE does not have a USN notice, patchedDate
-  // intentionally remains undefined to prevent fabricating artificial patch lags.
-  const standaloneRecords: VulnerabilityRecord[] = [];
-  const seenStandalone = new Set<string>();
-
-  for (const vuln of otherEntries) {
-    let cveId = (vuln.aliases ?? []).find((a) => /^CVE-\d{4}-\d{4,}$/i.test(a));
-    if (!cveId && vuln.id.startsWith('UBUNTU-CVE-')) {
-      cveId = vuln.id.replace('UBUNTU-', '');
+  // Standalone tracking records are only retained if the CVE is not covered by a USN
+  const nonUsnRecords: VulnerabilityRecord[] = [];
+  for (const [cveId, rec] of standaloneRecords) {
+    if (!usnCveRecords.has(cveId)) {
+      nonUsnRecords.push(rec);
     }
-    if (!cveId || usnCveRecords.has(cveId) || seenStandalone.has(cveId)) continue;
-
-    const date = parseDate(vuln.published ?? vuln.modified);
-    if (!date) continue;
-
-    const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
-    const title = (rawTitle || `Ubuntu CVE ${cveId}`).slice(0, 200);
-    const product = vuln.affected?.[0]?.package?.name || 'Ubuntu';
-
-    seenStandalone.add(cveId);
-    standaloneRecords.push(
-      buildRecord({
-        id: cveId,
-        source: 'ubuntu',
-        manufacturer: 'Ubuntu',
-        product,
-        title,
-        cvss: extractCvss(vuln.severity),
-        discoveredDate: date,
-        publishedDate: parseDate(vuln.published),
-        patchedDate: undefined,
-        cveIds: [cveId],
-        rawUrl: `https://ubuntu.com/security/${cveId}`,
-      }),
-    );
   }
 
-  return [...usnAdvisoryRecords, ...usnCveRecords.values(), ...standaloneRecords];
+  return [...usnAdvisoryRecords, ...usnCveRecords.values(), ...nonUsnRecords];
 }
 
 export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
@@ -177,14 +183,11 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
     throw new Error(`Ubuntu OSV zip fetch failed: HTTP ${response.status}`);
   }
 
-  console.log('Ubuntu: extracting records from zip...');
+  console.log('Ubuntu: streaming records from zip...');
   const arrayBuffer = await response.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  const osvVulns = extractZipJsonEntries<OsvUbuntuVuln>(buffer);
-  console.log(`Ubuntu: read ${osvVulns.length} entries from archive`);
-
-  const records = parseUbuntuVulns(osvVulns);
+  const records = parseUbuntuVulns(iterateZipJsonEntries<OsvUbuntuVuln>(buffer));
   console.log(`Ubuntu: ${records.length} records extracted`);
   return records;
 }

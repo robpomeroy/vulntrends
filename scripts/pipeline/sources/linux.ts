@@ -11,7 +11,7 @@
  */
 
 import { buildRecord, parseDate } from '../normalise.js';
-import { fetchWithRetry } from '../fetch-with-retry.js';
+import { fetchBufferWithRetry } from '../fetch-with-retry.js';
 import { iterateZipJsonEntries } from '../zip-reader.js';
 import { extractCvss } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
@@ -49,6 +49,7 @@ interface OsvVulnerability {
   details?: string;
   published?: string;
   modified?: string;
+  withdrawn?: string;
   aliases?: string[];
   severity?: OsvSeverity[];
   affected?: OsvAffected[];
@@ -56,6 +57,8 @@ interface OsvVulnerability {
 }
 
 export function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null {
+  if (vuln.withdrawn) return null;
+
   // Extract and canonicalise CVE ID to uppercase
   const rawCveId =
     (vuln.aliases ?? []).find((a) => /^CVE-\d{4}-\d{4,}$/i.test(a)) ??
@@ -110,19 +113,12 @@ export function parseLinuxVulns(osvVulns: Iterable<OsvVulnerability>): Vulnerabi
 
 export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   console.log('Linux (Kernel): downloading OSV bulk archive...');
-  const response = await fetchWithRetry(LINUX_OSV_ZIP_URL, {
+  const buffer = await fetchBufferWithRetry(LINUX_OSV_ZIP_URL, {
     headers: { 'User-Agent': 'VulnTrends/0.1' },
     timeoutMs: 60_000,
   });
 
-  if (!response.ok) {
-    throw new Error(`Linux OSV zip fetch failed: HTTP ${response.status}`);
-  }
-
   console.log('Linux (Kernel): streaming records from zip...');
-  const arrayBuffer = await response.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
   const records = parseLinuxVulns(iterateZipJsonEntries<OsvVulnerability>(buffer));
   console.log(`Linux (Kernel): ${records.length} records extracted`);
   return records;

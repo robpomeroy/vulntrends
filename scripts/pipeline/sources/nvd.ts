@@ -39,9 +39,9 @@ const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string; cpeMatch?
   { cpeVendor: 'fortinet', manufacturer: 'Fortinet' },
   { cpeVendor: 'cisco', manufacturer: 'Cisco' },
   { cpeVendor: 'adobe', manufacturer: 'Adobe' },
-  { cpeVendor: 'linux', manufacturer: 'Linux', cpeMatch: 'cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*:*' },
-  { cpeVendor: 'redhat', manufacturer: 'Red Hat', cpeMatch: 'cpe:2.3:o:redhat:enterprise_linux:*:*:*:*:*:*:*:*:*' },
-  { cpeVendor: 'canonical', manufacturer: 'Ubuntu', cpeMatch: 'cpe:2.3:o:canonical:ubuntu_linux:*:*:*:*:*:*:*:*:*' },
+  { cpeVendor: 'linux', manufacturer: 'Linux', cpeMatch: 'cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*' },
+  { cpeVendor: 'redhat', manufacturer: 'Red Hat', cpeMatch: 'cpe:2.3:o:redhat:enterprise_linux:*:*:*:*:*:*:*:*' },
+  { cpeVendor: 'canonical', manufacturer: 'Ubuntu', cpeMatch: 'cpe:2.3:o:canonical:ubuntu_linux:*:*:*:*:*:*:*:*' },
 ];
 
 interface NvdCve {
@@ -154,6 +154,16 @@ function cveToRecord(cve: NvdCve, manufacturer: string): VulnerabilityRecord | n
   });
 }
 
+/** True when a vulnerable CPE criterion matches the queried OS product. */
+export function hasVulnerableOsMatch(cve: NvdCve, cpeMatch: string): boolean {
+  const prefix = cpeMatch.split(':').slice(0, 5).join(':') + ':';
+  return (cve.configurations ?? []).some((config) =>
+    config.nodes?.some((node) =>
+      node.cpeMatch?.some((m) => m.vulnerable && m.criteria.startsWith(prefix)),
+    ),
+  );
+}
+
 /** Sleep for the given milliseconds. */
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -196,6 +206,7 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
           // Deduplicate by CVE ID per manufacturer across vendor queries
           const key = `${manufacturer}|${vuln.cve.id}`;
           if (seenIds.has(key)) continue;
+          if (cpeMatch && !hasVulnerableOsMatch(vuln.cve, cpeMatch)) continue;
           seenIds.add(key);
 
           const record = cveToRecord(vuln.cve, manufacturer);

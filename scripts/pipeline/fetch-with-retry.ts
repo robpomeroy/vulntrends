@@ -187,3 +187,95 @@ export async function fetchWithRetry(
     },
   );
 }
+
+/**
+ * Fetch a URL with retry, backoff, and timeout, reading the full response
+ * body into a Buffer under the active timeout deadline.
+ *
+ * This ensures large downloads (such as OSV bulk ZIP archives) do not stall
+ * indefinitely if headers arrive but the body trickle-stalls outside the
+ * initial fetch() call.
+ */
+export async function fetchBufferWithRetry(
+  url: string,
+  options: FetchWithRetryOptions = {},
+): Promise<Buffer> {
+  const {
+    timeoutMs = DEFAULT_TIMEOUT_MS,
+    maxRetries = DEFAULT_MAX_RETRIES,
+    baseBackoffMs = DEFAULT_BASE_BACKOFF_MS,
+    signal: externalSignal,
+    ...fetchOptions
+  } = options;
+
+  const causes: unknown[] = [];
+  let lastStatus: number | undefined;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    const onExternalAbort = () => controller.abort();
+    if (externalSignal) {
+      if (externalSignal.aborted) {
+        clearTimeout(timeout);
+        throw new FetchWithRetryError(`Request aborted by caller: ${url}`, {
+          attempts: attempt + 1,
+          lastStatus,
+          url,
+          causes,
+        });
+      }
+      externalSignal.addEventListener('abort', onExternalAbort, { once: true });
+    }
+
+    try {
+      const response = await fetch(url, { ...fetchOptions, signal: controller.signal });
+      lastStatus = response.status;
+
+      if (RETRYABLE_STATUSES.has(response.status)) {
+        try {
+          await response.arrayBuffer();
+        } catch {
+          // Ignore drain failure
+        }
+        causes.push(new Error(`HTTP ${response.status}`));
+      } else if (!response.ok) {
+        // Non-retryable HTTP error (e.g. 404)
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      } else {
+        // Stream the body while timeout controller is still active
+        const arrayBuf = await response.arrayBuffer();
+        return Buffer.from(arrayBuf);
+      }
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        causes.push(new Error(`timeout after ${timeoutMs}ms`));
+      } else {
+        causes.push(err);
+      }
+    } finally {
+      clearTimeout(timeout);
+      if (externalSignal) {
+        externalSignal.removeEventListener('abort', onExternalAbort);
+      }
+    }
+
+    if (attempt < maxRetries) {
+      const backoff = baseBackoffMs * 2 ** attempt + randomInt(JITTER_MS * 2) - JITTER_MS;
+      const clamped = Math.max(0, backoff);
+      await sleep(clamped);
+    }
+  }
+
+  const lastCause = causes[causes.length - 1];
+  const lastMessage = lastCause instanceof Error ? lastCause.message : String(lastCause);
+  throw new FetchWithRetryError(
+    `fetchBufferWithRetry: ${url} failed after ${maxRetries + 1} attempts (last: ${lastMessage})`,
+    {
+      attempts: maxRetries + 1,
+      lastStatus,
+      url,
+      causes,
+    },
+  );
+}

@@ -45,10 +45,22 @@ export function* iterateZipEntries(
   }
 
   let curOffset = cdOffset;
+  let entriesParsed = 0;
 
-  for (let i = 0; i < totalEntries && curOffset < buffer.length; i++) {
+  for (let i = 0; i < totalEntries; i++) {
+    if (curOffset + 46 > buffer.length) {
+      throw new Error(
+        `Invalid ZIP file: truncated central directory header at offset ${curOffset} (entry ${i + 1}/${totalEntries})`,
+      );
+    }
+
     const sig = buffer.readUInt32LE(curOffset);
-    if (sig !== 0x02014b50) break; // Central directory header signature
+    if (sig !== 0x02014b50) {
+      throw new Error(
+        `Invalid ZIP file: expected central directory signature 0x02014b50 at offset ${curOffset}, found 0x${sig.toString(16)}`,
+      );
+    }
+    entriesParsed++;
 
     const method = buffer.readUInt16LE(curOffset + 10);
     let compressedSize = buffer.readUInt32LE(curOffset + 20);
@@ -123,6 +135,12 @@ export function* iterateZipEntries(
       filename,
       data: decompressed,
     };
+  }
+
+  if (entriesParsed !== totalEntries) {
+    throw new Error(
+      `Invalid ZIP file: expected ${totalEntries} central directory entries, but only parsed ${entriesParsed}`,
+    );
   }
 }
 

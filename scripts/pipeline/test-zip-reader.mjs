@@ -93,6 +93,32 @@ const streamedJson = [...iterateZipJsonEntries(zipBuf)];
 expect('iterateZipJsonEntries streams 1 JSON object', streamedJson.length === 1);
 expect('streamed JSON content matches', streamedJson[0]?.id === 'CVE-2026-9999');
 
+// Test corruption detection: invalid central directory signature
+const corruptZipBuf = Buffer.from(zipBuf);
+// Corrupt the central directory signature (first 4 bytes of cdHeader at localHeader.length + compressed.length)
+// Find cdOffset from EOCD
+const eocdOffset = corruptZipBuf.length - 22;
+const cdOffset = corruptZipBuf.readUInt32LE(eocdOffset + 16);
+corruptZipBuf.writeUInt32LE(0xdeadbeef, cdOffset);
+
+let threwCorrupt = false;
+try {
+  [...iterateZipEntries(corruptZipBuf)];
+} catch (err) {
+  threwCorrupt = true;
+}
+expect('corrupted central directory signature throws Error', threwCorrupt === true);
+
+// Test truncated central directory
+const truncatedZipBuf = corruptZipBuf.subarray(0, cdOffset + 10);
+let threwTruncated = false;
+try {
+  [...iterateZipEntries(truncatedZipBuf)];
+} catch (err) {
+  threwTruncated = true;
+}
+expect('truncated central directory throws Error', threwTruncated === true);
+
 console.log(
   `\n${'='.repeat(60)}\nResults: ${passed} passed, ${failed} failed\n${'='.repeat(60)}`,
 );

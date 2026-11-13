@@ -176,17 +176,27 @@ export function extractCvss(severity?: OsvSeverity[]): number | undefined {
  * in sync than this hand-maintained mirror. The same pattern
  * is used by `scripts/pipeline/sources/nvd.ts` VENDOR_QUERIES.
  */
-function inferManufacturer(vuln: OsvVulnerability, cveId: string): string | undefined {
+export function inferManufacturer(vuln: OsvVulnerability, cveId: string): string | undefined {
   const e = (vuln.affected?.[0] as { package?: { ecosystem?: string } } | undefined)
     ?.package?.ecosystem;
-  const combined = `${vuln.id} ${cveId} ${vuln.summary ?? ''} ${vuln.details ?? ''}`.toLowerCase();
+
+  // 1. Prioritise explicit ecosystem identifiers so distribution package
+  // advisories (e.g. Ubuntu or Red Hat kernel packages) are not falsely
+  // classified as upstream Linux CNA records due to text matches.
   if (e === 'Mozilla') return 'Mozilla';
   if (e === 'Chrome' || e === 'Android') return 'Google';
-  if (e === 'macOS' || combined.includes('apple')) return 'Apple';
   if (e === 'Adobe') return 'Adobe';
-  if (e === 'Linux' || combined.includes('linux kernel')) return 'Linux';
-  if (e?.startsWith('Red Hat') || combined.includes('red hat') || combined.includes('rhel')) return 'Red Hat';
-  if (e?.startsWith('Ubuntu') || combined.includes('ubuntu')) return 'Ubuntu';
+  if (e === 'macOS') return 'Apple';
+  if (e?.startsWith('Red Hat')) return 'Red Hat';
+  if (e?.startsWith('Ubuntu')) return 'Ubuntu';
+  if (e === 'Linux') return 'Linux';
+
+  // 2. Fall back to text patterns only when the ecosystem does not identify a manufacturer
+  const combined = `${vuln.id} ${cveId} ${vuln.summary ?? ''} ${vuln.details ?? ''}`.toLowerCase();
+  if (combined.includes('apple') || combined.includes('macos') || combined.includes('ios')) return 'Apple';
+  if (combined.includes('ubuntu')) return 'Ubuntu';
+  if (combined.includes('red hat') || combined.includes('rhel')) return 'Red Hat';
+  if (combined.includes('linux kernel')) return 'Linux';
   if (combined.includes('microsoft')) return 'Microsoft';
   if (combined.includes('oracle')) return 'Oracle';
   return undefined;

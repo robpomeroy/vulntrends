@@ -10,7 +10,7 @@
  */
 
 import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
-import { fetchWithRetry } from '../fetch-with-retry.js';
+import { fetchBufferWithRetry } from '../fetch-with-retry.js';
 import { iterateZipJsonEntries } from '../zip-reader.js';
 import { extractCvss } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
@@ -24,8 +24,10 @@ interface OsvRedHatVuln {
   details?: string;
   published?: string;
   modified?: string;
+  withdrawn?: string;
   related?: string[];
   aliases?: string[];
+  upstream?: string[];
   severity?: Array<{ type: string; score: string }>;
   affected?: Array<{
     package?: { name?: string; ecosystem?: string };
@@ -41,6 +43,7 @@ export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): Vulnerabili
   const cveRecords = new Map<string, VulnerabilityRecord>();
 
   for (const vuln of osvVulns) {
+    if (vuln.withdrawn) continue;
     const patchDate = parseDate(vuln.published ?? vuln.modified);
     if (!patchDate) continue;
 
@@ -51,6 +54,10 @@ export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): Vulnerabili
     }
     for (const alias of vuln.aliases ?? []) {
       if (/^CVE-\d{4}-\d{4,}$/i.test(alias)) cveSet.add(alias.toUpperCase());
+    }
+    for (const up of vuln.upstream ?? []) {
+      const m = up.match(/CVE-\d{4}-\d{4,}/i);
+      if (m) cveSet.add(m[0].toUpperCase());
     }
     const fromDetails = extractCveIds(vuln.details);
     if (fromDetails) {
@@ -111,19 +118,12 @@ export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): Vulnerabili
 
 export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   console.log('Red Hat: downloading OSV bulk archive...');
-  const response = await fetchWithRetry(REDHAT_OSV_ZIP_URL, {
+  const buffer = await fetchBufferWithRetry(REDHAT_OSV_ZIP_URL, {
     headers: { 'User-Agent': 'VulnTrends/0.1' },
     timeoutMs: 60_000,
   });
 
-  if (!response.ok) {
-    throw new Error(`Red Hat OSV zip fetch failed: HTTP ${response.status}`);
-  }
-
   console.log('Red Hat: streaming records from zip...');
-  const arrayBuffer = await response.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
   const records = parseRedHatVulns(iterateZipJsonEntries<OsvRedHatVuln>(buffer));
   console.log(`Red Hat: ${records.length} records extracted`);
   return records;

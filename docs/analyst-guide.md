@@ -29,7 +29,7 @@ manufacturers.json                          # canonical 13-vendor list with char
 | File | What it is |
 |---|---|
 | `src/data/raw/<source>.json` | One file per parser. Each is an array of `VulnerabilityRecord` objects. The MSRC file no longer contains Mariner records (they're filtered out at parse time — see §4). |
-| `src/data/raw/all.json` | All sources concatenated, then **deduplicated** by CVE ID and merged. This is what the aggregator reads. |
+| `src/data/raw/all.json` | All sources concatenated, then **deduplicated** per manufacturer and CVE and merged. Vulnerabilities affecting shared components (e.g. Linux kernel CVEs affecting Ubuntu and Red Hat) appear once for each manufacturer; aggregate sums across manufacturers represent manufacturer incidents, not unique global CVE counts. This is what the aggregator reads. |
 | `src/data/aggregated/*.json` | Time-bucketed counts (per manufacturer, per bucket key like `2025-04`) that the dashboard renders. |
 | `src/data/meta.json` | Pipeline metadata: when the run happened, source-level record counts, per-source duration, etc. |
 
@@ -55,7 +55,8 @@ interface VulnerabilityRecord {
   id: string;                  // CVE ID (CVE-YYYY-NNNN+), except for projectzero stubs
   cveIds: string[];            // all CVE IDs the record covers (usually one)
   source: 'mozilla' | 'msrc' | 'apple' | 'chrome' | 'pan' | 'fortinet'
-         | 'adobe' | 'projectzero' | 'cisco' | 'osv' | 'nvd';
+         | 'adobe' | 'projectzero' | 'cisco' | 'linux' | 'redhat' | 'ubuntu'
+         | 'osv' | 'nvd';
   manufacturer: string;        // canonical name, e.g. 'Microsoft' (not 'microsoft')
   title: string;               // human-readable title; for vendor records this is
                                //   the advisory headline

@@ -1,11 +1,12 @@
 // Unit tests for Linux Kernel, Red Hat, and Ubuntu OSV parsers
 // Verifies fix handling, earliest patch date selection, and avoidance of fabricated patch lags.
 
-import { osvToRecord, parseLinuxVulns } from './sources/linux.js';
-import { parseRedHatVulns } from './sources/redhat.js';
-import { parseUbuntuVulns } from './sources/ubuntu.js';
-import { inferManufacturer, formatOsvTitle } from './sources/osv.js';
-import { hasVulnerableOsMatch } from './sources/nvd.js';
+import { deflateRawSync } from 'node:zlib';
+import { osvToRecord, parseLinuxVulns, fetchRecords as fetchLinuxRecords } from './sources/linux.js';
+import { parseRedHatVulns, fetchRecords as fetchRedHatRecords } from './sources/redhat.js';
+import { parseUbuntuVulns, fetchRecords as fetchUbuntuRecords } from './sources/ubuntu.js';
+import { inferManufacturer, formatOsvTitle, extractCvss, fetchRecords as fetchOsvRecords } from './sources/osv.js';
+import { hasVulnerableOsMatch, cveToRecord } from './sources/nvd.js';
 
 let passed = 0;
 let failed = 0;
@@ -20,9 +21,9 @@ function expect(label, condition) {
   }
 }
 
-function group(name, fn) {
+async function group(name, fn) {
   console.log(`\n── ${name} ──`);
-  fn();
+  await fn();
 }
 
 // 1. Linux Kernel: OSV metadata timestamps must not be used as patch dates
@@ -372,6 +373,330 @@ group('NVD hasVulnerableOsMatch filtering', () => {
     'non-vulnerable OS criterion returns false',
     hasVulnerableOsMatch(nonVulnerableMatchCve, linuxCpeMatch) === false,
   );
+});
+
+// 7. Ubuntu OSV parser: order-independent discovery date preservation ([USN-later, standalone, USN-earlier])
+group('Ubuntu OSV parser: order-independent discovery date preservation', () => {
+  const laterUsn = {
+    id: 'USN-2000-1',
+    summary: 'Later notice for CVE-2024-9999',
+    published: '2024-05-01T10:00:00Z',
+    aliases: ['CVE-2024-9999'],
+  };
+  const standalone = {
+    id: 'UBUNTU-CVE-2024-9999',
+    summary: 'Standalone Ubuntu CVE entry',
+    published: '2024-01-10T10:00:00Z',
+  };
+  const earlierUsn = {
+    id: 'USN-1000-1',
+    summary: 'Earlier notice for CVE-2024-9999',
+    published: '2024-03-01T10:00:00Z',
+    aliases: ['CVE-2024-9999'],
+  };
+
+  const records = parseUbuntuVulns([laterUsn, standalone, earlierUsn]);
+  const cveRec = records.find((r) => r.id === 'CVE-2024-9999');
+
+  expect('single record retained for CVE', records.filter((r) => r.id === 'CVE-2024-9999').length === 1);
+  expect('earliest patch date from USN-1000-1 is retained', cveRec?.patchedDate === '2024-03-01');
+  expect('earlier discovery date from standalone entry is preserved', cveRec?.discoveredDate === '2024-01-10');
+  expect('patchLagDays reflects preserved discovery date (51 days)', cveRec?.patchLagDays === 51);
+});
+
+// 8. Red Hat and Ubuntu CVSS preservation across advisories
+group('Red Hat and Ubuntu CVSS preservation', () => {
+  const laterRhsa = {
+    id: 'RHSA-2024:2000',
+    summary: 'Later RHSA with CVSS',
+    published: '2024-04-01T10:00:00Z',
+    related: ['CVE-2024-8888'],
+    severity: [{ type: 'CVSS_V3', score: '8.8' }],
+  };
+  const earlierRhsa = {
+    id: 'RHSA-2024:1000',
+    summary: 'Earlier RHSA without CVSS',
+    published: '2024-02-01T10:00:00Z',
+    related: ['CVE-2024-8888'],
+  };
+  const rhRecords = parseRedHatVulns([laterRhsa, earlierRhsa]);
+  const rhRec = rhRecords.find((r) => r.id === 'CVE-2024-8888');
+  expect('Red Hat retains CVSS when earlier advisory replaces later', rhRec?.cvss === 8.8);
+  expect('Red Hat retains severity high', rhRec?.severity === 'high');
+
+  const rhRecordsReverse = parseRedHatVulns([earlierRhsa, laterRhsa]);
+  const rhRecRev = rhRecordsReverse.find((r) => r.id === 'CVE-2024-8888');
+  expect('Red Hat backfills CVSS when later advisory arrives', rhRecRev?.cvss === 8.8);
+
+  const laterUsn = {
+    id: 'USN-5000-1',
+    summary: 'Later USN with CVSS',
+    published: '2024-05-01T10:00:00Z',
+    aliases: ['CVE-2024-7777'],
+    severity: [{ type: 'CVSS_V3', score: '7.5' }],
+  };
+  const earlierUsn = {
+    id: 'USN-4000-1',
+    summary: 'Earlier USN without CVSS',
+    published: '2024-03-01T10:00:00Z',
+    aliases: ['CVE-2024-7777'],
+  };
+  const uRecords = parseUbuntuVulns([laterUsn, earlierUsn]);
+  const uRec = uRecords.find((r) => r.id === 'CVE-2024-7777');
+  expect('Ubuntu retains CVSS when earlier advisory replaces later', uRec?.cvss === 7.5);
+  expect('Ubuntu retains severity high', uRec?.severity === 'high');
+
+  const uRecordsRev = parseUbuntuVulns([earlierUsn, laterUsn]);
+  const uRecRev = uRecordsRev.find((r) => r.id === 'CVE-2024-7777');
+  expect('Ubuntu backfills CVSS when later USN arrives', uRecRev?.cvss === 7.5);
+});
+
+// 9. Advisory fallback when no CVE IDs are present
+group('Advisory fallback when no CVE IDs are present', () => {
+  const noCveRhsa = {
+    id: 'RHSA-2024:9999',
+    summary: 'General update with no CVE',
+    published: '2024-06-01T10:00:00Z',
+  };
+  const rhRecords = parseRedHatVulns([noCveRhsa]);
+  expect('RHSA with no CVEs records under advisory ID', rhRecords.some((r) => r.id === 'RHSA-2024:9999'));
+
+  const noCveUsn = {
+    id: 'USN-9999-1',
+    summary: 'General USN update with no CVE',
+    published: '2024-06-01T10:00:00Z',
+  };
+  const uRecords = parseUbuntuVulns([noCveUsn]);
+  expect('USN with no CVEs records under advisory ID', uRecords.some((r) => r.id === 'USN-9999-1'));
+
+  const detailsRhsa = {
+    id: 'RHSA-2024:8888',
+    summary: 'Advisory with CVE only in details',
+    details: 'This update fixes CVE-2024-5555 in the package.',
+    published: '2024-06-01T10:00:00Z',
+  };
+  const rhDetails = parseRedHatVulns([detailsRhsa]);
+  expect('RHSA extracts CVE from details string', rhDetails.some((r) => r.id === 'CVE-2024-5555'));
+});
+
+// 10. Linux Kernel parser edge cases
+group('Linux Kernel parser edge cases', () => {
+  const modifiedOnlyVuln = {
+    id: 'CVE-2024-6000',
+    summary: 'Modified date fallback',
+    modified: '2024-05-15T10:00:00Z',
+  };
+  const rec = osvToRecord(modifiedOnlyVuln);
+  expect('discoveredDate falls back to modified when published is missing', rec?.discoveredDate === '2024-05-15');
+
+  const noCveVuln = {
+    id: 'GHSA-xxxx-yyyy',
+    summary: 'No CVE alias',
+    published: '2024-05-15T10:00:00Z',
+  };
+  expect('missing CVE ID returns null', osvToRecord(noCveVuln) === null);
+});
+
+// 11. extractCvss vector parsing and inferManufacturer text fallbacks
+group('extractCvss vector parsing and inferManufacturer text fallbacks', () => {
+  expect('extractCvss parses numeric score', extractCvss([{ type: 'CVSS_V3', score: '7.8' }]) === 7.8);
+
+  const vectorScoreChanged = extractCvss([
+    { type: 'CVSS_V3', score: 'CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H' },
+  ]);
+  expect('extractCvss computes score for Scope Changed vector (10)', vectorScoreChanged === 10);
+
+  const vectorScoreUnchanged = extractCvss([
+    { type: 'CVSS_V3', score: 'CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:L/I:N/A:N' },
+  ]);
+  expect('extractCvss computes score for Scope Unchanged vector (>0)', typeof vectorScoreUnchanged === 'number' && vectorScoreUnchanged > 0);
+
+  const makeTextOsv = (text) => ({ id: 'TEST-1', summary: text });
+  expect('apple in text maps to Apple', inferManufacturer(makeTextOsv('Security update for Apple products'), 'CVE-2024-1') === 'Apple');
+  expect('macos in text maps to Apple', inferManufacturer(makeTextOsv('Kernel update for macOS'), 'CVE-2024-1') === 'Apple');
+  expect('ios in text maps to Apple', inferManufacturer(makeTextOsv('Buffer overflow on iOS devices'), 'CVE-2024-1') === 'Apple');
+  expect('ubuntu in text maps to Ubuntu', inferManufacturer(makeTextOsv('Ubuntu package flaw'), 'CVE-2024-1') === 'Ubuntu');
+  expect('red hat in text maps to Red Hat', inferManufacturer(makeTextOsv('Red Hat Enterprise Linux bug'), 'CVE-2024-1') === 'Red Hat');
+  expect('rhel in text maps to Red Hat', inferManufacturer(makeTextOsv('RHEL 9 package update'), 'CVE-2024-1') === 'Red Hat');
+  expect('linux kernel in text maps to Linux', inferManufacturer(makeTextOsv('Flaw in linux kernel network stack'), 'CVE-2024-1') === 'Linux');
+  expect('microsoft in text maps to Microsoft', inferManufacturer(makeTextOsv('Microsoft Office vulnerability'), 'CVE-2024-1') === 'Microsoft');
+  expect('oracle in text maps to Oracle', inferManufacturer(makeTextOsv('Oracle Database issue'), 'CVE-2024-1') === 'Oracle');
+  expect('unrelated text maps to undefined', inferManufacturer(makeTextOsv('Some random proprietary app'), 'CVE-2024-1') === undefined);
+});
+
+// 12. NVD hasVulnerableOsMatch wildcard product criteria
+group('NVD hasVulnerableOsMatch wildcard product criteria', () => {
+  const redhatWildcardCpe = 'cpe:2.3:a:redhat:*:*:*:*:*:*:*:*';
+  const cveRedhatApp = {
+    id: 'CVE-2024-3333',
+    configurations: [
+      {
+        nodes: [
+          {
+            cpeMatch: [
+              {
+                vulnerable: true,
+                criteria: 'cpe:2.3:a:redhat:ansible_tower:3.8:*:*:*:*:*:*:*',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  expect('Red Hat wildcard product matches application criterion', hasVulnerableOsMatch(cveRedhatApp, redhatWildcardCpe) === true);
+
+  const ubuntuWildcardCpe = 'cpe:2.3:a:canonical:*:*:*:*:*:*:*:*';
+  const cveCanonicalApp = {
+    id: 'CVE-2024-4444',
+    configurations: [
+      {
+        nodes: [
+          {
+            cpeMatch: [
+              {
+                vulnerable: true,
+                criteria: 'cpe:2.3:a:canonical:snapd:2.57:*:*:*:*:*:*:*',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  expect('Canonical wildcard product matches application criterion', hasVulnerableOsMatch(cveCanonicalApp, ubuntuWildcardCpe) === true);
+});
+
+// Helper to construct a minimal ZIP file in memory for testing fetchRecords
+function createMockZip(filename, jsonContent) {
+  const fileData = Buffer.from(JSON.stringify(jsonContent), 'utf8');
+  const compressed = deflateRawSync(fileData);
+  const nameBuf = Buffer.from(filename, 'utf8');
+
+  const localHeader = Buffer.alloc(30 + nameBuf.length);
+  localHeader.writeUInt32LE(0x04034b50, 0);
+  localHeader.writeUInt16LE(20, 4);
+  localHeader.writeUInt16LE(0, 6);
+  localHeader.writeUInt16LE(8, 8);
+  localHeader.writeUInt32LE(compressed.length, 18);
+  localHeader.writeUInt32LE(fileData.length, 22);
+  localHeader.writeUInt16LE(nameBuf.length, 26);
+  nameBuf.copy(localHeader, 30);
+
+  const localOffset = 0;
+  const cdOffset = localHeader.length + compressed.length;
+
+  const cdHeader = Buffer.alloc(46 + nameBuf.length);
+  cdHeader.writeUInt32LE(0x02014b50, 0);
+  cdHeader.writeUInt16LE(20, 4);
+  cdHeader.writeUInt16LE(20, 6);
+  cdHeader.writeUInt16LE(0, 8);
+  cdHeader.writeUInt16LE(8, 10);
+  cdHeader.writeUInt32LE(compressed.length, 20);
+  cdHeader.writeUInt32LE(fileData.length, 24);
+  cdHeader.writeUInt16LE(nameBuf.length, 28);
+  cdHeader.writeUInt32LE(localOffset, 42);
+  nameBuf.copy(cdHeader, 46);
+
+  const eocd = Buffer.alloc(22);
+  eocd.writeUInt32LE(0x06054b50, 0);
+  eocd.writeUInt16LE(1, 8);
+  eocd.writeUInt16LE(1, 10);
+  eocd.writeUInt32LE(cdHeader.length, 12);
+  eocd.writeUInt32LE(cdOffset, 16);
+
+  return Buffer.concat([localHeader, compressed, cdHeader, eocd]);
+}
+
+// 13. fetchRecords integration with mock ZIP responses
+await group('fetchRecords integration with mock ZIP responses', async () => {
+  const origFetch = globalThis.fetch;
+  try {
+    const linuxZip = createMockZip('CVE-2024-1000.json', {
+      id: 'CVE-2024-1000',
+      summary: 'Linux test vuln',
+      published: '2024-03-01T00:00:00Z',
+    });
+    globalThis.fetch = async () => new Response(linuxZip, { status: 200 });
+    const linuxRecs = await fetchLinuxRecords();
+    expect('fetchLinuxRecords parses records from downloaded zip', linuxRecs.length === 1 && linuxRecs[0]?.id === 'CVE-2024-1000');
+
+    const rhZip = createMockZip('RHSA-2024-1001.json', {
+      id: 'RHSA-2024:1001',
+      summary: 'RHSA test vuln',
+      published: '2024-03-01T00:00:00Z',
+      related: ['CVE-2024-1001'],
+    });
+    globalThis.fetch = async () => new Response(rhZip, { status: 200 });
+    const rhRecs = await fetchRedHatRecords();
+    expect('fetchRedHatRecords parses records from downloaded zip', rhRecs.length === 1 && rhRecs[0]?.id === 'CVE-2024-1001');
+
+    const uZip = createMockZip('USN-1002-1.json', {
+      id: 'USN-1002-1',
+      summary: 'USN test vuln',
+      published: '2024-03-01T00:00:00Z',
+      aliases: ['CVE-2024-1002'],
+    });
+    globalThis.fetch = async () => new Response(uZip, { status: 200 });
+    const uRecs = await fetchUbuntuRecords();
+    expect('fetchUbuntuRecords parses records from downloaded zip', uRecs.length === 1 && uRecs[0]?.id === 'CVE-2024-1002');
+
+    // OSV stub without CVE list env var
+    delete process.env.OSV_LOOKUP_CVE_LIST;
+    const osvEmpty = await fetchOsvRecords();
+    expect('fetchOsvRecords returns empty array when OSV_LOOKUP_CVE_LIST is unset', osvEmpty.length === 0);
+
+    // OSV stub with nonexistent file
+    process.env.OSV_LOOKUP_CVE_LIST = 'nonexistent-cve-list.txt';
+    const osvMissing = await fetchOsvRecords();
+    expect('fetchOsvRecords returns empty array when list file is missing', osvMissing.length === 0);
+    delete process.env.OSV_LOOKUP_CVE_LIST;
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
+// 14. NVD cveToRecord unit tests
+group('NVD cveToRecord parsing', () => {
+  const nvdCve = {
+    id: 'CVE-2024-5000',
+    descriptions: [{ lang: 'en', value: 'Test description of CVE-2024-5000' }],
+    published: '2024-02-15T00:00:00.000',
+    metrics: {
+      cvssMetricV31: [
+        {
+          cvssData: { baseScore: 9.8 },
+        },
+      ],
+    },
+    references: [
+      {
+        url: 'https://example.com/advisory',
+        tags: ['Vendor Advisory'],
+      },
+    ],
+  };
+
+  const rec = cveToRecord(nvdCve, 'Linux');
+  expect('cveToRecord parses id', rec?.id === 'CVE-2024-5000');
+  expect('cveToRecord parses cvss score', rec?.cvss === 9.8);
+  expect('cveToRecord maps severity critical', rec?.severity === 'critical');
+  expect('cveToRecord uses vendor advisory rawUrl', rec?.rawUrl === 'https://example.com/advisory');
+
+  const longDesc = 'B'.repeat(300);
+  const nvdLong = {
+    id: 'CVE-2024-5001',
+    descriptions: [{ lang: 'en', value: longDesc }],
+    published: '2024-02-15T00:00:00.000',
+  };
+  const recLong = cveToRecord(nvdLong, 'Ubuntu');
+  expect('cveToRecord truncates long description to 201 chars (with ellipsis)', recLong?.title.length === 201 && recLong?.title.endsWith('…'));
+
+  const nvdNoDate = {
+    id: 'CVE-2024-5002',
+    descriptions: [{ lang: 'en', value: 'No date' }],
+  };
+  expect('cveToRecord returns null when published date is missing', cveToRecord(nvdNoDate, 'Red Hat') === null);
 });
 
 console.log(

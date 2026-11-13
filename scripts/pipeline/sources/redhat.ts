@@ -9,7 +9,7 @@
  * CVE identifiers resolved by each advisory.
  */
 
-import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
+import { buildRecord, cvssToSeverity, extractCveIds, parseDate } from '../normalise.js';
 import { fetchBufferWithRetry } from '../fetch-with-retry.js';
 import { iterateZipJsonEntries } from '../zip-reader.js';
 import { extractCvss, formatOsvTitle } from './osv.js';
@@ -93,6 +93,11 @@ export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): Vulnerabili
         // Short-circuit before expensive buildRecord allocation and schema validation.
         const existing = cveRecords.get(cveId);
         if (existing?.patchedDate && patchDate >= existing.patchedDate) {
+          // If existing lacks CVSS score but new advisory has one, backfill it
+          if (existing.cvss === undefined && cvss !== undefined) {
+            existing.cvss = cvss;
+            existing.severity = cvssToSeverity(cvss);
+          }
           continue;
         }
 
@@ -102,7 +107,7 @@ export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): Vulnerabili
           manufacturer: 'Red Hat',
           product,
           title: `${title} — ${cveId}`.slice(0, 200),
-          cvss,
+          cvss: cvss ?? existing?.cvss,
           discoveredDate: patchDate,
           publishedDate: patchDate,
           patchedDate: patchDate,

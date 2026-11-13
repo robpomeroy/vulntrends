@@ -10,7 +10,7 @@
  * and references the upstream CVE IDs.
  */
 
-import { buildRecord, computePatchLagDays, parseDate } from '../normalise.js';
+import { buildRecord, computePatchLagDays, cvssToSeverity, parseDate } from '../normalise.js';
 import { fetchBufferWithRetry } from '../fetch-with-retry.js';
 import { iterateZipJsonEntries } from '../zip-reader.js';
 import { extractCvss, formatOsvTitle } from './osv.js';
@@ -110,6 +110,15 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
           // Short-circuit before expensive buildRecord allocation and schema validation.
           const existing = usnCveRecords.get(cveId);
           if (existing?.patchedDate && patchDate >= existing.patchedDate) {
+            // Retain earlier patch date, but backfill CVSS/severity if existing lacks it
+            if (existing.cvss === undefined) {
+              const perCveSeverity = cveSeverityMap.get(cveId) ?? vuln.severity;
+              const cvss = extractCvss(perCveSeverity);
+              if (cvss !== undefined) {
+                existing.cvss = cvss;
+                existing.severity = cvssToSeverity(cvss);
+              }
+            }
             continue;
           }
 
@@ -117,8 +126,12 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
           const perCveSeverity = cveSeverityMap.get(cveId) ?? vuln.severity;
           const cvss = extractCvss(perCveSeverity);
 
-          // If a standalone record was already registered for this CVE, merge its discoveredDate
+          // If a standalone record or previously-merged USN was registered for this CVE,
+          // preserve the earliest discoveredDate so order of USN and standalone records does not matter.
           let discoveredDate = patchDate;
+          if (existing && existing.discoveredDate < discoveredDate) {
+            discoveredDate = existing.discoveredDate;
+          }
           const standaloneRec = standaloneRecords.get(cveId);
           if (standaloneRec) {
             if (standaloneRec.discoveredDate < discoveredDate) {
@@ -127,13 +140,15 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
             standaloneRecords.delete(cveId);
           }
 
+          const resolvedCvss = cvss ?? existing?.cvss ?? standaloneRec?.cvss;
+
           const candidate = buildRecord({
             id: cveId,
             source: 'ubuntu',
             manufacturer: 'Ubuntu',
             product,
             title: `${title} — ${cveId}`.slice(0, 200),
-            cvss,
+            cvss: resolvedCvss,
             discoveredDate,
             publishedDate: patchDate,
             patchedDate: patchDate,
@@ -168,6 +183,13 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
         if (date < usnRec.discoveredDate) {
           usnRec.discoveredDate = date;
           usnRec.patchLagDays = computePatchLagDays(usnRec.discoveredDate, usnRec.patchedDate);
+        }
+        if (usnRec.cvss === undefined) {
+          const cvss = extractCvss(vuln.severity);
+          if (cvss !== undefined) {
+            usnRec.cvss = cvss;
+            usnRec.severity = cvssToSeverity(cvss);
+          }
         }
         continue;
       }

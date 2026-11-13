@@ -124,7 +124,7 @@ async function fetchCvePage(
  * @param cve            The NVD CVE entry
  * @param manufacturer  The canonical manufacturer name (from the query)
  */
-function cveToRecord(cve: NvdCve, manufacturer: string): VulnerabilityRecord | null {
+export function cveToRecord(cve: NvdCve, manufacturer: string): VulnerabilityRecord | null {
   const description =
     cve.descriptions?.find((d) => d.lang === 'en')?.value ?? cve.id;
   const cvss =

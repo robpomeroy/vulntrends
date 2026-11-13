@@ -176,22 +176,35 @@ export function extractCvss(severity?: OsvSeverity[]): number | undefined {
  * in sync than this hand-maintained mirror. The same pattern
  * is used by `scripts/pipeline/sources/nvd.ts` VENDOR_QUERIES.
  */
+/**
+ * Clean and cap an OSV title string to a maximum of 200 characters.
+ */
+export function formatOsvTitle(
+  summary: string | undefined,
+  details: string | undefined,
+  id: string,
+  prefix = 'Vulnerability',
+): string {
+  const raw = summary?.trim() || details?.split('\n')[0]?.trim();
+  const title = raw || `${prefix} ${id}`;
+  return title.slice(0, 200);
+}
+
 export function inferManufacturer(vuln: OsvVulnerability, cveId: string): string | undefined {
-  const e = (vuln.affected?.[0] as { package?: { ecosystem?: string } } | undefined)
-    ?.package?.ecosystem;
+  // 1. Prioritise explicit ecosystem identifiers from any affected package entry
+  for (const aff of (vuln.affected ?? []) as Array<{ package?: { ecosystem?: string } }>) {
+    const e = aff.package?.ecosystem;
+    if (!e) continue;
+    if (e === 'Mozilla') return 'Mozilla';
+    if (e === 'Chrome' || e === 'Android') return 'Google';
+    if (e === 'Adobe') return 'Adobe';
+    if (e === 'macOS') return 'Apple';
+    if (e.startsWith('Red Hat')) return 'Red Hat';
+    if (e.startsWith('Ubuntu')) return 'Ubuntu';
+    if (e === 'Linux') return 'Linux';
+  }
 
-  // 1. Prioritise explicit ecosystem identifiers so distribution package
-  // advisories (e.g. Ubuntu or Red Hat kernel packages) are not falsely
-  // classified as upstream Linux CNA records due to text matches.
-  if (e === 'Mozilla') return 'Mozilla';
-  if (e === 'Chrome' || e === 'Android') return 'Google';
-  if (e === 'Adobe') return 'Adobe';
-  if (e === 'macOS') return 'Apple';
-  if (e?.startsWith('Red Hat')) return 'Red Hat';
-  if (e?.startsWith('Ubuntu')) return 'Ubuntu';
-  if (e === 'Linux') return 'Linux';
-
-  // 2. Fall back to text patterns only when the ecosystem does not identify a manufacturer
+  // 2. Fall back to text patterns only when no affected ecosystem identifies a manufacturer
   const combined = `${vuln.id} ${cveId} ${vuln.summary ?? ''} ${vuln.details ?? ''}`.toLowerCase();
   if (combined.includes('apple') || combined.includes('macos') || combined.includes('ios')) return 'Apple';
   if (combined.includes('ubuntu')) return 'Ubuntu';

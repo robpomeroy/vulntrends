@@ -119,6 +119,87 @@ try {
 }
 expect('truncated central directory throws Error', threwTruncated === true);
 
+// Test stored (uncompressed, method 0) entries
+function createZipWithStoredEntry(filename, jsonContent) {
+  const fileData = Buffer.from(JSON.stringify(jsonContent), 'utf8');
+  const nameBuf = Buffer.from(filename, 'utf8');
+
+  const localHeader = Buffer.alloc(30 + nameBuf.length);
+  localHeader.writeUInt32LE(0x04034b50, 0);
+  localHeader.writeUInt16LE(20, 4);
+  localHeader.writeUInt16LE(0, 6);
+  localHeader.writeUInt16LE(0, 8); // method = stored
+  localHeader.writeUInt32LE(0, 10);
+  localHeader.writeUInt32LE(0, 14);
+  localHeader.writeUInt32LE(fileData.length, 18);
+  localHeader.writeUInt32LE(fileData.length, 22);
+  localHeader.writeUInt16LE(nameBuf.length, 26);
+  localHeader.writeUInt16LE(0, 28);
+  nameBuf.copy(localHeader, 30);
+
+  const localOffset = 0;
+  const cdOffset = localHeader.length + fileData.length;
+
+  const cdHeader = Buffer.alloc(46 + nameBuf.length);
+  cdHeader.writeUInt32LE(0x02014b50, 0);
+  cdHeader.writeUInt16LE(20, 4);
+  cdHeader.writeUInt16LE(20, 6);
+  cdHeader.writeUInt16LE(0, 8);
+  cdHeader.writeUInt16LE(0, 10); // method = stored
+  cdHeader.writeUInt32LE(0, 12);
+  cdHeader.writeUInt32LE(0, 16);
+  cdHeader.writeUInt32LE(fileData.length, 20);
+  cdHeader.writeUInt32LE(fileData.length, 24);
+  cdHeader.writeUInt16LE(nameBuf.length, 28);
+  cdHeader.writeUInt16LE(0, 30);
+  cdHeader.writeUInt16LE(0, 32);
+  cdHeader.writeUInt16LE(0, 34);
+  cdHeader.writeUInt16LE(0, 36);
+  cdHeader.writeUInt32LE(0, 38);
+  cdHeader.writeUInt32LE(localOffset, 42);
+  nameBuf.copy(cdHeader, 46);
+
+  const eocd = Buffer.alloc(22);
+  eocd.writeUInt32LE(0x06054b50, 0);
+  eocd.writeUInt16LE(0, 4);
+  eocd.writeUInt16LE(0, 6);
+  eocd.writeUInt16LE(1, 8);
+  eocd.writeUInt16LE(1, 10);
+  eocd.writeUInt32LE(cdHeader.length, 12);
+  eocd.writeUInt32LE(cdOffset, 16);
+  eocd.writeUInt16LE(0, 20);
+
+  return Buffer.concat([localHeader, fileData, cdHeader, eocd]);
+}
+
+const storedZip = createZipWithStoredEntry('stored.json', { ok: true, stored: 1 });
+const storedResults = extractZipJsonEntries(storedZip);
+expect('method 0 (STORED) entry is correctly extracted', storedResults.length === 1 && storedResults[0]?.stored === 1);
+
+// Test corrupt local header signature throws
+const corruptLocalZip = Buffer.from(zipBuf);
+corruptLocalZip.writeUInt32LE(0xdeadbeef, 0);
+let threwLocalSig = false;
+try {
+  [...iterateZipEntries(corruptLocalZip)];
+} catch (err) {
+  threwLocalSig = true;
+}
+expect('invalid local file header signature throws Error', threwLocalSig === true);
+
+// Test zip bomb protection: uncompressedSize > 32 MB throws
+const zipBombBuf = Buffer.from(zipBuf);
+const eocdOff = zipBombBuf.length - 22;
+const cdOff = zipBombBuf.readUInt32LE(eocdOff + 16);
+zipBombBuf.writeUInt32LE(33 * 1024 * 1024, cdOff + 24);
+let threwZipBomb = false;
+try {
+  [...iterateZipEntries(zipBombBuf)];
+} catch (err) {
+  threwZipBomb = true;
+}
+expect('uncompressed size exceeding 32MB limit throws Error', threwZipBomb === true);
+
 console.log(
   `\n${'='.repeat(60)}\nResults: ${passed} passed, ${failed} failed\n${'='.repeat(60)}`,
 );

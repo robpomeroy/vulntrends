@@ -13,7 +13,7 @@
 import { buildRecord, parseDate } from '../normalise.js';
 import { fetchBufferWithRetry } from '../fetch-with-retry.js';
 import { iterateZipJsonEntries } from '../zip-reader.js';
-import { extractCvss } from './osv.js';
+import { extractCvss, formatOsvTitle } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const LINUX_OSV_ZIP_URL = 'https://storage.googleapis.com/osv-vulnerabilities/Linux/all.zip';
@@ -75,8 +75,7 @@ export function osvToRecord(vuln: OsvVulnerability): VulnerabilityRecord | null 
   // patchedDate undefined rather than deriving it from OSV metadata timestamps
   // (such as vuln.modified), which would fabricate artificial patch lags.
   const cvss = extractCvss(vuln.severity);
-  const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
-  const title = (rawTitle || `Linux kernel vulnerability ${cveId}`).slice(0, 200);
+  const title = formatOsvTitle(vuln.summary, vuln.details, cveId, 'Linux kernel vulnerability');
 
   const advisoryRef = vuln.references?.find(
     (r) => r.type === 'ADVISORY' || r.type === 'WEB',
@@ -115,7 +114,7 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   console.log('Linux (Kernel): downloading OSV bulk archive...');
   const buffer = await fetchBufferWithRetry(LINUX_OSV_ZIP_URL, {
     headers: { 'User-Agent': 'VulnTrends/0.1' },
-    timeoutMs: 60_000,
+    timeoutMs: 180_000,
   });
 
   console.log('Linux (Kernel): streaming records from zip...');

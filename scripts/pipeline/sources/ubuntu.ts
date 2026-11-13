@@ -10,10 +10,10 @@
  * and references the upstream CVE IDs.
  */
 
-import { buildRecord, parseDate } from '../normalise.js';
+import { buildRecord, computePatchLagDays, parseDate } from '../normalise.js';
 import { fetchBufferWithRetry } from '../fetch-with-retry.js';
 import { iterateZipJsonEntries } from '../zip-reader.js';
-import { extractCvss } from './osv.js';
+import { extractCvss, formatOsvTitle } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const UBUNTU_OSV_ZIP_URL = 'https://storage.googleapis.com/osv-vulnerabilities/Ubuntu/all.zip';
@@ -85,8 +85,7 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
       }
 
       const cveList = [...cveSet];
-      const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
-      const title = (rawTitle || `Ubuntu Security Notice ${vuln.id}`).slice(0, 200);
+      const title = formatOsvTitle(vuln.summary, vuln.details, vuln.id, 'Ubuntu Security Notice');
       const product = vuln.affected?.[0]?.package?.name || 'Ubuntu';
       const rawUrl = `https://ubuntu.com/security/notices/${vuln.id}`;
 
@@ -107,29 +106,43 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
         );
       } else {
         for (const cveId of cveList) {
+          // Retain the earliest patch release date when multiple USNs address the same CVE.
+          // Short-circuit before expensive buildRecord allocation and schema validation.
+          const existing = usnCveRecords.get(cveId);
+          if (existing?.patchedDate && patchDate >= existing.patchedDate) {
+            continue;
+          }
+
           // Prefer per-CVE CVSS/severity from database_specific.cves_map, fallback to top-level
           const perCveSeverity = cveSeverityMap.get(cveId) ?? vuln.severity;
           const cvss = extractCvss(perCveSeverity);
+
+          // If a standalone record was already registered for this CVE, merge its discoveredDate
+          let discoveredDate = patchDate;
+          const standaloneRec = standaloneRecords.get(cveId);
+          if (standaloneRec) {
+            if (standaloneRec.discoveredDate < discoveredDate) {
+              discoveredDate = standaloneRec.discoveredDate;
+            }
+            standaloneRecords.delete(cveId);
+          }
 
           const candidate = buildRecord({
             id: cveId,
             source: 'ubuntu',
             manufacturer: 'Ubuntu',
             product,
-            title: `${title} — ${cveId}`,
+            title: `${title} — ${cveId}`.slice(0, 200),
             cvss,
-            discoveredDate: patchDate,
+            discoveredDate,
             publishedDate: patchDate,
             patchedDate: patchDate,
+            patchLagDays: computePatchLagDays(discoveredDate, patchDate),
             cveIds: [cveId],
             rawUrl,
           });
 
-          // Retain the earliest patch release date when multiple USNs address the same CVE
-          const existing = usnCveRecords.get(cveId);
-          if (!existing || (existing.patchedDate && patchDate < existing.patchedDate)) {
-            usnCveRecords.set(cveId, candidate);
-          }
+          usnCveRecords.set(cveId, candidate);
         }
       }
     } else {
@@ -146,13 +159,22 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
       if (!rawCveId) continue;
       const cveId = rawCveId.toUpperCase();
 
-      if (standaloneRecords.has(cveId)) continue;
-
       const date = parseDate(vuln.published ?? vuln.modified);
       if (!date) continue;
 
-      const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
-      const title = (rawTitle || `Ubuntu CVE ${cveId}`).slice(0, 200);
+      // If already covered by a USN, merge earlier discovery date immediately and avoid storing standalone record
+      const usnRec = usnCveRecords.get(cveId);
+      if (usnRec) {
+        if (date < usnRec.discoveredDate) {
+          usnRec.discoveredDate = date;
+          usnRec.patchLagDays = computePatchLagDays(usnRec.discoveredDate, usnRec.patchedDate);
+        }
+        continue;
+      }
+
+      if (standaloneRecords.has(cveId)) continue;
+
+      const title = formatOsvTitle(vuln.summary, vuln.details, cveId, 'Ubuntu CVE');
       const product = vuln.affected?.[0]?.package?.name || 'Ubuntu';
 
       standaloneRecords.set(
@@ -175,32 +197,15 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
   }
 
   // Standalone tracking records are only retained if the CVE is not covered by a USN.
-  // When a CVE is covered by a USN, merge earlier discovery date from the standalone record if present.
-  const nonUsnRecords: VulnerabilityRecord[] = [];
-  for (const [cveId, standaloneRec] of standaloneRecords) {
-    const usnRec = usnCveRecords.get(cveId);
-    if (usnRec) {
-      if (standaloneRec.discoveredDate < usnRec.discoveredDate) {
-        usnRec.discoveredDate = standaloneRec.discoveredDate;
-        if (usnRec.patchedDate) {
-          const d1 = new Date(usnRec.discoveredDate).getTime();
-          const d2 = new Date(usnRec.patchedDate).getTime();
-          usnRec.patchLagDays = Math.max(0, Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
-        }
-      }
-    } else {
-      nonUsnRecords.push(standaloneRec);
-    }
-  }
-
-  return [...usnAdvisoryRecords, ...usnCveRecords.values(), ...nonUsnRecords];
+  // Any standalone record matched by a USN was merged above and removed from standaloneRecords.
+  return [...usnAdvisoryRecords, ...usnCveRecords.values(), ...standaloneRecords.values()];
 }
 
 export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   console.log('Ubuntu: downloading OSV bulk archive...');
   const buffer = await fetchBufferWithRetry(UBUNTU_OSV_ZIP_URL, {
     headers: { 'User-Agent': 'VulnTrends/0.1' },
-    timeoutMs: 60_000,
+    timeoutMs: 180_000,
   });
 
   console.log('Ubuntu: streaming records from zip...');

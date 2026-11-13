@@ -246,8 +246,9 @@ async function main(): Promise<void> {
     const isFuture =
       r.discoveredDate > futureCutoffIso ||
       (!!r.patchedDate && r.patchedDate > futureCutoffIso);
-    if (isFuture && !seen.has(r.id)) {
-      seen.add(r.id);
+    const key = `${r.manufacturer}|${r.id}`;
+    if (isFuture && !seen.has(key)) {
+      seen.add(key);
       futureDated.push(r);
     }
   }
@@ -317,6 +318,8 @@ async function main(): Promise<void> {
     if (r.patchedDate) byMfr[r.manufacturer].patched++;
   }
   for (const [mfr, { total, patched }] of Object.entries(byMfr)) {
+    // Linux kernel CNA records identify commit fixes without patch release timestamps (patchedDate is intentionally undefined)
+    if (mfr === 'Linux') continue;
     const coverage = total > 0 ? patched / total : 0;
     if (coverage < MIN_PATCH_COVERAGE && total > 50) {
       issues.push({

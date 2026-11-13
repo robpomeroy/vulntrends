@@ -12,7 +12,7 @@
 import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
 import { fetchBufferWithRetry } from '../fetch-with-retry.js';
 import { iterateZipJsonEntries } from '../zip-reader.js';
-import { extractCvss } from './osv.js';
+import { extractCvss, formatOsvTitle } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const REDHAT_OSV_ZIP_URL =
@@ -66,8 +66,7 @@ export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): Vulnerabili
 
     const cveList = [...cveSet];
     const cvss = extractCvss(vuln.severity);
-    const rawTitle = vuln.summary?.trim() || vuln.details?.split('\n')[0]?.trim();
-    const title = (rawTitle || `Red Hat Advisory ${vuln.id}`).slice(0, 200);
+    const title = formatOsvTitle(vuln.summary, vuln.details, vuln.id, 'Red Hat Advisory');
     const product =
       vuln.affected?.[0]?.package?.name || 'Red Hat Enterprise Linux';
     const rawUrl = `https://access.redhat.com/errata/${encodeURIComponent(vuln.id)}`;
@@ -90,12 +89,19 @@ export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): Vulnerabili
       );
     } else {
       for (const cveId of cveList) {
+        // Retain the earliest patch release date when multiple RHSAs address the same CVE.
+        // Short-circuit before expensive buildRecord allocation and schema validation.
+        const existing = cveRecords.get(cveId);
+        if (existing?.patchedDate && patchDate >= existing.patchedDate) {
+          continue;
+        }
+
         const candidate = buildRecord({
           id: cveId,
           source: 'redhat',
           manufacturer: 'Red Hat',
           product,
-          title: `${title} — ${cveId}`,
+          title: `${title} — ${cveId}`.slice(0, 200),
           cvss,
           discoveredDate: patchDate,
           publishedDate: patchDate,
@@ -104,11 +110,7 @@ export function parseRedHatVulns(osvVulns: Iterable<OsvRedHatVuln>): Vulnerabili
           rawUrl,
         });
 
-        // Retain the earliest patch release date when multiple RHSAs address the same CVE
-        const existing = cveRecords.get(cveId);
-        if (!existing || (existing.patchedDate && patchDate < existing.patchedDate)) {
-          cveRecords.set(cveId, candidate);
-        }
+        cveRecords.set(cveId, candidate);
       }
     }
   }
@@ -120,7 +122,7 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   console.log('Red Hat: downloading OSV bulk archive...');
   const buffer = await fetchBufferWithRetry(REDHAT_OSV_ZIP_URL, {
     headers: { 'User-Agent': 'VulnTrends/0.1' },
-    timeoutMs: 60_000,
+    timeoutMs: 180_000,
   });
 
   console.log('Red Hat: streaming records from zip...');

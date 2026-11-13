@@ -41,7 +41,9 @@ const VENDOR_QUERIES: Array<{ cpeVendor: string; manufacturer: string; cpeMatch?
   { cpeVendor: 'adobe', manufacturer: 'Adobe' },
   { cpeVendor: 'linux', manufacturer: 'Linux', cpeMatch: 'cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*' },
   { cpeVendor: 'redhat', manufacturer: 'Red Hat', cpeMatch: 'cpe:2.3:o:redhat:enterprise_linux:*:*:*:*:*:*:*:*' },
+  { cpeVendor: 'redhat', manufacturer: 'Red Hat', cpeMatch: 'cpe:2.3:a:redhat:*:*:*:*:*:*:*:*:*' },
   { cpeVendor: 'canonical', manufacturer: 'Ubuntu', cpeMatch: 'cpe:2.3:o:canonical:ubuntu_linux:*:*:*:*:*:*:*:*' },
+  { cpeVendor: 'canonical', manufacturer: 'Ubuntu', cpeMatch: 'cpe:2.3:a:canonical:*:*:*:*:*:*:*:*:*' },
 ];
 
 interface NvdCve {
@@ -154,12 +156,13 @@ function cveToRecord(cve: NvdCve, manufacturer: string): VulnerabilityRecord | n
   });
 }
 
-/** True when a vulnerable CPE criterion matches the queried OS product. */
+/** True when a vulnerable CPE criterion matches the queried OS or application product. */
 export function hasVulnerableOsMatch(cve: NvdCve, cpeMatch: string): boolean {
-  const prefix = cpeMatch.split(':').slice(0, 5).join(':') + ':';
+  const parts = cpeMatch.split(':');
+  const prefix = (parts[4] === '*' ? parts.slice(0, 4).join(':') : parts.slice(0, 5).join(':')) + ':';
   return (cve.configurations ?? []).some((config) =>
     config.nodes?.some((node) =>
-      node.cpeMatch?.some((m) => m.vulnerable && m.criteria.startsWith(prefix)),
+      node.cpeMatch?.some((m) => Boolean(m.vulnerable) && Boolean(m.criteria?.startsWith(prefix))),
     ),
   );
 }

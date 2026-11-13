@@ -4,7 +4,7 @@
 import { osvToRecord, parseLinuxVulns } from './sources/linux.js';
 import { parseRedHatVulns } from './sources/redhat.js';
 import { parseUbuntuVulns } from './sources/ubuntu.js';
-import { inferManufacturer } from './sources/osv.js';
+import { inferManufacturer, formatOsvTitle } from './sources/osv.js';
 import { hasVulnerableOsMatch } from './sources/nvd.js';
 
 let passed = 0;
@@ -286,6 +286,33 @@ group('OSV inferManufacturer ecosystem prioritization', () => {
     'Linux ecosystem maps to Linux',
     inferManufacturer(upstreamLinuxOsv, 'CVE-2024-3000') === 'Linux',
   );
+
+  const multiAffectedOsv = {
+    id: 'CVE-2024-3001',
+    summary: 'Multi-affected bug',
+    affected: [
+      { package: { name: 'unrelated', ecosystem: 'PyPI' } },
+      { package: { name: 'core', ecosystem: 'Ubuntu:22.04:LTS' } },
+    ],
+  };
+  expect(
+    'inferManufacturer scans all affected entries for ecosystem match',
+    inferManufacturer(multiAffectedOsv, 'CVE-2024-3001') === 'Ubuntu',
+  );
+});
+
+// 6. formatOsvTitle: validates truncation to 200 chars and fallbacks
+group('formatOsvTitle helper', () => {
+  const longSummary = 'A'.repeat(300);
+  const formattedLong = formatOsvTitle(longSummary, undefined, 'CVE-2024-0001', 'Fallback');
+  expect('truncates titles to 200 chars max', formattedLong.length === 200);
+
+  const multiLineDetails = 'First line summary\nSecond line extra detail\nThird line';
+  const fromDetails = formatOsvTitle(undefined, multiLineDetails, 'CVE-2024-0002', 'Fallback');
+  expect('uses first line of details when summary is missing', fromDetails === 'First line summary');
+
+  const fallbackTitle = formatOsvTitle(undefined, undefined, 'CVE-2024-0003', 'Fallback');
+  expect('uses fallback with CVE ID when summary and details are missing', fallbackTitle === 'Fallback CVE-2024-0003');
 });
 
 // 6. NVD: hasVulnerableOsMatch verifies vulnerable criteria matching OS prefix

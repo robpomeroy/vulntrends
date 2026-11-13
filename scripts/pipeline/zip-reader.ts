@@ -13,6 +13,9 @@ export interface ZipEntry {
   data: Buffer;
 }
 
+/** Maximum allowed uncompressed size per file entry (32 MB) to prevent zip-bomb DoS. */
+export const MAX_ENTRY_BYTES = 32 * 1024 * 1024;
+
 export function* iterateZipEntries(
   buffer: Buffer,
   filter?: (filename: string) => boolean,
@@ -38,9 +41,11 @@ export function* iterateZipEntries(
   // Check for ZIP64 EOCD locator (20 bytes immediately preceding standard EOCD)
   if (eocdOffset >= 20 && buffer.readUInt32LE(eocdOffset - 20) === 0x07064b50) {
     const zip64EocdOffset = Number(buffer.readBigUInt64LE(eocdOffset - 20 + 8));
-    if (buffer.readUInt32LE(zip64EocdOffset) === 0x06064b50) {
-      totalEntries = Number(buffer.readBigUInt64LE(zip64EocdOffset + 32));
-      cdOffset = Number(buffer.readBigUInt64LE(zip64EocdOffset + 48));
+    if (zip64EocdOffset >= 0 && zip64EocdOffset + 56 <= buffer.length) {
+      if (buffer.readUInt32LE(zip64EocdOffset) === 0x06064b50) {
+        totalEntries = Number(buffer.readBigUInt64LE(zip64EocdOffset + 32));
+        cdOffset = Number(buffer.readBigUInt64LE(zip64EocdOffset + 48));
+      }
     }
   }
 
@@ -70,6 +75,12 @@ export function* iterateZipEntries(
     const commentLen = buffer.readUInt16LE(curOffset + 32);
     let localHeaderOffset = buffer.readUInt32LE(curOffset + 42);
 
+    if (curOffset + 46 + fileNameLen > buffer.length) {
+      throw new Error(
+        `Invalid ZIP file: filename extends past archive buffer at offset ${curOffset}`,
+      );
+    }
+
     const filename = buffer.toString(
       'utf8',
       curOffset + 46,
@@ -79,7 +90,7 @@ export function* iterateZipEntries(
     // Read ZIP64 extra field if needed
     if (extraLen > 0) {
       let extraPos = curOffset + 46 + fileNameLen;
-      const extraEnd = extraPos + extraLen;
+      const extraEnd = Math.min(buffer.length, extraPos + extraLen);
       while (extraPos + 4 <= extraEnd) {
         const headerId = buffer.readUInt16LE(extraPos);
         const dataSize = buffer.readUInt16LE(extraPos + 2);
@@ -111,24 +122,56 @@ export function* iterateZipEntries(
       continue;
     }
 
-    // Verify local header
+    // Protect against zip bombs: reject entries whose declared uncompressed size exceeds limit
+    if (uncompressedSize > MAX_ENTRY_BYTES) {
+      throw new Error(
+        `Invalid ZIP file: entry ${filename} uncompressed size ${uncompressedSize} exceeds ${MAX_ENTRY_BYTES} bytes limit`,
+      );
+    }
+
+    // Verify local header offset and signature
+    if (localHeaderOffset < 0 || localHeaderOffset + 30 > buffer.length) {
+      throw new Error(
+        `Invalid ZIP file: local header offset ${localHeaderOffset} out of bounds for ${filename}`,
+      );
+    }
+
     if (buffer.readUInt32LE(localHeaderOffset) !== 0x04034b50) {
-      continue;
+      throw new Error(
+        `Invalid ZIP file: corrupted local header signature 0x${buffer.readUInt32LE(localHeaderOffset).toString(16)} for ${filename}`,
+      );
     }
 
     const localFileNameLen = buffer.readUInt16LE(localHeaderOffset + 26);
     const localExtraLen = buffer.readUInt16LE(localHeaderOffset + 28);
     const dataStart = localHeaderOffset + 30 + localFileNameLen + localExtraLen;
+
+    if (dataStart + compressedSize > buffer.length) {
+      throw new Error(
+        `Invalid ZIP file: compressed data for ${filename} exceeds archive length (${dataStart + compressedSize} > ${buffer.length})`,
+      );
+    }
+
     const compressedData = buffer.subarray(dataStart, dataStart + compressedSize);
 
     let decompressed: Buffer;
     if (method === 0) {
+      if (compressedSize !== uncompressedSize) {
+        throw new Error(
+          `Invalid ZIP file: STORED method size mismatch for ${filename} (${compressedSize} vs ${uncompressedSize})`,
+        );
+      }
       decompressed = Buffer.from(compressedData);
     } else if (method === 8) {
-      decompressed = inflateRawSync(compressedData);
+      decompressed = inflateRawSync(compressedData, { maxOutputLength: MAX_ENTRY_BYTES });
     } else {
-      // Unsupported compression method; skip
-      continue;
+      throw new Error(`Invalid ZIP file: unsupported compression method ${method} for ${filename}`);
+    }
+
+    if (decompressed.length !== uncompressedSize) {
+      throw new Error(
+        `Invalid ZIP file: decompressed size mismatch for ${filename} (${decompressed.length} vs expected ${uncompressedSize})`,
+      );
     }
 
     yield {

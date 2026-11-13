@@ -467,12 +467,18 @@ export function deduplicateByCve(
       if (existingP < recordP) {
         // existing is primary; record is secondary
         const merged = mergeRecords(existing, record);
-        if (merged === null) continue; // both candidates failed sanity — drop
+        if (merged === null) {
+          byCve.delete(key); // both candidates failed sanity — drop
+          continue;
+        }
         byCve.set(key, { ...merged, id: cve, cveIds: [cve] });
       } else {
         // record is primary; existing is secondary
         const merged = mergeRecords(record, existing);
-        if (merged === null) continue; // both candidates failed sanity — drop
+        if (merged === null) {
+          byCve.delete(key); // both candidates failed sanity — drop
+          continue;
+        }
         byCve.set(key, { ...merged, id: cve, cveIds: [cve] });
       }
     }

@@ -350,6 +350,28 @@ group('deduplicateByCve: cross-manufacturer coexistence for shared CVEs', () => 
   expect('Red Hat record retains RHSA patch date', redhatRec?.patchedDate === '2024-03-10');
 });
 
+group('deduplicateByCve drops pathological records when mergeRecords fails sanity check', () => {
+  // If two records share a CVE and manufacturer but both dates fail the CVE-year sanity check,
+  // mergeRecords returns null and deduplicateByCve drops the invalid record from the output.
+  const r1 = makeRecord({
+    id: 'ADV-1',
+    cveIds: ['CVE-2015-9999'],
+    source: 'msrc',
+    manufacturer: 'Microsoft',
+    discoveredDate: '2025-01-01', // 10 years off
+  });
+  const r2 = makeRecord({
+    id: 'ADV-2',
+    cveIds: ['CVE-2015-9999'],
+    source: 'nvd',
+    manufacturer: 'Microsoft',
+    discoveredDate: '2025-02-01', // 10 years off
+  });
+
+  const merged = deduplicateByCve([r1, r2]);
+  expect('pathological records with failed merge are dropped', merged.length === 0);
+});
+
 // ============================================================================
 // Summary
 // ============================================================================

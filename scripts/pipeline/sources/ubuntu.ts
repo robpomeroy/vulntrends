@@ -60,8 +60,9 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
       const patchDate = parseDate(vuln.published ?? vuln.modified);
       if (!patchDate) continue;
 
-      // Collect all CVE IDs referenced by this USN and per-CVE severity if provided
-      const cveSet = new Set(collectOsvCveIds(vuln));
+      // Collect all CVE IDs referenced by this USN and per-CVE severity if provided.
+      // Strict matching: omit free-text details and related fields to avoid attributing cross-references.
+      const cveSet = new Set(collectOsvCveIds(vuln, { includeDetails: false, includeRelated: false }));
       const cveSeverityMap = new Map<string, Array<{ type: string; score: string }>>();
       for (const aff of vuln.affected ?? []) {
         const cves = aff.database_specific?.cves_map?.cves ?? [];

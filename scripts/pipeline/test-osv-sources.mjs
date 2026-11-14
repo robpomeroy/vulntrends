@@ -15,7 +15,13 @@ import {
   extractCvss,
   fetchRecords as fetchOsvRecords,
 } from './sources/osv.js';
-import { hasVulnerableOsMatch, cveToRecord, fetchRecords as fetchNvdRecords, fetchCvePage } from './sources/nvd.js';
+import {
+  hasVulnerableOsMatch,
+  cveToRecord,
+  fetchRecords as fetchNvdRecords,
+  fetchCvePage,
+  parseNvdDelay,
+} from './sources/nvd.js';
 
 let passed = 0;
 let failed = 0;
@@ -734,6 +740,16 @@ group('collectOsvCveIds helper', () => {
   const ids = collectOsvCveIds(vuln);
   expect('collectOsvCveIds extracts and deduplicates uppercase CVEs', ids.length === 4);
   expect('contains all 4 CVE IDs', ids.includes('CVE-2024-0001') && ids.includes('CVE-2024-0002') && ids.includes('CVE-2024-0003') && ids.includes('CVE-2024-0004'));
+
+  const idsStrict = collectOsvCveIds(vuln, { includeDetails: false, includeRelated: false });
+  expect('collectOsvCveIds with strict options excludes related and details', idsStrict.length === 2);
+  expect('strict contains aliases and upstream only', idsStrict.includes('CVE-2024-0001') && idsStrict.includes('CVE-2024-0003'));
+
+  const idsNoDetails = collectOsvCveIds(vuln, { includeDetails: false });
+  expect('collectOsvCveIds with includeDetails: false excludes details only', idsNoDetails.length === 3);
+
+  const idsNoRelated = collectOsvCveIds(vuln, { includeRelated: false });
+  expect('collectOsvCveIds with includeRelated: false excludes related only', idsNoRelated.length === 3);
 });
 
 // 16. inferManufacturer ecosystem coverage
@@ -875,6 +891,19 @@ await group('NVD fetchCvePage and fetchRecords integration', async () => {
     globalThis.fetch = origFetch;
     delete process.env.NVD_DELAY_MS;
   }
+});
+
+// 20. parseNvdDelay helper tests
+group('parseNvdDelay helper', () => {
+  expect('parseNvdDelay defaults to 500ms with API key', parseNvdDelay(undefined, true) === 500);
+  expect('parseNvdDelay defaults to 6000ms without API key', parseNvdDelay(undefined, false) === 6000);
+  expect('parseNvdDelay uses valid positive delay override', parseNvdDelay('250', false) === 250);
+  expect('parseNvdDelay supports 0ms delay override', parseNvdDelay('0', false) === 0);
+  expect('parseNvdDelay trims whitespace', parseNvdDelay('  100  ', true) === 100);
+  expect('parseNvdDelay rejects empty string', parseNvdDelay('', false) === 6000);
+  expect('parseNvdDelay rejects whitespace-only string', parseNvdDelay('   ', true) === 500);
+  expect('parseNvdDelay rejects non-numeric string', parseNvdDelay('abc', false) === 6000);
+  expect('parseNvdDelay rejects negative number', parseNvdDelay('-50', true) === 500);
 });
 
 console.log(

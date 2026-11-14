@@ -173,6 +173,19 @@ function sleep(ms: number): Promise<void> {
 }
 
 /**
+ * Determine the delay (in milliseconds) to wait between NVD requests.
+ * Defaults to 500ms with an API key, 6000ms without, overridable via NVD_DELAY_MS.
+ */
+export function parseNvdDelay(envVal?: string, hasApiKey = !!NVD_API_KEY): number {
+  const defaultDelay = hasApiKey ? 500 : 6000;
+  const rawDelay = envVal?.trim();
+  const parsedDelay = rawDelay ? Number(rawDelay) : NaN;
+  return Number.isFinite(parsedDelay) && parsedDelay >= 0
+    ? parsedDelay
+    : defaultDelay;
+}
+
+/**
  * Fetch all NVD vulnerability records for our target manufacturers.
  *
  * Queries each CPE vendor separately via `virtualMatchString` to avoid
@@ -186,9 +199,7 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
   }
 
   // Rate limit: 500ms with API key, 6s without (overridable via NVD_DELAY_MS for testing)
-  const delay = process.env.NVD_DELAY_MS !== undefined
-    ? Number(process.env.NVD_DELAY_MS)
-    : (NVD_API_KEY ? 500 : 6000);
+  const delay = parseNvdDelay(process.env.NVD_DELAY_MS);
 
   const seenIds = new Set<string>();
   const allRecords: VulnerabilityRecord[] = [];

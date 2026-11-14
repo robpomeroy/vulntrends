@@ -32,7 +32,7 @@
  *    step will keep the vendor version per its precedence rules).
  */
 
-import { buildRecord, parseDate } from '../normalise.js';
+import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
 import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
@@ -188,6 +188,34 @@ export function formatOsvTitle(
   const raw = summary?.trim() || details?.split('\n')[0]?.trim();
   const title = raw || `${prefix} ${id}`;
   return title.slice(0, 200);
+}
+
+/**
+ * Extract and canonicalise all unique CVE IDs from an OSV entry's aliases,
+ * related, upstream, and details fields.
+ */
+export function collectOsvCveIds(vuln: {
+  aliases?: string[];
+  related?: string[];
+  upstream?: string[];
+  details?: string;
+}): string[] {
+  const cveSet = new Set<string>();
+  for (const alias of vuln.aliases ?? []) {
+    if (/^CVE-\d{4}-\d{4,}$/i.test(alias)) cveSet.add(alias.toUpperCase());
+  }
+  for (const rel of vuln.related ?? []) {
+    if (/^CVE-\d{4}-\d{4,}$/i.test(rel)) cveSet.add(rel.toUpperCase());
+  }
+  for (const up of vuln.upstream ?? []) {
+    const m = up.match(/CVE-\d{4}-\d{4,}/i);
+    if (m) cveSet.add(m[0].toUpperCase());
+  }
+  const fromDetails = extractCveIds(vuln.details);
+  if (fromDetails) {
+    for (const c of fromDetails) cveSet.add(c.toUpperCase());
+  }
+  return [...cveSet];
 }
 
 export function inferManufacturer(vuln: OsvVulnerability, cveId: string): string | undefined {

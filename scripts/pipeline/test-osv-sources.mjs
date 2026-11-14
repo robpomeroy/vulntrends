@@ -2,11 +2,20 @@
 // Verifies fix handling, earliest patch date selection, and avoidance of fabricated patch lags.
 
 import { deflateRawSync } from 'node:zlib';
+import { writeFile, unlink } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { osvToRecord, parseLinuxVulns, fetchRecords as fetchLinuxRecords } from './sources/linux.js';
 import { parseRedHatVulns, fetchRecords as fetchRedHatRecords } from './sources/redhat.js';
 import { parseUbuntuVulns, fetchRecords as fetchUbuntuRecords } from './sources/ubuntu.js';
-import { inferManufacturer, formatOsvTitle, extractCvss, fetchRecords as fetchOsvRecords } from './sources/osv.js';
-import { hasVulnerableOsMatch, cveToRecord } from './sources/nvd.js';
+import {
+  collectOsvCveIds,
+  inferManufacturer,
+  formatOsvTitle,
+  extractCvss,
+  fetchRecords as fetchOsvRecords,
+} from './sources/osv.js';
+import { hasVulnerableOsMatch, cveToRecord, fetchRecords as fetchNvdRecords, fetchCvePage } from './sources/nvd.js';
 
 let passed = 0;
 let failed = 0;
@@ -506,6 +515,21 @@ group('extractCvss vector parsing and inferManufacturer text fallbacks', () => {
   ]);
   expect('extractCvss computes score for Scope Changed vector (10)', vectorScoreChanged === 10);
 
+  const vectorPrL = extractCvss([
+    { type: 'CVSS_V3', score: 'CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H' },
+  ]);
+  expect('extractCvss computes score for Scope Changed with PR:L', typeof vectorPrL === 'number' && vectorPrL > 0);
+
+  const vectorPrH = extractCvss([
+    { type: 'CVSS_V3', score: 'CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H' },
+  ]);
+  expect('extractCvss computes score for Scope Changed with PR:H', typeof vectorPrH === 'number' && vectorPrH > 0);
+
+  const incompleteVector = extractCvss([
+    { type: 'CVSS_V3', score: 'CVSS:3.1/AV:N' },
+  ]);
+  expect('extractCvss returns undefined for incomplete vector', incompleteVector === undefined);
+
   const vectorScoreUnchanged = extractCvss([
     { type: 'CVSS_V3', score: 'CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:L/I:N/A:N' },
   ]);
@@ -697,6 +721,160 @@ group('NVD cveToRecord parsing', () => {
     descriptions: [{ lang: 'en', value: 'No date' }],
   };
   expect('cveToRecord returns null when published date is missing', cveToRecord(nvdNoDate, 'Red Hat') === null);
+});
+
+// 15. collectOsvCveIds helper tests
+group('collectOsvCveIds helper', () => {
+  const vuln = {
+    aliases: ['cve-2024-0001', 'GHSA-xxxx-yyyy'],
+    related: ['CVE-2024-0002'],
+    upstream: ['https://git.kernel.org/commit/CVE-2024-0003'],
+    details: 'This resolves CVE-2024-0004 and duplicates cve-2024-0001.',
+  };
+  const ids = collectOsvCveIds(vuln);
+  expect('collectOsvCveIds extracts and deduplicates uppercase CVEs', ids.length === 4);
+  expect('contains all 4 CVE IDs', ids.includes('CVE-2024-0001') && ids.includes('CVE-2024-0002') && ids.includes('CVE-2024-0003') && ids.includes('CVE-2024-0004'));
+});
+
+// 16. inferManufacturer ecosystem coverage
+group('inferManufacturer ecosystem coverage', () => {
+  const makeEcoOsv = (ecosystem) => ({ id: 'TEST', affected: [{ package: { ecosystem } }] });
+  expect('Mozilla ecosystem maps to Mozilla', inferManufacturer(makeEcoOsv('Mozilla'), 'CVE-1') === 'Mozilla');
+  expect('Chrome ecosystem maps to Google', inferManufacturer(makeEcoOsv('Chrome'), 'CVE-1') === 'Google');
+  expect('Android ecosystem maps to Google', inferManufacturer(makeEcoOsv('Android'), 'CVE-1') === 'Google');
+  expect('Adobe ecosystem maps to Adobe', inferManufacturer(makeEcoOsv('Adobe'), 'CVE-1') === 'Adobe');
+  expect('macOS ecosystem maps to Apple', inferManufacturer(makeEcoOsv('macOS'), 'CVE-1') === 'Apple');
+});
+
+// 17. Linux Kernel branch coverage
+group('Linux Kernel parser branches', () => {
+  const invalidDateVuln = {
+    id: 'CVE-2024-9001',
+    summary: 'Invalid date vuln',
+    published: 'not-a-valid-date',
+  };
+  expect('osvToRecord returns null on invalid date', osvToRecord(invalidDateVuln) === null);
+
+  const advisoryRefVuln = {
+    id: 'CVE-2024-9002',
+    summary: 'Advisory ref vuln',
+    published: '2024-01-01',
+    references: [{ type: 'ADVISORY', url: 'https://kernel.org/advisory/9002' }],
+  };
+  const rec = osvToRecord(advisoryRefVuln);
+  expect('osvToRecord uses ADVISORY reference url', rec?.rawUrl === 'https://kernel.org/advisory/9002');
+
+  const dupVulns = [advisoryRefVuln, advisoryRefVuln];
+  const parsed = parseLinuxVulns(dupVulns);
+  expect('parseLinuxVulns deduplicates duplicate records', parsed.length === 1);
+});
+
+// 18. OSV enrichment fetch with valid CVE list
+await group('OSV enrichment fetch with active list file', async () => {
+  const tmpList = join(tmpdir(), `osv-test-list-${Date.now()}.txt`);
+  await writeFile(tmpList, 'CVE-2024-7777\n', 'utf8');
+  process.env.OSV_LOOKUP_CVE_LIST = tmpList;
+
+  const origFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async () =>
+      new Response(
+        JSON.stringify({
+          id: 'CVE-2024-7777',
+          summary: 'Enriched OSV CVE',
+          published: '2024-03-01T00:00:00Z',
+          modified: '2024-03-05T00:00:00Z',
+          affected: [{ package: { ecosystem: 'Linux' } }],
+          references: [{ type: 'WEB', url: 'https://osv.dev/v/CVE-2024-7777' }],
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } },
+      );
+
+    const recs = await fetchOsvRecords();
+    expect('fetchOsvRecords enriches records from CVE list', recs.length === 1 && recs[0]?.id === 'CVE-2024-7777');
+  } finally {
+    globalThis.fetch = origFetch;
+    delete process.env.OSV_LOOKUP_CVE_LIST;
+    await unlink(tmpList).catch(() => {});
+  }
+});
+
+// 19. NVD fetchCvePage and fetchRecords integration
+await group('NVD fetchCvePage and fetchRecords integration', async () => {
+  const origFetch = globalThis.fetch;
+  process.env.NVD_DELAY_MS = '0';
+
+  try {
+    // 1. fetchCvePage success
+    globalThis.fetch = async () =>
+      new Response(
+        JSON.stringify({
+          resultsPerPage: 1,
+          startIndex: 0,
+          totalResults: 1,
+          vulnerabilities: [
+            {
+              cve: {
+                id: 'CVE-2024-9000',
+                descriptions: [{ lang: 'en', value: 'NVD test page vuln' }],
+                published: '2024-01-01T00:00:00.000',
+              },
+            },
+          ],
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } },
+      );
+
+    const page = await fetchCvePage('microsoft', 0);
+    expect('fetchCvePage parses NVD response', page.totalResults === 1 && page.vulnerabilities.length === 1);
+
+    const pageWithMatch = await fetchCvePage('redhat', 0, 'cpe:2.3:o:redhat:enterprise_linux:8:*:*:*:*:*:*:*');
+    expect('fetchCvePage supports custom cpeMatch parameter', pageWithMatch.totalResults === 1);
+
+    // 2. fetchCvePage error
+    globalThis.fetch = async () =>
+      new Response('Internal Server Error', { status: 500 });
+    let threw500 = false;
+    try {
+      await fetchCvePage('microsoft', 0);
+    } catch {
+      threw500 = true;
+    }
+    expect('fetchCvePage throws on non-200 response', threw500 === true);
+
+    // 3. fetchRecords with mock queries and simulated failure on one query
+    let callCount = 0;
+    globalThis.fetch = async (url) => {
+      callCount++;
+      // Simulate failure on the first call to test per-vendor resilience catch block
+      if (callCount === 1) {
+        return new Response('Fail', { status: 500 });
+      }
+      return new Response(
+        JSON.stringify({
+          resultsPerPage: 1,
+          startIndex: 0,
+          totalResults: 1,
+          vulnerabilities: [
+            {
+              cve: {
+                id: `CVE-2024-${callCount}`,
+                descriptions: [{ lang: 'en', value: `NVD test vuln ${callCount}` }],
+                published: '2024-01-01T00:00:00.000',
+              },
+            },
+          ],
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } },
+      );
+    };
+
+    const nvdRecords = await fetchNvdRecords();
+    expect('fetchNvdRecords extracts records across queries despite vendor failure', nvdRecords.length > 0);
+  } finally {
+    globalThis.fetch = origFetch;
+    delete process.env.NVD_DELAY_MS;
+  }
 });
 
 console.log(

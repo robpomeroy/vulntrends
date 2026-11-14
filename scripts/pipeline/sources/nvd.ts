@@ -84,7 +84,7 @@ interface NvdResponse {
  * @param cpeVendor  The CPE 2.3 vendor string (e.g. "microsoft")
  * @param startIndex  Pagination offset
  */
-async function fetchCvePage(
+export async function fetchCvePage(
   cpeVendor: string,
   startIndex: number,
   cpeMatch?: string,
@@ -185,8 +185,10 @@ export async function fetchRecords(): Promise<VulnerabilityRecord[]> {
     console.warn('  NVD: No NVD_API_KEY set — rate limits will be aggressive (1 req/6s)');
   }
 
-  // Rate limit: 500ms with API key, 6s without
-  const delay = NVD_API_KEY ? 500 : 6000;
+  // Rate limit: 500ms with API key, 6s without (overridable via NVD_DELAY_MS for testing)
+  const delay = process.env.NVD_DELAY_MS !== undefined
+    ? Number(process.env.NVD_DELAY_MS)
+    : (NVD_API_KEY ? 500 : 6000);
 
   const seenIds = new Set<string>();
   const allRecords: VulnerabilityRecord[] = [];

@@ -12,10 +12,16 @@
 
 import { strict as assert } from 'node:assert';
 import {
+  buildRecord,
+  computePatchLagDays,
+  cvssToSeverity,
   dateMatchesCveYear,
   DATE_SANITY_MAX_YEARS,
   deduplicateByCve,
   deduplicateRecords,
+  extractCveIds,
+  normaliseManufacturer,
+  parseDate,
 } from './normalise.js';
 
 void assert; // silence unused-import; used implicitly via runtime checks
@@ -370,6 +376,42 @@ group('deduplicateByCve drops pathological records when mergeRecords fails sanit
 
   const merged = deduplicateByCve([r1, r2]);
   expect('pathological records with failed merge are dropped', merged.length === 0);
+});
+
+group('normalise helpers: parseDate, computePatchLagDays, cvssToSeverity, extractCveIds', () => {
+  expect('parseDate returns undefined for null/undefined/empty', parseDate(undefined) === undefined && parseDate(null) === undefined && parseDate('') === undefined);
+  expect('parseDate returns undefined for invalid date', parseDate('not-a-date') === undefined);
+  expect('parseDate preserves explicit ISO timezone', parseDate('2024-05-10T15:30:00Z') === '2024-05-10');
+  expect('parseDate parses timezone-naive dates', parseDate('January 15, 2024') === '2024-01-15');
+
+  expect('computePatchLagDays returns undefined if date missing or invalid', computePatchLagDays(undefined, '2024-01-01') === undefined && computePatchLagDays('2024-01-01', undefined) === undefined && computePatchLagDays('invalid', '2024-01-01') === undefined);
+  expect('computePatchLagDays calculates exact day difference', computePatchLagDays('2024-01-01', '2024-01-11') === 10);
+
+  expect('cvssToSeverity handles undefined and null', cvssToSeverity(undefined) === undefined && cvssToSeverity(null) === undefined);
+  expect('cvssToSeverity critical bucket >= 9.0', cvssToSeverity(9.8) === 'critical');
+  expect('cvssToSeverity high bucket >= 7.0', cvssToSeverity(7.5) === 'high');
+  expect('cvssToSeverity medium bucket >= 4.0', cvssToSeverity(5.0) === 'medium');
+  expect('cvssToSeverity low bucket < 4.0', cvssToSeverity(2.5) === 'low');
+
+  expect('normaliseManufacturer preserves unmapped names', normaliseManufacturer('Custom Vendor Inc') === 'Custom Vendor Inc');
+
+  expect('extractCveIds handles undefined or no matches', extractCveIds(undefined) === undefined && extractCveIds('No vulnerabilities here') === undefined);
+  expect('extractCveIds extracts and uppercases CVEs', extractCveIds('fixed cve-2024-1111 and CVE-2024-2222')?.length === 2);
+
+  const builtWithExplicit = buildRecord({
+    id: 'CVE-2024-9999',
+    source: 'linux',
+    manufacturer: 'kernel.org',
+    title: 'Custom',
+    discoveredDate: '2024-01-01',
+    patchedDate: '2024-01-05',
+    patchLagDays: 4,
+    severity: 'high',
+    cveIds: ['CVE-2024-9999'],
+    rawUrl: 'https://example.com',
+  });
+  expect('buildRecord normalises manufacturer', builtWithExplicit.manufacturer === 'Linux');
+  expect('buildRecord retains explicit patchLagDays and severity', builtWithExplicit.patchLagDays === 4 && builtWithExplicit.severity === 'high');
 });
 
 // ============================================================================

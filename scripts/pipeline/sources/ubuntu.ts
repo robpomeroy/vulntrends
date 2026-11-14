@@ -13,7 +13,7 @@
 import { buildRecord, computePatchLagDays, cvssToSeverity, parseDate } from '../normalise.js';
 import { fetchBufferWithRetry } from '../fetch-with-retry.js';
 import { iterateZipJsonEntries } from '../zip-reader.js';
-import { extractCvss, formatOsvTitle } from './osv.js';
+import { collectOsvCveIds, extractCvss, formatOsvTitle } from './osv.js';
 import type { VulnerabilityRecord } from '../types.js';
 
 const UBUNTU_OSV_ZIP_URL = 'https://storage.googleapis.com/osv-vulnerabilities/Ubuntu/all.zip';
@@ -61,16 +61,8 @@ export function parseUbuntuVulns(osvVulns: Iterable<OsvUbuntuVuln>): Vulnerabili
       if (!patchDate) continue;
 
       // Collect all CVE IDs referenced by this USN and per-CVE severity if provided
-      const cveSet = new Set<string>();
+      const cveSet = new Set(collectOsvCveIds(vuln));
       const cveSeverityMap = new Map<string, Array<{ type: string; score: string }>>();
-
-      for (const alias of vuln.aliases ?? []) {
-        if (/^CVE-\d{4}-\d{4,}$/i.test(alias)) cveSet.add(alias.toUpperCase());
-      }
-      for (const up of vuln.upstream ?? []) {
-        const m = up.match(/CVE-\d{4}-\d{4,}/i);
-        if (m) cveSet.add(m[0].toUpperCase());
-      }
       for (const aff of vuln.affected ?? []) {
         const cves = aff.database_specific?.cves_map?.cves ?? [];
         for (const c of cves) {

@@ -1,3 +1,7 @@
+findings/*
+coderabbit_comments.json
+*.tmp
+
 # build output
 dist/
 # generated types

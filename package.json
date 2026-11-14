@@ -1,7 +1,7 @@
 {
   "name": "vulntrends",
   "type": "module",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "Tracking trends in vulnerability patching across major software manufacturers",
   "license": "MIT",
   "engines": {
@@ -15,7 +15,7 @@
     "data:build": "node scripts/check-platform.mjs && tsx --env-file-if-exists=.env scripts/pipeline/index.ts && tsx --env-file-if-exists=.env scripts/aggregate.ts",
     "data:validate": "node scripts/check-platform.mjs && tsx scripts/validate.ts",
     "data:audit": "node scripts/check-platform.mjs && tsx scripts/data-audit.ts",
-    "data:test": "node scripts/check-platform.mjs && tsx scripts/pipeline/test-dedup-date.mjs && tsx scripts/pipeline/test-msrc-mariner.mjs && tsx scripts/pipeline/test-atomic-write.mjs",
+    "data:test": "node scripts/check-platform.mjs && node --import tsx --test --experimental-test-coverage --test-coverage-lines=85 --test-coverage-branches=85 --test-coverage-include=\"scripts/pipeline/zip-reader.ts\" --test-coverage-include=\"scripts/pipeline/sources/linux.ts\" --test-coverage-include=\"scripts/pipeline/sources/redhat.ts\" --test-coverage-include=\"scripts/pipeline/sources/ubuntu.ts\" --test-coverage-include=\"scripts/pipeline/sources/osv.ts\" --test-coverage-include=\"scripts/pipeline/sources/nvd.ts\" --test-coverage-include=\"scripts/pipeline/fetch-with-retry.ts\" --test-coverage-include=\"scripts/pipeline/normalise.ts\" scripts/pipeline/test-dedup-date.mjs scripts/pipeline/test-msrc-mariner.mjs scripts/pipeline/test-atomic-write.mjs scripts/pipeline/test-zip-reader.mjs scripts/pipeline/test-osv-sources.mjs scripts/pipeline/test-fetch-with-retry.mjs",
     "data:archive": "node scripts/check-platform.mjs && tsx scripts/archive-snapshot.ts",
     "data:csv": "node scripts/check-platform.mjs && tsx scripts/export-csv.ts",
     "data:prune": "node scripts/check-platform.mjs && tsx scripts/prune-archive.ts",

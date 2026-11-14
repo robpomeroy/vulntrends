@@ -32,7 +32,7 @@
  *    step will keep the vendor version per its precedence rules).
  */
 
-import { buildRecord, parseDate } from '../normalise.js';
+import { buildRecord, extractCveIds, parseDate } from '../normalise.js';
 import { fetchWithRetry } from '../fetch-with-retry.js';
 import type { VulnerabilityRecord } from '../types.js';
 
@@ -138,7 +138,7 @@ function cvssVectorToScore(vector: string): number | undefined {
 }
 
 /** Extract a numeric CVSS score from an OSV severity array. */
-function extractCvss(severity?: OsvSeverity[]): number | undefined {
+export function extractCvss(severity?: OsvSeverity[]): number | undefined {
   if (!severity || severity.length === 0) return undefined;
   // Prefer CVSS_V3, then CVSS_V2
   const v3 = severity.find((s) => s.type === 'CVSS_V3');
@@ -176,14 +176,81 @@ function extractCvss(severity?: OsvSeverity[]): number | undefined {
  * in sync than this hand-maintained mirror. The same pattern
  * is used by `scripts/pipeline/sources/nvd.ts` VENDOR_QUERIES.
  */
-function inferManufacturer(vuln: OsvVulnerability, cveId: string): string | undefined {
-  const e = (vuln.affected?.[0] as { package?: { ecosystem?: string } } | undefined)
-    ?.package?.ecosystem;
+/**
+ * Clean and cap an OSV title string to a maximum of 200 characters.
+ */
+export function formatOsvTitle(
+  summary: string | undefined,
+  details: string | undefined,
+  id: string,
+  prefix = 'Vulnerability',
+): string {
+  const raw = summary?.trim() || details?.split('\n')[0]?.trim();
+  const title = raw || `${prefix} ${id}`;
+  return title.slice(0, 200);
+}
+
+export interface CollectOsvCveOptions {
+  includeDetails?: boolean;
+  includeRelated?: boolean;
+}
+
+/**
+ * Extract and canonicalise all unique CVE IDs from an OSV entry's aliases,
+ * related, upstream, and details fields.
+ */
+export function collectOsvCveIds(
+  vuln: {
+    aliases?: string[];
+    related?: string[];
+    upstream?: string[];
+    details?: string;
+  },
+  options: CollectOsvCveOptions = {},
+): string[] {
+  const { includeDetails = true, includeRelated = true } = options;
+  const cveSet = new Set<string>();
+  for (const alias of vuln.aliases ?? []) {
+    if (/^CVE-\d{4}-\d{4,}$/i.test(alias)) cveSet.add(alias.toUpperCase());
+  }
+  if (includeRelated) {
+    for (const rel of vuln.related ?? []) {
+      if (/^CVE-\d{4}-\d{4,}$/i.test(rel)) cveSet.add(rel.toUpperCase());
+    }
+  }
+  for (const up of vuln.upstream ?? []) {
+    const m = up.match(/CVE-\d{4}-\d{4,}/i);
+    if (m) cveSet.add(m[0].toUpperCase());
+  }
+  if (includeDetails) {
+    const fromDetails = extractCveIds(vuln.details);
+    if (fromDetails) {
+      for (const c of fromDetails) cveSet.add(c.toUpperCase());
+    }
+  }
+  return [...cveSet];
+}
+
+export function inferManufacturer(vuln: OsvVulnerability, cveId: string): string | undefined {
+  // 1. Prioritise explicit ecosystem identifiers from any affected package entry
+  for (const aff of (vuln.affected ?? []) as Array<{ package?: { ecosystem?: string } }>) {
+    const e = aff.package?.ecosystem;
+    if (!e) continue;
+    if (e === 'Mozilla') return 'Mozilla';
+    if (e === 'Chrome' || e === 'Android') return 'Google';
+    if (e === 'Adobe') return 'Adobe';
+    if (e === 'macOS') return 'Apple';
+    if (e.startsWith('Red Hat')) return 'Red Hat';
+    if (e.startsWith('Ubuntu')) return 'Ubuntu';
+    if (e === 'Linux') return 'Linux';
+  }
+
+  // 2. Fall back to text patterns only when no affected ecosystem identifies a manufacturer
   const combined = `${vuln.id} ${cveId} ${vuln.summary ?? ''} ${vuln.details ?? ''}`.toLowerCase();
-  if (e === 'Mozilla') return 'Mozilla';
-  if (e === 'Chrome' || e === 'Android') return 'Google';
-  if (e === 'macOS' || combined.includes('apple')) return 'Apple';
-  if (e === 'Adobe') return 'Adobe';
+  if (combined.includes('apple') || combined.includes('macos') || combined.includes('ios')) return 'Apple';
+  if (combined.includes('ubuntu')) return 'Ubuntu';
+  if (combined.includes('red hat') || combined.includes('rhel')) return 'Red Hat';
+  if (combined.includes('linux kernel')) return 'Linux';
   if (combined.includes('microsoft')) return 'Microsoft';
   if (combined.includes('oracle')) return 'Oracle';
   return undefined;

@@ -295,6 +295,9 @@ See `scripts/pipeline/sources/chrome.ts` for the canonical pattern
 | Fortinet | HTML scraping | `fortiguard.com/psirt` — separate Published and Updated dates give real patch-lag signal |
 | Cisco | NVD-only | openVuln API requires OAuth; OXML feed deprecated. Coverage via NVD `cisco` CPE vendor. |
 | Adobe | HTML scraping | `helpx.adobe.com/security.html` — per-bulletin CVE fetch is best-effort |
+| Linux | OSV bulk archive | `storage.googleapis.com/osv-vulnerabilities/Linux/all.zip` — Linux kernel CNA stream (cvelistV5 / linux-cve-announce) |
+| Red Hat | OSV bulk archive | `storage.googleapis.com/osv-vulnerabilities/Red%20Hat/all.zip` — official RHSA errata release and CVE tracking |
+| Ubuntu | OSV bulk archive | `storage.googleapis.com/osv-vulnerabilities/Ubuntu/all.zip` — official USN notices and Ubuntu CVE metadata |
 
 ## Documentation
 

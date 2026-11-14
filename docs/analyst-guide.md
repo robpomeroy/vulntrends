@@ -17,19 +17,19 @@ where the data comes from, and how to spot (and fix) data-quality issues.
 $ # what's in the dataset?
 $ ls src/data/raw/                       # per-source raw extracts (one file per source)
 adobe.json    all.json         apple.json    chrome.json  cisco.json
-fortinet.json mozilla.json     msrc.json     nvd.json      osv.json
-pan.json      projectzero.json
+fortinet.json linux.json       mozilla.json  msrc.json    nvd.json      osv.json
+pan.json      projectzero.json redhat.json   ubuntu.json
 $ ls src/data/aggregated/                 # post-aggregation time-series for the dashboard
 backlog-by-month.json     discovered-by-month.json    fixed-by-month.json
 patch-lag-by-month.json   severity-mix-by-month.json
 …and the corresponding *-by-year.json variants
-manufacturers.json                          # canonical 10-vendor list with chart colours
+manufacturers.json                          # canonical 13-vendor list with chart colours
 ```
 
 | File | What it is |
 |---|---|
 | `src/data/raw/<source>.json` | One file per parser. Each is an array of `VulnerabilityRecord` objects. The MSRC file no longer contains Mariner records (they're filtered out at parse time — see §4). |
-| `src/data/raw/all.json` | All sources concatenated, then **deduplicated** by CVE ID and merged. This is what the aggregator reads. |
+| `src/data/raw/all.json` | All sources concatenated, then **deduplicated** per manufacturer and CVE and merged. Vulnerabilities affecting shared components (e.g. Linux kernel CVEs affecting Ubuntu and Red Hat) appear once for each manufacturer; aggregate sums across manufacturers represent manufacturer incidents, not unique global CVE counts. This is what the aggregator reads. |
 | `src/data/aggregated/*.json` | Time-bucketed counts (per manufacturer, per bucket key like `2025-04`) that the dashboard renders. |
 | `src/data/meta.json` | Pipeline metadata: when the run happened, source-level record counts, per-source duration, etc. |
 
@@ -55,7 +55,8 @@ interface VulnerabilityRecord {
   id: string;                  // CVE ID (CVE-YYYY-NNNN+), except for projectzero stubs
   cveIds: string[];            // all CVE IDs the record covers (usually one)
   source: 'mozilla' | 'msrc' | 'apple' | 'chrome' | 'pan' | 'fortinet'
-         | 'adobe' | 'projectzero' | 'cisco' | 'osv' | 'nvd';
+         | 'adobe' | 'projectzero' | 'cisco' | 'linux' | 'redhat' | 'ubuntu'
+         | 'osv' | 'nvd';
   manufacturer: string;        // canonical name, e.g. 'Microsoft' (not 'microsoft')
   title: string;               // human-readable title; for vendor records this is
                                //   the advisory headline
@@ -99,6 +100,9 @@ interface VulnerabilityRecord {
 | **Pan-OS JSON** | ~25 | Palo Alto Networks PAN-OS | Direct JSON feed |
 | **Fortinet PSIRT** | ~700 | FortiOS, FortiProxy | Separate Published + Updated dates |
 | **Adobe PSIRT** | ~12 | Adobe products (Acrobat, Reader, etc.) | HTML index + best-effort per-bulletin |
+| **Linux (Kernel)** | ~14,000 | Linux kernel vulnerabilities | OSV bulk stream from kernel.org CNA (cvelistV5 / linux-cve-announce) |
+| **Red Hat** | ~18,000 | Red Hat Enterprise Linux errata | OSV bulk stream of official RHSA notices |
+| **Ubuntu** | ~20,000 | Ubuntu Security Notices | OSV bulk stream of official USN advisories and CVE mappings |
 | **NVD/CVE** | ~33,000 | Cross-vendor coverage + per-vendor CPE queries | The "backbone" — fills gaps where no direct source exists |
 | **Project Zero** | 0 (stub) | Was bugs.chromium.org/p/project-zero; endpoint retired | Coverage comes via NVD's `google` CPE |
 | **Cisco / OSV** | 0 (stubs) | Cisco (OAuth required) / OSV (opt-in via env var) | Both stub-only; coverage comes via NVD |

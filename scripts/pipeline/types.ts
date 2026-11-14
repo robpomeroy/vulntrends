@@ -17,6 +17,9 @@ export type SourceId =
   | 'fortinet'
   | 'cisco'
   | 'adobe'
+  | 'linux'
+  | 'redhat'
+  | 'ubuntu'
   | 'nvd'
   | 'osv';
 

@@ -24,11 +24,14 @@ export const MANUFACTURERS: ManufacturerInfo[] = [
   { name: 'Cisco', colour: '#b03060' },
   { name: 'Fortinet', colour: '#ff0000' },
   { name: 'Google', colour: '#ffd700' },
+  { name: 'Linux', colour: '#f59e0b' },
   { name: 'Microsoft', colour: '#7cfc00' },
   { name: 'Mozilla', colour: '#00ffff' },
   { name: 'Oracle', colour: '#ff00ff' },
   { name: 'Palo Alto', colour: '#6495ed' },
+  { name: 'Red Hat', colour: '#f87171' },
   { name: 'Samsung', colour: '#ffdab9' },
+  { name: 'Ubuntu', colour: '#e95420' },
 ];
 
 /**

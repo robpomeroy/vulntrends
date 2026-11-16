@@ -15,6 +15,9 @@ export const sourceIdSchema = z.enum([
   'fortinet',
   'cisco',
   'adobe',
+  'linux',
+  'redhat',
+  'ubuntu',
   'nvd',
   'osv',
 ]);

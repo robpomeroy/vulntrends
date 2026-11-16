@@ -13,7 +13,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { buildRecord } from './pipeline/normalise.js';
+import { buildRecord, deduplicateByCve, deduplicateRecords } from './pipeline/normalise.js';
 import type { PipelineMeta, SourceId, VulnerabilityRecord } from './pipeline/types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -78,6 +78,9 @@ function generateRecords(
     Fortinet: ['FortiOS', 'FortiProxy', 'FortiManager', 'FortiAnalyzer', 'FortiMail'],
     Cisco: ['IOS XE', 'IOS', 'NX-OS', 'Webex', 'Umbrella', 'Firepower'],
     Adobe: ['Acrobat', 'Reader', 'Photoshop', 'ColdFusion', 'Experience Manager'],
+    Linux: ['Linux Kernel'],
+    'Red Hat': ['RHEL 9', 'RHEL 8', 'OpenShift', 'Ansible'],
+    Ubuntu: ['Ubuntu 24.04 LTS', 'Ubuntu 22.04 LTS', 'Ubuntu 20.04 LTS'],
   };
 
   const productList = products[manufacturer] ?? ['Unknown'];
@@ -132,6 +135,10 @@ async function main(): Promise<void> {
     fortinet: 0,
     cisco: 0,
     adobe: 0,
+    linux: 0,
+    redhat: 0,
+    ubuntu: 0,
+    osv: 0,
     nvd: 0,
   };
 
@@ -146,6 +153,9 @@ async function main(): Promise<void> {
     { manufacturer: 'Fortinet', source: 'fortinet', count: 180 },
     { manufacturer: 'Cisco', source: 'cisco', count: 220 },
     { manufacturer: 'Adobe', source: 'adobe', count: 160 },
+    { manufacturer: 'Linux', source: 'linux', count: 350 },
+    { manufacturer: 'Red Hat', source: 'redhat', count: 280 },
+    { manufacturer: 'Ubuntu', source: 'ubuntu', count: 260 },
     { manufacturer: 'Oracle', source: 'nvd', count: 200 },
     { manufacturer: 'Samsung', source: 'nvd', count: 100 },
   ];
@@ -200,18 +210,19 @@ async function main(): Promise<void> {
     await writeJson(join(RAW_DIR, `${sourceId}.json`), sourceRecords);
   }
 
-  // Write merged file
-  await writeJson(join(RAW_DIR, 'all.json'), allRecords);
+  // Write merged file after deduplication
+  const deduped = deduplicateByCve(deduplicateRecords(allRecords));
+  await writeJson(join(RAW_DIR, 'all.json'), deduped);
 
   // Write metadata
   const meta: PipelineMeta = {
     lastUpdated: new Date().toISOString(),
     sourceCounts,
-    totalRecords: allRecords.length,
+    totalRecords: deduped.length,
   };
   await writeJson(join(DATA_DIR, 'meta.json'), meta);
 
-  console.log(`\nGenerated ${allRecords.length} total records`);
+  console.log(`\nGenerated ${allRecords.length} total records (${deduped.length} after dedup)`);
 }
 
 main().then(async () => {

@@ -70,6 +70,9 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
       <li><strong class="text-vt-text-primary">Palo Alto Networks</strong> — <code>security.paloaltonetworks.com/json</code>.</li>
       <li><strong class="text-vt-text-primary">Fortinet</strong> — PSIRT page at <code>fortiguard.com/psirt</code>; separate Published and Updated dates give a real patch-lag signal.</li>
       <li><strong class="text-vt-text-primary">Adobe</strong> — <code>helpx.adobe.com/security.html</code> index + best-effort per-bulletin CVE fetch (rate-limited; the per-CVE detail step is a graceful-degradation path, not a guarantee).</li>
+      <li><strong class="text-vt-text-primary">Linux</strong> — Open Source Vulnerabilities (OSV) bulk data for the Linux ecosystem, mirroring the Linux kernel CNA stream (<code>cvelistV5</code> / <code>linux-cve-announce</code>) with precise publication dates and commit fix ranges.</li>
+      <li><strong class="text-vt-text-primary">Red Hat</strong> — Red Hat Security Advisories (RHSA) via OSV bulk data, supplying official errata release dates, CVSS scores, and resolved CVE identifiers.</li>
+      <li><strong class="text-vt-text-primary">Ubuntu</strong> — Canonical Ubuntu Security Notices (USN) via OSV bulk data, supplying notice publication dates, affected package metadata, and associated CVE IDs.</li>
     </ul>
 
     <h4 class="mt-6 mb-2 text-base font-semibold text-vt-text-secondary">NVD-backed vendors</h4>
@@ -169,8 +172,13 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
     <ul class="mb-4 pl-6 space-y-2 text-vt-text-secondary list-disc">
       <li>
         <strong class="text-vt-text-primary">Full coverage (2013–present)</strong> —
-        All 10 manufacturers have advisory programmes and NVD CPE coverage
-        is mature. Charts over this range are cross-vendor comparable.
+        All 13 manufacturers have advisory programmes and NVD CPE coverage
+        is mature. Charts over this range are broadly cross-vendor comparable;
+        however, because upstream Linux Kernel CNA advisories and NVD record
+        commit fixes without independent patch release timestamps, Linux Kernel
+        patch dates remain undefined by default. Linux fixed-count and patch-lag
+        metrics should therefore not be directly compared with vendors that publish
+        explicit patch dates.
       </li>
       <li>
         <strong class="text-vt-text-primary">Partial coverage (1999–2012)</strong> —
@@ -199,10 +207,14 @@ import DashboardLayout from '@/layouts/Dashboard.astro';
 
     <p class="mb-4 text-vt-text-secondary">
       The dedup merge (which combines vendor and NVD records into a
-      single canonical record per CVE) is gated on a CVE-year sanity
+      single canonical record per manufacturer and CVE) is gated on a CVE-year sanity
       check: a candidate <code>discoveredDate</code> more than 1 year
       from any CVE in the record's <code>cveIds</code> list is treated
-      as an upstream artefact and discarded. When both candidates fail
+      as an upstream artefact and discarded. Deduplication is manufacturer-aware:
+      a shared CVE affecting Linux, Red Hat, and Ubuntu coexists as distinct
+      records to accurately track each manufacturer's disclosure timeline.
+      Consequently, sums across manufacturers reflect manufacturer-incident totals
+      rather than counts of unique global CVEs. When both candidates fail
       the check the record is dropped entirely. The logic and the
       Mariner filter both have dedicated regression tests; run
       <code>npm run data:test</code> after any change to

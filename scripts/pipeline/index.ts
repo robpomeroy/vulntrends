@@ -29,6 +29,9 @@ import { fetchRecords as fetchPan } from './sources/pan.js';
 import { fetchRecords as fetchFortinet } from './sources/fortinet.js';
 import { fetchRecords as fetchCisco } from './sources/cisco.js';
 import { fetchRecords as fetchAdobe } from './sources/adobe.js';
+import { fetchRecords as fetchLinux } from './sources/linux.js';
+import { fetchRecords as fetchRedHat } from './sources/redhat.js';
+import { fetchRecords as fetchUbuntu } from './sources/ubuntu.js';
 import { fetchRecords as fetchOsv } from './sources/osv.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -67,6 +70,9 @@ const SOURCES: Array<{ id: SourceId; fetch: () => Promise<VulnerabilityRecord[]>
   { id: 'fortinet', fetch: fetchFortinet },
   { id: 'cisco', fetch: fetchCisco },
   { id: 'adobe', fetch: fetchAdobe },
+  { id: 'linux', fetch: fetchLinux },
+  { id: 'redhat', fetch: fetchRedHat },
+  { id: 'ubuntu', fetch: fetchUbuntu },
   // OSV is opt-in: it requires an explicit `OSV_LOOKUP_CVE_LIST` env
   // var pointing to a CVE-ID list (see sources/osv.ts). Without that,
   // the stub returns `[]`. Sources that are expected to legitimately
@@ -122,6 +128,9 @@ async function main(): Promise<void> {
     fortinet: 0,
     cisco: 0,
     adobe: 0,
+    linux: 0,
+    redhat: 0,
+    ubuntu: 0,
     nvd: 0,
     osv: 0,
   };

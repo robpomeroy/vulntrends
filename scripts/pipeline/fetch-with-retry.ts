@@ -43,6 +43,16 @@ const JITTER_MS = 200;
 /** Status codes that indicate a transient failure — worth retrying. */
 const RETRYABLE_STATUSES = new Set([429, 502, 503, 504]);
 
+/** Internal sentinel error for failures that must not be retried. */
+class NonRetryableError extends Error {
+  readonly status?: number;
+  constructor(message: string, status?: number) {
+    super(message);
+    this.name = 'NonRetryableError';
+    this.status = status;
+  }
+}
+
 /** Sleep for `ms` milliseconds. */
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -92,19 +102,13 @@ export class FetchWithRetryError extends Error {
 }
 
 /**
- * Fetch a URL with retry, backoff, and timeout.
- *
- * Retries are triggered for:
- *   - Network errors (TypeError thrown by fetch on connection failures)
- *   - HTTP status codes in RETRYABLE_STATUSES (429/502/503/504)
- *
- * Non-retryable failures (other 4xx, 5xx not in the retryable set) fail
- * immediately on the first try — there's no point retrying an auth error.
+ * Shared retry loop that executes a fetch request and processes its response.
  */
-export async function fetchWithRetry(
+async function executeWithRetry<T>(
   url: string,
-  options: FetchWithRetryOptions = {},
-): Promise<Response> {
+  options: FetchWithRetryOptions,
+  action: (response: Response) => Promise<T>,
+): Promise<T> {
   const {
     timeoutMs = DEFAULT_TIMEOUT_MS,
     maxRetries = DEFAULT_MAX_RETRIES,
@@ -117,15 +121,42 @@ export async function fetchWithRetry(
   let lastStatus: number | undefined;
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    // Set up the per-attempt abort controller. Composed with any
-    // external signal so a caller-cancellation also aborts in-flight
-    // requests.
+    // If external caller has already aborted, abort immediately without retrying
+    if (externalSignal?.aborted) {
+      throw new FetchWithRetryError(`Request aborted by caller: ${url}`, {
+        attempts: attempt + 1,
+        lastStatus,
+        url,
+        causes,
+      });
+    }
+
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), timeoutMs);
     const onExternalAbort = () => controller.abort();
     if (externalSignal) {
-      if (externalSignal.aborted) {
-        clearTimeout(timeout);
+      externalSignal.addEventListener('abort', onExternalAbort, { once: true });
+    }
+
+    try {
+      const response = await fetch(url, { ...fetchOptions, signal: controller.signal });
+      lastStatus = response.status;
+
+      // Retryable HTTP status (429, 502, 503, 504)
+      if (RETRYABLE_STATUSES.has(response.status)) {
+        try {
+          await response.arrayBuffer();
+        } catch {
+          // Ignore body drain failure
+        }
+        causes.push(new Error(`HTTP ${response.status}`));
+      } else {
+        // Return or consume body under active timeout
+        return await action(response);
+      }
+    } catch (err) {
+      // Caller aborts must not be retried or masked as timeouts
+      if (externalSignal?.aborted) {
         throw new FetchWithRetryError(`Request aborted by caller: ${url}`, {
           attempts: attempt + 1,
           lastStatus,
@@ -133,26 +164,17 @@ export async function fetchWithRetry(
           causes,
         });
       }
-      externalSignal.addEventListener('abort', onExternalAbort, { once: true });
-    }
 
-    try {
-      const response = await fetch(url, { ...fetchOptions, signal: controller.signal });
-      lastStatus = response.status;
-      // Success or non-retryable failure: return immediately.
-      if (!RETRYABLE_STATUSES.has(response.status)) {
-        return response;
+      // Non-retryable errors (e.g. 404 in fetchBufferWithRetry) fail immediately
+      if (err instanceof NonRetryableError) {
+        throw new FetchWithRetryError(`fetchWithRetry: ${url} failed with ${err.message}`, {
+          attempts: attempt + 1,
+          lastStatus: err.status ?? lastStatus,
+          url,
+          causes: [...causes, err],
+        });
       }
-      // Drain the body so the connection can be reused — fetch keeps the
-      // body buffered otherwise.
-      try {
-        await response.arrayBuffer();
-      } catch {
-        // Body drain can fail on already-closed connections; not fatal.
-      }
-      causes.push(new Error(`HTTP ${response.status}`));
-    } catch (err) {
-      // AbortError is the timeout firing; treat as a retryable failure.
+
       if (err instanceof Error && err.name === 'AbortError') {
         causes.push(new Error(`timeout after ${timeoutMs}ms`));
       } else {
@@ -165,16 +187,13 @@ export async function fetchWithRetry(
       }
     }
 
-    // Don't sleep after the last attempt.
     if (attempt < maxRetries) {
-      // Exponential backoff with ±200ms jitter.
       const backoff = baseBackoffMs * 2 ** attempt + randomInt(JITTER_MS * 2) - JITTER_MS;
       const clamped = Math.max(0, backoff);
       await sleep(clamped);
     }
   }
 
-  // All retries exhausted.
   const lastCause = causes[causes.length - 1];
   const lastMessage = lastCause instanceof Error ? lastCause.message : String(lastCause);
   throw new FetchWithRetryError(
@@ -186,4 +205,42 @@ export async function fetchWithRetry(
       causes,
     },
   );
+}
+
+/**
+ * Fetch a URL with retry, backoff, and timeout.
+ *
+ * Retries are triggered for:
+ *   - Network errors (TypeError thrown by fetch on connection failures)
+ *   - HTTP status codes in RETRYABLE_STATUSES (429/502/503/504)
+ *
+ * Non-retryable failures (other 4xx, 5xx not in the retryable set) return
+ * immediately on the first try — there's no point retrying an auth error.
+ */
+export async function fetchWithRetry(
+  url: string,
+  options: FetchWithRetryOptions = {},
+): Promise<Response> {
+  return executeWithRetry(url, options, async (response) => response);
+}
+
+/**
+ * Fetch a URL with retry, backoff, and timeout, reading the full response
+ * body into a Buffer under the active timeout deadline.
+ *
+ * This ensures large downloads (such as OSV bulk ZIP archives) do not stall
+ * indefinitely if headers arrive but the body trickle-stalls outside the
+ * initial fetch() call.
+ */
+export async function fetchBufferWithRetry(
+  url: string,
+  options: FetchWithRetryOptions = {},
+): Promise<Buffer> {
+  return executeWithRetry(url, options, async (response) => {
+    if (!response.ok) {
+      throw new NonRetryableError(`HTTP ${response.status}: ${response.statusText}`, response.status);
+    }
+    const arrayBuf = await response.arrayBuffer();
+    return Buffer.from(arrayBuf);
+  });
 }

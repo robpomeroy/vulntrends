@@ -12,9 +12,16 @@
 
 import { strict as assert } from 'node:assert';
 import {
+  buildRecord,
+  computePatchLagDays,
+  cvssToSeverity,
   dateMatchesCveYear,
   DATE_SANITY_MAX_YEARS,
+  deduplicateByCve,
   deduplicateRecords,
+  extractCveIds,
+  normaliseManufacturer,
+  parseDate,
 } from './normalise.js';
 
 void assert; // silence unused-import; used implicitly via runtime checks
@@ -210,6 +217,7 @@ group('deduplicateRecords: legacy "vendor used patch as discovery" tie-breaker',
   });
   const nvd = makeRecord({
     source: 'nvd',
+    manufacturer: 'Mozilla',
     discoveredDate: '2025-09-20',
     patchedDate: undefined,
   });
@@ -275,6 +283,135 @@ group('deduplicateRecords: same precedence keeps first', () => {
     'same precedence + same id: only the first survives',
     merged.length === 1 && merged[0]?.discoveredDate === '2025-09-01',
   );
+});
+
+group('deduplicateByCve: cross-manufacturer coexistence for shared CVEs', () => {
+  const linuxKernel = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'linux',
+    manufacturer: 'Linux',
+    product: 'Linux Kernel',
+    discoveredDate: '2024-02-15',
+    patchedDate: '2024-02-15',
+  });
+  const ubuntuNotice = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'ubuntu',
+    manufacturer: 'Ubuntu',
+    product: 'linux',
+    discoveredDate: '2024-03-01',
+    patchedDate: '2024-03-01',
+  });
+  const redhatErrata = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'redhat',
+    manufacturer: 'Red Hat',
+    product: 'kernel',
+    discoveredDate: '2024-03-10',
+    patchedDate: '2024-03-10',
+  });
+  const nvdLinux = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'nvd',
+    manufacturer: 'Linux',
+    discoveredDate: '2024-02-10',
+    patchedDate: undefined,
+  });
+  const nvdUbuntu = makeRecord({
+    id: 'CVE-2024-26600',
+    cveIds: ['CVE-2024-26600'],
+    source: 'nvd',
+    manufacturer: 'Ubuntu',
+    discoveredDate: '2024-02-10',
+    patchedDate: undefined,
+  });
+
+  const merged = deduplicateByCve([
+    linuxKernel,
+    ubuntuNotice,
+    redhatErrata,
+    nvdLinux,
+    nvdUbuntu,
+  ]);
+
+  expect('shared CVE yields 3 records (one per manufacturer)', merged.length === 3);
+
+  const linuxRec = merged.find((r) => r.manufacturer === 'Linux');
+  const ubuntuRec = merged.find((r) => r.manufacturer === 'Ubuntu');
+  const redhatRec = merged.find((r) => r.manufacturer === 'Red Hat');
+
+  expect('Linux record exists and has CVE ID', linuxRec?.id === 'CVE-2024-26600');
+  expect('Linux record merges NVD discovery date', linuxRec?.discoveredDate === '2024-02-10');
+  expect('Linux record retains kernel patch date', linuxRec?.patchedDate === '2024-02-15');
+
+  expect('Ubuntu record exists and has CVE ID', ubuntuRec?.id === 'CVE-2024-26600');
+  expect('Ubuntu record merges NVD discovery date', ubuntuRec?.discoveredDate === '2024-02-10');
+  expect('Ubuntu record retains USN patch date', ubuntuRec?.patchedDate === '2024-03-01');
+
+  expect('Red Hat record exists and has CVE ID', redhatRec?.id === 'CVE-2024-26600');
+  expect('Red Hat record retains RHSA patch date', redhatRec?.patchedDate === '2024-03-10');
+});
+
+group('deduplicateByCve drops pathological records when mergeRecords fails sanity check', () => {
+  // If two records share a CVE and manufacturer but both dates fail the CVE-year sanity check,
+  // mergeRecords returns null and deduplicateByCve drops the invalid record from the output.
+  const r1 = makeRecord({
+    id: 'ADV-1',
+    cveIds: ['CVE-2015-9999'],
+    source: 'msrc',
+    manufacturer: 'Microsoft',
+    discoveredDate: '2025-01-01', // 10 years off
+  });
+  const r2 = makeRecord({
+    id: 'ADV-2',
+    cveIds: ['CVE-2015-9999'],
+    source: 'nvd',
+    manufacturer: 'Microsoft',
+    discoveredDate: '2025-02-01', // 10 years off
+  });
+
+  const merged = deduplicateByCve([r1, r2]);
+  expect('pathological records with failed merge are dropped', merged.length === 0);
+});
+
+group('normalise helpers: parseDate, computePatchLagDays, cvssToSeverity, extractCveIds', () => {
+  expect('parseDate returns undefined for null/undefined/empty', parseDate(undefined) === undefined && parseDate(null) === undefined && parseDate('') === undefined);
+  expect('parseDate returns undefined for invalid date', parseDate('not-a-date') === undefined);
+  expect('parseDate preserves explicit ISO timezone', parseDate('2024-05-10T15:30:00Z') === '2024-05-10');
+  expect('parseDate parses timezone-naive dates', parseDate('January 15, 2024') === '2024-01-15');
+
+  expect('computePatchLagDays returns undefined if date missing or invalid', computePatchLagDays(undefined, '2024-01-01') === undefined && computePatchLagDays('2024-01-01', undefined) === undefined && computePatchLagDays('invalid', '2024-01-01') === undefined);
+  expect('computePatchLagDays calculates exact day difference', computePatchLagDays('2024-01-01', '2024-01-11') === 10);
+
+  expect('cvssToSeverity handles undefined and null', cvssToSeverity(undefined) === undefined && cvssToSeverity(null) === undefined);
+  expect('cvssToSeverity critical bucket >= 9.0', cvssToSeverity(9.8) === 'critical');
+  expect('cvssToSeverity high bucket >= 7.0', cvssToSeverity(7.5) === 'high');
+  expect('cvssToSeverity medium bucket >= 4.0', cvssToSeverity(5.0) === 'medium');
+  expect('cvssToSeverity low bucket < 4.0', cvssToSeverity(2.5) === 'low');
+
+  expect('normaliseManufacturer preserves unmapped names', normaliseManufacturer('Custom Vendor Inc') === 'Custom Vendor Inc');
+
+  expect('extractCveIds handles undefined or no matches', extractCveIds(undefined) === undefined && extractCveIds('No vulnerabilities here') === undefined);
+  expect('extractCveIds extracts and uppercases CVEs', extractCveIds('fixed cve-2024-1111 and CVE-2024-2222')?.length === 2);
+
+  const builtWithExplicit = buildRecord({
+    id: 'CVE-2024-9999',
+    source: 'linux',
+    manufacturer: 'kernel.org',
+    title: 'Custom',
+    discoveredDate: '2024-01-01',
+    patchedDate: '2024-01-05',
+    patchLagDays: 4,
+    severity: 'high',
+    cveIds: ['CVE-2024-9999'],
+    rawUrl: 'https://example.com',
+  });
+  expect('buildRecord normalises manufacturer', builtWithExplicit.manufacturer === 'Linux');
+  expect('buildRecord retains explicit patchLagDays and severity', builtWithExplicit.patchLagDays === 4 && builtWithExplicit.severity === 'high');
 });
 
 // ============================================================================

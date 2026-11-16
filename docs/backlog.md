@@ -17,7 +17,10 @@ re-publication: an upstream source re-stamps old CVEs with a recent
 date (the MSRC Mariner re-import bug from July 2026 was the original
 case). The check was hardened with a tolerance of 50 so the known
 ~30 residuals don't block every deploy, but a regression that pushes
-the count above 50 will still hard-fail.
+the count above 50 will still hard-fail. Operating system distributions
+(Ubuntu, Red Hat) and the Linux kernel CNA are exempt from A6, as enterprise
+LTS backports and the kernel CNA's retrospective CVE assignments legitimately
+disclose or patch older CVEs.
 
 **The 30 known residuals** (current production baseline, as of
 2026-07-24) fall into three categories:

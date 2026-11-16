@@ -35,6 +35,11 @@
  *        still block publication; legitimate variations within the
  *        known-baseline range are advisory only.
  *
+ *    Linux distributions (Red Hat, Ubuntu) and the Linux kernel CNA are
+ *    exempt from this check: the kernel CNA's retrospective CVE assignments
+ *    and distribution multi-year LTS errata backports legitimately disclose
+ *    or patch older CVEs.
+ *
  *  - **E2**: Per-manufacturer patch-date coverage. Manufacturers with < 10%
  *    patch-date coverage inflate the backlog. Warn so the operator can decide
  *    whether to exclude them.
@@ -168,6 +173,18 @@ async function main(): Promise<void> {
   // (e.g. CVE-1999-0681 with `published=2001-03-12`). The catalogue-
   // re-publication pattern is specifically "recent date + ancient
   // CVE-year" which NVD never produces.
+  //
+  // Linux distributions (Ubuntu, Red Hat) and the Linux kernel CNA are
+  // exempt from this check:
+  //  - The Linux kernel CNA was established in 2024 and retroactively assigned
+  //    CVE IDs for historical commits dating back years; these disclosures
+  //    first appeared in 2024-2026.
+  //  - Distros maintain 5-10+ year LTS / ELS branches and legitimately backport
+  //    security fixes for older CVEs via RHSAs and USNs.
+  // These are genuine disclosures and patch releases, not catalog re-import bugs.
+  const DISTRO_SOURCES: ReadonlySet<string> = new Set(['linux', 'redhat', 'ubuntu']);
+  const DISTRO_MANUFACTURERS: ReadonlySet<string> = new Set(['Linux', 'Red Hat', 'Ubuntu']);
+
   const eighteenMonthsAgo = new Date(today.getTime() - 540 * 86_400_000);
   const eighteenMonthsAgoIso = eighteenMonthsAgo.toISOString().slice(0, 10);
   const catRepubResiduals: Array<{
@@ -176,6 +193,8 @@ async function main(): Promise<void> {
     discYear: number;
     source: string;
   }> = [];
+  const distroBackportsBySrc: Record<string, number> = {};
+
   for (const r of records) {
     const cveMatch = r.id.match(/^CVE-(\d{4})-\d{4,}$/);
     if (!cveMatch) continue;
@@ -187,6 +206,10 @@ async function main(): Promise<void> {
     const cveYear = Number.parseInt(cveMatch[1], 10);
     const discYear = Number.parseInt(r.discoveredDate.slice(0, 4), 10);
     if (discYear - cveYear > 1) {
+      if (DISTRO_SOURCES.has(r.source) || DISTRO_MANUFACTURERS.has(r.manufacturer)) {
+        distroBackportsBySrc[r.source] = (distroBackportsBySrc[r.source] ?? 0) + 1;
+        continue;
+      }
       // `discoveredDate` is recent (last 18 months) but the CVE is
       // from at least 2 years before — that's the catalog-re-pub
       // signature, not a delayed NVD publish.
@@ -226,6 +249,15 @@ async function main(): Promise<void> {
     }
   } else {
     console.log('  ✓ A6: no catalog-re-publication residuals');
+  }
+
+  const distroBackportTotal = Object.values(distroBackportsBySrc).reduce((a, b) => a + b, 0);
+  if (distroBackportTotal > 0) {
+    console.log(
+      `    (${distroBackportTotal} distro backports / retrospective CNA disclosures excluded from A6:`,
+      distroBackportsBySrc,
+      ')',
+    );
   }
 
   // ---- A3: Future-dated records ----

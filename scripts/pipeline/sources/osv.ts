@@ -247,9 +247,9 @@ export function inferManufacturer(vuln: OsvVulnerability, cveId: string): string
 
   // 2. Fall back to text patterns only when no affected ecosystem identifies a manufacturer
   const combined = `${vuln.id} ${cveId} ${vuln.summary ?? ''} ${vuln.details ?? ''}`.toLowerCase();
-  if (combined.includes('apple') || combined.includes('macos') || combined.includes('ios')) return 'Apple';
+  if (/\b(apple|macos)\b/.test(combined) || /(?<!cisco\s)\bios\b/.test(combined)) return 'Apple';
   if (combined.includes('ubuntu')) return 'Ubuntu';
-  if (combined.includes('red hat') || combined.includes('rhel')) return 'Red Hat';
+  if (combined.includes('red hat') || /\brhel\b/.test(combined)) return 'Red Hat';
   if (combined.includes('linux kernel')) return 'Linux';
   if (combined.includes('microsoft')) return 'Microsoft';
   if (combined.includes('oracle')) return 'Oracle';

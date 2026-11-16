@@ -760,6 +760,13 @@ group('inferManufacturer ecosystem coverage', () => {
   expect('Android ecosystem maps to Google', inferManufacturer(makeEcoOsv('Android'), 'CVE-1') === 'Google');
   expect('Adobe ecosystem maps to Adobe', inferManufacturer(makeEcoOsv('Adobe'), 'CVE-1') === 'Adobe');
   expect('macOS ecosystem maps to Apple', inferManufacturer(makeEcoOsv('macOS'), 'CVE-1') === 'Apple');
+
+  // Word-boundary guards for text fallback (avoid "bios", "axios", "Cisco IOS", etc. matching Apple)
+  const makeTextOsv = (summary) => ({ id: 'GHSA-1', summary });
+  expect('BIOS in summary does not map to Apple', inferManufacturer(makeTextOsv('UEFI BIOS buffer overflow'), 'CVE-1') === undefined);
+  expect('axios in summary does not map to Apple', inferManufacturer(makeTextOsv('SSRF in axios HTTP client'), 'CVE-1') === undefined);
+  expect('Cisco IOS in summary does not map to Apple', inferManufacturer(makeTextOsv('Vulnerability in Cisco IOS XE'), 'CVE-1') === undefined);
+  expect('standalone iOS in summary maps to Apple', inferManufacturer(makeTextOsv('Privilege escalation in iOS 17'), 'CVE-1') === 'Apple');
 });
 
 // 17. Linux Kernel branch coverage

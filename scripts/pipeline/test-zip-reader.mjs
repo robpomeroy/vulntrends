@@ -110,7 +110,10 @@ try {
 expect('corrupted central directory signature throws Error', threwCorrupt === true);
 
 // Test truncated central directory
-const truncatedZipBuf = corruptZipBuf.subarray(0, cdOffset + 10);
+const truncatedZipBuf = Buffer.concat([
+  zipBuf.subarray(0, cdOffset + 10),
+  zipBuf.subarray(eocdOffset),
+]);
 let threwTruncated = false;
 try {
   [...iterateZipEntries(truncatedZipBuf)];
